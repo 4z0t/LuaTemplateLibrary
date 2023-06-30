@@ -70,14 +70,14 @@ namespace Lua
 	template<size_t N, typename T, typename ...Ts>
 	size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
 	{
-		_PushValue(l, std::forward<T>(arg));
+		_PushValue(l, std::forward<std::decay_t<T>>(arg));
 		return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
 	}
 
 	template< typename ...Ts>
 	inline size_t PushArgs(lua_State* l, Ts&& ...args)
 	{
-		return _PushArgs<0>(l, std::forward<std::decay_t<Ts>>(args)...);
+		return _PushArgs<0>(l, std::forward<Ts>(args)...);
 	}
 
 	template<typename ...Ts>
