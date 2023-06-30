@@ -2,10 +2,10 @@
 
 
 #include "Tests.h"
+#include <cmath>
 
 #include "LuaFunctions.hpp"
 #include "LuaClass.hpp"
-
 
 
 
@@ -96,6 +96,22 @@ void Say(const char* str)
 }
 
 
+float myfunc(float a, float b)
+{
+	return a * b - a / b;
+}
+
+
+inline double Gamma(double a)
+{
+	return tgamma(a);
+}
+
+inline float Hypot(float a, float b)
+{
+	return hypotf(a, b);
+}
+
 void Test()
 {
 	using namespace std;
@@ -115,6 +131,9 @@ void Test()
 
 	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
 	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);
+	Lua::RegisterFunction(l, "Gamma", Lua::CFunction<Gamma>::Function<double>);
+	Lua::RegisterFunction(l, "Hypot", Lua::CFunction<Hypot>::Function<float, float>);
+	Lua::RegisterFunction(l, "MyFunc", Lua::CFunction<myfunc>::Function<double, double>);
 
 
 

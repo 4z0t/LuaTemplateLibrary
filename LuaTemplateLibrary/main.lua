@@ -18,6 +18,8 @@ function Test()
     SayBye()
     SayFoo()
     Say(1)
+    print(Gamma(0.5))
+    print(MyFunc(2, 5))
 end
 
 function Main( )
