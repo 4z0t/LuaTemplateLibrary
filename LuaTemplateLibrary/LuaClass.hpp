@@ -3,6 +3,8 @@
 
 namespace Lua
 {
+	using std::size_t;
+
 	constexpr size_t RegisterSize(const struct luaL_Reg* reg)
 	{
 		size_t s = 0;

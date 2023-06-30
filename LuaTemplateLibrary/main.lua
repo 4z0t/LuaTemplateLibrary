@@ -16,6 +16,8 @@ function Test()
 
     SayHello()
     SayBye()
+    SayFoo()
+    Say("Bar")
 end
 
 function Main( )

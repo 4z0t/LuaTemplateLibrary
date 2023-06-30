@@ -113,6 +113,9 @@ void Test()
 	Lua::RegisterClosure(l, "SayHello", Lua::ClosureWrapper<Say>::Function<const char*>, "Hello!");
 	Lua::RegisterClosure(l, "SayBye", Lua::ClosureWrapper<Say>::Function<const char*>, "Bye!");
 
+	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
+	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);
+
 
 
 	if (luaL_dofile(l, "main.lua"))
