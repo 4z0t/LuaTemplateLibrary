@@ -255,4 +255,10 @@ namespace Lua
 		}
 		return _ReplaceUpvalue<Index + 1, TResult, Ts...>(l, upvalues);
 	}
+
+	template<typename ...CArgs>
+	void ReplaceUpvalues(lua_State* l, std::tuple<CArgs...>& upvalues)
+	{
+		_ReplaceUpvalue<0, std::tuple<CArgs...>, CArgs...>(l, upvalues);
+	}
 }

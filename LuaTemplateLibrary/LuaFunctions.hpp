@@ -4,8 +4,6 @@
 namespace Lua
 {
 
-
-
 	template<typename FnClass, typename ...TArgs>
 	struct FunctionWrapper
 	{
@@ -85,12 +83,6 @@ namespace Lua
 	};
 
 
-
-	template<typename ...CArgs>
-	void ReplaceUpvalues(lua_State* l, std::tuple<CArgs...>& upvalues)
-	{
-		_ReplaceUpvalue<0, std::tuple<CArgs...>, CArgs...>(l, upvalues);
-	}
 
 	template<auto fn, template<typename ...CArgs> typename Upvalues, typename ...TArgs>
 	struct CClosureWrapper
