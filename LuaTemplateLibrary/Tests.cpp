@@ -109,9 +109,9 @@ void Test()
 	Lua::RegisterFunction(l, "MakeArray", Lua::FunctionWrapper<MakeArray<int>, int>::Function);
 	Lua::RegisterFunction(l, "DoubleInt", Lua::FunctionWrapper<Callable, int, int>::Function);
 	Lua::RegisterFunction(l, "TripleInt", Lua::FunctionWrapper<Callable, int, int, int>::Function);
-	Lua::RegisterClosure(l, "PrintInc", Lua::ClosureWrapper<PrintClosureNumber2>::Function<int, float>, 7, 3.2f);
-	Lua::RegisterClosure(l, "SayHello", Lua::ClosureWrapper<Say>::Function<const char*>, "Hello!");
-	Lua::RegisterClosure(l, "SayBye", Lua::ClosureWrapper<Say>::Function<const char*>, "Bye!");
+	Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
+	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, const char*>::Function<>, "Hello!");
+	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, const char*>::Function<>, "Bye!");
 
 	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
 	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);
