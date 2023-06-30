@@ -19,7 +19,6 @@ namespace Lua
 		lua_setglobal(l, name);
 	}
 
-
 	template<typename T>
 	inline void _PushValue(lua_State* l, const T* arg);
 
@@ -31,13 +30,6 @@ namespace Lua
 
 	template<typename T>
 	inline void _PushValue(lua_State* l, T arg);
-
-
-	/*template<size_t N>
-	inline void _PushValue(lua_State* l, const char arg[N])
-	{
-		lua_pushstring(l, arg);
-	}*/
 
 	template<>
 	inline void _PushValue(lua_State* l, lua_Integer arg)
@@ -63,7 +55,6 @@ namespace Lua
 		_PushValue<lua_Number>(l, static_cast<lua_Number> (arg));
 	}
 
-
 	template<>
 	inline void _PushValue(lua_State* l, std::nullptr_t arg)
 	{
@@ -73,61 +64,49 @@ namespace Lua
 	template<size_t N>
 	size_t _PushArgs(lua_State* l)
 	{
-		return 0;
+		return N;
 	}
 
-	template<size_t N, typename T>
-	size_t _PushArgs(lua_State* l, const T& arg);
 	template<size_t N, typename T, typename ...Ts>
-	size_t _PushArgs(lua_State* l, const T& arg, const Ts&... args);
-
-	template<size_t N, typename T, typename ...Ts>
-	size_t _PushArgs(lua_State* l, const T& arg, const Ts&... args)
+	size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
 	{
-		_PushValue(l, arg);
-		return _PushArgs<N + 1, Ts...>(l, args...);
-	}
-
-	template<size_t N, typename T>
-	size_t _PushArgs(lua_State* l, const T& arg)
-	{
-		_PushValue(l, arg);
-		return N + 1;
+		_PushValue(l, std::forward<T>(arg));
+		return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
 	}
 
 	template< typename ...Ts>
-	inline size_t PushArgs(lua_State* l, const Ts& ...args)
+	inline size_t PushArgs(lua_State* l, Ts&& ...args)
 	{
-		return _PushArgs<0, Ts...>(l, args...);
+		return _PushArgs<0>(l, std::forward<std::decay_t<Ts>>(args)...);
 	}
 
 	template<typename ...Ts>
-	inline size_t _PrepareCall(lua_State* l, const char* name, const Ts&... args)
+	inline size_t _PrepareCall(lua_State* l, const char* name, Ts&&... args)
 	{
 		lua_getglobal(l, name);
-		size_t n = PushArgs(l, args...);
+		size_t n = PushArgs(l, std::forward<Ts>(args)...);
 		return n;
 	}
 
 	template<typename ...Ts>
-	void CallFunction(lua_State* l, const char* name, const Ts&... args)
+	void CallFunction(lua_State* l, const char* name, Ts&&... args)
 	{
-		size_t n = _PrepareCall(l, name, args...);
+		size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
 		lua_call(l, n, 0);
 	}
 
 	template<typename ...Ts>
-	bool CallFunctionProtected(lua_State* l, const char* name, const Ts&... args)
+	bool CallFunctionProtected(lua_State* l, const char* name, Ts&&... args)
 	{
-		size_t n = _PrepareCall(l, name, args...);
+		size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
 		return lua_pcall(l, n, 0, 0) == LUA_OK;
 	}
 
 
 	template<typename ...Ts>
-	void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, const Ts&... args)
+	void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
 	{
-		size_t n = _PushArgs<0, Ts...>(l, args...);
+		size_t n = PushArgs(l, std::forward<Ts>(args)...);
 		lua_pushcclosure(l, func, n);
 		lua_setglobal(l, name);
 	}
