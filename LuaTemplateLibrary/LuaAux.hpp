@@ -251,7 +251,7 @@ namespace Lua
 		if constexpr (!std::is_pointer<T>::value)
 		{
 			_PushValue<T>(l, std::get<Index>(upvalues));
-			lua_replace(l, lua_upvalueindex(Index + 1));
+			lua_replace(l, lua_upvalueindex((int)Index + 1));
 		}
 		return _ReplaceUpvalue<Index + 1, TResult, Ts...>(l, upvalues);
 	}
