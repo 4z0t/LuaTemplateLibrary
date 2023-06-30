@@ -112,34 +112,34 @@ namespace Lua
 	}
 
 	template<typename T>
-	T GetArg(lua_State* l, size_t Index);
+	T GetArg(lua_State* l, int Index);
 
 	template<>
-	float GetArg(lua_State* l, size_t Index)
+	float GetArg(lua_State* l, int Index)
 	{
 		return luaL_checknumber(l, Index);
 	}
 
 	template<>
-	int GetArg(lua_State* l, size_t Index)
+	int GetArg(lua_State* l, int Index)
 	{
 		return luaL_checkinteger(l, Index);
 	}
 
 	template<>
-	uint8_t GetArg(lua_State* l, size_t Index)
+	uint8_t GetArg(lua_State* l, int Index)
 	{
 		return luaL_checkinteger(l, Index);
 	}
 
 	template<>
-	double GetArg(lua_State* l, size_t Index)
+	double GetArg(lua_State* l, int Index)
 	{
 		return luaL_checknumber(l, Index);
 	}
 
 	template<>
-	const char* GetArg(lua_State* l, size_t Index)
+	const char* GetArg(lua_State* l, int Index)
 	{
 		return luaL_checkstring(l, Index);
 	}
@@ -167,7 +167,7 @@ namespace Lua
 	template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
 	constexpr size_t GetUpvalues(lua_State* l, TArgsTuple& args)
 	{
-		std::get<N>(args) = GetArg<TArg>(l, lua_upvalueindex(N + 1));
+		std::get<N>(args) = GetArg<TArg>(l, lua_upvalueindex((int)N + 1));
 		return GetUpvalues<N + 1, TArgsTuple, TArgs...>(l, args);
 	}
 

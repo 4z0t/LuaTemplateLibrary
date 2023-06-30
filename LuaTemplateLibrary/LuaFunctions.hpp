@@ -214,7 +214,7 @@ namespace Lua
 		}
 	private:
 		template <size_t ... UpIs, typename ...TArgs, size_t ... Is>
-		static TReturn<TArgs...> CallHelper(Upvalues& upvalues, ArgsTuple<TArgs...>& args, std::index_sequence<UpIs...> const, std::index_sequence<Is...> const)
+		inline static TReturn<TArgs...> CallHelper(Upvalues& upvalues, ArgsTuple<TArgs...>& args, std::index_sequence<UpIs...> const, std::index_sequence<Is...> const)
 		{
 			return fn(std::get<UpIs>(upvalues)..., std::get<Is>(args)...);
 		}
