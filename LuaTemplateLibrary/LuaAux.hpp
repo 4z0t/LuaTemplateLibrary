@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 #include <stdint.h>
-
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
@@ -40,7 +40,7 @@ namespace Lua
 	template<>
 	inline void _PushValue(lua_State* l, int arg)
 	{
-		_PushValue<lua_Integer>(l, static_cast<lua_Integer>(arg));
+		TypeParser<int>::Push(l, arg);
 	}
 
 	template<>
