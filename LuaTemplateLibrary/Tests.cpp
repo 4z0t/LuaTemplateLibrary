@@ -65,11 +65,13 @@ public:
 
 	int operator()(int a, int b)
 	{
+		std::cout << "2 args\n";
 		return a * a + b;
 	}
 
 	int operator()(int a, int b, int c)
 	{
+		std::cout << "3 args\n";
 		return a * a + b * c;
 	}
 };

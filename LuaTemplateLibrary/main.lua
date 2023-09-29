@@ -6,6 +6,7 @@ function Test()
         print(t[i])
     end
     print(DoubleInt(2, 3))
+    print(TripleInt(2, 3, 5))
 
     local tc = TestClass.new()
     tc:print()
