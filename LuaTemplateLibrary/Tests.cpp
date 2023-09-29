@@ -6,6 +6,7 @@
 
 #include "LuaFunctions.hpp"
 #include "LuaClass.hpp"
+#include "LuaState.hpp"
 
 
 
@@ -115,6 +116,8 @@ inline float Hypot(float a, float b)
 void Test()
 {
 	using namespace std;
+	Lua::State s{};
+	s.OpenLibs();
 	lua_State* l = luaL_newstate();
 	luaL_openlibs(l);
 	using namespace Tests;
