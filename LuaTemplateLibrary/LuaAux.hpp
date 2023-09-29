@@ -188,13 +188,13 @@ namespace Lua
 
 
 	template<typename T>
-	inline void _PushResult(lua_State* l, T result)
+	inline void _PushResult(lua_State* l, const T& result)
 	{
 		_PushValue<T>(l, result);
 	}
 
 	template<typename T>
-	inline void _PushResult(lua_State* l, std::vector<T>& result)
+	inline void _PushResult(lua_State* l,const std::vector<T>& result)
 	{
 		lua_createtable(l, result.size(), 0);
 		for (size_t i = 0; i < result.size(); i++) {
