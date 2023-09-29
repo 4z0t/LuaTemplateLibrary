@@ -122,9 +122,9 @@ void Test()
 
 	std::cout << TestClass::className << std::endl;
 
-	Lua::RegisterFunction(l, "MakeArray", Lua::FunctionWrapper<MakeArray<int>, int>::Function);
-	Lua::RegisterFunction(l, "DoubleInt", Lua::FunctionWrapper<Callable, int, int>::Function);
-	Lua::RegisterFunction(l, "TripleInt", Lua::FunctionWrapper<Callable, int, int, int>::Function);
+	Lua::RegisterFunction(l, "MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>);
+	Lua::RegisterFunction(l, "DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>);
+	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
 	Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
 	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, const char*>::Function<>, "Hello!");
 	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, const char*>::Function<>, "Bye!");
