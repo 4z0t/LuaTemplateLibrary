@@ -9,7 +9,7 @@ namespace Lua
 
 		static bool Check(lua_State* l, int index);
 
-		static void Push(lua_State* l, T && value);
+		static void Push(lua_State* l, T&& value);
 	};
 
 	template<>
@@ -31,4 +31,74 @@ namespace Lua
 		}
 	};
 
+	template<>
+	struct TypeParser<float>
+	{
+		static float Get(lua_State* l, int index)
+		{
+			return luaL_checknumber(l, index);
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isnumber(l, index);
+		}
+
+		static void Push(lua_State* l, float value)
+		{
+			lua_pushnumber(l, value);
+		}
+	};
+
+	template<>
+	struct TypeParser<bool>
+	{
+		static bool Get(lua_State* l, int index)
+		{
+			return lua_toboolean(l, index);
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isboolean(l, index);
+		}
+
+		static void Push(lua_State* l, bool value)
+		{
+			lua_pushboolean(l, value);
+		}
+	};
+
+	template<>
+	struct TypeParser<const char*>
+	{
+		static const char* Get(lua_State* l, int index)
+		{
+			return luaL_checkstring(l, index);
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isstring(l, index);
+		}
+
+		static void Push(lua_State* l, const char* value)
+		{
+			lua_pushstring(l, value);
+		}
+	};
+
+	template<>
+	struct TypeParser<std::string> : public TypeParser<const char*>
+	{
+		static std::string Get(lua_State* l, int index)
+		{
+			return { TypeParser<const char*>::Get(l, index) };
+		}
+
+		static void Push(lua_State* l, const std::string& value)
+		{
+			TypeParser<const char*>::Push(l, value.c_str());
+		}
+	};
 }
