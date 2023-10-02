@@ -51,6 +51,44 @@ namespace Lua
 	};
 
 	template<>
+	struct TypeParser<double>
+	{
+		static double Get(lua_State* l, int index)
+		{
+			return luaL_checknumber(l, index);
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isnumber(l, index);
+		}
+
+		static void Push(lua_State* l, double value)
+		{
+			lua_pushnumber(l, value);
+		}
+	};
+
+	template<>
+	struct TypeParser<long double>
+	{
+		static long double Get(lua_State* l, int index)
+		{
+			return luaL_checknumber(l, index);
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isnumber(l, index);
+		}
+
+		static void Push(lua_State* l, long double value)
+		{
+			lua_pushnumber(l, value);
+		}
+	};
+
+	template<>
 	struct TypeParser<bool>
 	{
 		static bool Get(lua_State* l, int index)
