@@ -125,6 +125,11 @@ struct Vector3f
 	{
 		return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
 	}
+
+	static Vector3f Sum(const Vector3f& v1, const Vector3f& v2)
+	{
+		return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
+	}
 };
 
 template<>
@@ -153,7 +158,7 @@ struct Lua::TypeParser<Vector3f>
 		return res;
 	}
 
-	static void Push(lua_State* l, Vector3f vec)
+	static void Push(lua_State* l, const Vector3f& vec)
 	{
 		lua_createtable(l, 3, 0);
 		lua_pushnumber(l, vec.x);
@@ -185,6 +190,7 @@ void Test()
 	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
 
 	Lua::RegisterFunction(l, "VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>);
+	Lua::RegisterFunction(l, "VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>);
 
 	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
 	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);

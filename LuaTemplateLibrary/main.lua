@@ -15,6 +15,8 @@ function Test()
     PrintInc()
     PrintInc()
     print(VectorLen{1,2,3})
+    local v = VectorSum({1,2,3},{4,5,6})
+    print(table.unpack(v))
 
     SayHello()
     SayBye()
