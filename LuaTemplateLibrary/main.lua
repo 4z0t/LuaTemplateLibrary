@@ -14,6 +14,7 @@ function Test()
     PrintInc()
     PrintInc()
     PrintInc()
+    print(VectorLen{1,2,3})
 
     SayHello()
     SayBye()

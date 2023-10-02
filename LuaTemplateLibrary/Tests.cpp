@@ -93,7 +93,7 @@ void PrintClosureNumber2(int& a, float& b)
 }
 
 
-void Say(const char* str)
+void Say(const std::string& str)
 {
 	std::cout << "Value is " << str << std::endl;
 }
@@ -115,6 +115,56 @@ inline float Hypot(float a, float b)
 	return hypotf(a, b);
 }
 
+#include "LuaTypes.hpp"
+
+struct Vector3f
+{
+	float x, y, z;
+
+	static float Length(const Vector3f& v)
+	{
+		return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	}
+};
+
+template<>
+struct Lua::TypeParser<Vector3f>
+{
+	static bool Check(lua_State* l, int index)
+	{
+		return lua_istable(l, index);
+	}
+
+	static Vector3f Get(lua_State* l, int index)
+	{
+		if (!lua_istable(l, index))
+		{
+			return { 0,0,0 };
+		}
+		Vector3f res;
+		lua_pushvalue(l, index);
+		lua_rawgeti(l, -1, 1);
+		res.x = lua_tonumber(l, -1);
+		lua_rawgeti(l, -2, 2);
+		res.y = lua_tonumber(l, -1);
+		lua_rawgeti(l, -3, 3);
+		res.z = lua_tonumber(l, -1);
+		lua_pop(l, 4);
+		return res;
+	}
+
+	static void Push(lua_State* l, Vector3f vec)
+	{
+		lua_createtable(l, 3, 0);
+		lua_pushnumber(l, vec.x);
+		lua_rawseti(l, -2, 1);
+		lua_pushnumber(l, vec.y);
+		lua_rawseti(l, -2, 2);
+		lua_pushnumber(l, vec.z);
+		lua_rawseti(l, -2, 3);
+	}
+};
+
 void Test()
 {
 	using namespace std;
@@ -131,8 +181,10 @@ void Test()
 	Lua::RegisterFunction(l, "DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>);
 	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
 	Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
-	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, const char*>::Function<>, "Hello!");
-	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, const char*>::Function<>, "Bye!");
+	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!");
+	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
+
+	Lua::RegisterFunction(l, "VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>);
 
 	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
 	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);
