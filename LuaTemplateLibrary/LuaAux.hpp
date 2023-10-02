@@ -13,7 +13,7 @@
 
 namespace Lua
 {
-	inline void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
+	void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
 	{
 		lua_pushcfunction(l, func);
 		lua_setglobal(l, name);

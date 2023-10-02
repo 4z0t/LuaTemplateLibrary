@@ -7,6 +7,7 @@
 #include "LuaFunctions.hpp"
 #include "LuaClass.hpp"
 #include "LuaState.hpp"
+#include <chrono>
 
 
 
@@ -170,6 +171,12 @@ struct Lua::TypeParser<Vector3f>
 	}
 };
 
+double GetSystemTime() {
+	using namespace std::chrono;
+	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() / 1000.0;
+}
+
+
 void Test()
 {
 	using namespace std;
@@ -198,12 +205,14 @@ void Test()
 	Lua::RegisterFunction(l, "Hypot", Lua::CFunction<Hypot>::Function<float, float>);
 	Lua::RegisterFunction(l, "MyFunc", Lua::CFunction<myfunc>::Function<double, double>);
 
+	Lua::RegisterFunction(l, "GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
 
 
-	if (luaL_dofile(l, "main.lua"))
-	{
-		cout << "error:" << lua_tostring(l, -1) << std::endl;
-	}
+
+		if (luaL_dofile(l, "main.lua"))
+		{
+			cout << "error:" << lua_tostring(l, -1) << std::endl;
+		}
 
 	Lua::CallFunction(l, "Main");
 
