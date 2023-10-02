@@ -40,7 +40,7 @@ namespace Lua
 				TReturn<TArgs...> result = CClosure::CallHelper(upvalues, args, index_sequence_for<TUpvalues...>{}, Indexes{});
 				ReplaceUpvalues(l, upvalues);
 				size_t n_results = PushResult(l, result);
-				return n_results;
+				return static_cast<int>(n_results);
 			}
 		}
 	private:
@@ -92,7 +92,7 @@ namespace Lua
 				TReturn<TArgs...> result = ClassClosure::CallHelper(l, upvalues, args, index_sequence_for<TUpvalues...>{}, Indexes{});
 				ReplaceUpvalues(l, upvalues);
 				size_t n_results = PushResult(l, result);
-				return n_results;
+				return static_cast<int>(n_results);
 			}
 		}
 	private:

@@ -20,45 +20,9 @@ namespace Lua
 	}
 
 	template<typename T>
-	inline void _PushValue(lua_State* l, const T* arg);
-
-	template<>
-	inline void _PushValue(lua_State* l, const char* arg)
+	inline void _PushValue(lua_State* l, const T& arg)
 	{
-		lua_pushstring(l, arg);
-	}
-
-	template<typename T>
-	inline void _PushValue(lua_State* l, T arg);
-
-	template<>
-	inline void _PushValue(lua_State* l, lua_Integer arg)
-	{
-		lua_pushinteger(l, arg);
-	}
-
-	template<>
-	inline void _PushValue(lua_State* l, int arg)
-	{
-		TypeParser<int>::Push(l, arg);
-	}
-
-	template<>
-	inline void _PushValue(lua_State* l, lua_Number arg)
-	{
-		lua_pushnumber(l, arg);
-	}
-
-	template<>
-	inline void _PushValue(lua_State* l, float arg)
-	{
-		_PushValue<lua_Number>(l, static_cast<lua_Number> (arg));
-	}
-
-	template<>
-	inline void _PushValue(lua_State* l, std::nullptr_t arg)
-	{
-		lua_pushnil(l);
+		TypeParser<T>::Push(l, arg);
 	}
 
 	template<size_t N>
@@ -112,36 +76,9 @@ namespace Lua
 	}
 
 	template<typename T>
-	T GetArg(lua_State* l, int Index);
-
-	template<>
-	float GetArg(lua_State* l, int Index)
+	T GetArg(lua_State* l, int index)
 	{
-		return luaL_checknumber(l, Index);
-	}
-
-	template<>
-	int GetArg(lua_State* l, int Index)
-	{
-		return luaL_checkinteger(l, Index);
-	}
-
-	template<>
-	uint8_t GetArg(lua_State* l, int Index)
-	{
-		return luaL_checkinteger(l, Index);
-	}
-
-	template<>
-	double GetArg(lua_State* l, int Index)
-	{
-		return luaL_checknumber(l, Index);
-	}
-
-	template<>
-	const char* GetArg(lua_State* l, int Index)
-	{
-		return luaL_checkstring(l, Index);
+		return TypeParser<T>::Get(l, index);
 	}
 
 	template<size_t N, typename TArgsTuple>
@@ -149,7 +86,6 @@ namespace Lua
 	{
 		return N;
 	}
-
 
 	template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
 	constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
@@ -194,7 +130,7 @@ namespace Lua
 	}
 
 	template<typename T>
-	inline void _PushResult(lua_State* l,const std::vector<T>& result)
+	inline void _PushResult(lua_State* l, const std::vector<T>& result)
 	{
 		lua_createtable(l, result.size(), 0);
 		for (size_t i = 0; i < result.size(); i++) {
