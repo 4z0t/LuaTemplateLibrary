@@ -30,7 +30,16 @@ end
 local function MySum( v1, v2)
 	return {v1[1]+v2[1],v1[2]+v2[2],v1[3]+v2[3]}
 end
+local Sqrt = math.sqrt
+local function MyLen( v)
+	return Sqrt(v[1]*v[1]+v[2]*v[2]+v[3]*v[3])
+end
 
+
+local function MyLenXYZ( v)
+    local x,y,z = v[1],v[2],v[3]
+	return Sqrt(x*x+y*y+z*z)
+end
 
 function TestSum(n)
     local VectorSum = VectorSum
@@ -38,7 +47,7 @@ function TestSum(n)
     local v2 = {4,5,6}
     local start_t = GetSystemTime()
     for i = 1,n do
-    VectorSum(v1,v2)
+        VectorSum(v1,v2)
     end
 
     return  GetSystemTime() - start_t 
@@ -50,7 +59,39 @@ function TestMySum(n)
     local v2 = {4,5,6}
     local start_t = GetSystemTime()
     for i = 1,n do
-    VectorSum(v1,v2)
+        VectorSum(v1,v2)
+    end
+
+    return  GetSystemTime() - start_t 
+end
+
+function TestLen(n)
+    local VectorLen = VectorLen
+    local v = {4,5,6}
+    local start_t = GetSystemTime()
+    for i = 1,n do
+        VectorLen(v)
+    end
+
+    return  GetSystemTime() - start_t 
+end
+function TestLenXYZ(n)
+    local VectorLen = MyLenXYZ
+    local v = {4,5,6}
+    local start_t = GetSystemTime()
+    for i = 1,n do
+        VectorLen(v)
+    end
+
+    return  GetSystemTime() - start_t 
+end
+
+function TestMyLen(n)
+    local VectorLen = MyLen
+    local v = {4,5,6}
+    local start_t = GetSystemTime()
+    for i = 1,n do
+        VectorLen(v)
     end
 
     return  GetSystemTime() - start_t 
@@ -59,8 +100,12 @@ end
 
 function Main( )
    Test()
-   local n = 10000000
+   local n = 1000000
    print(TestSum(n))
    print(TestMySum(n))
+
+    print(TestMyLen(n))
+   print(TestLen(n))
+   print(TestLenXYZ(n))
 end
 
