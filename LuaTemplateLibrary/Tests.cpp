@@ -84,7 +84,21 @@ struct MakeArray
 	{
 		return std::vector<T>(n);
 	}
+
+
 };
+
+template<typename T>
+std::vector<T> DoubleArray(const std::vector<T>& arr)
+{
+	std::vector<T> result(arr.size() * 2);
+	for (size_t i = 0; i < result.size(); i++)
+	{
+		result[i] = arr[i % arr.size()];
+	}
+	return result;
+}
+
 
 void PrintClosureNumber2(int& a, float& b)
 {
@@ -190,6 +204,7 @@ void Test()
 	std::cout << TestClass::className << std::endl;
 
 	Lua::RegisterFunction(l, "MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>);
+	Lua::RegisterFunction(l, "DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>);
 	Lua::RegisterFunction(l, "DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>);
 	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
 	Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
@@ -209,10 +224,10 @@ void Test()
 
 
 
-		if (luaL_dofile(l, "main.lua"))
-		{
-			cout << "error:" << lua_tostring(l, -1) << std::endl;
-		}
+	if (luaL_dofile(l, "main.lua"))
+	{
+		cout << "error:" << lua_tostring(l, -1) << std::endl;
+	}
 
 	Lua::CallFunction(l, "Main");
 

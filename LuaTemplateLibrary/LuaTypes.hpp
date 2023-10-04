@@ -140,4 +140,36 @@ namespace Lua
 			TypeParser<const char*>::Push(l, value.c_str());
 		}
 	};
+
+	template<typename T>
+	struct TypeParser<std::vector<T>>
+	{
+		static std::vector<T> Get(lua_State* l, int index)
+		{
+			lua_pushvalue(l, index);
+			auto size = lua_rawlen(l, -1);
+			std::vector<T> result(size);
+			for (size_t i = 0; i < size; i++) {
+				lua_rawgeti(l, -1, i + 1);
+				result[i] = TypeParser<T>::Get(l, -1);
+				lua_pop(l, 1);
+			}
+			lua_pop(l, 1);
+			return result;
+		}
+
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_istable(l, index);
+		}
+
+		static void Push(lua_State* l, const std::vector<T>& value)
+		{
+			lua_createtable(l, value.size(), 0);
+			for (size_t i = 0; i < value.size(); i++) {
+				TypeParser<T>::Push(l, value[i]);
+				lua_rawseti(l, -2, i + 1);
+			}
+		}
+	};
 }

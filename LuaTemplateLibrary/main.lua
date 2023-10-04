@@ -4,6 +4,12 @@ function Test()
     print(#t)
     for i = 1, #t do
         print(t[i])
+        t[i] = i
+    end
+    t = DoubleArray(t)
+    print(#t)
+    for i = 1, #t do
+        print(t[i])
     end
     print(DoubleInt(2, 3))
     print(TripleInt(2, 3, 5))
@@ -104,7 +110,7 @@ function Main( )
    print(TestSum(n))
    print(TestMySum(n))
 
-    print(TestMyLen(n))
+   print(TestMyLen(n))
    print(TestLen(n))
    print(TestLenXYZ(n))
 end
