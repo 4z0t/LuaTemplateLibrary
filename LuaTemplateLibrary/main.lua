@@ -11,6 +11,7 @@ function Test()
     for i = 1, #t do
         print(t[i])
     end
+
     print(DoubleInt(2, 3))
     print(TripleInt(2, 3, 5))
 
