@@ -59,6 +59,9 @@ struct UnWrap<T, std::enable_if_t<std::is_base_of_v<SuperBase, T>>>
 {
 	using type = typename T::type;
 };
+template<typename T, typename DerivedFromSuper = void>
+using Unwrap_t = typename UnWrap<T, DerivedFromSuper>::type;
+
 template<typename T>
 struct  Default : Base<T>
 {
@@ -67,11 +70,23 @@ struct  Default : Base<T>
 template<typename T>
 T Default<T>::value{};
 
-struct MyDerived : Base<float>
+template<typename T>
+struct Upvalue :Default<T> {};
+
+struct MyDerived : Default<float>
 {
 	static constexpr float value = 1.0f;
 };
 
+struct OptionalArg {};
+
+template<typename T>
+struct OptionalBase :OptionalArg, Base<T>
+{
+	using type = T;
+};
+
+/*
 int main()
 {
 	using namespace std;
@@ -80,7 +95,8 @@ int main()
 	cout << typeid(UnWrap<int>::type).name() << endl;
 	cout << typeid(UnWrap<NotDerived<int>>::type).name() << endl;
 	cout << typeid(UnWrap<Derived<vector<int>>>::type).name() << endl;
-	cout << typeid(UnWrap<vector<int>>::type).name() << endl;
 	cout << typeid(UnWrap<MyDerived>::type).name() << endl;
+	cout << typeid(UnWrap<vector<int>>::type).name() << endl;
 	cout << typeid(UnWrap<Default<vector<float>>>::type).name() << endl;
 }
+*/

@@ -120,6 +120,11 @@ float myfunc(float a, float b)
 }
 
 
+float TestDefault(float a, float b)
+{
+	return a * b;
+}
+
 inline double Gamma(double a)
 {
 	return tgamma(a);
@@ -191,6 +196,11 @@ double GetSystemTime() {
 }
 
 
+struct OptionalDouble1 :OptionalBase<double>
+{
+	static constexpr double value = 1;
+};
+
 void Test()
 {
 	using namespace std;
@@ -219,6 +229,11 @@ void Test()
 	Lua::RegisterFunction(l, "Gamma", Lua::CFunction<Gamma>::Function<double>);
 	Lua::RegisterFunction(l, "Hypot", Lua::CFunction<Hypot>::Function<float, float>);
 	Lua::RegisterFunction(l, "MyFunc", Lua::CFunction<myfunc>::Function<double, double>);
+
+	Lua::RegisterFunction(l, "Def", Lua::Closure<TestDefault, double, Default<double>>::Function);
+	Lua::RegisterClosure(l, "Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f);
+	Lua::RegisterClosure(l, "Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function);
+
 
 	Lua::RegisterFunction(l, "GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
 

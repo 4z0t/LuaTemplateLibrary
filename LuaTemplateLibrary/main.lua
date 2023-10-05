@@ -11,7 +11,10 @@ function Test()
     for i = 1, #t do
         print(t[i])
     end
-
+    print(Def(3))
+    print(Def(3,2))
+    print(Upval(3))
+    print(Opt(3))
     print(DoubleInt(2, 3))
     print(TripleInt(2, 3, 5))
 
