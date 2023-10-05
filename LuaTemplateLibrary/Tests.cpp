@@ -200,6 +200,13 @@ struct OptionalDouble1 :OptionalBase<double>
 	static constexpr double value = 1;
 };
 
+struct OptStringValue :OptionalBase<std::string>
+{
+	static const std::string value;
+
+};
+const std::string OptStringValue::value = "My string";
+
 void Test()
 {
 	using namespace std;
@@ -218,7 +225,7 @@ void Test()
 	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
 	//Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
 	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!");
-	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
+	//Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
 
 	Lua::RegisterFunction(l, "VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>);
 	Lua::RegisterFunction(l, "VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>);
@@ -233,6 +240,7 @@ void Test()
 	Lua::RegisterClosure(l, "Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f);
 	Lua::RegisterClosure(l, "Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function);
 	Lua::RegisterClosure(l, "PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f);
+	Lua::RegisterClosure(l, "SayBye", Lua::Closure<Say, OptStringValue>::Function);
 
 	Lua::RegisterFunction(l, "GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
 
