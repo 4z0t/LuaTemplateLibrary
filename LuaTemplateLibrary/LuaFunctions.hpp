@@ -292,13 +292,4 @@ namespace Lua
 			return fn(std::get<Is>(args)...);
 		}
 	};
-
-
-
-
-
-
-
-
-
 }
