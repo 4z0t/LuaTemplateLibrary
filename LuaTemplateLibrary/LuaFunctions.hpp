@@ -151,7 +151,7 @@ namespace Lua
 		struct ArgExtractor
 		{
 			template<size_t ArgI, size_t UpvalueI>
-			static T Get(lua_State* l)
+			static 	constexpr T Get(lua_State* l)
 			{
 				return TypeParser<T>::Get(l, ArgI + 1);
 			}
@@ -161,7 +161,7 @@ namespace Lua
 		struct ArgExtractor<Default<T>>
 		{
 			template<size_t ArgI, size_t UpvalueI>
-			static T Get(lua_State* l)
+			static 	constexpr T Get(lua_State* l)
 			{
 				if (TypeParser<T>::Check(l, ArgI + 1))
 					return TypeParser<T>::Get(l, ArgI + 1);
@@ -173,7 +173,7 @@ namespace Lua
 		struct ArgExtractor<Upvalue<T>>
 		{
 			template<size_t ArgI, size_t UpvalueI>
-			static T Get(lua_State* l)
+			static constexpr T Get(lua_State* l)
 			{
 				return TypeParser<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
 			}
@@ -183,7 +183,7 @@ namespace Lua
 		struct UpvalueReplacer
 		{
 			template<size_t UpvalueI>
-			static void Replace(lua_State* l, const T& value)
+			static  constexpr void Replace(lua_State* l, const T& value)
 			{
 				if constexpr (!std::is_pointer<T>::value)
 				{
@@ -198,7 +198,7 @@ namespace Lua
 		{
 			using ReturnT = typename T::type;
 			template<size_t ArgI, size_t UpvalueI>
-			static ReturnT Get(lua_State* l)
+			static constexpr ReturnT Get(lua_State* l)
 			{
 				if (TypeParser<ReturnT>::Check(l, ArgI + 1))
 					return TypeParser<ReturnT>::Get(l, ArgI + 1);
