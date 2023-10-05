@@ -141,7 +141,13 @@ namespace Lua
 			static constexpr size_t value = 1;
 		};
 
-		template<typename T, typename Optional=void>
+		template<typename T>
+		struct IsUpvalueType
+		{
+			static constexpr bool value = IncrementUpvalueIndex<T>::value == 1;
+		};
+
+		template<typename T, typename Optional = void>
 		struct ArgExtractor
 		{
 			template<size_t ArgI, size_t UpvalueI>
@@ -170,6 +176,20 @@ namespace Lua
 			static T Get(lua_State* l)
 			{
 				return TypeParser<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
+			}
+		};
+
+		template<typename T>
+		struct UpvalueReplacer
+		{
+			template<size_t UpvalueI>
+			static void Replace(lua_State* l, const T& value)
+			{
+				if constexpr (!std::is_pointer<T>::value)
+				{
+					TypeParser<T>::Push(l, value);
+					lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
+				}
 			}
 		};
 
@@ -208,29 +228,27 @@ namespace Lua
 			return GetArgs<0, 0, TArgsTuple, TArgs...>(l, args);
 		}
 
-
-		template<size_t Index, typename TResult>
-		constexpr size_t ReplaceUpvalues(lua_State* l, TResult& upvalues)
+		template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
+		constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
 		{
-			return Index;
+			return ArgIndex + UpvalueIndex;
 		}
 
-		template<size_t Index, typename TResult, typename T, typename ...Ts>
-		constexpr size_t ReplaceUpvalues(lua_State* l, TResult& upvalues)
+		template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple, typename T, typename ...Ts>
+		constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
 		{
-			/*if constexpr (!std::is_pointer<T>::value)
-			{
-				TypeParser<T>::Push(l, std::get<Index>(upvalues));
-				lua_replace(l, lua_upvalueindex((int)Index + 1));
-			}*/
-			return ReplaceUpvalues<Index + 1, TResult, Ts...>(l, upvalues);
+			if constexpr (IsUpvalueType<T>::value)
+				UpvalueReplacer<typename T::type>::Replace<UpvalueIndex>(l, std::get<ArgIndex + UpvalueIndex>(args));
+			return ReplaceUpvalues<
+				ArgIndex + IncrementArgIndex<T>::value,
+				UpvalueIndex + IncrementUpvalueIndex<T>::value,
+				TArgsTuple, Ts...>(l, args);
 		}
 
-		template<typename TResult, typename ...Ts>
-		constexpr size_t ReplaceUpvalues(lua_State* l, TResult& upvalues)
+		template<typename TArgsTuple, typename ...Ts>
+		constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
 		{
-
-			return ReplaceUpvalues<0, TResult, Ts...>(l, upvalues);
+			return ReplaceUpvalues<0, 0, TArgsTuple, Ts...>(l, args);
 		}
 
 	}
@@ -239,8 +257,8 @@ namespace Lua
 	struct Closure
 	{
 		using FnType = decltype(fn);
-		using TReturn = typename std::invoke_result<FnType, Unwrap_t< TArgs>...>::type;
-		static_assert(std::is_invocable<FnType, Unwrap_t< TArgs>...>::value, "Given function can't be called with such arguments!");
+		static_assert(std::is_invocable<FnType, Unwrap_t< TArgs>&...>::value, "Given function can't be called with such arguments!");
+		using TReturn = typename std::invoke_result<FnType, Unwrap_t< TArgs>&...>::type;
 
 		using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
 		using Indexes = std::index_sequence_for<TArgs...>;

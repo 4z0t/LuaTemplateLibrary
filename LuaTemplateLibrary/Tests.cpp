@@ -216,7 +216,7 @@ void Test()
 	Lua::RegisterFunction(l, "DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>);
 	Lua::RegisterFunction(l, "DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>);
 	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
-	Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
+	//Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
 	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!");
 	Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
 
@@ -232,7 +232,7 @@ void Test()
 	Lua::RegisterFunction(l, "Def", Lua::Closure<TestDefault, double, Default<double>>::Function);
 	Lua::RegisterClosure(l, "Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f);
 	Lua::RegisterClosure(l, "Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function);
-
+	Lua::RegisterClosure(l, "PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f);
 
 	Lua::RegisterFunction(l, "GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
 
