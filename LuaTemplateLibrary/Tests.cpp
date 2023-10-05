@@ -8,8 +8,7 @@
 #include "LuaClass.hpp"
 #include "LuaState.hpp"
 #include <chrono>
-
-
+#include "FuncTraits.hpp"
 
 namespace Tests
 {

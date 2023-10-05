@@ -1,6 +1,6 @@
 #pragma once
 #include "LuaAux.hpp"
-
+#include "FuncTraits.hpp"
 namespace Lua
 {
 	template<auto fn, typename ...TUpvalues>
