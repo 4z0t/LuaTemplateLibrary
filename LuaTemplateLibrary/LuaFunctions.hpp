@@ -179,19 +179,6 @@ namespace Lua
 			}
 		};
 
-		template<typename T>
-		struct UpvalueReplacer
-		{
-			template<size_t UpvalueI>
-			static  constexpr void Replace(lua_State* l, const T& value)
-			{
-				if constexpr (!std::is_pointer<T>::value)
-				{
-					TypeParser<T>::Push(l, value);
-					lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
-				}
-			}
-		};
 
 		template<typename T>
 		struct ArgExtractor<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>>
@@ -206,6 +193,19 @@ namespace Lua
 			}
 		};
 
+		template<typename T>
+		struct UpvalueReplacer
+		{
+			template<size_t UpvalueI>
+			static  constexpr void Replace(lua_State* l, const T& value)
+			{
+				if constexpr (!std::is_pointer<T>::value)
+				{
+					TypeParser<T>::Push(l, value);
+					lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
+				}
+			}
+		};
 		template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
 		constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
 		{
@@ -257,10 +257,10 @@ namespace Lua
 	struct Closure
 	{
 		using FnType = decltype(fn);
-		static_assert(std::is_invocable<FnType, Unwrap_t< TArgs>&...>::value, "Given function can't be called with such arguments!");
-		using TReturn = typename std::invoke_result<FnType, Unwrap_t< TArgs>&...>::type;
+		static_assert(std::is_invocable<FnType, UnWrap_t< TArgs>&...>::value, "Given function can't be called with such arguments!");
+		using TReturn = typename std::invoke_result<FnType, UnWrap_t< TArgs>&...>::type;
 
-		using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
+		using ArgsTuple = std::tuple<UnWrap_t<TArgs>...>;
 		using Indexes = std::index_sequence_for<TArgs...>;
 	private:
 

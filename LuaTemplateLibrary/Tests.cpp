@@ -195,12 +195,12 @@ double GetSystemTime() {
 }
 
 
-struct OptionalDouble1 :OptionalBase<double>
+struct OptionalDouble1 :Lua::OptionalBase<double>
 {
 	static constexpr double value = 1;
 };
 
-struct OptStringValue :OptionalBase<std::string>
+struct OptStringValue :Lua::OptionalBase<std::string>
 {
 	static const std::string value;
 
@@ -210,6 +210,7 @@ const std::string OptStringValue::value = "My string";
 void Test()
 {
 	using namespace std;
+	using namespace Lua;
 	Lua::State s{};
 	s.OpenLibs();
 	lua_State* l = luaL_newstate();
