@@ -258,34 +258,41 @@ namespace Lua
 	{
 		using FnType = decltype(fn);
 		static_assert(std::is_invocable<FnType, UnWrap_t< TArgs>&...>::value, "Given function can't be called with such arguments!");
-		using TReturn = typename std::invoke_result<FnType, UnWrap_t< TArgs>&...>::type;
+		using TReturn = std::invoke_result_t<FnType, UnWrap_t<TArgs>&...>;
 
 		using ArgsTuple = std::tuple<UnWrap_t<TArgs>...>;
 		using Indexes = std::index_sequence_for<TArgs...>;
-	private:
-
-
 
 	public:
 		static int Function(lua_State* l)
 		{
 			ArgsTuple args;
-			FuncUtility::GetArgs<ArgsTuple, TArgs ...>(l, args);
+			Closure::GetArgs(l, args);
 			if constexpr (std::is_void<TReturn>::value)
 			{
 				Closure::CallHelper(args, Indexes{});
-				FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs ...>(l, args);
+				Closure::ReplaceUpvalues(l, args);
 				return 0;
 			}
 			else
 			{
 				TReturn result = Closure::CallHelper(args, Indexes{});
-				FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs ...>(l, args);
+				Closure::ReplaceUpvalues(l, args);
 				size_t n_results = PushResult(l, result);
 				return static_cast<int>(n_results);
 			}
 		}
 	private:
+		static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
+		{
+			return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
+		}
+
+		static  constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
+		{
+			return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
+		}
+
 		template <size_t ... Is>
 		inline static TReturn CallHelper(ArgsTuple& args, std::index_sequence<Is...> const)
 		{
