@@ -213,45 +213,39 @@ void Test()
 	using namespace Lua;
 	Lua::State s{};
 	s.OpenLibs();
-	lua_State* l = luaL_newstate();
+	/*lua_State* l = luaL_newstate();
 	luaL_openlibs(l);
 	using namespace Tests;
-	Lua::ClassWrapper<TestClass>::Init(l, "TestClass", TestClass::_class);
+	Lua::ClassWrapper<TestClass>::Init(l, "TestClass", TestClass::_class);*/
 
-	std::cout << TestClass::className << std::endl;
+	//std::cout << TestClass::className << std::endl;
 
-	Lua::RegisterFunction(l, "MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>);
-	Lua::RegisterFunction(l, "DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>);
-	Lua::RegisterFunction(l, "DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>);
-	Lua::RegisterFunction(l, "TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>);
-	//Lua::RegisterClosure(l, "PrintInc", Lua::CClosure<PrintClosureNumber2, int, float>::Function<>, 7, 3.2f);
-	Lua::RegisterClosure(l, "SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!");
-	//Lua::RegisterClosure(l, "SayBye", Lua::CClosure<Say, std::string>::Function<>, "Bye!");
-
-	Lua::RegisterFunction(l, "VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>);
-	Lua::RegisterFunction(l, "VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>);
-
-	Lua::RegisterClosure(l, "SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo");
-	Lua::RegisterFunction(l, "Say", Lua::CFunction<Say>::Function<const char*>);
-	Lua::RegisterFunction(l, "Gamma", Lua::CFunction<Gamma>::Function<double>);
-	Lua::RegisterFunction(l, "Hypot", Lua::CFunction<Hypot>::Function<float, float>);
-	Lua::RegisterFunction(l, "MyFunc", Lua::CFunction<myfunc>::Function<double, double>);
-
-	Lua::RegisterFunction(l, "Def", Lua::Closure<TestDefault, double, Default<double>>::Function);
-	Lua::RegisterClosure(l, "Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f);
-	Lua::RegisterClosure(l, "Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function);
-	Lua::RegisterClosure(l, "PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f);
-	Lua::RegisterClosure(l, "SayBye", Lua::Closure<Say, OptStringValue>::Function);
-
-	Lua::RegisterFunction(l, "GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
+	s.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
+		.AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
+		.AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
+		.AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
+		.AddClosure("SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!")
+		.AddFunction("VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>)
+		.AddFunction("VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>)
+		.AddClosure("SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo")
+		.AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
+		.AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
+		.AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
+		.AddFunction("MyFunc", Lua::CFunction<myfunc>::Function<double, double>)
+		.AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
+		.AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
+		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function)
+		.AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
+		.AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
+		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
 
 
 
-	if (luaL_dofile(l, "main.lua"))
+	if (s.DoFile("main.lua"))
 	{
-		cout << "error:" << lua_tostring(l, -1) << std::endl;
+		cout << "error:" << s.To<const char*>(-1) << std::endl;
 	}
 
-	Lua::CallFunction(l, "Main");
+	s.Call("Main");
 
 }

@@ -49,6 +49,24 @@ namespace Lua
 			lua_close(Unwrap(this));
 		}
 
+		template<typename ...Ts>
+		void RegisterClosure(const char* name, lua_CFunction func, Ts&&... args)
+		{
+			Lua::RegisterClosure(Unwrap(this), name, func, std::forward<Ts>(args)...);
+		}
+
+		template<typename ...Ts>
+		void Call(const char* name, Ts&&... args)
+		{
+			Lua::CallFunction(Unwrap(this), name, std::forward<Ts>(args)...);
+		}
+
+		template<typename T>
+		T Get(int index)
+		{
+			return TypeParser<T>::Get(Unwrap(this), index);
+		}
+
 	private:
 		StateWrap() = delete;
 		~StateWrap() = delete;
@@ -67,7 +85,8 @@ namespace Lua
 
 		~State()
 		{
-			m_state->Close();
+			if (m_state)
+				m_state->Close();
 			m_state = nullptr;
 		}
 
@@ -85,6 +104,35 @@ namespace Lua
 		void Pop(size_t n)
 		{
 			return m_state->Pop(n);
+		}
+
+		State& AddFunction(const char* name, lua_CFunction func)
+		{
+			return this->AddClosure(name, func);
+		}
+
+		template<typename ...Ts>
+		State& AddClosure(const char* name, lua_CFunction func, Ts&&... args)
+		{
+			m_state->RegisterClosure(name, func, std::forward<Ts>(args)...);
+			return *this;
+		}
+
+		bool DoFile(const char* path)
+		{
+			return m_state->DoFile(path);
+		}
+
+		template<typename ...Ts>
+		void Call(const char* name, Ts&&... args)
+		{
+			m_state->Call(name, std::forward<Ts>(args)...);
+		}
+
+		template<typename T>
+		T To(int index)
+		{
+			return m_state->Get<T>(index);
 		}
 
 	private:
