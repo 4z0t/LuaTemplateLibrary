@@ -199,14 +199,10 @@ double GetSystemTime() {
 	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() / 1000.0;
 }
 
-
-struct OptionalDouble1 : Lua::OptionalBase<double>
-{
-	static constexpr double value = 1;
-};
-
 LuaOptionalArg(OptStringValue, std::string, "My string");
 LuaOptionalArg(OptionalDoubleHalf, double, 0.5);
+LuaOptionalArg(OptionalDouble1, double, 1);
+
 
 void Test()
 {
