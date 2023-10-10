@@ -118,9 +118,7 @@ namespace Lua
 	namespace FuncUtility
 	{
 		template<typename T, T Value>
-		struct ValueContainer {
-			static constexpr T value = Value;
-		};
+		using ValueContainer = std::integral_constant<T, Value>;
 
 		template<typename T>
 		struct IncrementArgIndex : ValueContainer<size_t, 1> {};
