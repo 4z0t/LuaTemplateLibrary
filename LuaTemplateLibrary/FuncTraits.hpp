@@ -19,19 +19,19 @@ namespace Lua
 	struct OptionalBase :OptionalArg, TypeBase<T> {};
 
 	template<typename T, typename DerivedFromSuper = void>
-	struct UnWrap
+	struct Unwrap
 	{
 		using type = T;
 	};
 
 	template<typename T>
-	struct UnWrap<T, std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>>
+	struct Unwrap<T, std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>>
 	{
 		using type = typename T::type;
 	};
 
 	template<typename T, typename DerivedFromSuper = void>
-	using UnWrap_t = typename UnWrap<T, DerivedFromSuper>::type;
+	using Unwrap_t = typename Unwrap<T, DerivedFromSuper>::type;
 
 	template<typename T>
 	struct  Default : TypeBase<T>

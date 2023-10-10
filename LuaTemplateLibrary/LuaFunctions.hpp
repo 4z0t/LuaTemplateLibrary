@@ -257,10 +257,11 @@ namespace Lua
 	struct Closure
 	{
 		using FnType = decltype(fn);
-		static_assert(std::is_invocable<FnType, UnWrap_t< TArgs>&...>::value, "Given function can't be called with such arguments!");
-		using TReturn = std::invoke_result_t<FnType, UnWrap_t<TArgs>&...>;
 
-		using ArgsTuple = std::tuple<UnWrap_t<TArgs>...>;
+		static_assert(std::is_invocable_v<FnType, Unwrap_t<TArgs>&...>, "Given function can't be called with such arguments!");
+		using TReturn = std::invoke_result_t<FnType, Unwrap_t<TArgs>&...>;
+
+		using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
 		using Indexes = std::index_sequence_for<TArgs...>;
 
 	public:
@@ -288,13 +289,13 @@ namespace Lua
 			return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
 		}
 
-		static  constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
+		static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
 		{
 			return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
 		}
 
 		template <size_t ... Is>
-		inline static TReturn CallHelper(ArgsTuple& args, std::index_sequence<Is...> const)
+		inline static TReturn CallHelper(ArgsTuple& args, const std::index_sequence<Is...>)
 		{
 			return fn(std::get<Is>(args)...);
 		}
