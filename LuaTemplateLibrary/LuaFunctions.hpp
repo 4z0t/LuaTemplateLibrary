@@ -117,35 +117,25 @@ namespace Lua
 
 	namespace FuncUtility
 	{
-		template<typename T>
-		struct IncrementArgIndex
-		{
-			static  constexpr size_t value = 1;
+		template<typename T, T Value>
+		struct ValueContainer {
+			static constexpr T value = Value;
 		};
 
 		template<typename T>
-		struct IncrementArgIndex<Upvalue<T>>
-		{
-			static  constexpr size_t value = 0;
-		};
+		struct IncrementArgIndex : ValueContainer<size_t, 1> {};
 
 		template<typename T>
-		struct IncrementUpvalueIndex
-		{
-			static  constexpr size_t value = 0;
-		};
+		struct IncrementArgIndex<Upvalue<T>> : ValueContainer<size_t, 0> {};
 
 		template<typename T>
-		struct IncrementUpvalueIndex<Upvalue<T>>
-		{
-			static constexpr size_t value = 1;
-		};
+		struct IncrementUpvalueIndex : ValueContainer<size_t, 0> {};
 
 		template<typename T>
-		struct IsUpvalueType
-		{
-			static constexpr bool value = IncrementUpvalueIndex<T>::value == 1;
-		};
+		struct IncrementUpvalueIndex<Upvalue<T>> : ValueContainer<size_t, 1> {};
+
+		template<typename T>
+		struct IsUpvalueType : ValueContainer<bool, IncrementUpvalueIndex<T>::value == 1> {};
 
 		template<typename T, typename Optional = void>
 		struct ArgExtractor
