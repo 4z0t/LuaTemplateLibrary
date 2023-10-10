@@ -236,14 +236,14 @@ void Test()
 		.AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
 		.AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
 		.AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-		.AddFunction("MyFunc", Lua::CFunction<myfunc>::Function<double, double>)
+		.AddFunction("MyFunc", Lua::Closure<myfunc,float, float>::Function)
 		.AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
 		.AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
 		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function)
 		.AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
 		.AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
 		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
-		//.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function);
+		.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function);
 		;
 
 

@@ -271,13 +271,13 @@ namespace Lua
 			Closure::GetArgs(l, args);
 			if constexpr (std::is_void<TReturn>::value)
 			{
-				Closure::CallHelper(args, Indexes{});
+				Closure::Call(args, Indexes{});
 				Closure::ReplaceUpvalues(l, args);
 				return 0;
 			}
 			else
 			{
-				TReturn result = Closure::CallHelper(args, Indexes{});
+				TReturn result = Closure::Call(args, Indexes{});
 				Closure::ReplaceUpvalues(l, args);
 				size_t n_results = PushResult(l, result);
 				return static_cast<int>(n_results);
@@ -294,10 +294,33 @@ namespace Lua
 			return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
 		}
 
-		template <size_t ... Is>
-		inline static TReturn CallHelper(ArgsTuple& args, const std::index_sequence<Is...>)
+		template<typename R, typename D = R>
+		struct CallHelper;
+
+		template<typename R, typename ...Ts>
+		struct CallHelper<R(*)(Ts...)>
 		{
-			return fn(std::get<Is>(args)...);
+			template<typename ...Args>
+			static TReturn Call(Args&... args)
+			{
+				return fn(args...);
+			}
+		};
+
+		template<typename R, class C, typename ...Ts>
+		struct CallHelper<R(C::*)(Ts...)>
+		{
+			template<class C, typename ...Args>
+			static TReturn Call(C& arg, Args&... args)
+			{
+				return (arg.*fn)(args...);
+			}
+		};
+
+		template <size_t ... Is>
+		inline static TReturn Call(ArgsTuple& args, const std::index_sequence<Is...>)
+		{
+			return CallHelper<FnType>::Call(std::get<Is>(args)...);
 		}
 	};
 }
