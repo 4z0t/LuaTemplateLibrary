@@ -17,25 +17,25 @@ namespace Lua
 			return Wrap(luaL_newstate());
 		}
 
-		inline static lua_State* UnWrap(StateWrap* s)
+		inline static lua_State* Unwrap(StateWrap* s)
 		{
 			return (lua_State*)s;
 		}
 
 		void OpenLibs()
 		{
-			return luaL_openlibs(UnWrap(this));
+			return luaL_openlibs(Unwrap(this));
 		}
 
 		bool DoFile(const char* name)
 		{
-			return luaL_dofile(UnWrap(this), name);
+			return luaL_dofile(Unwrap(this), name);
 		}
 
 
 		void Close()
 		{
-			lua_close(UnWrap(this));
+			lua_close(Unwrap(this));
 		}
 
 	private:
