@@ -150,7 +150,7 @@ struct Vector3f
 		return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
 	}
 
-	Vector3f operator+(const Vector3f& v)
+	Vector3f operator+(const Vector3f& v)const 
 	{
 		return Sum(*this, v);
 	}

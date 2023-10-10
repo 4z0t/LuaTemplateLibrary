@@ -317,6 +317,16 @@ namespace Lua
 			}
 		};
 
+		template<typename R, class C, typename ...Ts>
+		struct CallHelper<R(C::*)(Ts...)const>
+		{
+			template<class C, typename ...Args>
+			static TReturn Call(const C& arg, Args&... args)
+			{
+				return (arg.*fn)(args...);
+			}
+		};
+
 		template <size_t ... Is>
 		inline static TReturn Call(ArgsTuple& args, const std::index_sequence<Is...>)
 		{
