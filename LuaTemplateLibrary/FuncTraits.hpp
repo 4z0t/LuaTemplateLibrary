@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <iostream>
 #include <vector>
+
 namespace Lua
 {
 
@@ -43,6 +44,11 @@ namespace Lua
 
 	template<typename T>
 	struct Upvalue :TypeBase<T> {};
-
-
 }
+
+#define LuaOptionalArg(name_, type_, value_) \
+struct name_ : Lua::OptionalBase<type_>\
+{\
+  static const type_ value; \
+};\
+const type_ name_::value = (value_)

@@ -200,17 +200,13 @@ double GetSystemTime() {
 }
 
 
-struct OptionalDouble1 :Lua::OptionalBase<double>
+struct OptionalDouble1 : Lua::OptionalBase<double>
 {
 	static constexpr double value = 1;
 };
 
-struct OptStringValue :Lua::OptionalBase<std::string>
-{
-	static const std::string value;
-
-};
-const std::string OptStringValue::value = "My string";
+LuaOptionalArg(OptStringValue, std::string, "My string");
+LuaOptionalArg(OptionalDoubleHalf, double, 0.5);
 
 void Test()
 {
@@ -239,12 +235,14 @@ void Test()
 		.AddFunction("MyFunc", Lua::Closure<myfunc,float, float>::Function)
 		.AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
 		.AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
-		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function)
+		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
 		.AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
 		.AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
 		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
 		.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function);
 		;
+
+
 
 
 	if (lua_state.DoFile("main.lua"))
