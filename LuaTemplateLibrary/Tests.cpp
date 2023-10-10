@@ -149,6 +149,11 @@ struct Vector3f
 	{
 		return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
 	}
+
+	Vector3f operator+(const Vector3f& v)
+	{
+		return Sum(*this, v);
+	}
 };
 
 template<>
@@ -211,8 +216,8 @@ void Test()
 {
 	using namespace std;
 	using namespace Lua;
-	Lua::State s{};
-	s.OpenLibs();
+	Lua::State lua_state{};
+	lua_state.OpenLibs();
 	/*lua_State* l = luaL_newstate();
 	luaL_openlibs(l);
 	using namespace Tests;
@@ -220,7 +225,7 @@ void Test()
 
 	//std::cout << TestClass::className << std::endl;
 
-	s.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
+	lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
 		.AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
 		.AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
 		.AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
@@ -237,15 +242,16 @@ void Test()
 		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDouble1>::Function)
 		.AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
 		.AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
-		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>);
+		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
+		//.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function);
+		;
 
 
-
-	if (s.DoFile("main.lua"))
+	if (lua_state.DoFile("main.lua"))
 	{
-		cout << "error:" << s.To<const char*>(-1) << std::endl;
+		cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
 	}
 
-	s.Call("Main");
+	lua_state.Call("Main");
 
 }
