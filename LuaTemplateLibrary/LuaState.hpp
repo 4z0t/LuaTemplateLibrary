@@ -1,5 +1,6 @@
 #pragma once
 #include "LuaAux.hpp"
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
@@ -32,6 +33,16 @@ namespace Lua
 			return luaL_dofile(Unwrap(this), name);
 		}
 
+		template<typename T>
+		void Push(const T& value)
+		{
+			return TypeParser<T>::Push(Unwrap(this), value);
+		}
+
+		void Pop(size_t n)
+		{
+			return lua_pop(Unwrap(this), static_cast<int>(n));
+		}
 
 		void Close()
 		{
@@ -65,7 +76,16 @@ namespace Lua
 			return m_state->OpenLibs();
 		}
 
+		template<typename T>
+		void Push(const T& value)
+		{
+			return m_state->Push<T>(value);
+		}
 
+		void Pop(size_t n)
+		{
+			return m_state->Pop(n);
+		}
 
 	private:
 		StateWrap* m_state = nullptr;
