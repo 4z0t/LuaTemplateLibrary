@@ -187,7 +187,7 @@ namespace Lua
 			template<size_t UpvalueI>
 			static  constexpr void Replace(lua_State* l, const T& value)
 			{
-				if constexpr (!std::is_pointer<T>::value)
+				if constexpr (!std::is_pointer_v<T>)
 				{
 					TypeParser<T>::Push(l, value);
 					lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
@@ -257,7 +257,7 @@ namespace Lua
 		{
 			ArgsTuple args;
 			Closure::GetArgs(l, args);
-			if constexpr (std::is_void<TReturn>::value)
+			if constexpr (std::is_void_v<TReturn>)
 			{
 				Closure::Call(args, Indexes{});
 				Closure::ReplaceUpvalues(l, args);
@@ -298,10 +298,10 @@ namespace Lua
 		template<typename R, class C, typename ...Ts>
 		struct CallHelper<R(C::*)(Ts...)>
 		{
-			template<class C, typename ...Args>
-			static TReturn Call(C& arg, Args&... args)
+			template<class Class, typename ...Args>
+			static TReturn Call(Class& arg, Args&... args)
 			{
-				if constexpr (std::is_pointer_v<C>)
+				if constexpr (std::is_pointer_v<Class>)
 				{
 					return (arg->*fn)(args...);
 				}
@@ -315,10 +315,10 @@ namespace Lua
 		template<typename R, class C, typename ...Ts>
 		struct CallHelper<R(C::*)(Ts...)const>
 		{
-			template<class C, typename ...Args>
-			static TReturn Call(const C& arg, Args&... args)
+			template<class Class, typename ...Args>
+			static TReturn Call(const Class& arg, Args&... args)
 			{
-				if constexpr (std::is_pointer_v<C>)
+				if constexpr (std::is_pointer_v<Class>)
 				{
 					return (arg->*fn)(args...);
 				}

@@ -212,9 +212,7 @@ struct Lua::TypeParser<Vector3f*>
 	static void Push(lua_State* l, const Vector3f* vec)
 	{
 		Vector3f* ud = (Vector3f*)lua_newuserdata(l, sizeof(Vector3f));
-		ud->x = vec->x;
-		ud->y = vec->y;
-		ud->z = vec->z;
+		ud->operator=(*vec);
 	}
 };
 
