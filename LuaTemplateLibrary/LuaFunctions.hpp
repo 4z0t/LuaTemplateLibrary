@@ -133,7 +133,7 @@ namespace Lua
 		struct IncrementUpvalueIndex<Upvalue<T>> : ValueContainer<size_t, 1> {};
 
 		template<typename T>
-		struct IsUpvalueType : ValueContainer<bool, IncrementUpvalueIndex<T>::value == 1> {};
+		struct IsUpvalueType : std::bool_constant<IncrementUpvalueIndex<T>::value == 1> {};
 
 		template<typename T, typename Optional = void>
 		struct ArgExtractor
