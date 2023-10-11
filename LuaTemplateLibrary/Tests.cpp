@@ -150,7 +150,7 @@ struct Vector3f
 		return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
 	}
 
-	Vector3f operator+(const Vector3f& v)const 
+	Vector3f operator+(const Vector3f& v)const
 	{
 		return Sum(*this, v);
 	}
@@ -194,6 +194,30 @@ struct Lua::TypeParser<Vector3f>
 	}
 };
 
+template<>
+struct Lua::TypeParser<Vector3f*>
+{
+	static bool Check(lua_State* l, int index)
+	{
+		return lua_isuserdata(l, index);
+	}
+
+	static Vector3f* Get(lua_State* l, int index)
+	{
+		void* ud = lua_touserdata(l, index);
+
+		return (Vector3f*)ud;
+	}
+
+	static void Push(lua_State* l, const Vector3f* vec)
+	{
+		Vector3f* ud = (Vector3f*)lua_newuserdata(l, sizeof(Vector3f));
+		ud->x = vec->x;
+		ud->y = vec->y;
+		ud->z = vec->z;
+	}
+};
+
 double GetSystemTime() {
 	using namespace std::chrono;
 	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() / 1000.0;
@@ -217,6 +241,7 @@ void Test()
 
 	//std::cout << TestClass::className << std::endl;
 
+	Vector3f v{ 1,2,3 };
 	lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
 		.AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
 		.AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
@@ -228,15 +253,16 @@ void Test()
 		.AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
 		.AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
 		.AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-		.AddFunction("MyFunc", Lua::Closure<myfunc,float, float>::Function)
+		.AddFunction("MyFunc", Lua::Closure<myfunc, float, float>::Function)
 		.AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
 		.AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
 		.AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
 		.AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
 		.AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
 		.AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
-		.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function);
-		;
+		.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+		.AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v);
+	;
 
 
 

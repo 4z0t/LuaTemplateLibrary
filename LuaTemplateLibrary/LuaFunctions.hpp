@@ -301,7 +301,14 @@ namespace Lua
 			template<class C, typename ...Args>
 			static TReturn Call(C& arg, Args&... args)
 			{
-				return (arg.*fn)(args...);
+				if constexpr (std::is_pointer_v<C>)
+				{
+					return (arg->*fn)(args...);
+				}
+				else
+				{
+					return (arg.*fn)(args...);
+				}
 			}
 		};
 
@@ -311,7 +318,14 @@ namespace Lua
 			template<class C, typename ...Args>
 			static TReturn Call(const C& arg, Args&... args)
 			{
-				return (arg.*fn)(args...);
+				if constexpr (std::is_pointer_v<C>)
+				{
+					return (arg->*fn)(args...);
+				}
+				else
+				{
+					return (arg.*fn)(args...);
+				}
 			}
 		};
 
