@@ -41,7 +41,7 @@ namespace Lua
 			return *this;
 		}
 
-		RefObject& operator=(RefObject&& obj)
+		RefObject& operator=(RefObject&& obj) noexcept
 		{
 			this->Unref();
 			this->m_ref = obj.m_ref;
@@ -109,8 +109,8 @@ namespace Lua
 			lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_ref);
 		}
 
-		int m_ref = LUA_NOREF;
 		lua_State* m_state = nullptr;
+		int m_ref = LUA_NOREF;
 	};
 
 }
