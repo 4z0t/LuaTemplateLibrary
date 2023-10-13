@@ -74,6 +74,7 @@ namespace Lua
 			{
 				luaL_unref(m_state, LUA_REGISTRYINDEX, m_ref);
 				m_state = nullptr;
+				m_ref = LUA_NOREF;
 			}
 		}
 

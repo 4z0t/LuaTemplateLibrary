@@ -32,7 +32,7 @@ namespace Lua
 		}
 	};
 
-	template<>
+	/*template<>
 	struct TypeParser<std::nullptr_t>
 	{
 		static bool Check(lua_State* l, int index)
@@ -44,7 +44,7 @@ namespace Lua
 		{
 			lua_pushnil(l);
 		}
-	};
+	};*/
 
 	template<>
 	struct TypeParser<float>
