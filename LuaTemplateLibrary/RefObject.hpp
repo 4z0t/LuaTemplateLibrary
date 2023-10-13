@@ -20,12 +20,33 @@ namespace Lua
 
 		};
 
+		RefObject(const RefObject& obj) noexcept 
+		{
+			obj._Push();
+			m_state = obj.m_state;
+			m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+		}
+
+		RefObject(RefObject&& obj) noexcept : m_ref(obj.m_ref), m_state(obj.m_state)
+		{
+			obj._Clear();
+		}
+
 		RefObject& operator=(const RefObject& obj)
 		{
 			this->Unref();
 			obj._Push();
-			this->m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+			m_state = obj.m_state;
+			m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+			return *this;
+		}
+
+		RefObject& operator=(RefObject&& obj)
+		{
+			this->Unref();
+			this->m_ref = obj.m_ref;
 			this->m_state = obj.m_state;
+			obj._Clear();
 			return *this;
 		}
 
@@ -73,9 +94,14 @@ namespace Lua
 			if (m_state)
 			{
 				luaL_unref(m_state, LUA_REGISTRYINDEX, m_ref);
-				m_state = nullptr;
-				m_ref = LUA_NOREF;
+				_Clear();
 			}
+		}
+
+		void _Clear()
+		{
+			m_state = nullptr;
+			m_ref = LUA_NOREF;
 		}
 
 		void _Push()const
