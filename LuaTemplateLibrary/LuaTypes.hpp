@@ -33,6 +33,20 @@ namespace Lua
 	};
 
 	template<>
+	struct TypeParser<std::nullptr_t>
+	{
+		static bool Check(lua_State* l, int index)
+		{
+			return lua_isnil(l, index);
+		}
+
+		static void Push(lua_State* l, std::nullptr_t value)
+		{
+			lua_pushnil(l);
+		}
+	};
+
+	template<>
 	struct TypeParser<float>
 	{
 		static float Get(lua_State* l, int index)

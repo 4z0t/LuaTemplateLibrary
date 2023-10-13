@@ -139,6 +139,7 @@
     <ClInclude Include="LuaFunctions.hpp" />
     <ClInclude Include="LuaState.hpp" />
     <ClInclude Include="LuaTypes.hpp" />
+    <ClInclude Include="RefObject.hpp" />
     <ClInclude Include="Tests.h" />
   </ItemGroup>
   <ItemGroup>

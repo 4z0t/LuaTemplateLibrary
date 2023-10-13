@@ -9,6 +9,7 @@
 #include "LuaState.hpp"
 #include <chrono>
 #include "FuncTraits.hpp"
+#include "RefObject.hpp"
 
 namespace Tests
 {
@@ -267,7 +268,11 @@ void Test()
 
 	if (lua_state.DoFile("main.lua"))
 	{
+		Lua::RefObject obj = Lua::RefObject::FromStack(lua_state, -1);
+
+		cout << obj.Is<const char*>() << std::endl;
 		cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
+		return;
 	}
 
 	lua_state.Call("Main");

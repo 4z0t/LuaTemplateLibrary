@@ -18,9 +18,14 @@ namespace Lua
 			return Wrap(luaL_newstate());
 		}
 
-		inline static lua_State* Unwrap(StateWrap* s)
+		inline static lua_State* Unwrap(const StateWrap* s)
 		{
 			return (lua_State*)s;
+		}
+
+		inline lua_State* Unwrap()const
+		{
+			return StateWrap::Unwrap(this);
 		}
 
 		void OpenLibs()
@@ -133,6 +138,11 @@ namespace Lua
 		T To(int index)
 		{
 			return m_state->Get<T>(index);
+		}
+
+		const StateWrap* GetState()const
+		{
+			return m_state;
 		}
 
 	private:
