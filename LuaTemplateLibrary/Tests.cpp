@@ -275,6 +275,9 @@ void Test()
 		return;
 	}
 
+	Lua::RefObject obj2(lua_state);
+	cout << obj2.IsNil() << endl;
+
 	lua_state.Call("Main");
 
 }

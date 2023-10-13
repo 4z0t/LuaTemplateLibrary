@@ -10,6 +10,15 @@ namespace Lua
 	{
 	public:
 		RefObject() {};
+		RefObject(lua_State* l) : m_state(l)
+		{
+
+		};
+
+		RefObject(const State& state) : RefObject(state.GetState()->Unwrap())
+		{
+
+		};
 
 		RefObject& operator=(const RefObject& obj)
 		{
@@ -49,7 +58,13 @@ namespace Lua
 			return res;
 		}
 
-
+		bool IsNil()const
+		{
+			this->_Push();
+			bool res = lua_isnil(m_state, -1);
+			lua_pop(m_state, 1);
+			return res;
+		}
 
 	private:
 
