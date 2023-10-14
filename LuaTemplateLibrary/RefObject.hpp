@@ -112,6 +112,15 @@ namespace Lua
             friend class RefObjectBase<RefTableObject, RefObject>;
             using RefObjectBase::RefObjectBase;
 
+            RefTableObject(const RefTableObject& obj) : RefObjectBase(obj.m_state)
+            {
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_key_ref);
+                m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_table_ref);
+                m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            }
+
             template<typename T>
             RefTableObject operator[](const T& key)
             {
@@ -119,29 +128,17 @@ namespace Lua
             }
 
             template<typename T>
-            RefTableObject& operator=(T&& value)
+            RefTableObject& operator=(T value)
             {
                 using TArg = std::decay_t<T>;
                 lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
                 lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_key_ref);
-                TypeParser<TArg>::Push(m_state, std::forward<TArg>(value));
+                TypeParser<TArg>::Push(m_state, value);
                 lua_settable(m_state, -3);
                 Pop();
                 return *this;
             }
 
-            template<>
-            RefTableObject& operator=(RefObject& obj)
-            {
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_key_ref);
-                obj.Push();
-                lua_settable(m_state, -3);
-                Pop();
-                return *this;
-            }
-
-            template<>
             RefTableObject& operator=(const RefObject& obj)
             {
                 lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
@@ -150,6 +147,11 @@ namespace Lua
                 lua_settable(m_state, -3);
                 Pop();
                 return *this;
+            }
+            
+            RefTableObject& operator=(const RefTableObject& obj)
+            {
+                return *this = RefObject(obj);
             }
 
         private:
@@ -209,17 +211,6 @@ namespace Lua
             Ref();
         }
 
-        template<typename T>
-        RefObject& operator=(T&& value)
-        {
-            using TArg = std::decay_t<T>;
-            Unref();
-            TypeParser<TArg>::Push(m_state, std::forward<TArg>(value));
-            Ref();
-            return *this;
-        }
-
-        template<>
         RefObject& operator=(const RefObject& obj)
         {
             Unref();
@@ -229,17 +220,16 @@ namespace Lua
             return *this;
         }
 
-        template<>
-        RefObject& operator=(RefObject& obj)
+        template<typename T>
+        RefObject& operator=(T value)
         {
+            using TArg = std::decay_t<T>;
             Unref();
-            obj.Push();
-            m_state = obj.m_state;
+            TypeParser<TArg>::Push(m_state, value);
             Ref();
             return *this;
         }
 
-        template<>
         RefObject& operator=(RefObject&& obj)
         {
             Unref();

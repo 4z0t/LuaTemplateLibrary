@@ -303,7 +303,10 @@ void Test()
     cout << obj4["Hi"].ToString() << endl;
     obj4["Hi"] = obj4;
     obj4["Hi"]["Hi"] = "No";
-    cout << obj4["Hi"].ToString() << endl;
+
+    obj4["hi"] = obj4["Hi"];
+    cout << obj4["hi"].TypeName() << endl;
+    cout << obj4["hi"].ToString() << endl;
 
     //lua_state.Call("Main");
 
