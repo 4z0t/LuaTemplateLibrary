@@ -8,7 +8,7 @@ namespace Lua
     class RefObject
     {
     public:
-        RefObject() = delete;
+        RefObject() {};
         RefObject(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
         RefObject(const State& state) noexcept : RefObject(state.GetState()->Unwrap()) {};
 
@@ -47,7 +47,7 @@ namespace Lua
         template<>
         RefObject& operator=(RefObject& obj)
         {
-            this->_Unref();
+            _Unref();
             obj._Push();
             m_state = obj.m_state;
             _Ref();
@@ -57,7 +57,7 @@ namespace Lua
         template<>
         RefObject& operator=(RefObject&& obj)
         {
-            this->_Unref();
+            _Unref();
             this->m_ref = obj.m_ref;
             this->m_state = obj.m_state;
             obj._Clear();
