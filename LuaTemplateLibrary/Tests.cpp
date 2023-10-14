@@ -278,6 +278,11 @@ void Test()
     Lua::RefObject obj2(lua_state);
     cout << obj2.IsNil() << endl;
 
+    RefObject obj3 = RefObject::MakeTable(lua_state);
+    cout << obj3.IsTable() << endl;
+    cout << obj3.TypeName() << endl;
+
+
     lua_state.Call("Main");
 
 }

@@ -1,24 +1,16 @@
 #pragma once
 #include "LuaAux.hpp"
 #include "LuaState.hpp"
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
-
-
     class RefObject
     {
     public:
         RefObject() {};
-        RefObject(lua_State* l) : m_state(l)
-        {
-
-        };
-
-        RefObject(const State& state) : RefObject(state.GetState()->Unwrap())
-        {
-
-        };
+        RefObject(lua_State* l) noexcept : m_state(l) {};
+        RefObject(const State& state) noexcept : RefObject(state.GetState()->Unwrap()) {};
 
         RefObject(const RefObject& obj) noexcept
         {
@@ -34,7 +26,7 @@ namespace Lua
 
         RefObject& operator=(const RefObject& obj)
         {
-            this->Unref();
+            this->_Unref();
             obj._Push();
             m_state = obj.m_state;
             m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
@@ -43,7 +35,7 @@ namespace Lua
 
         RefObject& operator=(RefObject&& obj) noexcept
         {
-            this->Unref();
+            this->_Unref();
             this->m_ref = obj.m_ref;
             this->m_state = obj.m_state;
             obj._Clear();
@@ -52,44 +44,89 @@ namespace Lua
 
         ~RefObject()
         {
-            this->Unref();
+            _Unref();
         }
 
+        static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
+        {
+            RefObject obj{ l };
+            lua_createtable(l, narr, nhash);
+            obj.m_ref = luaL_ref(l, LUA_REGISTRYINDEX);
+            return obj;
+        }
+
+        static RefObject MakeTable(const State& state, int narr = 0, int nhash = 0)
+        {
+            return MakeTable(state.GetState()->Unwrap(), narr, nhash);
+        }
+
+        static RefObject FromStack(lua_State* l, int index)
+        {
+            RefObject obj{ l };
+            lua_pushvalue(l, index);
+            obj.m_ref = luaL_ref(l, LUA_REGISTRYINDEX);
+            return obj;
+        }
 
         static RefObject FromStack(const State& state, int index)
         {
             return FromStack(state.GetState()->Unwrap(), index);
         }
 
-        static RefObject FromStack(lua_State* l, int index)
-        {
-            RefObject obj;
-            lua_pushvalue(l, index);
-            obj.m_ref = luaL_ref(l, LUA_REGISTRYINDEX);
-            obj.m_state = l;
-            return obj;
-        }
-
         template<typename T>
         bool Is()const
         {
-            this->_Push();
+            AutoPop pop(this);
             bool res = TypeParser<T>::Check(m_state, -1);
-            lua_pop(m_state, 1);
             return res;
         }
 
         bool IsNil()const
         {
-            this->_Push();
+            AutoPop pop(this);
             bool res = lua_isnil(m_state, -1);
-            lua_pop(m_state, 1);
+            return res;
+        }
+
+        bool IsTable()const
+        {
+            AutoPop pop(this);
+            bool res = lua_istable(m_state, -1);
+            return res;
+        }
+
+        Type Type()const
+        {
+            AutoPop pop(this);
+            Lua::Type res = static_cast<Lua::Type>(lua_type(m_state, -1));
+            return res;
+        }
+
+        const char* TypeName()const
+        {
+            AutoPop pop(this);
+            const char* res = lua_typename(m_state, lua_type(m_state, -1));
             return res;
         }
 
     private:
 
-        void Unref()
+        class AutoPop
+        {
+        public:
+            AutoPop(const RefObject* obj) : m_obj(obj)
+            {
+                m_obj->_Push();
+            }
+            ~AutoPop()
+            {
+                m_obj->_Pop();
+            }
+            const RefObject* m_obj;
+        };
+        friend class AutoPop;
+
+        void _Unref()
         {
             if (m_state)
             {
@@ -107,6 +144,11 @@ namespace Lua
         void _Push()const
         {
             lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_ref);
+        }
+
+        void _Pop()const
+        {
+            lua_pop(m_state, 1);
         }
 
         lua_State* m_state = nullptr;
