@@ -220,6 +220,15 @@ namespace Lua
             return *this;
         }
 
+        RefObject& operator=(const RefTableObject& obj)
+        {
+            Unref();
+            obj.Push();
+            m_state = obj.m_state;
+            Ref();
+            return *this;
+        }
+
         template<typename T>
         RefObject& operator=(T value)
         {
@@ -230,7 +239,7 @@ namespace Lua
             return *this;
         }
 
-        RefObject& operator=(RefObject&& obj)
+        RefObject& operator=(RefObject&& obj) noexcept
         {
             Unref();
             m_ref = obj.m_ref;

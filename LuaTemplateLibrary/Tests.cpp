@@ -308,6 +308,12 @@ void Test()
     cout << obj4["hi"].TypeName() << endl;
     cout << obj4["hi"].ToString() << endl;
 
+    obj4[1.1] = 2.5;
+    obj4[obj4[1.1]] = 1.1;
+    cout << obj4[1.1].ToString() << endl;
+    cout << obj4[2.5].ToString() << endl;
+
+
     //lua_state.Call("Main");
 
 }
