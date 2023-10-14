@@ -3,6 +3,21 @@
 
 namespace Lua
 {
+
+    enum class Type
+    {
+        None = LUA_TNONE,
+        Nil = LUA_TNIL,
+        Boolean = LUA_TBOOLEAN,
+        Lightdata = LUA_TLIGHTUSERDATA,
+        Number = LUA_TNUMBER,
+        String = LUA_TSTRING,
+        Table = LUA_TTABLE,
+        Function = LUA_TFUNCTION,
+        Userdata = LUA_TUSERDATA,
+        Thread = LUA_TTHREAD,
+    };
+
     template<typename T>
     struct TypeParser
     {
