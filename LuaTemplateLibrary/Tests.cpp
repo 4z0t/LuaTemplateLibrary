@@ -282,6 +282,10 @@ void Test()
     cout << obj3.IsTable() << endl;
     cout << obj3.TypeName() << endl;
 
+    RefObject obj4{ lua_state };
+    obj4 = "Hello world";
+    cout << obj4.ToString() << endl;
+
 
     lua_state.Call("Main");
 

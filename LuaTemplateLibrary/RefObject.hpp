@@ -33,6 +33,14 @@ namespace Lua
             return *this;
         }
 
+        RefObject& operator=(const char* s)
+        {
+            this->_Unref();
+            lua_pushstring(m_state, s);
+            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            return *this;
+        }
+
         RefObject& operator=(RefObject&& obj) noexcept
         {
             this->_Unref();
@@ -45,6 +53,7 @@ namespace Lua
         ~RefObject()
         {
             _Unref();
+            _Clear();
         }
 
         static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
@@ -77,36 +86,37 @@ namespace Lua
         bool Is()const
         {
             AutoPop pop(this);
-            bool res = TypeParser<T>::Check(m_state, -1);
-            return res;
+            return TypeParser<T>::Check(m_state, -1);
         }
 
         bool IsNil()const
         {
             AutoPop pop(this);
-            bool res = lua_isnil(m_state, -1);
-            return res;
+            return lua_isnil(m_state, -1);
         }
 
         bool IsTable()const
         {
             AutoPop pop(this);
-            bool res = lua_istable(m_state, -1);
-            return res;
+            return lua_istable(m_state, -1);
         }
 
         Type Type()const
         {
             AutoPop pop(this);
-            Lua::Type res = static_cast<Lua::Type>(lua_type(m_state, -1));
-            return res;
+            return static_cast<Lua::Type>(lua_type(m_state, -1));
         }
 
         const char* TypeName()const
         {
             AutoPop pop(this);
-            const char* res = lua_typename(m_state, lua_type(m_state, -1));
-            return res;
+            return lua_typename(m_state, lua_type(m_state, -1));
+        }
+
+        const char* ToString()const
+        {
+            AutoPop pop(this);
+            return lua_tostring(m_state, -1);
         }
 
     private:
@@ -130,7 +140,7 @@ namespace Lua
             if (m_state)
             {
                 luaL_unref(m_state, LUA_REGISTRYINDEX, m_ref);
-                _Clear();
+                m_ref = LUA_NOREF;
             }
         }
 
