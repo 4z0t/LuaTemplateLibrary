@@ -41,7 +41,7 @@
     <ClInclude Include="LuaState.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="FuncTraits.hpp">
+    <ClInclude Include="FuncArguments.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="RefObject.hpp">
