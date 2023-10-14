@@ -24,6 +24,17 @@ namespace Lua
             obj._Clear();
         }
 
+        template<typename T>
+        RefObject& operator=(T&& value)
+        {
+            using TArg = std::decay_t<T>;
+            this->_Unref();
+            TypeParser<TArg>::Push(m_state, std::forward<TArg>(value));
+            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            return *this;
+        }
+
+        template<>
         RefObject& operator=(const RefObject& obj)
         {
             this->_Unref();
@@ -33,15 +44,18 @@ namespace Lua
             return *this;
         }
 
-        RefObject& operator=(const char* s)
+        template<>
+        RefObject& operator=(RefObject& obj)
         {
             this->_Unref();
-            lua_pushstring(m_state, s);
+            obj._Push();
+            m_state = obj.m_state;
             m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
             return *this;
         }
 
-        RefObject& operator=(RefObject&& obj) noexcept
+        template<>
+        RefObject& operator=(RefObject&& obj)
         {
             this->_Unref();
             this->m_ref = obj.m_ref;
@@ -116,7 +130,8 @@ namespace Lua
         const char* ToString()const
         {
             AutoPop pop(this);
-            return lua_tostring(m_state, -1);
+            const char* s = lua_tostring(m_state, -1);
+            return s ? s : "";
         }
 
     private:

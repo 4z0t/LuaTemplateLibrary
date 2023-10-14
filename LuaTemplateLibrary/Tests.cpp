@@ -285,8 +285,15 @@ void Test()
     RefObject obj4{ lua_state };
     obj4 = "Hello world";
     cout << obj4.ToString() << endl;
-
-
-    lua_state.Call("Main");
+    obj4 = 4;
+    cout << obj4.ToString() << endl;
+    obj4 = 4.5f;
+    cout << obj4.ToString() << endl;
+    obj4 = 4.3;
+    cout << obj4.ToString() << endl;
+    obj4 = obj3;
+    cout << obj4.ToString() << endl;
+    cout << obj4.TypeName() << endl;
+    //lua_state.Call("Main");
 
 }
