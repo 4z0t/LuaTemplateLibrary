@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <assert.h>
 #include <iostream>
 #include <lua.hpp>
 #include <tuple>

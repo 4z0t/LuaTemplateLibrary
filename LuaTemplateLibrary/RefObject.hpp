@@ -8,19 +8,19 @@ namespace Lua
     class RefObject
     {
     public:
-        RefObject() {};
-        RefObject(lua_State* l) noexcept : m_state(l) {};
+        RefObject() = delete;
+        RefObject(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
         RefObject(const State& state) noexcept : RefObject(state.GetState()->Unwrap()) {};
 
-        RefObject(const RefObject& obj) noexcept
+        RefObject(const RefObject& obj) noexcept : RefObject(obj.m_state)
         {
             obj._Push();
-            m_state = obj.m_state;
             m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
         }
 
-        RefObject(RefObject&& obj) noexcept : m_ref(obj.m_ref), m_state(obj.m_state)
+        RefObject(RefObject&& obj) noexcept : RefObject(obj.m_state)
         {
+            m_ref = obj.m_ref;
             obj._Clear();
         }
 
@@ -110,7 +110,6 @@ namespace Lua
         }
 
     private:
-
         class AutoPop
         {
         public:
