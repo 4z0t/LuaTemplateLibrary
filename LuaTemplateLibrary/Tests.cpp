@@ -312,6 +312,8 @@ void Test()
     obj4[obj4[1.1]] = 1.1;
     cout << obj4[1.1].ToString() << endl;
     cout << obj4[2.5].ToString() << endl;
+    cout << obj4[obj4[1.1]].ToString() << endl;
+    cout << obj4[obj4[2.5]].ToString() << endl;
 
 
     //lua_state.Call("Main");
