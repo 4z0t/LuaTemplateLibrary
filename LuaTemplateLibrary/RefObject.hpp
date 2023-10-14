@@ -15,7 +15,7 @@ namespace Lua
         RefObject(const RefObject& obj) noexcept : RefObject(obj.m_state)
         {
             obj._Push();
-            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            _Ref();
         }
 
         RefObject(RefObject&& obj) noexcept : RefObject(obj.m_state)
@@ -30,7 +30,7 @@ namespace Lua
             using TArg = std::decay_t<T>;
             this->_Unref();
             TypeParser<TArg>::Push(m_state, std::forward<TArg>(value));
-            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            _Ref();
             return *this;
         }
 
@@ -40,7 +40,7 @@ namespace Lua
             this->_Unref();
             obj._Push();
             m_state = obj.m_state;
-            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            _Ref();
             return *this;
         }
 
@@ -50,7 +50,7 @@ namespace Lua
             this->_Unref();
             obj._Push();
             m_state = obj.m_state;
-            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            _Ref();
             return *this;
         }
 
@@ -74,7 +74,7 @@ namespace Lua
         {
             RefObject obj{ l };
             lua_createtable(l, narr, nhash);
-            obj.m_ref = luaL_ref(l, LUA_REGISTRYINDEX);
+            obj._Ref();
             return obj;
         }
 
@@ -87,7 +87,7 @@ namespace Lua
         {
             RefObject obj{ l };
             lua_pushvalue(l, index);
-            obj.m_ref = luaL_ref(l, LUA_REGISTRYINDEX);
+            obj._Ref();
             return obj;
         }
 
@@ -149,6 +149,11 @@ namespace Lua
             const RefObject* m_obj;
         };
         friend class AutoPop;
+
+        void _Ref()
+        {
+            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+        }
 
         void _Unref()
         {
