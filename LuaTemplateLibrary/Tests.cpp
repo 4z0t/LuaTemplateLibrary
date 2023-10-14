@@ -296,7 +296,13 @@ void Test()
     cout << obj4.TypeName() << endl;
 
     obj4["Hi"] = "Bruh";
-
+    cout << obj4["Hi"].ToString() << endl;
+    RefObject obj5{ lua_state };
+    obj5 = "Bro";
+    obj4["Hi"] = obj5;
+    cout << obj4["Hi"].ToString() << endl;
+    obj4["Hi"] = obj4;
+    obj4["Hi"]["Hi"] = "No";
     cout << obj4["Hi"].ToString() << endl;
 
     //lua_state.Call("Main");

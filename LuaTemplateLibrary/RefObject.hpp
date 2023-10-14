@@ -130,6 +130,28 @@ namespace Lua
                 return *this;
             }
 
+            template<>
+            RefTableObject& operator=(RefObject& obj)
+            {
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_key_ref);
+                obj.Push();
+                lua_settable(m_state, -3);
+                Pop();
+                return *this;
+            }
+
+            template<>
+            RefTableObject& operator=(const RefObject& obj)
+            {
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_key_ref);
+                obj.Push();
+                lua_settable(m_state, -3);
+                Pop();
+                return *this;
+            }
+
         private:
             void Unref()
             {
@@ -247,7 +269,6 @@ namespace Lua
             obj.m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
             return obj;
         }
-
 
         static RefObject MakeTable(const State& state, int narr = 0, int nhash = 0)
         {
