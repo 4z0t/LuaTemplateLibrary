@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <memory>
 #include <iostream>
 #include <lua.hpp>
