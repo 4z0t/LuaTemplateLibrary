@@ -144,6 +144,14 @@ namespace Lua
                 return *this = RefObject(obj);
             }
 
+            void Push()const
+            {
+                PushTable();
+                PushKey();
+                lua_gettable(m_state, -2);
+                lua_remove(m_state, -2);
+            }
+
         private:
             RefTableObject() :RefObjectBase() {};
             RefTableObject(lua_State* l) noexcept :RefObjectBase(l) { };
@@ -183,14 +191,6 @@ namespace Lua
                 m_state = nullptr;
                 m_table_ref = LUA_NOREF;
                 m_key_ref = LUA_NOREF;
-            }
-
-            void Push()const
-            {
-                PushTable();
-                PushKey();
-                lua_gettable(m_state, -2);
-                lua_remove(m_state, -2); // remove the table
             }
 
             void Pop()const
@@ -298,6 +298,11 @@ namespace Lua
         {
             return FromStack(state.GetState()->Unwrap(), index);
         }
+
+        void Push()const
+        {
+            lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_ref);
+        }
     private:
         void Ref()
         {
@@ -317,11 +322,6 @@ namespace Lua
         {
             m_state = nullptr;
             m_ref = LUA_NOREF;
-        }
-
-        void Push()const
-        {
-            lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_ref);
         }
 
         void Pop()const
