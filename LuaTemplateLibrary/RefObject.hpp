@@ -5,7 +5,7 @@
 
 namespace Lua
 {
-    template<typename ThisClass, typename RefClass>
+    template<typename RefClass>
     class RefObjectBase
     {
     public:
@@ -95,21 +95,21 @@ namespace Lua
         }
 
     private:
-        const ThisClass& _This() const { return static_cast<const ThisClass&>(*this); }
-        ThisClass& _This() { return static_cast<ThisClass&>(*this); }
+        const RefClass& _This() const { return static_cast<const RefClass&>(*this); }
+        RefClass& _This() { return static_cast<RefClass&>(*this); }
     protected:
         lua_State* m_state = nullptr;
     };
 
-    class RefObject : public RefObjectBase<RefObject, RefObject>
+    class RefObject : public RefObjectBase<RefObject>
     {
     public:
 
-        class RefTableObject : public RefObjectBase<RefTableObject, RefObject>
+        class RefTableObject : public RefObjectBase<RefTableObject>
         {
         public:
             friend class RefObject;
-            friend class RefObjectBase<RefTableObject, RefObject>;
+            friend class RefObjectBase<RefTableObject>;
 
             template<typename T>
             RefTableObject operator[](const T& key)
@@ -192,7 +192,7 @@ namespace Lua
             int m_key_ref = LUA_NOREF;
         };
 
-        friend class RefObjectBase<RefObject, RefObject>;
+        friend class RefObjectBase<RefObject>;
         using RefObjectBase::RefObjectBase;
 
         RefObject(const RefObject& obj) noexcept : RefObjectBase(obj.m_state)
