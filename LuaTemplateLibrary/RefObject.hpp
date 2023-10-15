@@ -331,4 +331,23 @@ namespace Lua
 
         int m_ref = LUA_NOREF;
     };
+
+    template<>
+    struct TypeParser<RefObject>
+    {
+        static RefObject Get(lua_State* l, int index)
+        {
+            return RefObject::FromStack(l, index);
+        }
+
+        static bool Check(lua_State* l, int index)
+        {
+            return !lua_isnone(l, index);
+        }
+
+        static void Push(lua_State* l, const RefObject &value)
+        {
+            value.Push();
+        }
+    };
 }
