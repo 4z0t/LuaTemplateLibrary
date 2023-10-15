@@ -110,16 +110,6 @@ namespace Lua
         public:
             friend class RefObject;
             friend class RefObjectBase<RefTableObject, RefObject>;
-            using RefObjectBase::RefObjectBase;
-
-            RefTableObject(const RefTableObject& obj) : RefObjectBase(obj.m_state)
-            {
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_key_ref);
-                m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
-
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_table_ref);
-                m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
-            }
 
             template<typename T>
             RefTableObject operator[](const T& key)
@@ -148,13 +138,25 @@ namespace Lua
                 Pop();
                 return *this;
             }
-            
+
             RefTableObject& operator=(const RefTableObject& obj)
             {
                 return *this = RefObject(obj);
             }
 
         private:
+            RefTableObject() :RefObjectBase() {};
+            RefTableObject(lua_State* l) noexcept :RefObjectBase(l) { };
+            RefTableObject(const State& state) noexcept : RefObjectBase(state) {};
+            RefTableObject(const RefTableObject& obj) : RefObjectBase(obj.m_state)
+            {
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_key_ref);
+                m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+
+                lua_rawgeti(m_state, LUA_REGISTRYINDEX, obj.m_table_ref);
+                m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            }
+
             void Unref()
             {
                 if (m_state)
