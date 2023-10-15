@@ -122,6 +122,12 @@ function Main( )
    print(TestMyLen(n))
    print(TestLen(n))
    print(TestLenXYZ(n))
+
+   local t ={Lua = "No"}
+   CoolFunction(t)
+   print(t.Lua)
+
+
    return n
 end
 

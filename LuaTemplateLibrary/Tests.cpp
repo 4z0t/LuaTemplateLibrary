@@ -226,6 +226,10 @@ LuaOptionalArg(OptStringValue, std::string, "My string");
 LuaOptionalArg(OptionalDoubleHalf, double, 0.5);
 LuaOptionalArg(OptionalDouble1, double, 1);
 
+void CoolFunction(Lua::RefObject& obj)
+{
+    obj["Lua"] = "Yes";
+}
 
 void Test()
 {
@@ -260,7 +264,8 @@ void Test()
         .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
         .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
         .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-        .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v);
+        .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+        .AddClosure("CoolFunction", Lua::Closure<CoolFunction, RefObject>::Function)
     ;
 
 
