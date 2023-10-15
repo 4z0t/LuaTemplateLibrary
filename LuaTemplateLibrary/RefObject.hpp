@@ -260,14 +260,6 @@ namespace Lua
             return *this;
         }
 
-        static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
-        {
-            RefObject obj{ l };
-            lua_createtable(l, narr, nhash);
-            obj.Ref();
-            return obj;
-        }
-
         template<typename T>
         RefTableObject operator[](const T& key)
         {
@@ -278,6 +270,14 @@ namespace Lua
             obj.m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
             Push();
             obj.m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            return obj;
+        }
+
+        static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
+        {
+            RefObject obj{ l };
+            lua_createtable(l, narr, nhash);
+            obj.Ref();
             return obj;
         }
 
@@ -345,7 +345,7 @@ namespace Lua
             return !lua_isnone(l, index);
         }
 
-        static void Push(lua_State* l, const RefObject &value)
+        static void Push(lua_State* l, const RefObject& value)
         {
             value.Push();
         }
