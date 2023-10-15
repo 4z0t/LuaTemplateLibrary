@@ -52,11 +52,22 @@ namespace Lua
         return n;
     }
 
-    template<typename ...Ts>
-    void CallFunction(lua_State* l, const char* name, Ts&&... args)
+    template<typename RType = void, typename ...Ts>
+    RType CallFunction(lua_State* l, const char* name, Ts&&... args)
     {
-        size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
-        lua_call(l, n, 0);
+        if constexpr (std::is_void_v<RType>)
+        {
+            size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
+            lua_call(l, n, 0);
+        }
+        else
+        {
+            size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
+            lua_call(l, n, 1);
+            RType result = TypeParser<RType>::Get(l, 1);
+            lua_pop(l, 1);
+            return result;
+        }
     }
 
     template<typename ...Ts>

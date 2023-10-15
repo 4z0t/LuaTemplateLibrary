@@ -122,5 +122,6 @@ function Main( )
    print(TestMyLen(n))
    print(TestLen(n))
    print(TestLenXYZ(n))
+   return n
 end
 
