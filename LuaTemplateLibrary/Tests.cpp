@@ -226,7 +226,7 @@ LuaOptionalArg(OptStringValue, std::string, "My string");
 LuaOptionalArg(OptionalDoubleHalf, double, 0.5);
 LuaOptionalArg(OptionalDouble1, double, 1);
 
-void CoolFunction(Lua::RefObject& obj)
+void CoolFunction(Lua::GRefObject& obj)
 {
     obj["Lua"] = "Yes";
 }
@@ -265,7 +265,7 @@ void Test()
         .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
         .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
         .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-        .AddClosure("CoolFunction", Lua::Closure<CoolFunction, RefObject>::Function)
+        .AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
     ;
 
 
@@ -273,21 +273,21 @@ void Test()
 
     if (lua_state.DoFile("main.lua"))
     {
-        Lua::RefObject obj = Lua::RefObject::FromStack(lua_state, -1);
+        Lua::GRefObject obj = Lua::GRefObject::FromStack(lua_state, -1);
 
         cout << obj.Is<const char*>() << std::endl;
         cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
         return;
     }
 
-    Lua::RefObject obj2(lua_state);
+    Lua::GRefObject obj2(lua_state);
     cout << obj2.IsNil() << endl;
 
-    RefObject obj3 = RefObject::MakeTable(lua_state);
+    GRefObject obj3 = GRefObject::MakeTable(lua_state);
     cout << obj3.IsTable() << endl;
     cout << obj3.TypeName() << endl;
 
-    RefObject obj4{ lua_state };
+    GRefObject obj4{ lua_state };
     obj4 = "Hello world";
     cout << obj4.ToString() << endl;
     obj4 = 4;
@@ -302,7 +302,7 @@ void Test()
 
     obj4["Hi"] = "Bruh";
     cout << obj4["Hi"].ToString() << endl;
-    RefObject obj5{ lua_state };
+    GRefObject obj5{ lua_state };
     obj5 = "Bro";
     obj4["Hi"] = obj5;
     cout << obj4["Hi"].ToString() << endl;
@@ -320,6 +320,6 @@ void Test()
     cout << obj4[obj4[1.1]].ToString() << endl;
     cout << obj4[obj4[2.5]].ToString() << endl;
 
-    cout << lua_state.Call<RefObject>("Main").TypeName() << endl;
+    cout << lua_state.Call<GRefObject>("Main").TypeName() << endl;
 
 }

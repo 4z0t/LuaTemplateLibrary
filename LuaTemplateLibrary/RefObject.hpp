@@ -5,11 +5,29 @@
 
 namespace Lua
 {
-    template<typename RefClass>
+    struct RefGlobalAccess
+    {
+        static int GetRef(lua_State* l)
+        {
+            return luaL_ref(l, LUA_REGISTRYINDEX);
+        }
+
+        static void Unref(lua_State* l, int ref)
+        {
+            luaL_unref(l, LUA_REGISTRYINDEX, ref);
+        }
+
+        static void PushRef(lua_State* l, int ref)
+        {
+            lua_rawgeti(l, LUA_REGISTRYINDEX, ref);
+        }
+    };
+
+
+    template<typename RefClass, typename RefAccess>
     class RefObjectBase
     {
     public:
-
         RefObjectBase() {};
         RefObjectBase(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
         RefObjectBase(const State& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
@@ -93,6 +111,21 @@ namespace Lua
         {
             _This().Pop();
         }
+    protected:
+        void PushRef(int ref)const
+        {
+            RefAccess::PushRef(m_state, ref);
+        }
+
+        int GetRef()
+        {
+            return RefAccess::GetRef(m_state);
+        }
+
+        void UnrefRef(int ref)
+        {
+            RefAccess::Unref(m_state, ref);
+        }
 
     private:
         const RefClass& _This() const { return static_cast<const RefClass&>(*this); }
@@ -101,20 +134,22 @@ namespace Lua
         lua_State* m_state = nullptr;
     };
 
-    class RefObject : public RefObjectBase<RefObject>
+    template<typename RefAccess>
+    class RefObject : public RefObjectBase<RefObject<RefAccess>, RefAccess>
     {
     public:
-
-        class RefTableObject : public RefObjectBase<RefTableObject>
+        template<typename RefAccess>
+        class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefAccess>
         {
         public:
-            friend class RefObject;
-            friend class RefObjectBase<RefTableObject>;
+            friend class RefObject<RefAccess>;
+            using Base = RefObjectBase<RefTableObject<RefAccess>, RefAccess>;
+            friend class Base;
 
             template<typename T>
             RefTableObject operator[](const T& key)
             {
-                return RefObject(*this)[key];
+                return RefObject<RefAccess>(*this)[key];
             }
 
             template<typename T>
@@ -123,64 +158,64 @@ namespace Lua
                 using TArg = std::decay_t<T>;
                 PushTable();
                 PushKey();
-                TypeParser<TArg>::Push(m_state, value);
-                lua_settable(m_state, -3);
+                TypeParser<TArg>::Push(this->m_state, value);
+                lua_settable(this->m_state, -3);
                 Pop();
                 return *this;
             }
 
-            RefTableObject& operator=(const RefObject& obj)
+            RefTableObject& operator=(const RefObject<RefAccess>& obj)
             {
                 PushTable();
                 PushKey();
                 obj.Push();
-                lua_settable(m_state, -3);
+                lua_settable(this->m_state, -3);
                 Pop();
                 return *this;
             }
 
             RefTableObject& operator=(const RefTableObject& obj)
             {
-                return *this = RefObject(obj);
+                return *this = RefObject<RefAccess>(obj);
             }
 
             void Push()const
             {
                 PushTable();
                 PushKey();
-                lua_gettable(m_state, -2);
-                lua_remove(m_state, -2);
+                lua_gettable(this->m_state, -2);
+                lua_remove(this->m_state, -2);
             }
 
         private:
-            RefTableObject() :RefObjectBase() {};
-            RefTableObject(lua_State* l) noexcept :RefObjectBase(l) { };
-            RefTableObject(const State& state) noexcept : RefObjectBase(state) {};
-            RefTableObject(const RefTableObject& obj) : RefObjectBase(obj.m_state)
+            RefTableObject() :Base() {};
+            RefTableObject(lua_State* l) noexcept :Base(l) { };
+            RefTableObject(const State& state) noexcept : Base(state) {};
+            RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
             {
                 obj.PushKey();
-                m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+                m_key_ref = this->GetRef();
 
                 obj.PushTable();
-                m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+                m_table_ref = this->GetRef();
             }
 
             void PushKey()const
             {
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_key_ref);
+                this->PushRef(m_key_ref);
             }
 
             void PushTable()const
             {
-                lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_table_ref);
+                this->PushRef(m_table_ref);
             }
 
             void Unref()
             {
-                if (m_state)
+                if (this->m_state)
                 {
-                    luaL_unref(m_state, LUA_REGISTRYINDEX, m_table_ref);
-                    luaL_unref(m_state, LUA_REGISTRYINDEX, m_key_ref);
+                    this->UnrefRef(m_table_ref);
+                    this->UnrefRef(m_key_ref);
                     m_table_ref = LUA_NOREF;
                     m_key_ref = LUA_NOREF;
                 }
@@ -188,36 +223,38 @@ namespace Lua
 
             void Clear()
             {
-                m_state = nullptr;
+                this->m_state = nullptr;
                 m_table_ref = LUA_NOREF;
                 m_key_ref = LUA_NOREF;
             }
 
             void Pop()const
             {
-                lua_pop(m_state, 1);
+                lua_pop(this->m_state, 1);
             }
 
             int m_table_ref = LUA_NOREF;
             int m_key_ref = LUA_NOREF;
         };
 
-        friend class RefObjectBase<RefObject>;
-        using RefObjectBase::RefObjectBase;
+        using Base = RefObjectBase<RefObject<RefAccess>, RefAccess>;
+        friend class Base;
+        using Base::Base;
+        using RefTableObjectT = RefTableObject<RefAccess>;
 
-        RefObject(const RefObject& obj) noexcept : RefObjectBase(obj.m_state)
+        RefObject(const RefObject& obj) noexcept : Base(obj.m_state)
         {
             obj.Push();
             Ref();
         }
 
-        RefObject(RefObject&& obj) noexcept : RefObjectBase(obj.m_state)
+        RefObject(RefObject&& obj) noexcept : Base(obj.m_state)
         {
             m_ref = obj.m_ref;
             obj.Clear();
         }
 
-        RefObject(const RefTableObject& obj) noexcept : RefObjectBase(obj.m_state)
+        RefObject(const RefTableObjectT& obj) noexcept : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -227,16 +264,16 @@ namespace Lua
         {
             Unref();
             obj.Push();
-            m_state = obj.m_state;
+            this->m_state = obj.m_state;
             Ref();
             return *this;
         }
 
-        RefObject& operator=(const RefTableObject& obj)
+        RefObject& operator=(const RefTableObjectT& obj)
         {
             Unref();
             obj.Push();
-            m_state = obj.m_state;
+            this->m_state = obj.m_state;
             Ref();
             return *this;
         }
@@ -246,7 +283,7 @@ namespace Lua
         {
             using TArg = std::decay_t<T>;
             Unref();
-            TypeParser<TArg>::Push(m_state, value);
+            TypeParser<TArg>::Push(this->m_state, value);
             Ref();
             return *this;
         }
@@ -255,21 +292,21 @@ namespace Lua
         {
             Unref();
             m_ref = obj.m_ref;
-            m_state = obj.m_state;
+            this->m_state = obj.m_state;
             obj.Clear();
             return *this;
         }
 
         template<typename T>
-        RefTableObject operator[](const T& key)
+        RefTableObjectT operator[](const T& key)
         {
-            RefObject key_obj{ m_state };
+            RefObject key_obj{ this->m_state };
             key_obj = key;
             key_obj.Push();
-            RefTableObject obj{ m_state };
-            obj.m_key_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            RefTableObjectT obj{ this->m_state };
+            obj.m_key_ref = RefAccess::GetRef(this->m_state);
             Push();
-            obj.m_table_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            obj.m_table_ref = RefAccess::GetRef(this->m_state);
             return obj;
         }
 
@@ -301,43 +338,45 @@ namespace Lua
 
         void Push()const
         {
-            lua_rawgeti(m_state, LUA_REGISTRYINDEX, m_ref);
+            this->PushRef(m_ref);
         }
     private:
         void Ref()
         {
-            m_ref = luaL_ref(m_state, LUA_REGISTRYINDEX);
+            m_ref = this->GetRef();
         }
 
         void Unref()
         {
-            if (m_state)
+            if (this->m_state)
             {
-                luaL_unref(m_state, LUA_REGISTRYINDEX, m_ref);
+                this->UnrefRef(m_ref);
                 m_ref = LUA_NOREF;
             }
         }
 
         void Clear()
         {
-            m_state = nullptr;
+            this->m_state = nullptr;
             m_ref = LUA_NOREF;
         }
 
         void Pop()const
         {
-            lua_pop(m_state, 1);
+            lua_pop(this->m_state, 1);
         }
 
         int m_ref = LUA_NOREF;
     };
 
-    template<>
-    struct TypeParser<RefObject>
+    using GRefObject = RefObject<RefGlobalAccess>;
+
+    template<typename T>
+    struct TypeParser<RefObject<T>>
     {
-        static RefObject Get(lua_State* l, int index)
+        static RefObject<T> Get(lua_State* l, int index)
         {
-            return RefObject::FromStack(l, index);
+            return RefObject<T>::FromStack(l, index);
         }
 
         static bool Check(lua_State* l, int index)
@@ -345,7 +384,7 @@ namespace Lua
             return !lua_isnone(l, index);
         }
 
-        static void Push(lua_State* l, const RefObject& value)
+        static void Push(lua_State* l, const RefObject<T>& value)
         {
             value.Push();
         }
