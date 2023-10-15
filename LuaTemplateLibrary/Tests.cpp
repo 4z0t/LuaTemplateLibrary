@@ -315,11 +315,13 @@ void Test()
 
     obj4[1.1] = 2.5;
     obj4[obj4[1.1]] = 1.1;
+    obj4[obj4] = "TABLE";
     cout << obj4[1.1].ToString() << endl;
     cout << obj4[2.5].ToString() << endl;
     cout << obj4[obj4[1.1]].ToString() << endl;
     cout << obj4[obj4[2.5]].ToString() << endl;
+    cout << obj4[obj4].ToString() << endl;
 
-    cout << lua_state.Call<GRefObject>("Main").TypeName() << endl;
+    cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
 
 }

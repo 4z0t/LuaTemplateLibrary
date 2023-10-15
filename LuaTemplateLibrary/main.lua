@@ -113,7 +113,10 @@ function TestMyLen(n)
 end
 
 
-function Main( )
+function Main(obj)
+    for k, v in pairs(obj) do
+        print(tostring(k)..":"..tostring(v))
+    end
    Test()
    local n = 1000000
    print(TestSum(n))
