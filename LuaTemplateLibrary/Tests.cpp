@@ -322,6 +322,15 @@ void Test()
     cout << obj4[obj4[2.5]].ToString() << endl;
     cout << obj4[obj4].ToString() << endl;
 
-    cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
+    //cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
+
+    lua_state.Run("s = { a = 4 }");
+    GRefObject s = GRefObject::Global(lua_state, "s");
+    cout << s.TypeName() << endl;
+    cout << s.ToString() << endl;
+    cout << s["a"].TypeName() << endl;
+    cout << s["a"].ToString() << endl;
+
+
 
 }

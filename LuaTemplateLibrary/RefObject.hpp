@@ -310,6 +310,19 @@ namespace Lua
             return obj;
         }
 
+        static RefObject Global(lua_State* l, const char* key)
+        {
+            RefObject obj{ l };
+            lua_getglobal(l, key);
+            obj.Ref();
+            return obj;
+        }
+
+        static RefObject Global(const State& state, const char* key)
+        {
+            return Global(state.GetState()->Unwrap(), key);
+        }
+
         static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
         {
             RefObject obj{ l };

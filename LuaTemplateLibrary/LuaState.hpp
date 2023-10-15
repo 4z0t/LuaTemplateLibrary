@@ -72,6 +72,11 @@ namespace Lua
             return TypeParser<T>::Get(Unwrap(this), index);
         }
 
+        int Run(const char* s)
+        {
+            return luaL_dostring(Unwrap(this), s);
+        }
+
     private:
         StateWrap() = delete;
         ~StateWrap() = delete;
@@ -143,6 +148,11 @@ namespace Lua
         const StateWrap* GetState()const
         {
             return m_state;
+        }
+
+        int Run(const char* s)
+        {
+            return m_state->Run(s);
         }
 
     private:
