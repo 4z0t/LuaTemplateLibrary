@@ -48,6 +48,13 @@ namespace Lua
         friend class AutoPop;
 
         template<typename T>
+        T To()const
+        {
+            AutoPop pop(this);
+            return TypeParser<T>::Get(m_state, -1);
+        }
+
+        template<typename T>
         bool Is()const
         {
             AutoPop pop(this);

@@ -330,6 +330,7 @@ void Test()
     cout << s.ToString() << endl;
     cout << s["a"].TypeName() << endl;
     cout << s["a"].ToString() << endl;
+    cout << s["a"].To<int>() << endl;
 
 
 
