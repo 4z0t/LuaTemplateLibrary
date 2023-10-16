@@ -339,9 +339,9 @@ namespace Lua
             key_obj = key;
             key_obj.Push();
             RefTableObject obj{ this->m_state };
-            obj.m_key_ref = RefAccess::GetRef(this->m_state);
+            obj.m_key_ref = this->GetRef();
             Push();
-            obj.m_table_ref = RefAccess::GetRef(this->m_state);
+            obj.m_table_ref = this->GetRef();
             return obj;
         }
 

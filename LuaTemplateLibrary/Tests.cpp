@@ -336,6 +336,7 @@ void Test()
     cout << (s == s) << endl;
     cout << (s["a"] == s) << endl;
     cout << (s["a"] == 4) << endl;
+    cout << (s == 4) << endl;
     //cout << (s["a"] == s["a"]) << endl;//todo
 
 
