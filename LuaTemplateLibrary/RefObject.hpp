@@ -155,14 +155,15 @@ namespace Lua
         class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefAccess>
         {
         public:
-            friend class RefObject<RefAccess>;
+            using RefClass = RefObject<RefAccess>;
             using Base = RefObjectBase<RefTableObject<RefAccess>, RefAccess>;
+            friend class RefClass;
             friend class Base;
 
             template<typename T>
             RefTableObject operator[](const T& key)
             {
-                return RefObject<RefAccess>(*this)[key];
+                return RefClass(*this)[key];
             }
 
             template<typename T>
@@ -177,7 +178,7 @@ namespace Lua
                 return *this;
             }
 
-            RefTableObject& operator=(const RefObject<RefAccess>& obj)
+            RefTableObject& operator=(const RefClass& obj)
             {
                 PushTable();
                 PushKey();
@@ -189,7 +190,7 @@ namespace Lua
 
             RefTableObject& operator=(const RefTableObject& obj)
             {
-                return *this = RefObject<RefAccess>(obj);
+                return *this = RefClass(obj);
             }
 
             void Push()const
