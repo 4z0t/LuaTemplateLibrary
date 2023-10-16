@@ -266,7 +266,7 @@ void Test()
         .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
         .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
         .AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
-    ;
+        ;
 
 
 
@@ -332,6 +332,11 @@ void Test()
     cout << s["a"].ToString() << endl;
     cout << s["a"].To<int>() << endl;
     cout << (int)s["a"] << endl;
+
+    cout << (s == s) << endl;
+    cout << (s["a"] == s) << endl;
+    cout << (s["a"] == 4) << endl;
+    //cout << (s["a"] == s["a"]) << endl;//todo
 
 
 

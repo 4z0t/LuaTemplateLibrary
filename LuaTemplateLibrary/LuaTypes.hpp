@@ -25,7 +25,7 @@ namespace Lua
 
         static bool Check(lua_State* l, int index);
 
-        static void Push(lua_State* l, T&& value);
+        static void Push(lua_State* l, const T& value);
     };
 
     template<>

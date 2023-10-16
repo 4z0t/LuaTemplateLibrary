@@ -61,6 +61,29 @@ namespace Lua
         }
 
         template<typename T>
+        bool operator==(const T& value)const
+        {
+            this->Push();
+            TypeParser<T>::Push(m_state, value);
+            bool res = lua_compare(m_state, -1, -2, LUA_OPEQ);
+            lua_pop(m_state, 2);
+            return res;
+        }
+
+        /*bool operator==(const RefObjectBase& other)const
+        {
+            AutoPop obj1(*this);
+            AutoPop obj2(other);
+            return lua_compare(m_state, -1, -2, LUA_OPEQ);
+        }*/
+
+        template<typename T>
+        bool operator!=(const T& other)const
+        {
+            return !(*this == other);
+        }
+
+        template<typename T>
         bool Is()const
         {
             AutoPop pop(*this);
@@ -151,12 +174,11 @@ namespace Lua
     class RefObject : public RefObjectBase<RefObject<RefAccess>, RefAccess>
     {
     public:
-        template<typename RefAccess>
-        class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefAccess>
+        class RefTableObject : public RefObjectBase<RefTableObject, RefAccess>
         {
         public:
             using RefClass = RefObject<RefAccess>;
-            using Base = RefObjectBase<RefTableObject<RefAccess>, RefAccess>;
+            using Base = RefObjectBase<RefTableObject, RefAccess>;
             friend class RefClass;
             friend class Base;
 
@@ -254,7 +276,6 @@ namespace Lua
         using Base = RefObjectBase<RefObject<RefAccess>, RefAccess>;
         friend class Base;
         using Base::Base;
-        using RefTableObjectT = RefTableObject<RefAccess>;
 
         RefObject(const RefObject& obj) noexcept : Base(obj.m_state)
         {
@@ -268,7 +289,7 @@ namespace Lua
             obj.Clear();
         }
 
-        RefObject(const RefTableObjectT& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefTableObject& obj) noexcept : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -283,7 +304,7 @@ namespace Lua
             return *this;
         }
 
-        RefObject& operator=(const RefTableObjectT& obj)
+        RefObject& operator=(const RefTableObject& obj)
         {
             Unref();
             obj.Push();
@@ -312,12 +333,12 @@ namespace Lua
         }
 
         template<typename T>
-        RefTableObjectT operator[](const T& key)
+        RefTableObject operator[](const T& key)
         {
             RefObject key_obj{ this->m_state };
             key_obj = key;
             key_obj.Push();
-            RefTableObjectT obj{ this->m_state };
+            RefTableObject obj{ this->m_state };
             obj.m_key_ref = RefAccess::GetRef(this->m_state);
             Push();
             obj.m_table_ref = RefAccess::GetRef(this->m_state);
@@ -416,4 +437,23 @@ namespace Lua
             value.Push();
         }
     };
+
+    template<typename T>
+    using RefTableObject = typename RefObject<T>::RefTableObject;
+
+    /*template<typename T>
+    struct TypeParser<RefTableObject<T>>
+    {
+        using Type = RefTableObject<T>;
+
+        static bool Check(lua_State* l, int index)
+        {
+            return !lua_isnone(l, index);
+        }
+
+        static void Push(lua_State* l, const Type& value)
+        {
+            value.Push();
+        }
+    };*/
 }
