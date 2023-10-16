@@ -91,6 +91,15 @@ namespace Lua
             {
                 return { m_key,m_value };
             }
+
+            ParentClass operator->()const
+            {
+                return m_value;
+            }
+
+            ParentClass Key()const { return m_key; }
+            ParentClass Value()const { return m_value; }
+
         private:
             ParentClass m_table{};
             ParentClass m_key{};
