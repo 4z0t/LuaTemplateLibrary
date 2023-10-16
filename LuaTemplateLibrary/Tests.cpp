@@ -243,30 +243,32 @@ void Test()
     Lua::ClassWrapper<TestClass>::Init(l, "TestClass", TestClass::_class);*/
 
     //std::cout << TestClass::className << std::endl;
+    {
 
-    Vector3f v{ 1,2,3 };
-    lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
-        .AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
-        .AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
-        .AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
-        .AddClosure("SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!")
-        .AddFunction("VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>)
-        .AddFunction("VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>)
-        .AddClosure("SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo")
-        .AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
-        .AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
-        .AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-        .AddFunction("MyFunc", Lua::Closure<myfunc, float, float>::Function)
-        .AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
-        .AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
-        .AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
-        .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
-        .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
-        .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
-        .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-        .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-        .AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
-        ;
+        Vector3f v{ 1,2,3 };
+        lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
+            .AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
+            .AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
+            .AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
+            .AddClosure("SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!")
+            .AddFunction("VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>)
+            .AddFunction("VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>)
+            .AddClosure("SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo")
+            .AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
+            .AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
+            .AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
+            .AddFunction("MyFunc", Lua::Closure<myfunc, float, float>::Function)
+            .AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
+            .AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
+            .AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
+            .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
+            .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
+            .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
+            .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+            .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+            .AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
+            ;
+    }
 
 
 
@@ -322,10 +324,11 @@ void Test()
     cout << obj4[obj4[2.5]].ToString() << endl;
     cout << obj4[obj4].ToString() << endl;
 
-    //cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
+    ////cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
 
     lua_state.Run("s = { a = 4 }");
     GRefObject s = GRefObject::Global(lua_state, "s");
+    GRefObject global = GRefObject::Global(lua_state, "_G");
     cout << s.TypeName() << endl;
     cout << s.ToString() << endl;
     cout << s["a"].TypeName() << endl;
@@ -334,9 +337,21 @@ void Test()
     cout << (int)s["a"] << endl;
 
     cout << (s == s) << endl;
+    cout << (global["s"] == s) << endl;
     cout << (s["a"] == s) << endl;
     cout << (s["a"] == 4) << endl;
     cout << (s == 4) << endl;
+    lua_state.Run("t = { a = 4, b = 5, c = {1,2,3,4,5} , 1,2,3}");
+    GRefObject v = GRefObject::Global(lua_state, "t");
+    for (auto [key, value] : v)
+    {
+        cout << key.ToString() << ":" << value.ToString() << endl;
+    }
+    for (auto [key, value] : v["c"])
+    {
+        cout << key.ToString() << ":" << value.ToString() << endl;
+    }
+
     //cout << (s["a"] == s["a"]) << endl;//todo
 
 

@@ -24,7 +24,7 @@ namespace Lua
     };
 
 
-    template<typename RefClass, typename RefAccess>
+    template<typename RefClass, typename ParentClass, typename RefAccess>
     class RefObjectBase
     {
     public:
@@ -47,6 +47,60 @@ namespace Lua
         };
         friend class AutoPop;
 
+        class Iterator
+        {
+        public:
+            Iterator(const ParentClass& iterable) : m_table(iterable), m_key(iterable.GetState()) {}
+
+            Iterator& Next()
+            {
+                lua_State* l = m_table.GetState();
+                m_table.Push();
+                m_key.Push();
+                if (lua_next(l, -2) != 0)
+                {
+                    m_key = ParentClass::FromStack(l, -2);
+                    m_value = ParentClass::FromStack(l, -1);
+                    lua_pop(l, 3);
+                }
+                else
+                {
+                    m_key.Unref();
+                    m_value.Unref();
+                    lua_pop(l, 1);
+                }
+                return *this;
+            }
+
+            bool operator==(const Iterator& other)const
+            {
+                return m_table == other.m_table && m_key == other.m_key;
+            }
+
+            bool operator!=(const Iterator& other)const
+            {
+                return !(*this == other);
+            }
+
+            Iterator& operator++()
+            {
+                return this->Next();
+            }
+
+            std::pair<ParentClass, ParentClass> operator*()const
+            {
+                return { m_key,m_value };
+            }
+        private:
+            ParentClass m_table{};
+            ParentClass m_key{};
+            ParentClass m_value{};
+        };
+        friend class Iterator;
+
+        Iterator begin()const { return Iterator(ParentClass(_This())).Next(); };
+        Iterator end()const { return Iterator(ParentClass(_This())); }
+
         template<typename T>
         T To()const
         {
@@ -64,18 +118,13 @@ namespace Lua
         bool operator==(const T& value)const
         {
             this->Push();
-            TypeParser<T>::Push(m_state, value);
-            bool res = lua_compare(m_state, -1, -2, LUA_OPEQ);
+            ParentClass other{ m_state };
+            other = value;
+            other.Push();
+            bool res = lua_compare(m_state, -2, -1, LUA_OPEQ);
             lua_pop(m_state, 2);
             return res;
         }
-
-        /*bool operator==(const RefObjectBase& other)const
-        {
-            AutoPop obj1(*this);
-            AutoPop obj2(other);
-            return lua_compare(m_state, -1, -2, LUA_OPEQ);
-        }*/
 
         template<typename T>
         bool operator!=(const T& other)const
@@ -119,6 +168,11 @@ namespace Lua
             AutoPop pop(*this);
             const char* s = lua_tostring(m_state, -1);
             return s ? s : "";
+        }
+
+        lua_State* GetState()const
+        {
+            return this->m_state;
         }
 
         ~RefObjectBase()
@@ -171,14 +225,14 @@ namespace Lua
     };
 
     template<typename RefAccess>
-    class RefObject : public RefObjectBase<RefObject<RefAccess>, RefAccess>
+    class RefObject : public RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
-        class RefTableObject : public RefObjectBase<RefTableObject, RefAccess>
+        class RefTableObject : public RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>
         {
         public:
             using RefClass = RefObject<RefAccess>;
-            using Base = RefObjectBase<RefTableObject, RefAccess>;
+            using Base = RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>;
             friend class RefClass;
             friend class Base;
 
@@ -223,6 +277,16 @@ namespace Lua
                 lua_remove(this->m_state, -2);
             }
 
+            void Unref()
+            {
+                if (this->m_state)
+                {
+                    this->UnrefRef(m_table_ref);
+                    this->UnrefRef(m_key_ref);
+                    m_table_ref = LUA_NOREF;
+                    m_key_ref = LUA_NOREF;
+                }
+            }
         private:
             RefTableObject() :Base() {};
             RefTableObject(lua_State* l) noexcept :Base(l) { };
@@ -246,17 +310,6 @@ namespace Lua
                 this->PushRef(m_table_ref);
             }
 
-            void Unref()
-            {
-                if (this->m_state)
-                {
-                    this->UnrefRef(m_table_ref);
-                    this->UnrefRef(m_key_ref);
-                    m_table_ref = LUA_NOREF;
-                    m_key_ref = LUA_NOREF;
-                }
-            }
-
             void Clear()
             {
                 this->m_state = nullptr;
@@ -273,7 +326,7 @@ namespace Lua
             int m_key_ref = LUA_NOREF;
         };
 
-        using Base = RefObjectBase<RefObject<RefAccess>, RefAccess>;
+        using Base = RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>;
         friend class Base;
         using Base::Base;
 
@@ -388,11 +441,6 @@ namespace Lua
         {
             this->PushRef(m_ref);
         }
-    private:
-        void Ref()
-        {
-            m_ref = this->GetRef();
-        }
 
         void Unref()
         {
@@ -402,6 +450,12 @@ namespace Lua
                 m_ref = LUA_NOREF;
             }
         }
+    private:
+        void Ref()
+        {
+            m_ref = this->GetRef();
+        }
+
 
         void Clear()
         {
