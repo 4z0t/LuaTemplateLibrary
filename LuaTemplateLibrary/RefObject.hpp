@@ -55,7 +55,7 @@ namespace Lua
         }
 
         template<typename T>
-        operator T()
+        operator T()const
         {
             return this->To<T>();
         }

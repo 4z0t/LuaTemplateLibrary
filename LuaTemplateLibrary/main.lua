@@ -119,12 +119,12 @@ function Main(obj)
     end
    Test()
    local n = 1000000
-   print(TestSum(n))
-   print(TestMySum(n))
+   --print(TestSum(n))
+   --print(TestMySum(n))
 
-   print(TestMyLen(n))
-   print(TestLen(n))
-   print(TestLenXYZ(n))
+   --print(TestMyLen(n))
+   --print(TestLen(n))
+   --print(TestLenXYZ(n))
 
    local t ={Lua = "No"}
    CoolFunction(t)
