@@ -35,59 +35,65 @@ namespace Lua
         class AutoPop
         {
         public:
-            AutoPop(const RefObjectBase* obj) : m_obj(obj)
+            AutoPop(const RefObjectBase& obj) : m_obj(obj)
             {
-                m_obj->Push();
+                m_obj.Push();
             }
             ~AutoPop()
             {
-                m_obj->Pop();
+                m_obj.Pop();
             }
-            const RefObjectBase* m_obj;
+            const RefObjectBase& m_obj;
         };
         friend class AutoPop;
 
         template<typename T>
         T To()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return TypeParser<T>::Get(m_state, -1);
+        }
+
+        template<typename T>
+        operator T()
+        {
+            return this->To<T>();
         }
 
         template<typename T>
         bool Is()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return TypeParser<T>::Check(m_state, -1);
         }
 
         bool IsNil()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return lua_isnil(m_state, -1);
         }
 
         bool IsTable()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return lua_istable(m_state, -1);
         }
 
         Type Type()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return static_cast<Lua::Type>(lua_type(m_state, -1));
         }
 
         const char* TypeName()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             return lua_typename(m_state, lua_type(m_state, -1));
         }
 
         const char* ToString()const
         {
-            AutoPop pop(this);
+            AutoPop pop(*this);
             const char* s = lua_tostring(m_state, -1);
             return s ? s : "";
         }
