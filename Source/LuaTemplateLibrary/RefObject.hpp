@@ -172,9 +172,10 @@ namespace Lua
 
         const char* ToString()const
         {
+            lua_getglobal(m_state, "tostring");
             AutoPop pop(*this);
-            const char* s = lua_tostring(m_state, -1);
-            return s ? s : "";
+            lua_call(m_state, 1, 1);
+            return lua_tostring(m_state, -1);
         }
 
         lua_State* GetState()const
