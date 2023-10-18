@@ -354,8 +354,7 @@ void Test()
     {
         cout << key.ToString() << ":" << value.ToString() << endl;
     }
-
-    //cout << (s["a"] == s["a"]) << endl;//todo
+    cout << (s["a"] == s["a"]) << endl;
 
 
 
