@@ -342,11 +342,11 @@ void Test()
     cout << (s == 4) << endl;
     lua_state.Run("t = { a = 4, b = 5, c = {1,2,3,4,5} , 1,2,3}");
     GRefObject v = GRefObject::Global(lua_state, "t");
-    for (auto [key, value] : v)
+    for (auto& [key, value] : v)
     {
         cout << key.ToString() << ":" << value.ToString() << endl;
     }
-    for (auto [key, value] : v["c"])
+    for (auto& [key, value] : v["c"])
     {
         cout << key.ToString() << ":" << value.ToString() << endl;
     }

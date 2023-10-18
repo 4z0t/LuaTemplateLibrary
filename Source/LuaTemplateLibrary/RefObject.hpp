@@ -87,7 +87,7 @@ namespace Lua
                 return this->Next();
             }
 
-            std::pair<ParentClass, ParentClass> operator*()const
+            const std::pair<ParentClass, ParentClass> operator*()const
             {
                 return { m_key,m_value };
             }
