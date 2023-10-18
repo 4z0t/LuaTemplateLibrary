@@ -126,8 +126,7 @@ namespace Lua
         bool operator==(const T& value)const
         {
             this->Push();
-            ParentClass other{ m_state };
-            other = value;
+            ParentClass other{ m_state , value };
             other.Push();
             bool res = lua_compare(m_state, -2, -1, LUA_OPEQ);
             lua_pop(m_state, 2);
@@ -344,6 +343,20 @@ namespace Lua
             Ref();
         }
 
+        template<typename T>
+        RefObject(lua_State* l, const T& value) noexcept :Base(l)
+        {
+            TypeParser<T>::Push(l, value);
+            Ref();
+        };
+
+        template<>
+        RefObject(lua_State* l, const RefTableObject& obj) noexcept : Base(obj.m_state)
+        {
+            obj.Push();
+            Ref();
+        }
+
         RefObject(RefObject&& obj) noexcept : Base(obj.m_state)
         {
             m_ref = obj.m_ref;
@@ -414,7 +427,7 @@ namespace Lua
             return obj;
         }
 
-        static RefObject Global(const State& state, const char* key="_G")
+        static RefObject Global(const State& state, const char* key = "_G")
         {
             return Global(state.GetState()->Unwrap(), key);
         }
