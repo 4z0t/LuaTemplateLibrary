@@ -348,16 +348,13 @@ void Test()
     GRefObject v = GRefObject::Global(lua_state, "t");
     for (auto& [key, value] : v)
     {
-        cout << key.ToString() << ":" << value.ToString() << endl;
+        cout << key << ":" << value << endl;
     }
     for (auto& [key, value] : v["c"])
     {
-        cout << key.ToString() << ":" << value.ToString() << endl;
+        cout << key << ":" << value << endl;
     }
     cout << (s["a"] == s["a"]) << endl;
-
-
-
 }
 
 int main()

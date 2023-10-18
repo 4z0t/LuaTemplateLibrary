@@ -178,6 +178,11 @@ namespace Lua
             return lua_tostring(m_state, -1);
         }
 
+        friend static std::ostream& operator<<(std::ostream& os, const RefObjectBase& obj)
+        {
+            return os << obj.ToString();
+        }
+
         lua_State* GetState()const
         {
             return this->m_state;
