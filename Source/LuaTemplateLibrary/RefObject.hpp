@@ -414,7 +414,7 @@ namespace Lua
             return obj;
         }
 
-        static RefObject Global(const State& state, const char* key)
+        static RefObject Global(const State& state, const char* key="_G")
         {
             return Global(state.GetState()->Unwrap(), key);
         }

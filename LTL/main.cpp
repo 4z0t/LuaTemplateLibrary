@@ -331,7 +331,7 @@ void Test()
 
     lua_state.Run("s = { a = 4 }");
     GRefObject s = GRefObject::Global(lua_state, "s");
-    GRefObject global = GRefObject::Global(lua_state, "_G");
+    GRefObject global = GRefObject::Global(lua_state);
     cout << s.TypeName() << endl;
     cout << s.ToString() << endl;
     cout << s["a"].TypeName() << endl;
