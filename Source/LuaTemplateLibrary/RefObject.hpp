@@ -351,8 +351,9 @@ namespace Lua
         };
 
         template<>
-        RefObject(lua_State* l, const RefTableObject& obj) noexcept : Base(obj.m_state)
+        RefObject(lua_State* l, const RefTableObject& obj) noexcept : Base(l)
         {
+            assert(l == obj.m_state);
             obj.Push();
             Ref();
         }
