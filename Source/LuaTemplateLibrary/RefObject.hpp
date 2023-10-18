@@ -23,7 +23,6 @@ namespace Lua
         }
     };
 
-
     template<typename RefClass, typename ParentClass, typename RefAccess>
     class RefObjectBase
     {

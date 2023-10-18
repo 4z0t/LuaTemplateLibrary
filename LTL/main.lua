@@ -114,11 +114,17 @@ end
 
 
 function Main(obj)
-    for k, v in pairs(obj) do
-        print(tostring(k)..":"..tostring(v))
-    end
-   Test()
-   local n = 1000000
+    print(tostring(obj.func))
+   local t ={Lua = "No"}
+   print(t.Lua)
+   obj.func(t)
+   print(t.Lua)
+
+   -- for k, v in pairs(obj) do
+   --     print(tostring(k)..":"..tostring(v))
+   -- end
+   --Test()
+   --local n = 1000000
    --print(TestSum(n))
    --print(TestMySum(n))
 
@@ -126,9 +132,6 @@ function Main(obj)
    --print(TestLen(n))
    --print(TestLenXYZ(n))
 
-   local t ={Lua = "No"}
-   CoolFunction(t)
-   print(t.Lua)
 
 
    return n

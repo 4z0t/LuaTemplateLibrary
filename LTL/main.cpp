@@ -229,7 +229,10 @@ LuaOptionalArg(OptionalDouble1, double, 1);
 
 void CoolFunction(Lua::GRefObject& obj)
 {
+    using namespace std;
+    cout << obj["Lua"].ToString() << endl;
     obj["Lua"] = "Yes";
+
 }
 
 void Test()
@@ -322,8 +325,9 @@ void Test()
     cout << obj4[obj4[1.1]].ToString() << endl;
     cout << obj4[obj4[2.5]].ToString() << endl;
     cout << obj4[obj4].ToString() << endl;
+    obj4["func"] = Closure<CoolFunction, GRefObject>::Function;
 
-    ////cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
+    cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
 
     lua_state.Run("s = { a = 4 }");
     GRefObject s = GRefObject::Global(lua_state, "s");

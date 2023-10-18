@@ -179,6 +179,25 @@ namespace Lua
         }
     };
 
+    template<>
+    struct TypeParser<lua_CFunction>
+    {
+        static lua_CFunction Get(lua_State* l, int index)
+        {
+            return lua_tocfunction(l, index);
+        }
+
+        static bool Check(lua_State* l, int index)
+        {
+            return lua_iscfunction(l, index);
+        }
+
+        static void Push(lua_State* l, lua_CFunction value)
+        {
+            lua_pushcfunction(l, value);
+        }
+    };
+
     template<typename T>
     struct TypeParser<std::vector<T>>
     {
