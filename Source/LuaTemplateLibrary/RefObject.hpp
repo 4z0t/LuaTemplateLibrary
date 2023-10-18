@@ -139,6 +139,15 @@ namespace Lua
             return !(*this == other);
         }
 
+        template<typename ...TArgs>
+        ParentClass operator()(TArgs&& ...args)
+        {
+            Push();
+            size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
+            lua_call(m_state, n, 1);
+            return ParentClass::FromTop(m_state);
+        }
+
         template<typename T>
         bool Is()const
         {
@@ -463,6 +472,18 @@ namespace Lua
         static RefObject FromStack(const State& state, int index)
         {
             return FromStack(state.GetState()->Unwrap(), index);
+        }
+
+         static RefObject FromTop(lua_State* l)
+        {
+            RefObject obj{ l };
+            obj.Ref();
+            return obj;
+        }
+
+        static RefObject FromTop(const State& state)
+        {
+            return FromTop(state.GetState()->Unwrap());
         }
 
         void Push()const

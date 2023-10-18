@@ -327,7 +327,7 @@ void Test()
     cout << obj4[obj4].ToString() << endl;
     obj4["func"] = Closure<CoolFunction, GRefObject>::Function;
 
-    cout << lua_state.Call<GRefObject>("Main", obj4).TypeName() << endl;
+    cout << lua_state.Call<GRefObject>("Main", obj4) << endl;
 
     lua_state.Run("s = { a = 4 }");
     GRefObject s = GRefObject::Global(lua_state, "s");
@@ -335,7 +335,7 @@ void Test()
     cout << s.TypeName() << endl;
     cout << s.ToString() << endl;
     cout << s["a"].TypeName() << endl;
-    cout << s["a"].ToString() << endl;
+    cout << s["a"] << endl;
     cout << s["a"].To<int>() << endl;
     cout << (int)s["a"] << endl;
 
@@ -355,6 +355,10 @@ void Test()
         cout << key << ":" << value << endl;
     }
     cout << (s["a"] == s["a"]) << endl;
+
+    global["bool"] = true;
+    cout << global["bool"] << endl;
+    cout << global["RefFunc"](1) << endl;
 }
 
 int main()

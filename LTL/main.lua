@@ -112,6 +112,10 @@ function TestMyLen(n)
     return  GetSystemTime() - start_t 
 end
 
+function RefFunc(a)
+    print(tostring(a))
+    return a
+end
 
 function Main(obj)
     print(tostring(obj.func))
