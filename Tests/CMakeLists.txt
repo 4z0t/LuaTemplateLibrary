@@ -1,5 +1,6 @@
 set(LTL_TEST_SOURCE_FILES
     Source/RefObject.cpp
+    Source/Main.cpp
 )
 
 
@@ -12,7 +13,7 @@ file(GLOB LUA54_FILES
     Lua/lua-5.4.4/src/*.hpp
     Lua/LuaLibrary.h
 )
-add_library(Lua54 ${LUA54_FILES} "Source/RefObject.cpp")
+add_library(Lua54 ${LUA54_FILES})
 target_compile_definitions(Lua54 PUBLIC LUA_VERSION=504)
 target_include_directories(Lua54 PUBLIC Lua/lua-5.4.4/src)
 source_group("Source" FILES ${LUA54_FILES})
@@ -29,7 +30,7 @@ target_include_directories(TestLTL PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(TestLTL
     LuaTemplateLibrary
-    ${LUA_LIBRARY}
+    Lua54
     GTest::gtest
 )
 

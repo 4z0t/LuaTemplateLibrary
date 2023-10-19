@@ -9,7 +9,7 @@ endif()
 project (LuaTemplateLibrary)
 
 add_subdirectory (Source)
-add_subdirectory (LTL)
+#add_subdirectory (LTL)
 
 cmake_dependent_option(LTL_TESTING "Build tests" ON
     "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF

@@ -9,6 +9,7 @@ set(LTL_HEADERS
     ${LTL_DIR}/LuaState.hpp
     ${LTL_DIR}/LuaTypes.hpp
     ${LTL_DIR}/RefObject.hpp
+    ${LTL_DIR}/LTL.hpp
 )
 
 source_group("LTL" FILES ${LTL_HEADERS})
