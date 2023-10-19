@@ -139,13 +139,29 @@ namespace Lua
             return !(*this == other);
         }
 
-        template<typename ...TArgs>
-        ParentClass operator()(TArgs&& ...args)
+
+        template<typename TReturn=void, typename ...TArgs>
+        TReturn Call(TArgs&& ...args)
         {
             Push();
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
-            lua_call(m_state, n, 1);
-            return ParentClass::FromTop(m_state);
+            if constexpr (std::is_void_v<TReturn>)
+            {
+                lua_call(m_state, n, 0);
+            }
+            else
+            {
+                lua_call(m_state, n, 1);
+                TReturn result = TypeParser<TReturn>::Get(m_state, 1);
+                lua_pop(m_state, 1);
+                return result;
+            }
+        }
+
+        template<typename ...TArgs>
+        ParentClass operator()(TArgs&& ...args)
+        {
+            return this->Call<ParentClass>(std::forward<TArgs>(args)...);
         }
 
         template<typename T>
