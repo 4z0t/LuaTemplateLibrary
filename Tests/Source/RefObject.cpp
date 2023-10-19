@@ -1,24 +1,15 @@
-#include "Lua/LuaLibrary.h"
-#include "LuaTemplateLibrary/LTL.hpp"
-#include <gtest/gtest.h>
+#include "TestBase.hpp"
 
-struct TestBase : public testing::Test
+
+struct RefObjectTests : TestBase
 {
 
-    lua_State* l = nullptr;
-
-    void SetUp() override
-    {
-        l = nullptr;
-        l = luaL_newstate();
-        luaL_openlibs(l);
-    }
-
-    void TearDown() override
-    {
-        if (l != nullptr)
-        {
-            lua_close(l);
-        }
-    }
 };
+
+TEST_F(RefObjectTests, ValueAccess)
+{
+    Run("result = true");
+    ASSERT_TRUE(Result().Is<bool>());
+
+
+}
