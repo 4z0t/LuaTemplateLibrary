@@ -9,6 +9,7 @@
 #include <vector>
 #include <stdint.h>
 #include "lua.hpp"
+#define STATIC_FAIl(message) static_assert(false, (message));
 
 namespace Lua::Internal
 {
