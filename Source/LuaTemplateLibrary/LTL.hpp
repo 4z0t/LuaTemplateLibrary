@@ -1,4 +1,5 @@
 #pragma once
+#include "Internal.hpp"
 #include "LuaAux.hpp"
 #include "FuncArguments.hpp"
 #include "FuncUtils.hpp"
