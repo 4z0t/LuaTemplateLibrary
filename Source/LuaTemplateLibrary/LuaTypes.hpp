@@ -1,14 +1,5 @@
 #pragma once
-#include <memory>
-#include <assert.h>
-#include <iostream>
-#include <tuple>
-#include <string>
-#include <type_traits>
-#include <utility>
-#include <vector>
-#include <stdint.h>
-#include "lua.hpp"
+#include "Internal.hpp"
 
 namespace Lua
 {
@@ -30,45 +21,53 @@ namespace Lua
     template<typename T>
     struct TypeParser
     {
-        static T Get(lua_State* l, int index);
+        static T Get(lua_State* l, int index)
+        {
+            static_assert(false, "Not provided implementation for Get function");
+        }
 
-        static bool Check(lua_State* l, int index);
+        static bool Check(lua_State* l, int index)
+        {
+            static_assert(false, "Not provided implementation for Check function");
+        }
 
-        static void Push(lua_State* l, const T& value);
+        static void Push(lua_State* l, const T& value)
+        {
+            static_assert(false, "Not provided implementation for Push function");
+        }
     };
 
     template<>
-    struct TypeParser<int>
-    {
-        static int Get(lua_State* l, int index)
-        {
-            return luaL_checkinteger(l, index);
-        }
+    struct TypeParser<char> : Internal::IntParser<char> {};
+    template<>
+    struct TypeParser<unsigned char> : Internal::IntParser<unsigned char> {};
+    template<>
+    struct TypeParser<int> : Internal::IntParser<int> {};
+    template<>
+    struct TypeParser<unsigned int> : Internal::IntParser<unsigned int> {};
+    template<>
+    struct TypeParser<short> : Internal::IntParser<short> {};
+    template<>
+    struct TypeParser<unsigned short> : Internal::IntParser<unsigned short> {};
+    template<>
+    struct TypeParser<long long> : Internal::IntParser<long long> {};
+    template<>
+    struct TypeParser<unsigned long long> : Internal::IntParser<unsigned long long> {};
 
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_isinteger(l, index);
-        }
 
-        static void Push(lua_State* l, int value)
-        {
-            lua_pushinteger(l, value);
-        }
-    };
+    /* template<>
+     struct TypeParser<std::nullptr_t>
+     {
+         static bool Check(lua_State* l, int index)
+         {
+             return lua_isnil(l, index);
+         }
 
-   /* template<>
-    struct TypeParser<std::nullptr_t>
-    {
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_isnil(l, index);
-        }
-
-        static void Push(lua_State* l, std::nullptr_t)
-        {
-            lua_pushnil(l);
-        }
-    };*/
+         static void Push(lua_State* l, std::nullptr_t)
+         {
+             lua_pushnil(l);
+         }
+     };*/
 
     template<>
     struct TypeParser<float>
