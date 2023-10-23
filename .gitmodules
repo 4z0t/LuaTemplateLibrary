@@ -1,6 +1,9 @@
 [submodule "googletest"]
 	path = googletest
 	url = https://github.com/google/googletest.git
-[submodule "Lua v5.4.4"]
+[submodule "v5.4.4"]
 	path = Tests/Lua/v5.4.4
+	url = https://github.com/lua/lua.git
+[submodule "v5.3.6"]
+	path = Tests/Lua/v5.3.6
 	url = https://github.com/lua/lua.git
