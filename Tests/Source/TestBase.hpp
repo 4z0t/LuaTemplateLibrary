@@ -1,4 +1,4 @@
-#include "Lua/LuaLibrary.h"
+#include "Lua/lua.hpp"
 #include "LuaTemplateLibrary/LTL.hpp"
 #include <gtest/gtest.h>
 

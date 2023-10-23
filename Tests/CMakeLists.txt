@@ -6,14 +6,16 @@ set(LTL_TEST_SOURCE_FILES
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
 
 file(GLOB LUA54_FILES
-    Lua/lua-5.4.4/src/*.c
-    Lua/lua-5.4.4/src/*.h
-    Lua/lua-5.4.4/src/*.hpp
-    Lua/LuaLibrary.h
+    Lua/v5.4.4/*.c
+    Lua/v5.4.4/*.h
+    Lua/v5.4.4/*.hpp
+    Lua/lua.hpp
 )
+list(FILTER LUA54_FILES EXCLUDE REGEX ".*lua\\.c$")
+
 add_library(Lua54 ${LUA54_FILES})
 target_compile_definitions(Lua54 PUBLIC LUA_VERSION=504)
-target_include_directories(Lua54 PUBLIC Lua/lua-5.4.4/src)
+target_include_directories(Lua54 PUBLIC Lua/v5.4.4)
 source_group("Source" FILES ${LUA54_FILES})
 
 add_executable(TestLTL

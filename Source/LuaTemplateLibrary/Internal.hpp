@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 #include <stdint.h>
-#include "Lua/LuaLibrary.h"
+#include "Lua/lua.hpp"
 
 #define STATIC_FAIl(message) static_assert(false, (message))
 
