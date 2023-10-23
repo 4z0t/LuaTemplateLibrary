@@ -17,24 +17,16 @@ source_group("LTL" FILES ${LTL_HEADERS})
 
 add_library(LuaTemplateLibrary INTERFACE)
 
-target_sources(LuaTemplateLibrary INTERFACE
-    ${LTL_HEADERS}
-)
-
-target_include_directories(LuaTemplateLibrary INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-
-
-if(MSVC AND CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-    add_custom_target(LuaTemplateLibrarySources SOURCES
-        ${LTL_HEADERS}
-    )
-endif()
-
-if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-    install(DIRECTORY LuaTemplateLibrary TYPE INCLUDE)
-endif()
-
 set_target_properties(LuaTemplateLibrary PROPERTIES
     CXX_STANDARD 17
     CXX_EXTENSIONS OFF
     )
+
+
+target_sources(LuaTemplateLibrary INTERFACE
+    ${LTL_HEADERS}
+)
+
+target_include_directories(LuaTemplateLibrary INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)

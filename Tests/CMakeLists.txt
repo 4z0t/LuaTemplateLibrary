@@ -3,9 +3,7 @@ set(LTL_TEST_SOURCE_FILES
     Source/Main.cpp
 )
 
-
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
-
 
 file(GLOB LUA54_FILES
     Lua/lua-5.4.4/src/*.c
