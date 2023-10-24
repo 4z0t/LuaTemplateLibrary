@@ -23,17 +23,17 @@ namespace Lua
     {
         static T Get(lua_State* l, int index)
         {
-            STATIC_FAIl("Not provided implementation for Get function");
+            STATIC_FAIL("Not provided implementation for Get function");
         }
 
         static bool Check(lua_State* l, int index)
         {
-            STATIC_FAIl("Not provided implementation for Check function");
+            STATIC_FAIL("Not provided implementation for Check function");
         }
 
         static void Push(lua_State* l, const T& value)
         {
-            STATIC_FAIl("Not provided implementation for Push function");
+            STATIC_FAIL("Not provided implementation for Push function");
         }
     };
 

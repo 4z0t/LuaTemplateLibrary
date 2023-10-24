@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "Lua/LuaLibrary.h"
 
-#define STATIC_FAIl(message) static_assert(false, (message))
+#define STATIC_FAIL(message) static_assert(false, message)
 
 namespace Lua::Internal
 {
