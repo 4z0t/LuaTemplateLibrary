@@ -110,18 +110,18 @@ TEST_F(RefObjectTests, AccessClasses)
         ASSERT_TRUE(obj == gobj);
     }
     {
-        RefObject<MyAccess2> obj2{ l };
-        GRefObject gobj2{ l };
-        obj2 = "Hello";
-        gobj2 = obj2;
-        ASSERT_TRUE(obj2 == gobj2);
-        ASSERT_TRUE(obj2.Is<const char*>());
-        ASSERT_STREQ(obj2.To<const char*>(), "Hello");
+        RefObject<MyAccess2> obj{ l };
+        GRefObject gobj{ l };
+        obj = "Hello";
+        gobj = obj;
+        ASSERT_TRUE(obj == gobj);
+        ASSERT_TRUE(obj.Is<const char*>());
+        ASSERT_STREQ(obj.To<const char*>(), "Hello");
     }
     {
-        RefObject<MyAccess> obj{ l };
+        RefObject<MyAccess2> obj{ l };
         GRefObject gobj{ l };
-        obj = RefObject<MyAccess>::MakeTable(l);
+        obj = RefObject<MyAccess2>::MakeTable(l);
         obj["key"] = "Hi";
         gobj = obj["key"];
         ASSERT_TRUE(gobj == obj["key"]);
