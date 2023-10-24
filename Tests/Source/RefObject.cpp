@@ -50,11 +50,7 @@ struct MyAccess2
 {
     static int GetRef(lua_State* l)
     {
-        if (!assigned)
-            AssignTable(l);
-        lua_pushlightuserdata(l, GetIndex());
-        lua_gettable(l, LUA_REGISTRYINDEX);
-        assert(lua_istable(l, -1));
+        GetTable(l);
         lua_pushvalue(l, -2);
         int ref = luaL_ref(l, -2);
         lua_pop(l, 2);
@@ -63,26 +59,27 @@ struct MyAccess2
 
     static void Unref(lua_State* l, int ref)
     {
-        if (!assigned)
-            AssignTable(l);
-        lua_pushlightuserdata(l, GetIndex());
-        lua_gettable(l, LUA_REGISTRYINDEX);
-        assert(lua_istable(l, -1));
+        GetTable(l);
         luaL_unref(l, -1, ref);
         lua_pop(l, 1);
     }
 
     static void PushRef(lua_State* l, int ref)
     {
+        GetTable(l);
+        lua_rawgeti(l, -1, ref);
+        lua_remove(l, -2);
+    }
+private:
+
+    static void GetTable(lua_State* l)
+    {
         if (!assigned)
             AssignTable(l);
         lua_pushlightuserdata(l, GetIndex());
         lua_gettable(l, LUA_REGISTRYINDEX);
         assert(lua_istable(l, -1));
-        lua_rawgeti(l, -1, ref);
-        lua_remove(l, -2);
     }
-private:
 
     static void AssignTable(lua_State* l)
     {
@@ -127,6 +124,9 @@ TEST_F(RefObjectTests, AccessClasses)
         obj = RefObject<MyAccess>::MakeTable(l);
         obj["key"] = "Hi";
         gobj = obj["key"];
-        
+        ASSERT_TRUE(gobj == obj["key"]);
+        ASSERT_TRUE(gobj.Is<const char*>());
+        ASSERT_STREQ(gobj.To<const char*>(), "Hi");
+
     }
 }

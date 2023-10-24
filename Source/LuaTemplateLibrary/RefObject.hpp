@@ -140,7 +140,7 @@ namespace Lua
         }
 
 
-        template<typename TReturn=void, typename ...TArgs>
+        template<typename TReturn = void, typename ...TArgs>
         TReturn Call(TArgs&& ...args)
         {
             Push();
@@ -262,109 +262,18 @@ namespace Lua
         lua_State* m_state = nullptr;
     };
 
+
+    template<typename RefAccess>
+    class RefObject;
+    template<typename RefAccess>
+    class RefTableObject;
+
     template<typename RefAccess>
     class RefObject : public RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
-        class RefTableObject : public RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>
-        {
-        public:
-            using RefClass = RefObject<RefAccess>;
-            using Base = RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>;
-            friend class RefClass;
-            friend class Base;
-
-            template<typename T>
-            RefTableObject operator[](const T& key)
-            {
-                return RefClass(*this)[key];
-            }
-
-            template<typename T>
-            RefTableObject& operator=(T value)
-            {
-                using TArg = std::decay_t<T>;
-                PushTable();
-                PushKey();
-                TypeParser<TArg>::Push(this->m_state, value);
-                lua_settable(this->m_state, -3);
-                Pop();
-                return *this;
-            }
-
-            RefTableObject& operator=(const RefClass& obj)
-            {
-                PushTable();
-                PushKey();
-                obj.Push();
-                lua_settable(this->m_state, -3);
-                Pop();
-                return *this;
-            }
-
-            RefTableObject& operator=(const RefTableObject& obj)
-            {
-                return *this = RefClass(obj);
-            }
-
-            void Push()const
-            {
-                PushTable();
-                PushKey();
-                lua_gettable(this->m_state, -2);
-                lua_remove(this->m_state, -2);
-            }
-
-            void Unref()
-            {
-                if (this->m_state)
-                {
-                    this->UnrefRef(m_table_ref);
-                    this->UnrefRef(m_key_ref);
-                    m_table_ref = LUA_NOREF;
-                    m_key_ref = LUA_NOREF;
-                }
-            }
-        private:
-            RefTableObject() :Base() {};
-            RefTableObject(lua_State* l) noexcept :Base(l) { };
-            RefTableObject(const State& state) noexcept : Base(state) {};
-            RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
-            {
-                obj.PushKey();
-                m_key_ref = this->GetRef();
-
-                obj.PushTable();
-                m_table_ref = this->GetRef();
-            }
-
-            void PushKey()const
-            {
-                this->PushRef(m_key_ref);
-            }
-
-            void PushTable()const
-            {
-                this->PushRef(m_table_ref);
-            }
-
-            void Clear()
-            {
-                this->m_state = nullptr;
-                m_table_ref = LUA_NOREF;
-                m_key_ref = LUA_NOREF;
-            }
-
-            void Pop()const
-            {
-                lua_pop(this->m_state, 1);
-            }
-
-            int m_table_ref = LUA_NOREF;
-            int m_key_ref = LUA_NOREF;
-        };
-
         using Base = RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>;
+        using RefTableObjectT = RefTableObject<RefAccess>;
         friend class Base;
         using Base::Base;
 
@@ -382,7 +291,7 @@ namespace Lua
         };
 
         template<>
-        RefObject(lua_State* l, const RefTableObject& obj) noexcept : Base(l)
+        RefObject(lua_State* l, const RefTableObjectT& obj) noexcept : Base(l)
         {
             assert(l == obj.m_state);
             obj.Push();
@@ -395,7 +304,7 @@ namespace Lua
             obj.Clear();
         }
 
-        RefObject(const RefTableObject& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefTableObjectT& obj) noexcept : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -410,7 +319,7 @@ namespace Lua
             return *this;
         }
 
-        RefObject& operator=(const RefTableObject& obj)
+        RefObject& operator=(const RefTableObjectT& obj)
         {
             Unref();
             obj.Push();
@@ -439,12 +348,12 @@ namespace Lua
         }
 
         template<typename T>
-        RefTableObject operator[](const T& key)
+        RefTableObjectT operator[](const T& key)
         {
             RefObject key_obj{ this->m_state };
             key_obj = key;
             key_obj.Push();
-            RefTableObject obj{ this->m_state };
+            RefTableObjectT obj{ this->m_state };
             obj.m_key_ref = this->GetRef();
             Push();
             obj.m_table_ref = this->GetRef();
@@ -490,7 +399,7 @@ namespace Lua
             return FromStack(state.GetState()->Unwrap(), index);
         }
 
-         static RefObject FromTop(lua_State* l)
+        static RefObject FromTop(lua_State* l)
         {
             RefObject obj{ l };
             obj.Ref();
@@ -536,7 +445,107 @@ namespace Lua
         int m_ref = LUA_NOREF;
     };
 
+    template<typename RefAccess>
+    class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefObject<RefAccess>, RefAccess>
+    {
+    public:
+        using RefClass = RefObject<RefAccess>;
+        using Base = RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>;
+        friend class RefClass;
+        friend class Base;
+
+        template<typename T>
+        RefTableObject operator[](const T& key)
+        {
+            return RefClass(*this)[key];
+        }
+
+        template<typename T>
+        RefTableObject& operator=(T value)
+        {
+            using TArg = std::decay_t<T>;
+            PushTable();
+            PushKey();
+            TypeParser<TArg>::Push(this->m_state, value);
+            lua_settable(this->m_state, -3);
+            Pop();
+            return *this;
+        }
+
+        RefTableObject& operator=(const RefClass& obj)
+        {
+            PushTable();
+            PushKey();
+            obj.Push();
+            lua_settable(this->m_state, -3);
+            Pop();
+            return *this;
+        }
+
+        RefTableObject& operator=(const RefTableObject& obj)
+        {
+            return *this = RefClass(obj);
+        }
+
+        void Push()const
+        {
+            PushTable();
+            PushKey();
+            lua_gettable(this->m_state, -2);
+            lua_remove(this->m_state, -2);
+        }
+
+        void Unref()
+        {
+            if (this->m_state)
+            {
+                this->UnrefRef(m_table_ref);
+                this->UnrefRef(m_key_ref);
+                m_table_ref = LUA_NOREF;
+                m_key_ref = LUA_NOREF;
+            }
+        }
+    private:
+        RefTableObject() :Base() {};
+        RefTableObject(lua_State* l) noexcept :Base(l) { };
+        RefTableObject(const State& state) noexcept : Base(state) {};
+        RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
+        {
+            obj.PushKey();
+            m_key_ref = this->GetRef();
+
+            obj.PushTable();
+            m_table_ref = this->GetRef();
+        }
+
+        void PushKey()const
+        {
+            this->PushRef(m_key_ref);
+        }
+
+        void PushTable()const
+        {
+            this->PushRef(m_table_ref);
+        }
+
+        void Clear()
+        {
+            this->m_state = nullptr;
+            m_table_ref = LUA_NOREF;
+            m_key_ref = LUA_NOREF;
+        }
+
+        void Pop()const
+        {
+            lua_pop(this->m_state, 1);
+        }
+
+        int m_table_ref = LUA_NOREF;
+        int m_key_ref = LUA_NOREF;
+    };
+
     using GRefObject = RefObject<RefGlobalAccess>;
+
 
     template<typename T>
     struct TypeParser<RefObject<T>>
@@ -558,9 +567,6 @@ namespace Lua
     };
 
     template<typename T>
-    using RefTableObject = typename RefObject<T>::RefTableObject;
-
-    /*template<typename T>
     struct TypeParser<RefTableObject<T>>
     {
         using Type = RefTableObject<T>;
@@ -574,5 +580,5 @@ namespace Lua
         {
             value.Push();
         }
-    };*/
+    };
 }
