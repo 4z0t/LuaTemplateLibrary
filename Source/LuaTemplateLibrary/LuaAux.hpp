@@ -42,7 +42,7 @@ namespace Lua
         return n;
     }
 
-    template<typename TReturn = void, typename ...Ts>
+    template<typename TReturn = void>
     TReturn CallStack(lua_State* l, const size_t  n_args)
     {
         if constexpr (std::is_void_v<TReturn>)
