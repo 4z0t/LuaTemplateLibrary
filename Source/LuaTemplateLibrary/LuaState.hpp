@@ -28,6 +28,11 @@ namespace Lua
             return StateWrap::Unwrap(this);
         }
 
+        inline lua_State* Unwrap()
+        {
+            return StateWrap::Unwrap(this);
+        }
+
         void OpenLibs()
         {
             return luaL_openlibs(Unwrap(this));

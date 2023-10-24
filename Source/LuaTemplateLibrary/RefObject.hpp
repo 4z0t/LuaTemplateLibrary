@@ -262,9 +262,9 @@ namespace Lua
         lua_State* m_state = nullptr;
     };
 
-
     template<typename RefAccess>
     class RefObject;
+
     template<typename RefAccess>
     class RefTableObject;
 
@@ -545,7 +545,6 @@ namespace Lua
     };
 
     using GRefObject = RefObject<RefGlobalAccess>;
-
 
     template<typename T>
     struct TypeParser<RefObject<T>>
