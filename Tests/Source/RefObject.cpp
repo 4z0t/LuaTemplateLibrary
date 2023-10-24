@@ -127,6 +127,29 @@ TEST_F(RefObjectTests, AccessClasses)
         ASSERT_TRUE(gobj == obj["key"]);
         ASSERT_TRUE(gobj.Is<const char*>());
         ASSERT_STREQ(gobj.To<const char*>(), "Hi");
-
     }
+}
+
+
+TEST_F(RefObjectTests, SelfCallTest)
+{
+    using namespace Lua;
+    Run("result = {                         "
+        "func = function(self, s, n)        "
+        "   local s_ = self.custom_string   "
+        "   for i = 1,n do                  "
+        "       s_ = s_ .. s                "
+        "   end                             "
+        "   return s_                       "
+        "end,                               "
+        "custom_string = 'My string',       "
+        "}                                  "
+    );
+
+    auto result = Result();
+    auto s = result.SelfCall<GRefObject>("func", "1", 5);
+    ASSERT_TRUE(s.Is<const char*>());
+    ASSERT_STREQ(s.To<const char*>(), "My string11111");
+
+
 }
