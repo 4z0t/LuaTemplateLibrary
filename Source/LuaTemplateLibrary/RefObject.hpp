@@ -144,17 +144,7 @@ namespace Lua
         {
             Push();
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
-            if constexpr (std::is_void_v<TReturn>)
-            {
-                lua_call(m_state, n, 0);
-            }
-            else
-            {
-                lua_call(m_state, n, 1);
-                TReturn result = TypeParser<TReturn>::Get(m_state, 1);
-                lua_pop(m_state, 1);
-                return result;
-            }
+            return CallStack<TReturn>(m_state, n);
         }
 
         template<typename TReturn = void, typename ...TArgs>
@@ -165,17 +155,7 @@ namespace Lua
             lua_gettable(m_state, -2);
             lua_rotate(m_state, -2, 1);
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
-            if constexpr (std::is_void_v<TReturn>)
-            {
-                lua_call(m_state, n, 0);
-            }
-            else
-            {
-                lua_call(m_state, n, 1);
-                TReturn result = TypeParser<TReturn>::Get(m_state, 1);
-                lua_pop(m_state, 1);
-                return result;
-            }
+            return CallStack<TReturn>(m_state, n);
         }
 
         template<typename ...TArgs>
