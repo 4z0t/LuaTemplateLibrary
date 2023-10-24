@@ -134,16 +134,16 @@ TEST_F(RefObjectTests, AccessClasses)
 TEST_F(RefObjectTests, SelfCallTest)
 {
     using namespace Lua;
-    Run("result = {                         "
-        "func = function(self, s, n)        "
-        "   local s_ = self.custom_string   "
-        "   for i = 1,n do                  "
-        "       s_ = s_ .. s                "
-        "   end                             "
-        "   return s_                       "
-        "end,                               "
-        "custom_string = 'My string',       "
-        "}                                  "
+    Run("result = {                             "
+        "   func = function(self, s, n)         "
+        "      local s_ = self.custom_string    "
+        "      for i = 1,n do                   "
+        "          s_ = s_ .. s                 "
+        "      end                              "
+        "      return s_                        "
+        "   end,                                "
+        "   custom_string = 'My string',        "
+        "}                                      "
     );
 
     auto result = Result();
