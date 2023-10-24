@@ -153,3 +153,21 @@ TEST_F(RefObjectTests, SelfCallTest)
 
 
 }
+
+
+
+// exception tests are here for a moment with gtest bug?
+
+
+struct ExceptionTests : TestBase
+{
+
+};
+
+TEST_F(ExceptionTests, ThrowTests)
+{
+    Run("result = true");
+    ASSERT_THROW(Result().Call(), Lua::Exception);
+    ASSERT_THROW(Result()["Key"].To<int>(), Lua::Exception);
+
+}

@@ -24,6 +24,7 @@ namespace Lua
         static T Get(lua_State* l, int index)
         {
             STATIC_FAIL("Not provided implementation for Get function");
+            return {};
         }
 
         static bool Check(lua_State* l, int index)

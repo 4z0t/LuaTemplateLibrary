@@ -1,7 +1,7 @@
 #pragma once
+#include <gtest/gtest.h>
 #include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
-#include <gtest/gtest.h>
 
 struct TestBase : public testing::Test
 {
