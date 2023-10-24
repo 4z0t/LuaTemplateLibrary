@@ -1,5 +1,6 @@
 set(LTL_TEST_SOURCE_FILES
     Source/RefObject.cpp
+    Source/Exception.cpp
     Source/Main.cpp
 )
 

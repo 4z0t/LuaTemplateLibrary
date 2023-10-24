@@ -1,3 +1,4 @@
+#pragma once
 #include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
 #include <gtest/gtest.h>
@@ -12,6 +13,7 @@ struct TestBase : public testing::Test
         l = nullptr;
         l = luaL_newstate();
         luaL_openlibs(l);
+        lua_atpanic(l, Lua::Exception::PanicFunc);
     }
 
     void TearDown() override
