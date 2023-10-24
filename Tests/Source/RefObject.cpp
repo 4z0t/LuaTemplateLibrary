@@ -12,7 +12,7 @@ TEST_F(RefObjectTests, ValueAccess)
     ASSERT_TRUE(Result().Is<bool>());
     ASSERT_TRUE(Result().To<bool>());
     ASSERT_TRUE((bool)Result());
-    
+
     Run("result = 4");
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 4);
@@ -24,4 +24,109 @@ TEST_F(RefObjectTests, ValueAccess)
 
 
 
+}
+
+// Access classes tests
+
+struct MyAccess
+{
+    static int GetRef(lua_State* l)
+    {
+        return luaL_ref(l, LUA_REGISTRYINDEX);
+    }
+
+    static void Unref(lua_State* l, int ref)
+    {
+        luaL_unref(l, LUA_REGISTRYINDEX, ref);
+    }
+
+    static void PushRef(lua_State* l, int ref)
+    {
+        lua_rawgeti(l, LUA_REGISTRYINDEX, ref);
+    }
+};
+
+struct MyAccess2
+{
+    static int GetRef(lua_State* l)
+    {
+        if (!assigned)
+            AssignTable(l);
+        lua_pushlightuserdata(l, GetIndex());
+        lua_gettable(l, LUA_REGISTRYINDEX);
+        assert(lua_istable(l, -1));
+        lua_pushvalue(l, -2);
+        int ref = luaL_ref(l, -2);
+        lua_pop(l, 2);
+        return ref;
+    }
+
+    static void Unref(lua_State* l, int ref)
+    {
+        if (!assigned)
+            AssignTable(l);
+        lua_pushlightuserdata(l, GetIndex());
+        lua_gettable(l, LUA_REGISTRYINDEX);
+        assert(lua_istable(l, -1));
+        luaL_unref(l, -1, ref);
+        lua_pop(l, 1);
+    }
+
+    static void PushRef(lua_State* l, int ref)
+    {
+        if (!assigned)
+            AssignTable(l);
+        lua_pushlightuserdata(l, GetIndex());
+        lua_gettable(l, LUA_REGISTRYINDEX);
+        assert(lua_istable(l, -1));
+        lua_rawgeti(l, -1, ref);
+        lua_remove(l, -2);
+    }
+private:
+
+    static void AssignTable(lua_State* l)
+    {
+        lua_pushlightuserdata(l, GetIndex());
+        lua_newtable(l);
+        lua_settable(l, LUA_REGISTRYINDEX);
+        assigned = true;
+    }
+
+    static constexpr void* GetIndex()
+    {
+        return (void*)(&index);
+    }
+    static const char index = 0;
+    static bool assigned;
+};
+bool MyAccess2::assigned = false;
+
+TEST_F(RefObjectTests, AccessClasses)
+{
+    using namespace Lua;
+
+    {
+        RefObject<MyAccess> obj{ l };
+        GRefObject gobj{ l };
+        obj = "Hello";
+        gobj = obj;
+        ASSERT_TRUE(obj == gobj);
+    }
+    {
+        RefObject<MyAccess2> obj2{ l };
+        GRefObject gobj2{ l };
+        obj2 = "Hello";
+        gobj2 = obj2;
+        ASSERT_TRUE(obj2 == gobj2);
+        ASSERT_TRUE(obj2.Is<const char*>());
+        ASSERT_STREQ(obj2.To<const char*>(), "Hello");
+    }
+    {
+        RefObject<MyAccess> obj{ l };
+        GRefObject gobj{ l };
+        obj = RefObject<MyAccess>::MakeTable(l);
+        obj["key"] = "Hi";
+        gobj = obj["key"];
+        
+    }
 }
