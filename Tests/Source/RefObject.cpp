@@ -46,13 +46,33 @@ TEST_F(RefObjectTests, IteratorTest)
 
     for (const auto& [key, value] : result)
     {
+        ASSERT_TRUE(key.Is<int>());
         ASSERT_TRUE(key == index + 1);
+        ASSERT_TRUE(value.Is<int>());
         ASSERT_TRUE(value == arr[index]);
         index++;
     }
 
 
+
+
     //    Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
+
+}
+
+TEST_F(RefObjectTests, CompareTest)
+{
+    using namespace Lua;
+    Run("a, b = 2, 3");
+    GRefObject a = GRefObject::Global(l, "a");
+    GRefObject b = GRefObject::Global(l, "b");
+
+    ASSERT_FALSE(a == b);
+    ASSERT_TRUE(a != b);
+    ASSERT_TRUE(a < b);
+    ASSERT_FALSE(a > b);
+    ASSERT_FALSE(a >= b);
+    ASSERT_TRUE(a <= b);
 
 }
 
