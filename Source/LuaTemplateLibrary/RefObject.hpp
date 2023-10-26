@@ -126,14 +126,33 @@ namespace Lua
         }
 
         template<typename T>
-        bool operator==(const T& value)const
+        bool operator<(const T& other)const
         {
-            this->Push();
-            ParentClass other{ m_state , value };
-            other.Push();
-            bool res = lua_compare(m_state, -2, -1, LUA_OPEQ);
-            lua_pop(m_state, 2);
-            return res;
+            return this->Compare<LUA_OPLT>(other);
+        }
+
+        template<typename T>
+        bool operator<=(const T& other)const
+        {
+            return this->Compare<LUA_OPLE>(other);
+        }
+
+        template<typename T>
+        bool operator==(const T& other)const
+        {
+            return this->Compare<LUA_OPEQ>(other);
+        }
+
+        template<typename T>
+        bool operator>(const T& other)const
+        {
+            return !(*this <= other);
+        }
+
+        template<typename T>
+        bool operator>=(const T& other)const
+        {
+            return !(*this < other);
         }
 
         template<typename T>
@@ -223,6 +242,16 @@ namespace Lua
         }
 
     private:
+        template <int COMPARE_OP, typename T>
+        bool Compare(const T& value)const
+        {
+            this->Push();
+            TypeParser<const_decay_t<T>>::Push(m_state, value);
+            bool res = lua_compare(m_state, -2, -1, COMPARE_OP);
+            lua_pop(m_state, 2);
+            return res;
+        }
+
         void Unref()
         {
             _This().Unref();
