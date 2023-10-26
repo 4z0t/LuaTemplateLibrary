@@ -27,7 +27,7 @@ TEST_F(RefObjectTests, ValueAccess)
     Run("result = {a = 4}");
     ASSERT_TRUE(Result().IsTable());
     ASSERT_TRUE(Result()["a"].Is<int>());
-    
+
     GRefObject key{ l, "a" };
     ASSERT_TRUE(Result()[key].Is<int>());
 
@@ -35,6 +35,27 @@ TEST_F(RefObjectTests, ValueAccess)
 
 
 }
+
+TEST_F(RefObjectTests, IteratorTest)
+{
+    Run("result = {1,3,4,6,7,10}");
+    auto result = Result();
+
+    int arr[]{ 1,3,4,6,7,10 };
+    int index = 0;
+
+    for (const auto& [key, value] : result)
+    {
+        ASSERT_TRUE(key == index + 1);
+        ASSERT_TRUE(value == arr[index]);
+        index++;
+    }
+
+
+    //    Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
+
+}
+
 
 // Access classes tests
 
