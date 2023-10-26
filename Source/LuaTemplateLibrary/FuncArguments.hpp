@@ -16,6 +16,7 @@ namespace Lua
     };
 
     struct OptionalArg {};
+
     template<typename T>
     struct OptionalBase :OptionalArg, TypeBase<T> {};
 
@@ -39,6 +40,7 @@ namespace Lua
     {
         static  T value;
     };
+
     template<typename T>
     T Default<T>::value{};
 
