@@ -61,16 +61,16 @@ namespace Lua
                 m_key.Push();
                 if (lua_next(l, -2) != 0)
                 {
-                    m_key = ParentClass::FromStack(l, -2);
-                    m_value = ParentClass::FromStack(l, -1);
-                    lua_pop(l, 3);
+
+                    m_value = ParentClass::FromTop(l);
+                    m_key = ParentClass::FromTop(l);
                 }
                 else
                 {
                     m_key.Unref();
                     m_value.Unref();
-                    lua_pop(l, 1);
                 }
+                lua_pop(l, 1);
                 return *this;
             }
 
