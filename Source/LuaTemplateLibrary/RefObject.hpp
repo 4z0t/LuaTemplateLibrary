@@ -286,17 +286,9 @@ namespace Lua
         template<typename T>
         RefObject(lua_State* l, const T& value) noexcept :Base(l)
         {
-            TypeParser<T>::Push(l, value);
+            TypeParser<std::decay_t<const T>>::Push(l, value);
             Ref();
         };
-
-        template<>
-        RefObject(lua_State* l, const RefTableObjectT& obj) noexcept : Base(l)
-        {
-            assert(l == obj.m_state);
-            obj.Push();
-            Ref();
-        }
 
         RefObject(RefObject&& obj) noexcept : Base(obj.m_state)
         {
@@ -310,6 +302,16 @@ namespace Lua
             Ref();
         }
 
+        template<typename T>
+        RefObject& operator=(const T& value)
+        {
+            Unref();
+            TypeParser<std::decay_t<const T>>::Push(this->m_state, value);
+            Ref();
+            return *this;
+        }
+
+        template<>
         RefObject& operator=(const RefObject& obj)
         {
             Unref();
@@ -319,21 +321,12 @@ namespace Lua
             return *this;
         }
 
+        template<>
         RefObject& operator=(const RefTableObjectT& obj)
         {
             Unref();
             obj.Push();
             this->m_state = obj.m_state;
-            Ref();
-            return *this;
-        }
-
-        template<typename T>
-        RefObject& operator=(T value)
-        {
-            using TArg = std::decay_t<T>;
-            Unref();
-            TypeParser<TArg>::Push(this->m_state, value);
             Ref();
             return *this;
         }
@@ -350,10 +343,8 @@ namespace Lua
         template<typename T>
         RefTableObjectT operator[](const T& key)
         {
-            RefObject key_obj{ this->m_state };
-            key_obj = key;
-            key_obj.Push();
             RefTableObjectT obj{ this->m_state };
+            TypeParser<std::decay_t<const T>>::Push(this->m_state, key);
             obj.m_key_ref = this->GetRef();
             Push();
             obj.m_table_ref = this->GetRef();
@@ -461,17 +452,17 @@ namespace Lua
         }
 
         template<typename T>
-        RefTableObject& operator=(T value)
+        RefTableObject& operator=(const T& value)
         {
-            using TArg = std::decay_t<T>;
             PushTable();
             PushKey();
-            TypeParser<TArg>::Push(this->m_state, value);
+            TypeParser<std::decay_t<const T>>::Push(this->m_state, value);
             lua_settable(this->m_state, -3);
             Pop();
             return *this;
         }
 
+        template<>
         RefTableObject& operator=(const RefClass& obj)
         {
             PushTable();
@@ -561,6 +552,7 @@ namespace Lua
 
         static void Push(lua_State* l, const RefObject<T>& value)
         {
+            assert(l == value.GetState());
             value.Push();
         }
     };
@@ -577,6 +569,7 @@ namespace Lua
 
         static void Push(lua_State* l, const Type& value)
         {
+            assert(l == value.GetState());
             value.Push();
         }
     };
