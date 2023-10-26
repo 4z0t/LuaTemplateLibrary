@@ -46,7 +46,7 @@ namespace Lua
         template<typename T>
         void Push(const T& value)
         {
-            return TypeParser<T>::Push(Unwrap(this), value);
+            return TypeParser<const_decay_t<T>>::Push(Unwrap(this), value);
         }
 
         void Pop(size_t n)

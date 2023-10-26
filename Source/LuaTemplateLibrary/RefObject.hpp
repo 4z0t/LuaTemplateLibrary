@@ -5,8 +5,6 @@
 
 namespace Lua
 {
-    template<typename T>
-    using const_decay_t = std::decay_t<const T>;
 
     struct RefGlobalAccess
     {

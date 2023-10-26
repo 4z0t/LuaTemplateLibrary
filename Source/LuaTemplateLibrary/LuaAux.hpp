@@ -3,6 +3,10 @@
 
 namespace Lua
 {
+    template<typename T>
+    using const_decay_t = std::decay_t<const T>;
+
+
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
         lua_pushcfunction(l, func);
@@ -12,7 +16,7 @@ namespace Lua
     template<typename T>
     inline void _PushValue(lua_State* l, const T& arg)
     {
-        TypeParser<T>::Push(l, arg);
+        TypeParser<const_decay_t<T>>::Push(l, arg);
     }
 
     template<size_t N>
@@ -24,7 +28,7 @@ namespace Lua
     template<size_t N, typename T, typename ...Ts>
     size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
     {
-        _PushValue(l, std::forward<std::decay_t<T>>(arg));
+        _PushValue(l, std::forward<T>(arg));
         return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
     }
 
