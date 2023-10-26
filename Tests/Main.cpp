@@ -359,6 +359,7 @@ void Test()
     cout << global["bool"] << endl;
     cout << global["RefFunc"](1) << endl;
     global["RefFunc"].Call(1);
+
 }
 
 int main()

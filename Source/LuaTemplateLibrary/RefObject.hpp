@@ -343,7 +343,6 @@ namespace Lua
             return *this;
         }
 
-        template<>
         RefObject& operator=(const RefObject& obj)
         {
             Unref();
@@ -353,7 +352,6 @@ namespace Lua
             return *this;
         }
 
-        template<>
         RefObject& operator=(const RefTableObjectT& obj)
         {
             Unref();

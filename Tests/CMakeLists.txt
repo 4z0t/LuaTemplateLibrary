@@ -21,7 +21,11 @@ add_executable(TestLTL
     ${LTL_TEST_SOURCE_FILES}
 )
 
-set_target_properties(TestLTL PROPERTIES
+add_executable(FreeTest_LTL
+    Main.cpp
+)
+
+set_target_properties(TestLTL FreeTest_LTL PROPERTIES
     CXX_STANDARD 17
 )
 
@@ -32,5 +36,16 @@ target_link_libraries(TestLTL
     Lua54
     GTest::gtest
 )
+target_link_libraries(FreeTest_LTL
+    LuaTemplateLibrary
+    Lua54
+)
+
+add_custom_command(
+        TARGET FreeTest_LTL  POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${CMAKE_CURRENT_SOURCE_DIR}/main.lua
+                ${CMAKE_CURRENT_BINARY_DIR}/main.lua)
+
 
 add_test(TestLTL TestLTL)
