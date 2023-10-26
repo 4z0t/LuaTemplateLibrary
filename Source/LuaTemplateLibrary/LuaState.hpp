@@ -65,10 +65,10 @@ namespace Lua
             Lua::RegisterClosure(Unwrap(this), name, func, std::forward<Ts>(args)...);
         }
 
-        template<typename RType = void, typename ...Ts>
-        RType Call(const char* name, Ts&&... args)
+        template<typename TReturn = void, typename ...Ts>
+        TReturn Call(const char* name, Ts&&... args)
         {
-            return Lua::CallFunction<RType>(Unwrap(this), name, std::forward<Ts>(args)...);
+            return Lua::CallFunction<TReturn>(Unwrap(this), name, std::forward<Ts>(args)...);
         }
 
         template<typename T>
@@ -138,10 +138,10 @@ namespace Lua
             return m_state->DoFile(path);
         }
 
-        template<typename RType = void, typename ...Ts>
-        RType Call(const char* name, Ts&&... args)
+        template<typename TReturn = void, typename ...Ts>
+        TReturn Call(const char* name, Ts&&... args)
         {
-            return m_state->Call<RType>(name, std::forward<Ts>(args)...);
+            return m_state->Call<TReturn>(name, std::forward<Ts>(args)...);
         }
 
         template<typename T>

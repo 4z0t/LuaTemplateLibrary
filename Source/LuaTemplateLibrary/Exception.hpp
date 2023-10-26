@@ -8,7 +8,7 @@ namespace Lua
     public:
         Exception(lua_State* l, int index) :std::exception(GetReason(l, index)), m_state(l) {}
 
-        lua_State* GetState()
+        lua_State* GetState()const
         {
             return m_state;
         }
