@@ -8,6 +8,7 @@ struct RefObjectTests : TestBase
 
 TEST_F(RefObjectTests, ValueAccess)
 {
+    using namespace Lua;
     Run("result = true");
     ASSERT_TRUE(Result().Is<bool>());
     ASSERT_TRUE(Result().To<bool>());
@@ -21,6 +22,15 @@ TEST_F(RefObjectTests, ValueAccess)
     ASSERT_FLOAT_EQ(Result().To<float>(), 4.f);
     ASSERT_DOUBLE_EQ(Result().To<double>(), 4.0);
     ASSERT_DOUBLE_EQ(Result().To<long double>(), 4.0);
+
+
+    Run("result = {a = 4}");
+    ASSERT_TRUE(Result().IsTable());
+    ASSERT_TRUE(Result()["a"].Is<int>());
+    
+    GRefObject key{ l, "a" };
+    ASSERT_TRUE(Result()[key].Is<int>());
+
 
 
 
