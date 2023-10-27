@@ -7,7 +7,6 @@
 #include "Exception.hpp"
 #include "FuncArguments.hpp"
 #include "FuncUtils.hpp"
-#include "LuaClass.hpp"
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
 #include "RefObject.hpp"

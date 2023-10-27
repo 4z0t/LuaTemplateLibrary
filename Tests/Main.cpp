@@ -6,51 +6,6 @@
 #include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
 
-
-namespace Tests
-{
-    struct TestClass
-    {
-        static const char* className;
-
-
-        static int Print(lua_State* l)
-        {
-            std::cout << "Hello!" << std::endl;
-
-            return 0;
-        }
-
-
-        static int Create(lua_State* l)
-        {
-            size_t nbytes = sizeof(TestClass);
-            TestClass* a = (TestClass*)lua_newuserdata(l, nbytes);
-
-            luaL_getmetatable(l, TestClass::className);
-            lua_setmetatable(l, -2);
-
-            return 1;  /* new userdatum is already on the stack */
-        }
-
-
-        inline static const luaL_Reg meta[] = {
-            {"print", TestClass::Print},
-            {"aboba", TestClass::Print},
-            {NULL, NULL}
-        };
-
-        inline static const luaL_Reg _class[] = {
-            {"new", TestClass::Create},
-            {NULL, NULL}
-        };
-    };
-
-    const char* TestClass::className = typeid(TestClass).name();
-
-}
-
-
 class Callable
 {
 public:
@@ -238,12 +193,6 @@ void Test()
     using namespace Lua;
     Lua::State lua_state{};
     lua_state.OpenLibs();
-    /*lua_State* l = luaL_newstate();
-    luaL_openlibs(l);
-    using namespace Tests;
-    Lua::ClassWrapper<TestClass>::Init(l, "TestClass", TestClass::_class);*/
-
-    //std::cout << TestClass::className << std::endl;
     {
 
         Vector3f v{ 1,2,3 };
