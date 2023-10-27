@@ -21,11 +21,10 @@ namespace Lua
 
         static int DestructorFunction(lua_State* l)
         {
-            if constexpr (std::is_destructible_v<T>)
-            {
-                T* data = static_cast<T*>(lua_touserdata(l, 1));
-                data->~T();
-            }
+
+            T* data = static_cast<T*>(lua_touserdata(l, 1));
+            data->~T();
+
             return 0;
         }
 
@@ -42,7 +41,7 @@ namespace Lua
 
         static void ThrowWrongType(lua_State* l, int index)
         {
-            luaL_error(l, "Expected %s but got %s", GetClassName(l),  lua_typename(l, lua_type(l, index)));
+            luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
         }
 
         static T* ValidateUserData(lua_State* l, int index)
@@ -100,7 +99,7 @@ namespace Lua
             PushClassTable(l);
             lua_pushstring(l, "className");
             lua_rawget(l, -2);
-            const char * s = lua_tostring(l, -1);
+            const char* s = lua_tostring(l, -1);
             lua_pop(l, 2);
             return s;
         }
