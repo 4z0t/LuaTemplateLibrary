@@ -383,6 +383,17 @@ struct MyUData
         this->a = a;
     }
 
+    void Hello(const char* s)const
+    {
+        std::cout << "Hello" << a << b << c << s << std::endl;
+    }
+
+    ~MyUData()
+    {
+        std::cout << "GG" << std::endl;
+    }
+
+
     int a, b, c;
 };
 
@@ -394,6 +405,7 @@ void ClassTest()
     Class<MyUData>(lua_state, "MyClass")
         .AddMethod<&MyUData::GetA>("GetA")
         .AddMethod<&MyUData::SetA, int>("SetA")
+        .AddMethod<&MyUData::Hello, const char*>("Hello")
         ;
 
     lua_state.Run(
@@ -401,8 +413,9 @@ void ClassTest()
         "local ud = MyClass()       "
         "print(type(ud))            "
         "print(ud:GetA())           "
-        "print(ud:SetA(2))           "
+        "print(ud:SetA(2))          "
         "print(ud:GetA())           "
+        "ud:Hello('aaaaaa')           "
     );
 
 }

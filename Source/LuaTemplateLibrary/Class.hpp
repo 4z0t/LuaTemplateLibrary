@@ -16,6 +16,8 @@ namespace Lua
             MakeCtor();
             MakeMetaTable();
             MakeClassTable();
+
+            AddMetaMethod("__gc", UData::DestructorFunction);
         }
 
         Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
@@ -27,15 +29,20 @@ namespace Lua
         {
             auto method = Closure<fn, UserDataValue<T>, TArgs...>::Function;
 
-            UData::PushMetaTable(m_state);
-            lua_pushstring(m_state, name);
-            lua_pushcfunction(m_state, method);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
+            AddMetaMethod(name, method);
 
             return *this;
         }
     private:
+
+        void AddMetaMethod(const char* name, lua_CFunction func)
+        {
+            UData::PushMetaTable(m_state);
+            lua_pushstring(m_state, name);
+            lua_pushcfunction(m_state, func);
+            lua_rawset(m_state, -3);
+            lua_pop(m_state, 1);
+        }
 
         void MakeCtor()
         {
