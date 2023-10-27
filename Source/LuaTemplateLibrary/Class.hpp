@@ -16,8 +16,11 @@ namespace Lua
             MakeCtor();
             MakeMetaTable();
             MakeClassTable();
-
-            AddMetaMethod("__gc", UData::DestructorFunction);
+            if constexpr (!std::is_trivially_destructible_v<T>)
+            {
+                //std::cout << "Assigning dtor for " << typeid(T).name() << std::endl;
+                AddMetaMethod("__gc", UData::DestructorFunction);
+            }
         }
 
         Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
