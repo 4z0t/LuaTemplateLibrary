@@ -1,6 +1,6 @@
 #pragma once
 #include "LuaAux.hpp"
-
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
