@@ -11,6 +11,8 @@
 #include "Lua/LuaLibrary.h"
 
 #define STATIC_FAIL(message) static_assert(false, message)
+#define lua_setregp(l, p) lua_rawsetp(l, LUA_REGISTRYINDEX, p)
+#define lua_getregp(l, p) lua_rawgetp(l, LUA_REGISTRYINDEX, p)
 
 namespace Lua::Internal
 {

@@ -58,7 +58,7 @@ namespace Lua
             lua_pushstring(m_state, "__index");
             lua_pushvalue(m_state, -2);
             lua_rawset(m_state, -3);
-            lua_rawsetp(m_state, LUA_REGISTRYINDEX, UData::GetMetaTableKey());
+            lua_setregp(m_state, UData::GetMetaTableKey());
         }
 
         void MakeClassTable()
@@ -67,7 +67,7 @@ namespace Lua
             lua_pushstring(m_state, "className");
             lua_pushstring(m_state, m_name.c_str());
             lua_rawset(m_state, -3);
-            lua_rawsetp(m_state, LUA_REGISTRYINDEX, UData::GetClassTableKey());
+            lua_setregp(m_state, UData::GetClassTableKey());
         }
 
         lua_State* m_state;

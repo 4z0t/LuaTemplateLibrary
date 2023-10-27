@@ -86,12 +86,12 @@ namespace Lua
 
         static int PushMetaTable(lua_State* l)
         {
-            return lua_rawgetp(l, LUA_REGISTRYINDEX, GetMetaTableKey());
+            return lua_getregp(l, GetMetaTableKey());
         }
 
         static int PushClassTable(lua_State* l)
         {
-            return lua_rawgetp(l, LUA_REGISTRYINDEX, GetClassTableKey());
+            return lua_getregp(l, GetClassTableKey());
         }
 
         static const char* GetClassName(lua_State* l)
