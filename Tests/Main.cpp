@@ -388,6 +388,11 @@ struct MyUData
         std::cout << "Hello" << a << b << c << s << std::endl;
     }
 
+    void Hello2(const char* s, const MyUData* other)const
+    {
+        std::cout << "Hello" << a << b << c << s << other->a << std::endl;
+    }
+
     ~MyUData()
     {
         std::cout << "GG" << std::endl;
@@ -406,6 +411,11 @@ void ClassTest()
         .AddMethod<&MyUData::GetA>("GetA")
         .AddMethod<&MyUData::SetA, int>("SetA")
         .AddMethod<&MyUData::Hello, const char*>("Hello")
+        .AddMethod<&MyUData::Hello2, const char*, UserDataValue<MyUData>>("Hello2")
+        ;
+
+    Class<Vector3f>(lua_state, "Vector")
+
         ;
 
     lua_state.Run(
@@ -416,6 +426,7 @@ void ClassTest()
         "print(ud:SetA(2))          "
         "print(ud:GetA())           "
         "ud:Hello('aaaaaa')           "
+        "ud:Hello2('aaaaaa', ud)           "
     );
 
 }
