@@ -51,11 +51,11 @@ namespace Lua
     {
         if constexpr (std::is_void_v<TReturn>)
         {
-            lua_call(l, n_args, 0);
+            lua_call(l, static_cast<int>(n_args), 0);
         }
         else
         {
-            lua_call(l, n_args, 1);
+            lua_call(l, static_cast<int>(n_args), 1);
             TReturn result = TypeParser<TReturn>::Get(l, 1);
             lua_pop(l, 1);
             return result;
@@ -81,7 +81,7 @@ namespace Lua
     void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
     {
         size_t n = PushArgs(l, std::forward<Ts>(args)...);
-        lua_pushcclosure(l, func, n);
+        lua_pushcclosure(l, func, static_cast<int>(n));
         lua_setglobal(l, name);
     }
 
