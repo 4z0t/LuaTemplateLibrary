@@ -407,6 +407,7 @@ void ClassTest()
     using namespace Lua;
     State lua_state{};
     lua_state.OpenLibs();
+    lua_state.ThrowExceptions();
     Class<MyUData>(lua_state, "MyClass")
         .AddMethod<&MyUData::GetA>("GetA")
         .AddMethod<&MyUData::SetA, int>("SetA")
@@ -417,18 +418,28 @@ void ClassTest()
     Class<Vector3f>(lua_state, "Vector")
 
         ;
+    try
+    {
 
-    lua_state.Run(
-        "print(tostring(MyClass))   "
-        "local ud = MyClass()       "
-        "print(type(ud))            "
-        "print(ud:GetA())           "
-        "print(ud:SetA(2))          "
-        "print(ud:GetA())           "
-        "ud:Hello('aaaaaa')           "
-        "ud:Hello2('aaaaaa', ud)           "
-    );
+        lua_state.Run(
+            "print(tostring(MyClass))   "
+            "local ud = MyClass()       "
+            "print(type(ud))            "
+            "print(ud:GetA())           "
+            "local v = Vector()         "   
+            "print(ud.SetA(v,2))        "
+            "print(ud:GetA())           "
+            "ud:Hello('aaaaaa')         "
+            "ud:Hello2('aaaaaa', ud)    "
+        );
+        std::cerr << lua_state.To<const char*>(-1) << std::endl;
 
+    }
+    catch (Exception& ex)
+    {
+        std::cerr << ex.what() << std::endl;
+        std::cerr << "Helooo" << std::endl;
+    }
 }
 
 int main()

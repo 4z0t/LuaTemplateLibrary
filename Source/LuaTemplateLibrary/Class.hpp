@@ -64,6 +64,9 @@ namespace Lua
         void MakeClassTable()
         {
             lua_newtable(m_state);
+            lua_pushstring(m_state, "className");
+            lua_pushstring(m_state, m_name.c_str());
+            lua_rawset(m_state, -3);
             lua_rawsetp(m_state, LUA_REGISTRYINDEX, UData::GetClassTableKey());
         }
 

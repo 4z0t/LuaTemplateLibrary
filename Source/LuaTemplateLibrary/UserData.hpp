@@ -32,17 +32,43 @@ namespace Lua
 
         static void ThrowInvalidUserData(lua_State* l, int index)
         {
-            //...
+            luaL_argerror(l, index, "invalind UserData");
+        }
+
+        static void ThrowWrongUserDataType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
+        }
+
+        static void ThrowWrongType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got %s", GetClassName(l),  lua_typename(l, lua_type(l, index)));
         }
 
         static T* ValidateUserData(lua_State* l, int index)
         {
             if (!lua_isuserdata(l, index))
             {
+                ThrowWrongType(l, index);
+                return nullptr;
+            }
+
+            if (!lua_getmetatable(l, index))
+            {
                 ThrowInvalidUserData(l, index);
                 return nullptr;
             }
-            //...
+
+            PushMetaTable(l);
+            bool res = lua_compare(l, -2, -1, LUA_OPEQ);
+            lua_pop(l, 2);
+
+            if (!res)
+            {
+                ThrowWrongUserDataType(l, index);
+                return nullptr;
+            }
+
             return static_cast<T*>(lua_touserdata(l, index));
         }
 
@@ -68,6 +94,17 @@ namespace Lua
         {
             return lua_rawgetp(l, LUA_REGISTRYINDEX, GetClassTableKey());
         }
+
+        static const char* GetClassName(lua_State* l)
+        {
+            PushClassTable(l);
+            lua_pushstring(l, "className");
+            lua_rawget(l, -2);
+            const char * s = lua_tostring(l, -1);
+            lua_pop(l, 2);
+            return s;
+        }
+
     };
 
     template<typename T>

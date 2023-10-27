@@ -1,6 +1,7 @@
 #pragma once
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
+#include "Exception.hpp"
 
 namespace Lua
 {
@@ -82,6 +83,11 @@ namespace Lua
             return luaL_dostring(Unwrap(this), s);
         }
 
+        lua_CFunction SetAtPanicFuntion(lua_CFunction func)
+        {
+            return lua_atpanic(this->Unwrap(), func);
+        }
+
     private:
         StateWrap() = delete;
         ~StateWrap() = delete;
@@ -103,6 +109,11 @@ namespace Lua
             if (m_state)
                 m_state->Close();
             m_state = nullptr;
+        }
+
+        void ThrowExceptions()
+        {
+            m_state->SetAtPanicFuntion(Exception::PanicFunc);
         }
 
         void OpenLibs()
