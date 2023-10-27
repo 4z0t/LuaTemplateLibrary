@@ -7,23 +7,29 @@ namespace Lua
 {
     namespace FuncUtility
     {
-        template<typename T, T Value>
-        using ValueContainer = std::integral_constant<T, Value>;
+        template<typename T>
+        struct IsUpvalueType : std::false_type {};
 
         template<typename T>
-        struct IncrementArgIndex : ValueContainer<size_t, 1> {};
+        struct IsUpvalueType<Upvalue<T>> : std::true_type {};
 
-        template<typename T>
-        struct IncrementArgIndex<Upvalue<T>> : ValueContainer<size_t, 0> {};
+        template<size_t Value>
+        using ValueContainer = std::integral_constant<size_t, Value>;
 
-        template<typename T>
-        struct IncrementUpvalueIndex : ValueContainer<size_t, 0> {};
+        template<bool Increment, size_t Value>
+        struct Incrementer;
 
-        template<typename T>
-        struct IncrementUpvalueIndex<Upvalue<T>> : ValueContainer<size_t, 1> {};
+        template<size_t Value>
+        struct Incrementer<true, Value> : ValueContainer<Value + 1> {};
 
-        template<typename T>
-        struct IsUpvalueType : std::bool_constant<IncrementUpvalueIndex<T>::value == 1> {};
+        template<size_t Value>
+        struct Incrementer<false, Value> : ValueContainer<Value> {};
+
+        template<typename T, size_t Index>
+        struct IncrementArgIndex : Incrementer<!IsUpvalueType<T>::value, Index> {};
+
+        template<typename T, size_t Index>
+        struct IncrementUpvalueIndex : Incrementer<IsUpvalueType<T>::value, Index> {};
 
         template<typename T, typename Optional = void>
         struct ArgExtractor
@@ -95,8 +101,8 @@ namespace Lua
         {
             std::get<ArgIndex + UpvalueIndex>(args) = ArgExtractor<TArg>::Get<ArgIndex, UpvalueIndex>(l);
             return GetArgs<
-                ArgIndex + IncrementArgIndex<TArg>::value,
-                UpvalueIndex + IncrementUpvalueIndex<TArg>::value,
+                IncrementArgIndex<TArg, ArgIndex>::value,
+                IncrementUpvalueIndex<TArg, UpvalueIndex>::value,
                 TArgsTuple, TArgs...>(l, args);
         }
 
@@ -118,8 +124,8 @@ namespace Lua
             if constexpr (IsUpvalueType<T>::value)
                 UpvalueReplacer<typename T::type>::Replace<UpvalueIndex>(l, std::get<ArgIndex + UpvalueIndex>(args));
             return ReplaceUpvalues<
-                ArgIndex + IncrementArgIndex<T>::value,
-                UpvalueIndex + IncrementUpvalueIndex<T>::value,
+                IncrementArgIndex<T, ArgIndex>::value,
+                IncrementUpvalueIndex<T, UpvalueIndex>::value,
                 TArgsTuple, Ts...>(l, args);
         }
 
