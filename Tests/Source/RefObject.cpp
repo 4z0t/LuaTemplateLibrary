@@ -197,8 +197,7 @@ TEST_F(RefObjectTests, SelfCallTest)
         "}                                      "
     );
 
-    auto result = Result();
-    auto s = result.SelfCall<GRefObject>("func", "1", 5);
+    auto s = Result().SelfCall<GRefObject>("func", "1", 5);
     ASSERT_TRUE(s.Is<const char*>());
     ASSERT_STREQ(s.To<const char*>(), "My string11111");
 

@@ -426,7 +426,7 @@ void ClassTest()
             "local ud = MyClass()       "
             "print(type(ud))            "
             "print(ud:GetA())           "
-            "local v = Vector()         "   
+            "local v = Vector()         "
             "print(ud.SetA(v,2))        "
             "print(ud:GetA())           "
             "ud:Hello('aaaaaa')         "
