@@ -59,7 +59,7 @@ namespace Lua
             template<size_t ArgI, size_t UpvalueI>
             static constexpr typename StackType<T>::TReturn Get(lua_State* l)
             {
-                return StackType<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
+                return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
             }
         };
 
@@ -86,7 +86,7 @@ namespace Lua
                 if constexpr (!std::is_pointer_v<T>)
                 {
                     StackType<T>::Push(l, value);
-                    lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
+                    lua_replace(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
                 }
             }
         };
