@@ -5,6 +5,7 @@ set(LTL_HEADERS
     ${LTL_DIR}/FuncArguments.hpp
     ${LTL_DIR}/FuncUtils.hpp
     ${LTL_DIR}/LuaAux.hpp
+    ${LTL_DIR}/UserData.hpp
     ${LTL_DIR}/LuaClass.hpp
     ${LTL_DIR}/LuaFunctions.hpp
     ${LTL_DIR}/LuaState.hpp
