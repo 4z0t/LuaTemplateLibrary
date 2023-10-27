@@ -127,22 +127,20 @@ private:
     {
         if (!assigned)
             AssignTable(l);
-        lua_pushlightuserdata(l, GetIndex());
-        lua_gettable(l, LUA_REGISTRYINDEX);
+        lua_rawgetp(l, LUA_REGISTRYINDEX, GetIndex());
         assert(lua_istable(l, -1));
     }
 
     static void AssignTable(lua_State* l)
     {
-        lua_pushlightuserdata(l, GetIndex());
         lua_newtable(l);
-        lua_settable(l, LUA_REGISTRYINDEX);
+        lua_rawsetp(l, LUA_REGISTRYINDEX, GetIndex());
         assigned = true;
     }
 
-    static constexpr void* GetIndex()
+    static constexpr const void* GetIndex()
     {
-        return (void*)(&index);
+        return &index;
     }
     static const char index = 0;
     static bool assigned;
