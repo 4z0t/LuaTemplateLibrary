@@ -19,7 +19,7 @@ namespace Lua
     };
 
     template<typename T>
-    struct TypeParser
+    struct StackType
     {
         static T Get(lua_State* l, int index)
         {
@@ -39,25 +39,25 @@ namespace Lua
     };
 
     template<>
-    struct TypeParser<char> : Internal::IntParser<char> {};
+    struct StackType<char> : Internal::IntParser<char> {};
     template<>
-    struct TypeParser<unsigned char> : Internal::IntParser<unsigned char> {};
+    struct StackType<unsigned char> : Internal::IntParser<unsigned char> {};
     template<>
-    struct TypeParser<int> : Internal::IntParser<int> {};
+    struct StackType<int> : Internal::IntParser<int> {};
     template<>
-    struct TypeParser<unsigned int> : Internal::IntParser<unsigned int> {};
+    struct StackType<unsigned int> : Internal::IntParser<unsigned int> {};
     template<>
-    struct TypeParser<short> : Internal::IntParser<short> {};
+    struct StackType<short> : Internal::IntParser<short> {};
     template<>
-    struct TypeParser<unsigned short> : Internal::IntParser<unsigned short> {};
+    struct StackType<unsigned short> : Internal::IntParser<unsigned short> {};
     template<>
-    struct TypeParser<long long> : Internal::IntParser<long long> {};
+    struct StackType<long long> : Internal::IntParser<long long> {};
     template<>
-    struct TypeParser<unsigned long long> : Internal::IntParser<unsigned long long> {};
+    struct StackType<unsigned long long> : Internal::IntParser<unsigned long long> {};
 
 
     /* template<>
-     struct TypeParser<std::nullptr_t>
+     struct StackType<std::nullptr_t>
      {
          static bool Check(lua_State* l, int index)
          {
@@ -71,14 +71,14 @@ namespace Lua
      };*/
 
     template<>
-    struct TypeParser<float> : Internal::FloatParser<float> {};
+    struct StackType<float> : Internal::FloatParser<float> {};
     template<>
-    struct TypeParser<double> : Internal::FloatParser<double> {};
+    struct StackType<double> : Internal::FloatParser<double> {};
     template<>
-    struct TypeParser<long double> : Internal::FloatParser<long double> {};
+    struct StackType<long double> : Internal::FloatParser<long double> {};
 
     template<>
-    struct TypeParser<bool>
+    struct StackType<bool>
     {
         static bool Get(lua_State* l, int index)
         {
@@ -97,7 +97,7 @@ namespace Lua
     };
 
     template<>
-    struct TypeParser<const char*>
+    struct StackType<const char*>
     {
         static const char* Get(lua_State* l, int index)
         {
@@ -116,21 +116,21 @@ namespace Lua
     };
 
     template<>
-    struct TypeParser<std::string> : public TypeParser<const char*>
+    struct StackType<std::string> : public StackType<const char*>
     {
         static std::string Get(lua_State* l, int index)
         {
-            return { TypeParser<const char*>::Get(l, index) };
+            return { StackType<const char*>::Get(l, index) };
         }
 
         static void Push(lua_State* l, const std::string& value)
         {
-            TypeParser<const char*>::Push(l, value.c_str());
+            StackType<const char*>::Push(l, value.c_str());
         }
     };
 
     template<>
-    struct TypeParser<lua_CFunction>
+    struct StackType<lua_CFunction>
     {
         static lua_CFunction Get(lua_State* l, int index)
         {
@@ -149,7 +149,7 @@ namespace Lua
     };
 
     template<typename T>
-    struct TypeParser<std::vector<T>>
+    struct StackType<std::vector<T>>
     {
         static std::vector<T> Get(lua_State* l, int index)
         {
@@ -158,7 +158,7 @@ namespace Lua
             std::vector<T> result(size);
             for (size_t i = 0; i < size; i++) {
                 lua_rawgeti(l, -1, i + 1);
-                result[i] = TypeParser<T>::Get(l, -1);
+                result[i] = StackType<T>::Get(l, -1);
                 lua_pop(l, 1);
             }
             lua_pop(l, 1);
@@ -174,7 +174,7 @@ namespace Lua
         {
             lua_createtable(l, value.size(), 0);
             for (size_t i = 0; i < value.size(); i++) {
-                TypeParser<T>::Push(l, value[i]);
+                StackType<T>::Push(l, value[i]);
                 lua_rawseti(l, -2, i + 1);
             }
         }

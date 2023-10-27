@@ -114,7 +114,7 @@ namespace Lua
         T To()const
         {
             AutoPop pop(*this);
-            return TypeParser<T>::Get(m_state, -1);
+            return StackType<T>::Get(m_state, -1);
         }
 
         template<typename T>
@@ -188,7 +188,7 @@ namespace Lua
         bool Is()const
         {
             AutoPop pop(*this);
-            return TypeParser<T>::Check(m_state, -1);
+            return StackType<T>::Check(m_state, -1);
         }
 
         bool IsNil()const
@@ -244,7 +244,7 @@ namespace Lua
         bool Compare(const T& value)const
         {
             this->Push();
-            TypeParser<const_decay_t<T>>::Push(m_state, value);
+            StackType<const_decay_t<T>>::Push(m_state, value);
             bool res = lua_compare(m_state, -2, -1, COMPARE_OP);
             lua_pop(m_state, 2);
             return res;
@@ -316,7 +316,7 @@ namespace Lua
         template<typename T>
         RefObject(lua_State* l, const T& value) noexcept :Base(l)
         {
-            TypeParser<const_decay_t<T>>::Push(l, value);
+            StackType<const_decay_t<T>>::Push(l, value);
             Ref();
         };
 
@@ -336,7 +336,7 @@ namespace Lua
         RefObject& operator=(const T& value)
         {
             Unref();
-            TypeParser<const_decay_t<T>>::Push(this->m_state, value);
+            StackType<const_decay_t<T>>::Push(this->m_state, value);
             Ref();
             return *this;
         }
@@ -372,7 +372,7 @@ namespace Lua
         RefTableObjectT operator[](const T& key)
         {
             RefTableObjectT obj{ this->m_state };
-            TypeParser<const_decay_t<T>>::Push(this->m_state, key);
+            StackType<const_decay_t<T>>::Push(this->m_state, key);
             obj.m_key_ref = this->GetRef();
             Push();
             obj.m_table_ref = this->GetRef();
@@ -484,7 +484,7 @@ namespace Lua
         {
             PushTable();
             PushKey();
-            TypeParser<const_decay_t<T>>::Push(this->m_state, value);
+            StackType<const_decay_t<T>>::Push(this->m_state, value);
             lua_settable(this->m_state, -3);
             Pop();
             return *this;
@@ -566,7 +566,7 @@ namespace Lua
     using GRefObject = RefObject<RefGlobalAccess>;
 
     template<typename T>
-    struct TypeParser<RefObject<T>>
+    struct StackType<RefObject<T>>
     {
         static RefObject<T> Get(lua_State* l, int index)
         {
@@ -586,7 +586,7 @@ namespace Lua
     };
 
     template<typename T>
-    struct TypeParser<RefTableObject<T>>
+    struct StackType<RefTableObject<T>>
     {
         using Type = RefTableObject<T>;
 

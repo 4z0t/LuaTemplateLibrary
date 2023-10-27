@@ -31,7 +31,7 @@ namespace Lua
             template<size_t ArgI, size_t UpvalueI>
             static 	constexpr T Get(lua_State* l)
             {
-                return TypeParser<T>::Get(l, ArgI + 1);
+                return StackType<T>::Get(l, ArgI + 1);
             }
         };
 
@@ -41,8 +41,8 @@ namespace Lua
             template<size_t ArgI, size_t UpvalueI>
             static 	constexpr T Get(lua_State* l)
             {
-                if (TypeParser<T>::Check(l, ArgI + 1))
-                    return TypeParser<T>::Get(l, ArgI + 1);
+                if (StackType<T>::Check(l, ArgI + 1))
+                    return StackType<T>::Get(l, ArgI + 1);
                 return Default<T>::value;
             }
         };
@@ -53,7 +53,7 @@ namespace Lua
             template<size_t ArgI, size_t UpvalueI>
             static constexpr T Get(lua_State* l)
             {
-                return TypeParser<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
+                return StackType<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
             }
         };
 
@@ -65,8 +65,8 @@ namespace Lua
             template<size_t ArgI, size_t UpvalueI>
             static constexpr ReturnT Get(lua_State* l)
             {
-                if (TypeParser<ReturnT>::Check(l, ArgI + 1))
-                    return TypeParser<ReturnT>::Get(l, ArgI + 1);
+                if (StackType<ReturnT>::Check(l, ArgI + 1))
+                    return StackType<ReturnT>::Get(l, ArgI + 1);
                 return T::value;
             }
         };
@@ -79,7 +79,7 @@ namespace Lua
             {
                 if constexpr (!std::is_pointer_v<T>)
                 {
-                    TypeParser<T>::Push(l, value);
+                    StackType<T>::Push(l, value);
                     lua_replace(l, lua_upvalueindex((int)UpvalueI + 1));
                 }
             }

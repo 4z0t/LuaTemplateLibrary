@@ -46,7 +46,7 @@ namespace Lua
         template<typename T>
         void Push(const T& value)
         {
-            return TypeParser<const_decay_t<T>>::Push(Unwrap(this), value);
+            return StackType<const_decay_t<T>>::Push(Unwrap(this), value);
         }
 
         void Pop(size_t n)
@@ -74,7 +74,7 @@ namespace Lua
         template<typename T>
         T Get(int index)
         {
-            return TypeParser<T>::Get(Unwrap(this), index);
+            return StackType<T>::Get(Unwrap(this), index);
         }
 
         int Run(const char* s)

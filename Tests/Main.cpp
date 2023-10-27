@@ -153,7 +153,7 @@ struct Vector3f
 };
 
 template<>
-struct Lua::TypeParser<Vector3f>
+struct Lua::StackType<Vector3f>
 {
 	static bool Check(lua_State* l, int index)
 	{
@@ -191,7 +191,7 @@ struct Lua::TypeParser<Vector3f>
 };
 
 template<>
-struct Lua::TypeParser<Vector3f*>
+struct Lua::StackType<Vector3f*>
 {
 	static bool Check(lua_State* l, int index)
 	{

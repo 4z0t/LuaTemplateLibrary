@@ -16,7 +16,7 @@ namespace Lua
     template<typename T>
     inline void _PushValue(lua_State* l, const T& arg)
     {
-        TypeParser<const_decay_t<T>>::Push(l, arg);
+        StackType<const_decay_t<T>>::Push(l, arg);
     }
 
     template<size_t N>
@@ -56,7 +56,7 @@ namespace Lua
         else
         {
             lua_call(l, static_cast<int>(n_args), 1);
-            TReturn result = TypeParser<TReturn>::Get(l, 1);
+            TReturn result = StackType<TReturn>::Get(l, 1);
             lua_pop(l, 1);
             return result;
         }
@@ -88,7 +88,7 @@ namespace Lua
     template<typename T>
     T GetArg(lua_State* l, int index)
     {
-        return TypeParser<T>::Get(l, index);
+        return StackType<T>::Get(l, index);
     }
 
     template<size_t N, typename TArgsTuple>
