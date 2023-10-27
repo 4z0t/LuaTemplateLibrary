@@ -78,9 +78,12 @@ namespace Lua
             return StackType<T>::Get(Unwrap(this), index);
         }
 
-        int Run(const char* s)
+        void Run(const char* s)
         {
-            return luaL_dostring(Unwrap(this), s);
+            if (luaL_dostring(Unwrap(this), s))
+            {
+                lua_error(Unwrap(this));
+            }
         }
 
         lua_CFunction SetAtPanicFuntion(lua_CFunction func)
@@ -166,7 +169,7 @@ namespace Lua
             return m_state;
         }
 
-        int Run(const char* s)
+        void Run(const char* s)
         {
             return m_state->Run(s);
         }

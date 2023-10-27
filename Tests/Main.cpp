@@ -432,13 +432,11 @@ void ClassTest()
             "ud:Hello('aaaaaa')         "
             "ud:Hello2('aaaaaa', ud)    "
         );
-        std::cerr << lua_state.To<const char*>(-1) << std::endl;
 
     }
     catch (Exception& ex)
     {
         std::cerr << ex.what() << std::endl;
-        std::cerr << "Helooo" << std::endl;
     }
 }
 
