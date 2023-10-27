@@ -1,10 +1,10 @@
 #pragma once
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
+#include "FuncArguments.hpp"
 
 namespace Lua
 {
-
     template<typename T>
     struct UserData
     {
@@ -43,7 +43,7 @@ namespace Lua
                 return nullptr;
             }
             //...
-
+            return static_cast<T*>(lua_touserdata(l, index));
         }
 
         static const void* GetMetaTableKey()
@@ -69,4 +69,19 @@ namespace Lua
             return lua_rawgetp(l, LUA_REGISTRYINDEX, GetClassTableKey());
         }
     };
+
+    template<typename T>
+    struct UserDataValue : TypeBase<T*> {};
+
+    template<typename T>
+    struct StackType<UserDataValue<T>>
+    {
+        using TReturn = T*;
+
+        static TReturn Get(lua_State* l, int index)
+        {
+            return UserData<T>::ValidateUserData(l, index);
+        }
+    };
+
 }

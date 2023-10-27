@@ -155,6 +155,8 @@ struct Vector3f
 template<>
 struct Lua::StackType<Vector3f>
 {
+	using TReturn = Vector3f;
+
 	static bool Check(lua_State* l, int index)
 	{
 		return lua_istable(l, index);
@@ -193,6 +195,8 @@ struct Lua::StackType<Vector3f>
 template<>
 struct Lua::StackType<Vector3f*>
 {
+	using TReturn = Vector3f*;
+
 	static bool Check(lua_State* l, int index)
 	{
 		return lua_isuserdata(l, index);
@@ -362,7 +366,31 @@ void Test()
 
 }
 
+struct MyUData
+{
+	MyUData():a(1),b(2),c(3)
+	{
+
+	}
+
+	int GetA()const
+	{
+		return a;
+	}
+
+	int a, b, c;
+};
+
+void ClassTest()
+{
+	using namespace Lua;
+	State lua_state{};
+	lua_state.OpenLibs();
+	Class<MyUData>(lua_state).AddMethod<&MyUData::GetA>("GetA");
+}
+
 int main()
 {
+	ClassTest();
 	Test();
 }

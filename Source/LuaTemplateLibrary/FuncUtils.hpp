@@ -29,7 +29,7 @@ namespace Lua
         struct ArgExtractor
         {
             template<size_t ArgI, size_t UpvalueI>
-            static 	constexpr T Get(lua_State* l)
+            static constexpr typename StackType<T>::TReturn Get(lua_State* l)
             {
                 return StackType<T>::Get(l, ArgI + 1);
             }
@@ -39,7 +39,7 @@ namespace Lua
         struct ArgExtractor<Default<T>>
         {
             template<size_t ArgI, size_t UpvalueI>
-            static 	constexpr T Get(lua_State* l)
+            static 	constexpr typename StackType<T>::TReturn Get(lua_State* l)
             {
                 if (StackType<T>::Check(l, ArgI + 1))
                     return StackType<T>::Get(l, ArgI + 1);
@@ -51,7 +51,7 @@ namespace Lua
         struct ArgExtractor<Upvalue<T>>
         {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr typename StackType<T>::TReturn Get(lua_State* l)
             {
                 return StackType<T>::Get(l, lua_upvalueindex((int)UpvalueI + 1));
             }

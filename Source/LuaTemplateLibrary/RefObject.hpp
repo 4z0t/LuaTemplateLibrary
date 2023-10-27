@@ -568,7 +568,9 @@ namespace Lua
     template<typename T>
     struct StackType<RefObject<T>>
     {
-        static RefObject<T> Get(lua_State* l, int index)
+        using TReturn = RefObject<T>;
+
+        static TReturn Get(lua_State* l, int index)
         {
             return RefObject<T>::FromStack(l, index);
         }
