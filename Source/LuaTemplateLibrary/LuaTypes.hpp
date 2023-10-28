@@ -186,7 +186,7 @@ namespace Lua
         {
             lua_createtable(l, value.size(), 0);
             for (size_t i = 0; i < value.size(); i++) {
-                StackType<T>::Push(l, value[i]);
+                PushValue(l, value[i]);
                 lua_rawseti(l, -2, i + 1);
             }
         }

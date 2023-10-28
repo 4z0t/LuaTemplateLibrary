@@ -85,7 +85,7 @@ namespace Lua
             {
                 if constexpr (!std::is_pointer_v<T>)
                 {
-                    StackType<T>::Push(l, value);
+                    PushValue(l, value);
                     lua_replace(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
                 }
             }

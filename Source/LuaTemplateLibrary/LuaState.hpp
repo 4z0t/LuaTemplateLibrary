@@ -47,7 +47,7 @@ namespace Lua
         template<typename T>
         void Push(const T& value)
         {
-            return StackType<const_decay_t<T>>::Push(Unwrap(this), value);
+            return PushValue(Unwrap(this), value);
         }
 
         void Pop(size_t n)
