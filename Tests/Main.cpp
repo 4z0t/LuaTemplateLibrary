@@ -317,7 +317,12 @@ void Test()
 
 struct MyUData
 {
-    MyUData() :a(1), b(2), c(3)
+    MyUData() :MyUData(1, 2, 3)
+    {
+
+    }
+
+    MyUData(int a, int b, int c) :a(a), b(b), c(c)
     {
 
     }
@@ -345,6 +350,12 @@ struct MyUData
     ~MyUData()
     {
         std::cout << "GG" << std::endl;
+    }
+
+    // todo such methods
+    MyUData Double()const
+    {
+        return MyUData{ a * 2,b * 2,c * 2 };
     }
 
 

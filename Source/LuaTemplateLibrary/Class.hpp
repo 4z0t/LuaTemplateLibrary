@@ -25,8 +25,6 @@ namespace Lua
 
         Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
 
-
-
         template<auto fn, typename ...TArgs>
         Class& AddMethod(const char* name)
         {

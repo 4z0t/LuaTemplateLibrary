@@ -118,6 +118,8 @@ namespace Lua
         {
             return UserData<T>::ValidateUserData(l, index);
         }
+
+
     };
 
 }
