@@ -182,6 +182,7 @@ TEST_F(RefObjectTests, AccessClasses)
 
 TEST_F(RefObjectTests, SelfCallTest)
 {
+
     using namespace Lua;
     Run("result = {                             "
         "   func = function(self, s, n)         "
@@ -194,11 +195,19 @@ TEST_F(RefObjectTests, SelfCallTest)
         "   custom_string = 'My string',        "
         "}                                      "
     );
-
-    auto s = Result().SelfCall<GRefObject>("func", "1", 5);
-    ASSERT_TRUE(s.Is<const char*>());
-    ASSERT_STREQ(s.To<const char*>(), "My string11111");
-
+    {
+        auto s = Result().SelfCall<GRefObject>("func", "1", 5);
+        ASSERT_TRUE(s.Is<const char*>());
+        ASSERT_STREQ(s.To<const char*>(), "My string11111");
+    }
+    {
+        ASSERT_THROW(Result()["func"].Call<GRefObject>("1", 5), Exception);
+    }
+    {
+        auto s = Result()["func"].Call<GRefObject>(Result(), "1", 5);
+        ASSERT_TRUE(s.Is<const char*>());
+        ASSERT_STREQ(s.To<const char*>(), "My string11111");
+    }
 
 }
 
