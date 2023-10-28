@@ -14,6 +14,12 @@ namespace Lua
     }
 
     template<typename T>
+    T GetValue(lua_State* l, int index)
+    {
+        return StackType<T>::Get(l, index);
+    }
+
+    template<typename T>
     inline void PushValue(lua_State* l, const T& arg)
     {
         StackType<const_decay_t<T>>::Push(l, arg);
@@ -56,7 +62,7 @@ namespace Lua
         else
         {
             lua_call(l, static_cast<int>(n_args), 1);
-            TReturn result = StackType<TReturn>::Get(l, 1);
+            TReturn result = GetValue<TReturn>(l, -1);
             lua_pop(l, 1);
             return result;
         }
@@ -85,12 +91,6 @@ namespace Lua
         lua_setglobal(l, name);
     }
 
-    template<typename T>
-    T GetArg(lua_State* l, int index)
-    {
-        return StackType<T>::Get(l, index);
-    }
-
     template<size_t N, typename TArgsTuple>
     constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
     {
@@ -100,7 +100,7 @@ namespace Lua
     template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
     constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
     {
-        std::get<N>(args) = GetArg<TArg>(l, N + 1);
+        std::get<N>(args) = GetValue<TArg>(l, N + 1);
         return GetArgs<N + 1, TArgsTuple, TArgs...>(l, args);
     }
 
@@ -113,7 +113,7 @@ namespace Lua
     template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
     constexpr size_t GetUpvalues(lua_State* l, TArgsTuple& args)
     {
-        std::get<N>(args) = GetArg<TArg>(l, lua_upvalueindex((int)N + 1));
+        std::get<N>(args) = GetValue<TArg>(l, lua_upvalueindex((int)N + 1));
         return GetUpvalues<N + 1, TArgsTuple, TArgs...>(l, args);
     }
 

@@ -171,8 +171,7 @@ namespace Lua
         TReturn SelfCall(const char* key, TArgs&& ...args)
         {
             Push();
-            lua_pushstring(m_state, key);
-            lua_gettable(m_state, -2);
+            lua_getfield(m_state, -1, key);
             lua_rotate(m_state, -2, 1);
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
             return CallStack<TReturn>(m_state, n);
