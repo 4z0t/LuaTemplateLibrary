@@ -78,7 +78,7 @@ namespace Lua
             return GetValue<T>(Unwrap(this), index);
         }
 
-        void Run(const char* s)
+        void Run(const char* const s)
         {
             if (luaL_dostring(Unwrap(this), s))
             {
@@ -135,19 +135,19 @@ namespace Lua
             return m_state->Pop(n);
         }
 
-        State& AddFunction(const char* name, lua_CFunction func)
+        State& AddFunction(const char* const name, lua_CFunction func)
         {
             return this->AddClosure(name, func);
         }
 
         template<typename ...Ts>
-        State& AddClosure(const char* name, lua_CFunction func, Ts&&... args)
+        State& AddClosure(const char* const name, lua_CFunction func, Ts&&... args)
         {
             m_state->RegisterClosure(name, func, std::forward<Ts>(args)...);
             return *this;
         }
 
-        bool DoFile(const char* path)
+        bool DoFile(const char* const path)
         {
             return m_state->DoFile(path);
         }
@@ -169,9 +169,14 @@ namespace Lua
             return m_state;
         }
 
-        void Run(const char* s)
+        void Run(const char* const s)
         {
             return m_state->Run(s);
+        }
+
+        void Run(const std::string& s)
+        {
+            return Run(s.c_str());
         }
 
     private:
