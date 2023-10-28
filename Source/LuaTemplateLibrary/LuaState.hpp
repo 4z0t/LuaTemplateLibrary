@@ -75,7 +75,7 @@ namespace Lua
         template<typename T>
         T Get(int index)
         {
-            return StackType<T>::Get(Unwrap(this), index);
+            return GetValue<T>(Unwrap(this), index);
         }
 
         void Run(const char* s)
