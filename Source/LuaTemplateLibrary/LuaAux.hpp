@@ -14,7 +14,7 @@ namespace Lua
     }
 
     template<typename T>
-    inline void _PushValue(lua_State* l, const T& arg)
+    inline void PushValue(lua_State* l, const T& arg)
     {
         StackType<const_decay_t<T>>::Push(l, arg);
     }
@@ -28,7 +28,7 @@ namespace Lua
     template<size_t N, typename T, typename ...Ts>
     size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
     {
-        _PushValue(l, std::forward<T>(arg));
+        PushValue(l, std::forward<T>(arg));
         return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
     }
 
@@ -136,7 +136,7 @@ namespace Lua
     template<typename T>
     inline void _PushResult(lua_State* l, const T& result)
     {
-        _PushValue<T>(l, result);
+        PushValue<T>(l, result);
     }
 
     template<typename T>
@@ -165,7 +165,7 @@ namespace Lua
     {
         if constexpr (!std::is_pointer<T>::value)
         {
-            _PushValue<T>(l, std::get<Index>(upvalues));
+            PushValue<T>(l, std::get<Index>(upvalues));
             lua_replace(l, lua_upvalueindex((int)Index + 1));
         }
         return _ReplaceUpvalue<Index + 1, TResult, Ts...>(l, upvalues);

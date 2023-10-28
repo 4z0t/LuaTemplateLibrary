@@ -244,7 +244,7 @@ namespace Lua
         bool Compare(const T& value)const
         {
             this->Push();
-            StackType<const_decay_t<T>>::Push(m_state, value);
+            PushValue(m_state, value);
             bool res = lua_compare(m_state, -2, -1, COMPARE_OP);
             lua_pop(m_state, 2);
             return res;
@@ -316,7 +316,7 @@ namespace Lua
         template<typename T>
         RefObject(lua_State* l, const T& value) noexcept :Base(l)
         {
-            StackType<const_decay_t<T>>::Push(l, value);
+            PushValue(l, value);
             Ref();
         };
 
@@ -336,7 +336,7 @@ namespace Lua
         RefObject& operator=(const T& value)
         {
             Unref();
-            StackType<const_decay_t<T>>::Push(this->m_state, value);
+            PushValue(this->m_state, value);
             Ref();
             return *this;
         }
@@ -372,7 +372,7 @@ namespace Lua
         RefTableObjectT operator[](const T& key)
         {
             RefTableObjectT obj{ this->m_state };
-            StackType<const_decay_t<T>>::Push(this->m_state, key);
+            PushValue(this->m_state, key);
             obj.m_key_ref = this->GetRef();
             Push();
             obj.m_table_ref = this->GetRef();
@@ -484,7 +484,7 @@ namespace Lua
         {
             PushTable();
             PushKey();
-            StackType<const_decay_t<T>>::Push(this->m_state, value);
+            PushValue(this->m_state, value);
             lua_settable(this->m_state, -3);
             Pop();
             return *this;
