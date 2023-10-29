@@ -377,12 +377,12 @@ void ClassTest()
         .AddMethod<&MyUData::SetA, int>("SetA")
         .AddMethod<&MyUData::Hello, const char*>("Hello")
         .AddMethod<&MyUData::Hello2, const char*, UDValue<MyUData>>("Hello2")
-        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, UDValue<MyUData>)>{})
-        .AddMethod("Double", Method<MyUData, &MyUData::Double, UDValue<MyUData>()>{});
+        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
+        .AddMethod("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
     ;
 
     Class<Vector3f>(lua_state, "Vector")
-        .AddMethod("__add", Method<Vector3f, &Vector3f::operator+, UDValue<Vector3f>(UDValue<Vector3f>)>{});
+        //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
 
     ;
     try

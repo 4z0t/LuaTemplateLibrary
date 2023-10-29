@@ -18,11 +18,20 @@ namespace Lua
     public:
         using TClass = Class<C>;
 
+        template<typename T>
+        struct AddUserDataValue : TypeBase<T> {};
+
+        template<>
+        struct AddUserDataValue<C> : TypeBase<UserDataValue<C>> {};
+
+        template<typename T>
+        using AUDV_t = typename AddUserDataValue<T>::type;
+
         Method() = default;
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, TReturn(UserDataValue<C>, TArgs...)>::Function;
+            auto method = Closure<fn, AUDV_t<TReturn>(UserDataValue<C>, AUDV_t<TArgs>...)>::Function;
             c.AddMetaMethod(name, method);
         }
     };
