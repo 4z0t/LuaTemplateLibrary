@@ -11,11 +11,7 @@ namespace Lua
         static int ConstructorFunction(lua_State* l)
         {
             new(lua_newuserdata(l, sizeof(T))) T();
-            if (PushMetaTable(l) != LUA_TTABLE)
-            {
-                throw std::logic_error("The class was't registered");
-            }
-            lua_setmetatable(l, -2);
+            SetClassMetaTable(l);
             return 1;
         }
 
@@ -23,6 +19,11 @@ namespace Lua
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
             new(lua_newuserdata(l, sizeof(T))) T(std::forward<T>(other));
+            SetClassMetaTable(l);
+        }
+
+        static void SetClassMetaTable(lua_State* l)
+        {
             if (PushMetaTable(l) != LUA_TTABLE)
             {
                 throw std::logic_error("The class was't registered");
