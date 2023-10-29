@@ -399,6 +399,8 @@ void ClassTest()
             "local ud2 = ud:Double()    "
             "print(type(ud2))   "
             "print(ud2:GetA())  "
+            "print(ud2.GetA(ud))  "
+            "print(setmetatable(ud, {}))  "
         );
 
     }
