@@ -363,6 +363,8 @@ struct MyUData
 
     int a, b, c;
 };
+template<typename T>
+using  UDValue = Lua::UserDataValue<T>;
 
 void ClassTest()
 {
@@ -374,14 +376,15 @@ void ClassTest()
         .AddMethod<&MyUData::GetA>("GetA")
         .AddMethod<&MyUData::SetA, int>("SetA")
         .AddMethod<&MyUData::Hello, const char*>("Hello")
-        .AddMethod<&MyUData::Hello2, const char*, UserDataValue<MyUData>>("Hello2")
-        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, UserDataValue<MyUData>)>{})
-        .AddMethod("Double", Method<MyUData, &MyUData::Double, UserDataValue<MyUData>()>{});
+        .AddMethod<&MyUData::Hello2, const char*, UDValue<MyUData>>("Hello2")
+        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, UDValue<MyUData>)>{})
+        .AddMethod("Double", Method<MyUData, &MyUData::Double, UDValue<MyUData>()>{});
     ;
 
     Class<Vector3f>(lua_state, "Vector")
+        .AddMethod("__add", Method<Vector3f, &Vector3f::operator+, UDValue<Vector3f>(UDValue<Vector3f>)>{});
 
-        ;
+    ;
     try
     {
 
