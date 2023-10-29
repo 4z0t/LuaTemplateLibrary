@@ -8,13 +8,6 @@ namespace Lua
     template<typename T>
     struct UserData
     {
-        static int ConstructorFunction(lua_State* l)
-        {
-            new(lua_newuserdata(l, sizeof(T))) T();
-            SetClassMetaTable(l);
-            return 1;
-        }
-
         static void CopyFunction(lua_State* l, T&& other)
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");

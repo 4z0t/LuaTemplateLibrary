@@ -3,6 +3,7 @@
 #include "UserData.hpp"
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
+#include "ClassConstructor.hpp"
 
 namespace Lua
 {
@@ -85,6 +86,8 @@ namespace Lua
             return *this;
         }
 
+
+
         void AddMetaMethod(const char* name, lua_CFunction func)
         {
             UData::PushMetaTable(m_state);
@@ -97,7 +100,7 @@ namespace Lua
 
         void MakeCtor()
         {
-            RegisterFunction(m_state, m_name.c_str(), UData::ConstructorFunction);
+            RegisterFunction(m_state, m_name.c_str(), Constructor<T>::Function);
         }
 
         void MakeMetaTable()
