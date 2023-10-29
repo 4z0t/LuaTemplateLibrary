@@ -19,6 +19,17 @@ namespace Lua
             return 1;
         }
 
+        static void CopyFunction(lua_State* l, T&& other)
+        {
+            static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
+            new(lua_newuserdata(l, sizeof(T))) T(std::forward<T>(other));
+            if (PushMetaTable(l) != LUA_TTABLE)
+            {
+                throw std::logic_error("The class was't registered");
+            }
+            lua_setmetatable(l, -2);
+        }
+
         static int DestructorFunction(lua_State* l)
         {
 
@@ -119,6 +130,10 @@ namespace Lua
             return UserData<T>::ValidateUserData(l, index);
         }
 
+        static void Push(lua_State* l, T&& value)
+        {
+            UserData<T>::CopyFunction(l, std::forward<T>(value));
+        }
 
     };
 
