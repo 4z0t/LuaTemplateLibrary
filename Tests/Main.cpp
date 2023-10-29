@@ -407,7 +407,7 @@ void ClassTest()
         );
 
     }
-    catch (Exception &ex)
+    catch (Exception& ex)
     {
         std::cerr << ex.what() << std::endl;
     }
