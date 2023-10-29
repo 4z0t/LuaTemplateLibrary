@@ -72,6 +72,15 @@ namespace Lua
          }
      };*/
 
+     template<>
+      struct StackType<void>
+      {
+          static bool Check(lua_State* l, int index)
+          {
+              return lua_isnil(l, index);
+          }
+      };
+
     template<>
     struct StackType<float> : Internal::FloatParser<float> {};
     template<>
