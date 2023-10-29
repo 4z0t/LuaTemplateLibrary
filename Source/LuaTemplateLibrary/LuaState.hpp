@@ -78,7 +78,7 @@ namespace Lua
             return GetValue<T>(Unwrap(this), index);
         }
 
-        void Run(const char* const s)
+        void Run(const char* const s)throw(Exception)
         {
             if (luaL_dostring(Unwrap(this), s))
             {
@@ -169,7 +169,7 @@ namespace Lua
             return m_state;
         }
 
-        void Run(const char* const s)
+        void Run(const char* const s)throw(Exception)
         {
             return m_state->Run(s);
         }

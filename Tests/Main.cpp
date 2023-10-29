@@ -351,7 +351,7 @@ struct MyUData
 
     ~MyUData()
     {
-        std::cout << "GG" << std::endl;
+        //std::cout << "GG" << std::endl;
     }
 
     // todo such methods
@@ -369,24 +369,24 @@ using  UDValue = Lua::UserDataValue<T>;
 void ClassTest()
 {
     using namespace Lua;
-    State lua_state{};
-    lua_state.OpenLibs();
-    lua_state.ThrowExceptions();
-    Class<MyUData>(lua_state, "MyClass")
-        .AddMethod("GetA", Method<MyUData, &MyUData::GetA>{})
-        .AddMethod("SetA", Method<MyUData, &MyUData::SetA, int>{})
-        .AddMethod("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
-        .AddMethod("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
-        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
-        .AddMethod("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
-    ;
-
-    Class<Vector3f>(lua_state, "Vector")
-        //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
-
-        ;
     try
     {
+
+        State lua_state{};
+        lua_state.OpenLibs();
+        lua_state.ThrowExceptions();
+        Class<MyUData>(lua_state, "MyClass")
+            .AddMethod("GetA", Method<MyUData, &MyUData::GetA>{})
+            .AddMethod("SetA", Method<MyUData, &MyUData::SetA, int>{})
+            .AddMethod("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
+            .AddMethod("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
+            .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
+            .AddMethod("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
+        ;
+
+        Class<Vector3f>(lua_state, "Vector")
+            //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
+            ;
 
         lua_state.Run(
             "print(tostring(MyClass))   "
@@ -407,7 +407,7 @@ void ClassTest()
         );
 
     }
-    catch (Exception& ex)
+    catch (Exception &ex)
     {
         std::cerr << ex.what() << std::endl;
     }

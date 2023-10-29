@@ -3,10 +3,10 @@
 
 namespace Lua
 {
-    class Exception : public std::exception
+    class Exception : public std::runtime_error
     {
     public:
-        Exception(lua_State* l, int index) :std::exception(GetReason(l, index)), m_state(l) {}
+        Exception(lua_State* l, int index) :std::runtime_error(GetReason(l, index)), m_state(l) {}
 
         lua_State* GetState()const
         {

@@ -2,6 +2,7 @@
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
+#include "Exception.hpp"
 
 namespace Lua
 {
@@ -26,7 +27,6 @@ namespace Lua
 
         static int DestructorFunction(lua_State* l)
         {
-
             T* data = static_cast<T*>(lua_touserdata(l, 1));
             data->~T();
 
