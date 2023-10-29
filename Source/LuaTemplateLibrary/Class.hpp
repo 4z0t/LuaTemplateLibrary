@@ -18,9 +18,9 @@ namespace Lua
     public:
         using TClass = Class<C>;
 
-        Method() {}
+        Method() = default;
 
-        void AddMethod(TClass& c, const char* name)const
+        static void AddMethod(TClass& c, const char* name)
         {
             auto method = Closure<fn, TReturn(UserDataValue<C>, TArgs...)>::Function;
             c.AddMetaMethod(name, method);
@@ -57,9 +57,9 @@ namespace Lua
         }
 
         template<typename TMethod>
-        Class& AddMethod(const char* name, const TMethod& method)
+        Class& AddMethod(const char* name, const TMethod&)
         {
-            method.AddMethod(*this, name);
+            TMethod::AddMethod(*this, name);
 
             return *this;
         }
