@@ -10,12 +10,9 @@ namespace Lua
     template<typename T>
     struct Class;
 
-    template<class C, auto fn, typename ...TArgs>
-    class Method
+    template<class C>
+    struct UserDataValueClassWrapper
     {
-    public:
-        using TClass = Class<C>;
-
         template<typename T>
         struct AddUserDataValue : TypeBase<T> {};
 
@@ -24,6 +21,14 @@ namespace Lua
 
         template<typename T>
         using AUDV_t = typename AddUserDataValue<T>::type;
+    };
+
+    template<class C, auto fn, typename ...TArgs>
+    class Method: private UserDataValueClassWrapper<C>
+    {
+    public:
+        using TClass = Class<C>;
+        using UserDataValueClassWrapper::AUDV_t;
 
         Method() = default;
 
@@ -36,19 +41,11 @@ namespace Lua
 
 
     template<class C, auto fn, typename TReturn, typename ...TArgs>
-    class Method<C, fn, TReturn(TArgs...)>
+    class Method<C, fn, TReturn(TArgs...)> : private UserDataValueClassWrapper<C>
     {
     public:
         using TClass = Class<C>;
-
-        template<typename T>
-        struct AddUserDataValue : TypeBase<T> {};
-
-        template<>
-        struct AddUserDataValue<C> : TypeBase<UserDataValue<C>> {};
-
-        template<typename T>
-        using AUDV_t = typename AddUserDataValue<T>::type;
+        using UserDataValueClassWrapper::AUDV_t;
 
         Method() = default;
 
