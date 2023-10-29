@@ -373,10 +373,10 @@ void ClassTest()
     lua_state.OpenLibs();
     lua_state.ThrowExceptions();
     Class<MyUData>(lua_state, "MyClass")
-        .AddMethod<&MyUData::GetA>("GetA")
-        .AddMethod<&MyUData::SetA, int>("SetA")
-        .AddMethod<&MyUData::Hello, const char*>("Hello")
-        .AddMethod<&MyUData::Hello2, const char*, UDValue<MyUData>>("Hello2")
+        .AddMethod("GetA", Method<MyUData, &MyUData::GetA>{})
+        .AddMethod("SetA", Method<MyUData, &MyUData::SetA, int>{})
+        .AddMethod("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
+        .AddMethod("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
         .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
         .AddMethod("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
     ;
@@ -384,7 +384,7 @@ void ClassTest()
     Class<Vector3f>(lua_state, "Vector")
         //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
 
-    ;
+        ;
     try
     {
 
@@ -400,10 +400,10 @@ void ClassTest()
             "ud:Hello2('aaaaaa', ud)    "
             "ud:Hello2('aaaaaa', ud)    "
             "local ud2 = ud:Double()    "
-            "print(type(ud2))   "
-            "print(ud2:GetA())  "
-            "print(ud2.GetA(ud))  "
-            "print(setmetatable(ud, {}))  "
+            "print(type(ud2))           "
+            "print(ud2:GetA())          "
+            "print(ud2.GetA(ud))        "
+            "print(setmetatable(ud, {}))    "
         );
 
     }

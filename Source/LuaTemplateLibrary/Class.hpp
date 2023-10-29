@@ -9,8 +9,30 @@ namespace Lua
     template<typename T>
     struct Class;
 
-    template<class C, auto fn, typename TReturn, typename ...TArgs>
-    class Method;
+    template<class C, auto fn, typename ...TArgs>
+    class Method
+    {
+    public:
+        using TClass = Class<C>;
+
+        template<typename T>
+        struct AddUserDataValue : TypeBase<T> {};
+
+        template<>
+        struct AddUserDataValue<C> : TypeBase<UserDataValue<C>> {};
+
+        template<typename T>
+        using AUDV_t = typename AddUserDataValue<T>::type;
+
+        Method() = default;
+
+        static void AddMethod(TClass& c, const char* name)
+        {
+            auto method = Closure<fn, UserDataValue<C>, AUDV_t<TArgs>...>::Function;
+            c.AddMetaMethod(name, method);
+        }
+    };
+
 
     template<class C, auto fn, typename TReturn, typename ...TArgs>
     class Method<C, fn, TReturn(TArgs...)>
@@ -54,16 +76,6 @@ namespace Lua
         }
 
         Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
-
-        template<auto fn, typename ...TArgs>
-        Class& AddMethod(const char* name)
-        {
-            auto method = Closure<fn, UserDataValue<T>, TArgs...>::Function;
-
-            AddMetaMethod(name, method);
-
-            return *this;
-        }
 
         template<typename TMethod>
         Class& AddMethod(const char* name, const TMethod&)
