@@ -327,6 +327,8 @@ struct MyUData
 
     }
 
+    //MyUData(const MyUData&) = delete;
+
     int GetA()const
     {
         return a;
@@ -373,7 +375,9 @@ void ClassTest()
         .AddMethod<&MyUData::SetA, int>("SetA")
         .AddMethod<&MyUData::Hello, const char*>("Hello")
         .AddMethod<&MyUData::Hello2, const char*, UserDataValue<MyUData>>("Hello2")
-        ;
+        .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, UserDataValue<MyUData>)>{})
+        .AddMethod("Double", Method<MyUData, &MyUData::Double, UserDataValue<MyUData>()>{});
+    ;
 
     Class<Vector3f>(lua_state, "Vector")
 
@@ -387,10 +391,14 @@ void ClassTest()
             "print(type(ud))            "
             "print(ud:GetA())           "
             "local v = Vector()         "
-            "print(ud.SetA(v,2))        "
+            //"print(ud.SetA(v,2))        "
             "print(ud:GetA())           "
             "ud:Hello('aaaaaa')         "
             "ud:Hello2('aaaaaa', ud)    "
+            "ud:Hello2('aaaaaa', ud)    "
+            "local ud2 = ud:Double()    "
+            "print(type(ud2))   "
+            "print(ud2:GetA())  "
         );
 
     }

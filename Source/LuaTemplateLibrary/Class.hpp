@@ -7,6 +7,27 @@
 namespace Lua
 {
     template<typename T>
+    struct Class;
+
+    template<class C, auto fn, typename TReturn, typename ...TArgs>
+    class Method;
+
+    template<class C, auto fn, typename TReturn, typename ...TArgs>
+    class Method<C, fn, TReturn(TArgs...)>
+    {
+    public:
+        using TClass = Class<C>;
+
+        Method() {}
+
+        void AddMethod(TClass& c, const char* name)const
+        {
+            auto method = Closure<fn, TReturn(UserDataValue<C>, TArgs...)>::Function;
+            c.AddMetaMethod(name, method);
+        }
+    };
+
+    template<typename T>
     struct Class
     {
         using UData = UserData<T>;
@@ -34,7 +55,14 @@ namespace Lua
 
             return *this;
         }
-    private:
+
+        template<typename TMethod>
+        Class& AddMethod(const char* name, const TMethod& method)
+        {
+            method.AddMethod(*this, name);
+
+            return *this;
+        }
 
         void AddMetaMethod(const char* name, lua_CFunction func)
         {
@@ -44,6 +72,7 @@ namespace Lua
             lua_rawset(m_state, -3);
             lua_pop(m_state, 1);
         }
+    private:
 
         void MakeCtor()
         {
