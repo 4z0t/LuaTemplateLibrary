@@ -135,6 +135,26 @@ namespace Lua
             lua_pop(m_state, 1);
         }
 
+        Class& SetIndexFunction(lua_CFunction func)
+        {
+            UData::MetaTable::Push(m_state);
+            lua_pushstring(m_state, "__index");
+            lua_pushcfunction(m_state, func);
+            lua_rawset(m_state, -3);
+            lua_pop(m_state, 1);
+            return *this;
+        }
+
+        Class& SetNewIndexFunction(lua_CFunction func)
+        {
+            UData::MetaTable::Push(m_state);
+            lua_pushstring(m_state, "__newindex");
+            lua_pushcfunction(m_state, func);
+            lua_rawset(m_state, -3);
+            lua_pop(m_state, 1);
+            return *this;
+        }
+
     private:
 
         void MakeMetaTable()
@@ -165,15 +185,10 @@ namespace Lua
                 return;
             lua_regptr_isnt_set(m_state, UData::IndexTable::GetKey());
 
-            UData::MetaTable::Push(m_state);
-            lua_pushstring(m_state, "__index");
-            lua_pushcfunction(m_state, UData::IndexMethod);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
+            SetIndexFunction(UData::IndexMethod);
 
             lua_newtable(m_state);
             lua_setregp(m_state, UData::IndexTable::GetKey());
-
             m_has_index_table = true;
         }
 
@@ -183,11 +198,7 @@ namespace Lua
                 return;
             lua_regptr_isnt_set(m_state, UData::NewIndexTable::GetKey());
 
-            UData::MetaTable::Push(m_state);
-            lua_pushstring(m_state, "__newindex");
-            lua_pushcfunction(m_state, UData::NewIndexMethod);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
+            SetNewIndexFunction(UData::NewIndexMethod);
 
             lua_newtable(m_state);
             lua_setregp(m_state, UData::NewIndexTable::GetKey());
