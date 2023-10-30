@@ -43,7 +43,7 @@ target_link_libraries(FreeTest_LTL
     Lua54
 )
 
-target_compile_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/Zi>")
+target_compile_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/Zi;/EHa>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
