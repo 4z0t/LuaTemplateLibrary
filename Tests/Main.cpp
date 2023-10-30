@@ -411,17 +411,18 @@ void ClassTest()
 
         lua_state.Run(
             "local v = Vector(1,2,3)       "
-            "print(v.x)       "
-            "print(v.y)       "
-            "print(v.z)       "
-            "print(v.w)       "
+            "print(v.x)         "
+            "print(v.y)         "
+            "print(v.z)         "
+            "print(v.w)         "
             "v.x = 5            "
-            //"v.w = 1        "   
-            "print(v.x)       "
+            //"v.w = 1          "   
+            "print(v.x)         "
             "local ud = MyClass(2,3,4)  "
-            "print(ud.a)    "
-            "print(ud.a)    "
-            "ud.b = 5   "
+            "print(ud.a)        "
+            "print(ud.a)        "
+            "ud.b = 5           "
+            "print(ud.b)        "
             "ud:Double():Print() "
         );
 
