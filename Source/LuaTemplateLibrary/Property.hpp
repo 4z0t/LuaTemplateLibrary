@@ -14,7 +14,6 @@ namespace Lua
         static int Function(lua_State* l)
         {
             C* ud = UserData<C>::ValidateUserData(l, 1);
-            //T value = StackType<T>:Get(l, 2);
             PushValue(l, ud->*Field);
             return 1;
         }
@@ -28,7 +27,7 @@ namespace Lua
         {
             C* ud = UserData<C>::ValidateUserData(l, 1);
             T value = StackType<T>:Get(l, 2);
-            ud->*Field = value;
+            ud->*Field = std::move(value);
             return 0;
         }
     };
