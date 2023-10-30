@@ -415,6 +415,9 @@ void ClassTest()
             "print(setmetatable(ud, {}))    "
         );
 
+
+
+
     }
     catch (Exception& ex)
     {

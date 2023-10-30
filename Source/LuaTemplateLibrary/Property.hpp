@@ -45,4 +45,45 @@ namespace Lua
             return Setter<C, T, Field>::Function(l);
         }
     };
+
+    /*template<auto Field>
+    struct AProperty
+    {
+        using TField = decltype(Field);
+
+        static int Get(lua_State* l)
+        {
+            return __Get<TField>::Call(l);
+        }
+
+        static int Set(lua_State* l)
+        {
+            return __Set<TField>::Call(l);
+        }
+    private:
+        template<class C, typename T>
+        struct __Get;
+
+        template<class C, typename T>
+        struct __Set;
+
+        template<class C, typename T>
+        struct __Get<T C::* >
+        {
+            static int Call(lua_State* l)
+            {
+                return Getter<C, T, Field>::Function(l);
+            }
+        };
+
+        template<class C, typename T>
+        struct __Set<T C::*>
+        {
+            static int Call(lua_State* l)
+            {
+                return Getter<C, T, Field>::Function(l);
+            }
+        };
+    };*/
+
 }
