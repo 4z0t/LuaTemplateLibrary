@@ -372,6 +372,12 @@ struct MyUData
 template<typename T>
 using  UDValue = Lua::UserDataValue<T>;
 
+void Print(const MyUData* data)
+{
+    using namespace std;
+    cout << "MyUData: " << data->a << ' ' << data->b << ' ' << data->c << endl;
+}
+
 void ClassTest()
 {
     using namespace Lua;
@@ -390,6 +396,7 @@ void ClassTest()
             .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
             .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{})
             .Add("a", Property<MyUData, int, &MyUData::a>{})
+            .Add("Print", Method<MyUData, Print >{})
             ;
 
         Class<Vector3f>(lua_state, "Vector")
@@ -408,10 +415,11 @@ void ClassTest()
             "print(v.z)       "
             "print(v.w)       "
             "v.x = 5            "
-            "v.w = 1        "   
+            //"v.w = 1        "   
             "print(v.x)       "
             "local ud = MyClass(2,3,4)  "
-            "print(ud.a) "
+            "print(ud.a)    "
+            "ud:Double():Print() "
         );
 
 
