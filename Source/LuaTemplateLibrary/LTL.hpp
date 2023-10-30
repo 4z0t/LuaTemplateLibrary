@@ -2,6 +2,7 @@
 #include "Internal.hpp"
 #include "LuaTypes.hpp"
 #include "LuaAux.hpp"
+#include "Property.hpp"
 #include "ClassConstructor.hpp"
 #include "Class.hpp"
 #include "UserData.hpp"
