@@ -228,3 +228,84 @@ TEST_F(ExceptionTests, ThrowTests)
     ASSERT_THROW(Result()["Key"].To<int>(), Lua::Exception);
 
 }
+
+
+// UserData tests
+
+
+struct UserDataTests : TestBase
+{
+
+};
+
+TEST_F(UserDataTests, PropertyTests)
+{
+    using namespace Lua;
+    struct Vector3f
+    {
+        float x, y, z;
+
+        Vector3f(float x, float y, float z) :x(x), y(y), z(z)
+        {
+
+        }
+        Vector3f() :Vector3f(0, 0, 0) {}
+
+        float Length()const
+        {
+            return sqrtf(x * x + y * y + z * z);
+        }
+    };
+
+    Class<Vector3f>(l, "Vector")
+        .AddConstructor<Default<float>, Default<float>, Default<float>>()
+        .Add("x", Property<Vector3f, float, &Vector3f::x>{})
+        .Add("y", Property<Vector3f, float, &Vector3f::y>{})
+        .Add("z", Property<Vector3f, float, &Vector3f::z>{})
+        .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        ;
+    Run("v = Vector(1,2,3)  "
+        "result = v.x   "
+    );
+    ASSERT_TRUE(Result().Is<float>());
+    ASSERT_FLOAT_EQ(Result().To<float>(), 1.f);
+    Run(
+        "result = v.y   "
+    );
+    ASSERT_TRUE(Result().Is<float>());
+    ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
+    Run(
+        "result = v.z   "
+    );
+    ASSERT_TRUE(Result().Is<float>());
+    ASSERT_FLOAT_EQ(Result().To<float>(), 3.f);
+    {
+        Run("v.x = 2        "
+            "result = v.y   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
+        Run("v.y = 4        "
+            "result = v.y   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 4.f);
+        Run("v.z = 8        "
+            "result = v.z   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
+    }
+    {
+        ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
+        Run("result = v.w   "
+        );
+        ASSERT_TRUE(Result().Is<void>());
+    }
+
+    Run("v = Vector(1,2,3)  "
+        "result = v:Length()  "
+    );
+    ASSERT_TRUE(Result().Is<float>());
+    ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+}
