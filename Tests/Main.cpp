@@ -395,7 +395,8 @@ void ClassTest()
             .Add("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
             .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
             .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{})
-            .Add("a", Property<MyUData, int, &MyUData::a>{})
+            .Add("a", Getter<MyUData, int, &MyUData::a>{})
+            .Add("b", Setter<MyUData, int, &MyUData::b>{})
             .Add("Print", Method<MyUData, Print >{})
             ;
 
@@ -419,6 +420,8 @@ void ClassTest()
             "print(v.x)       "
             "local ud = MyClass(2,3,4)  "
             "print(ud.a)    "
+            "print(ud.a)    "
+            "ud.b = 5   "
             "ud:Double():Print() "
         );
 

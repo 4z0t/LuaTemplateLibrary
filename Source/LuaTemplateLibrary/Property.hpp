@@ -8,10 +8,12 @@
 namespace Lua
 {
 
+    struct GetterBase {};
+    struct SetterBase {};
     struct PropertyBase {};
 
     template<class C, typename T, T C::* Field>
-    struct Getter
+    struct Getter :public GetterBase
     {
         static int Function(lua_State* l)
         {
@@ -23,7 +25,7 @@ namespace Lua
     };
 
     template<class C, typename T, T C::* Field>
-    struct Setter
+    struct Setter :public SetterBase
     {
         static int Function(lua_State* l)
         {
@@ -35,7 +37,7 @@ namespace Lua
     };
 
     template<class C, typename T, T C::* Field>
-    struct Property: public PropertyBase
+    struct Property : public PropertyBase
     {
         static int Get(lua_State* l)
         {

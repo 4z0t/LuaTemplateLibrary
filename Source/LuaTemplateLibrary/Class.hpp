@@ -108,6 +108,20 @@ namespace Lua
             return *this;
         }
 
+        template<typename Element>
+        std::enable_if_t<std::is_base_of_v<GetterBase, Element>, Class&> Add(const char* name, const Element& element)
+        {
+            AddGetter(name, Element::Function);
+            return *this;
+        }
+
+        template<typename Element>
+        std::enable_if_t<std::is_base_of_v<SetterBase, Element>, Class&> Add(const char* name, const Element& element)
+        {
+            AddSetter(name, Element::Function);
+            return *this;
+        }
+
         void AddGetter(const char* name, lua_CFunction func)
         {
             MakeIndexTable();
