@@ -392,21 +392,6 @@ void ClassTest()
             .Add("a", Property<MyUData, int, &MyUData::a>{})
             ;
 
-
-        GRefObject vector_get_meta = GRefObject::MakeTable(lua_state, 0, 3);
-        vector_get_meta["x"] = Getter<Vector3f, float, &Vector3f::x>::Function;
-        vector_get_meta["y"] = Getter<Vector3f, float, &Vector3f::y>::Function;
-        vector_get_meta["z"] = Getter<Vector3f, float, &Vector3f::z>::Function;
-
-        GRefObject vector_set_meta = GRefObject::MakeTable(lua_state, 0, 3);
-        vector_set_meta["x"] = Setter<Vector3f, float, &Vector3f::x>::Function;
-        vector_set_meta["y"] = Setter<Vector3f, float, &Vector3f::y>::Function;
-        vector_set_meta["z"] = Setter<Vector3f, float, &Vector3f::z>::Function;
-
-        lua_state
-            .SetGlobal("VectorGetMeta", vector_get_meta)
-            .SetGlobal("VectorSetMeta", vector_set_meta)
-            ;
         Class<Vector3f>(lua_state, "Vector")
             .AddConstructor<Default<float>, Default<float>, Default<float>>()
             .Add("x", Property<Vector3f, float, &Vector3f::x>{})
@@ -417,43 +402,15 @@ void ClassTest()
             ;
 
         lua_state.Run(
-            /*"getmetatable(Vector()).__newindex = function(self, key, value) "
-            "   local func = VectorSetMeta[key]                             "
-            "    if func then       "
-            "       func(self, value)   "
-            "       return    "
-            "    end                    "
-            "    rawset(self, key, value) "
-            "end            "
-            "getmetatable(Vector()).__index = function(self, key)"
-            "   local func = VectorGetMeta[key]                  "
-            "    if func then       "
-            "       return func(self, key)   "
-            "    end                    "
-            "end        "*/
             "local v = Vector(1,2,3)       "
-            //"v.x = 5     "
             "print(v.x)       "
             "print(v.y)       "
             "print(v.z)       "
             "print(v.w)       "
             "v.x = 5            "
             "print(v.x)       "
-            "print(tostring(v.u))       "
-            "print(tostring(MyClass))   "
-            "local ud = MyClass(2,3,3)       "
-            "print(type(ud))            "
-            "print(ud:GetA())           "
-            "local v = Vector()         "
-            //"print(ud.SetA(v,2))        "
-            "print(ud:GetA())           "
-            "ud:Hello('aaaaaa')         "
-            "ud:Hello2('aaaaaa', ud)    "
-            "ud:Hello2('aaaaaa', ud)    "
-            "local ud2 = ud:Double()    "
-            "print(type(ud2))           "
-            "print(ud2:GetA())          "
-            "print(ud2.GetA(ud))        "
+            "local ud = MyClass(2,3,4)  "
+            "print(ud.a) "
         );
 
 
