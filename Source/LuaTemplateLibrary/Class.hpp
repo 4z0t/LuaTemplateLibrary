@@ -183,6 +183,12 @@ namespace Lua
                 return;
             lua_regptr_isnt_set(m_state, UData::NewIndexTable::GetKey());
 
+            UData::MetaTable::Push(m_state);
+            lua_pushstring(m_state, "__newindex");
+            lua_pushcfunction(m_state, UData::NewIndexMethod);
+            lua_rawset(m_state, -3);
+            lua_pop(m_state, 1);
+
             lua_newtable(m_state);
             lua_setregp(m_state, UData::NewIndexTable::GetKey());
             m_has_newindex_table = true;

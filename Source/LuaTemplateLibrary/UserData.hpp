@@ -127,6 +127,27 @@ namespace Lua
 
         static int NewIndexMethod(lua_State* l)
         {
+            NewIndexTable::Push(l);
+            lua_pushvalue(l, 2);
+            int type = lua_rawget(l, -2);
+            if (type == LUA_TNIL)
+            {
+                lua_pop(l, 2); // pop nil and index table
+
+                lua_pushvalue(l, 2);
+                lua_pushvalue(l, 3);
+                lua_rawset(l, 1);
+
+                return 1;
+            }
+            lua_remove(l, -2); // remove newindex table
+            lua_pushvalue(l, 1); // push userdata
+            lua_pushvalue(l, 3); // push value
+
+            assert(lua_isuserdata(l, -2));
+            assert(lua_isfunction(l, -3));
+
+            lua_call(l, 2, 0);
 
             return 0;
         }
