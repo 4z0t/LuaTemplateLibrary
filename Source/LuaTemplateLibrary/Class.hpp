@@ -4,11 +4,14 @@
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
 #include "ClassConstructor.hpp"
+#include "Property.hpp"
 
 namespace Lua
 {
     template<typename T>
     struct Class;
+
+    struct MethodBase {};
 
     template<class C>
     struct UserDataValueClassWrapper
@@ -24,7 +27,7 @@ namespace Lua
     };
 
     template<class C, auto fn, typename ...TArgs>
-    class Method : private UserDataValueClassWrapper<C>
+    class Method : private UserDataValueClassWrapper<C>, public MethodBase
     {
     public:
         using TClass = Class<C>;
@@ -41,7 +44,7 @@ namespace Lua
 
 
     template<class C, auto fn, typename TReturn, typename ...TArgs>
-    class Method<C, fn, TReturn(TArgs...)> : private UserDataValueClassWrapper<C>
+    class Method<C, fn, TReturn(TArgs...)> : private UserDataValueClassWrapper<C>, public MethodBase
     {
     public:
         using TClass = Class<C>;
@@ -82,7 +85,21 @@ namespace Lua
             return *this;
         }
 
+        template<typename Element>
+        std::enable_if_t<std::is_base_of_v<MethodBase, Element>, Class&>   Add(const char* name, const Element&)
+        {
+            Element::AddMethod(*this, name);
 
+            return *this;
+        }
+
+        template<typename Element>
+        std::enable_if_t<std::is_base_of_v<PropertyBase, Element>, Class&>   Add(const char* name, const Element&)
+        {
+
+
+            return *this;
+        }
 
         void AddMetaMethod(const char* name, lua_CFunction func)
         {

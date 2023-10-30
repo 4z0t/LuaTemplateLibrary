@@ -8,6 +8,8 @@
 namespace Lua
 {
 
+    struct PropertyBase {};
+
     template<class C, typename T, T C::* Field>
     struct Getter
     {
@@ -33,7 +35,7 @@ namespace Lua
     };
 
     template<class C, typename T, T C::* Field>
-    struct Property
+    struct Property: public PropertyBase
     {
         static int Get(lua_State* l)
         {

@@ -383,12 +383,12 @@ void ClassTest()
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")
             .AddConstructor<Default<int>, Default<int>, Default<int>>()
-            .AddMethod("GetA", Method<MyUData, &MyUData::GetA>{})
-            .AddMethod("SetA", Method<MyUData, &MyUData::SetA, int>{})
-            .AddMethod("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
-            .AddMethod("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
-            .AddMethod("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
-            .AddMethod("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
+            .Add("GetA", Method<MyUData, &MyUData::GetA>{})
+            .Add("SetA", Method<MyUData, &MyUData::SetA, int>{})
+            .Add("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
+            .Add("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
+            .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
+            .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
         ;
 
 
@@ -421,8 +421,8 @@ void ClassTest()
             "    end                    "
             "    rawset(self, key, value) " 
             "end            "
-            "getmetatable(Vector()).__index = function(self, key) "
-            "   local func = VectorGetMeta[key]                             "
+            "getmetatable(Vector()).__index = function(self, key)"
+            "   local func = VectorGetMeta[key]                  "
             "    if func then       "
             "       return func(self, key)   "
             "    end                    "
