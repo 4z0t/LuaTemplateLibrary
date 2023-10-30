@@ -408,6 +408,7 @@ void ClassTest()
             "print(v.z)       "
             "print(v.w)       "
             "v.x = 5            "
+            "v.w = 1        "   
             "print(v.x)       "
             "local ud = MyClass(2,3,4)  "
             "print(ud.a) "

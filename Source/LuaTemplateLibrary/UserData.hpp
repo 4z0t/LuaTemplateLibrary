@@ -134,9 +134,8 @@ namespace Lua
             {
                 lua_pop(l, 2); // pop nil and index table
 
-                lua_pushvalue(l, 2);
-                lua_pushvalue(l, 3);
-                lua_rawset(l, 1);
+                const char* s = lua_tostring(l, 2);
+                luaL_error(l, "Attempt to set field '%s' on %s", s ? s : "NONSTRINGVALUE", GetClassName(l));
 
                 return 1;
             }
