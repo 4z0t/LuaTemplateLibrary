@@ -302,10 +302,11 @@ TEST_F(UserDataTests, PropertyTests)
         );
         ASSERT_TRUE(Result().Is<void>());
     }
-
-    Run("v = Vector(1,2,3)  "
-        "result = v:Length()  "
-    );
-    ASSERT_TRUE(Result().Is<float>());
-    ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+    {
+        Run("v = Vector(1,2,3)  "
+            "result = v:Length()  "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+    }
 }

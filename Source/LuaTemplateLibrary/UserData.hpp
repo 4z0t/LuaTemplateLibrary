@@ -78,7 +78,12 @@ namespace Lua
                 return nullptr;
             }
 
-            MetaTable::Push(l);
+            if (MetaTable::Push(l) == LUA_TNIL)
+            {
+                lua_pop(l, 1);
+                return false;
+            }
+
             bool res = lua_rawequal(l, -2, -1);
             lua_pop(l, 2);
 
