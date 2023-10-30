@@ -91,6 +91,12 @@ struct Vector3f
 {
     float x, y, z;
 
+    Vector3f(float x, float y, float z) :x(x), y(y), z(z)
+    {
+
+    }
+    Vector3f() :Vector3f(0, 0, 0) {}
+
     static float Length(const Vector3f& v)
     {
         return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
@@ -376,6 +382,7 @@ void ClassTest()
         lua_state.OpenLibs();
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")
+            .AddConstructor<Default<int>, Default<int>, Default<int>>()
             .AddMethod("GetA", Method<MyUData, &MyUData::GetA>{})
             .AddMethod("SetA", Method<MyUData, &MyUData::SetA, int>{})
             .AddMethod("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
@@ -385,12 +392,14 @@ void ClassTest()
         ;
 
         Class<Vector3f>(lua_state, "Vector")
+            .AddConstructor<Default<float>, Default<float>, Default<float>>()
+
             //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
             ;
 
         lua_state.Run(
             "print(tostring(MyClass))   "
-            "local ud = MyClass()       "
+            "local ud = MyClass(2,3,3)       "
             "print(type(ud))            "
             "print(ud:GetA())           "
             "local v = Vector()         "

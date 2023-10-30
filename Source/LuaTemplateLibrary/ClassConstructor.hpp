@@ -34,10 +34,10 @@ namespace Lua
             return Make(object, std::get<Is>(args)...);
         }
 
-        static constexpr void Make(void* const object, TArgs&& ...args)
+        static constexpr void Make(void* const object, Unwrap_t<TArgs>& ...args)
         {
-            static_assert(std::is_constructible_v<C, TArgs...>, "Object of class C can't be constructed with such arguments!");
-            new(object) C(std::forward<TArgs>(args)...);
+            static_assert(std::is_constructible_v<C, Unwrap_t<TArgs>...>, "Object of class C can't be constructed with such arguments!");
+            new(object) C(args...);
         }
     };
 }

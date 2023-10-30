@@ -24,7 +24,7 @@ namespace Lua
     };
 
     template<class C, auto fn, typename ...TArgs>
-    class Method: private UserDataValueClassWrapper<C>
+    class Method : private UserDataValueClassWrapper<C>
     {
     public:
         using TClass = Class<C>;
@@ -63,7 +63,6 @@ namespace Lua
 
         Class(lua_State* l, const char* name) :m_state(l), m_name(name)
         {
-            MakeCtor();
             MakeMetaTable();
             MakeClassTable();
             if constexpr (!std::is_trivially_destructible_v<T>)
@@ -93,6 +92,14 @@ namespace Lua
             lua_rawset(m_state, -3);
             lua_pop(m_state, 1);
         }
+
+        template<typename ...TArgs>
+        Class& AddConstructor()
+        {
+            RegisterFunction(m_state, m_name.c_str(), Constructor<T, TArgs...>::Function);
+            return *this;
+        }
+
     private:
 
         void MakeCtor()
