@@ -179,6 +179,15 @@ namespace Lua
             return Run(s.c_str());
         }
 
+        template<typename T>
+        State& SetGlobal(const char* name, const T& value)
+        {
+            PushValue(m_state->Unwrap(), value);
+            lua_setglobal(m_state->Unwrap(), name);
+
+            return *this;
+        }
+
     private:
         StateWrap* m_state = nullptr;
 
