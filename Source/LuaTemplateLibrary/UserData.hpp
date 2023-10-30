@@ -79,7 +79,7 @@ namespace Lua
             }
 
             MetaTable::Push(l);
-            bool res = lua_compare(l, -2, -1, LUA_OPEQ);
+            bool res = lua_rawequal(l, -2, -1);
             lua_pop(l, 2);
 
             if (!res)
