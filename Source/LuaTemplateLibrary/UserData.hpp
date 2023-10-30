@@ -98,8 +98,31 @@ namespace Lua
 
         static int IndexMethod(lua_State* l)
         {
+            IndexTable::Push(l);
+            lua_pushvalue(l, 2);
+            int type = lua_rawget(l, -2);
+            if (type == LUA_TNIL)
+            {
+                lua_pop(l, 2); // pop nil and index table
 
-            return 0;
+                MetaTable::Push(l);
+                lua_pushvalue(l, 2);
+                lua_rawget(l, -2); // get value in metatable
+
+                lua_remove(l, -2); // remove metatable
+
+                return 1;
+            }
+
+            lua_remove(l, -2); // remove index table
+            lua_pushvalue(l, 1); // push userdata
+
+            assert(lua_isuserdata(l, -1));
+            assert(lua_isfunction(l, -2));
+
+            lua_call(l, 1, 1);
+
+            return 1;
         }
 
         static int NewIndexMethod(lua_State* l)

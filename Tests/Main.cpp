@@ -410,12 +410,14 @@ void ClassTest()
         Class<Vector3f>(lua_state, "Vector")
             .AddConstructor<Default<float>, Default<float>, Default<float>>()
             .Add("x", Property<Vector3f, float, &Vector3f::x>{})
+            .Add("y", Property<Vector3f, float, &Vector3f::y>{})
+            .Add("z", Property<Vector3f, float, &Vector3f::z>{})
 
             //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
             ;
 
         lua_state.Run(
-            "getmetatable(Vector()).__newindex = function(self, key, value) "
+            /*"getmetatable(Vector()).__newindex = function(self, key, value) "
             "   local func = VectorSetMeta[key]                             "
             "    if func then       "
             "       func(self, value)   "
@@ -428,10 +430,13 @@ void ClassTest()
             "    if func then       "
             "       return func(self, key)   "
             "    end                    "
-            "end        "
-            "local v = Vector()       "
-            "v.x = 5     "
+            "end        "*/
+            "local v = Vector(1,2,3)       "
+            //"v.x = 5     "
             "print(v.x)       "
+            "print(v.y)       "
+            "print(v.z)       "
+            "print(v.w)       "
             "print(tostring(v.u))       "
             "print(tostring(MyClass))   "
             "local ud = MyClass(2,3,3)       "

@@ -114,6 +114,7 @@ namespace Lua
             UData::IndexTable::Push(m_state);
             PushValue(m_state, func);
             lua_setfield(m_state, -2, name);
+            lua_pop(m_state, 1);
         }
 
         void AddSetter(const char* name, lua_CFunction func)
@@ -122,6 +123,7 @@ namespace Lua
             UData::NewIndexTable::Push(m_state);
             PushValue(m_state, func);
             lua_setfield(m_state, -2, name);
+            lua_pop(m_state, 1);
         }
 
         void AddMetaMethod(const char* name, lua_CFunction func)
@@ -163,8 +165,15 @@ namespace Lua
                 return;
             lua_regptr_isnt_set(m_state, UData::IndexTable::GetKey());
 
+            UData::MetaTable::Push(m_state);
+            lua_pushstring(m_state, "__index");
+            lua_pushcfunction(m_state, UData::IndexMethod);
+            lua_rawset(m_state, -3);
+            lua_pop(m_state, 1);
+
             lua_newtable(m_state);
             lua_setregp(m_state, UData::IndexTable::GetKey());
+
             m_has_index_table = true;
         }
 
