@@ -388,8 +388,9 @@ void ClassTest()
             .Add("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
             .Add("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
             .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
-            .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{});
-        ;
+            .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{})
+            .Add("a", Property<MyUData, int, &MyUData::a>{})
+            ;
 
 
         GRefObject vector_get_meta = GRefObject::MakeTable(lua_state, 0, 3);
@@ -408,6 +409,7 @@ void ClassTest()
             ;
         Class<Vector3f>(lua_state, "Vector")
             .AddConstructor<Default<float>, Default<float>, Default<float>>()
+            .Add("x", Property<Vector3f, float, &Vector3f::x>{})
 
             //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
             ;
@@ -419,7 +421,7 @@ void ClassTest()
             "       func(self, value)   "
             "       return    "
             "    end                    "
-            "    rawset(self, key, value) " 
+            "    rawset(self, key, value) "
             "end            "
             "getmetatable(Vector()).__index = function(self, key)"
             "   local func = VectorGetMeta[key]                  "
