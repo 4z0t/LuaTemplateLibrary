@@ -6,6 +6,18 @@ namespace Lua
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 
+    template<size_t N>
+    struct StackPopper
+    {
+        constexpr StackPopper(lua_State* l) : m_state(l) {}
+
+        ~StackPopper()
+        {
+            lua_pop(m_state, N);
+        }
+    private:
+        lua_State* m_state;
+    };
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
@@ -53,8 +65,7 @@ namespace Lua
     inline size_t _PrepareCall(lua_State* l, const char* name, Ts&&... args)
     {
         lua_getglobal(l, name);
-        size_t n = PushArgs(l, std::forward<Ts>(args)...);
-        return n;
+        return PushArgs(l, std::forward<Ts>(args)...);
     }
 
     template<typename TReturn = void>
@@ -66,10 +77,9 @@ namespace Lua
         }
         else
         {
+            StackPopper<1>{l};
             lua_call(l, static_cast<int>(n_args), 1);
-            TReturn result = GetValue<TReturn>(l, -1);
-            lua_pop(l, 1);
-            return result;
+            return GetValue<TReturn>(l, -1);
         }
     }
 
