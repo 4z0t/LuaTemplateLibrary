@@ -8,10 +8,13 @@ namespace Lua
     namespace FuncUtility
     {
         template<typename T>
-        struct IsUpvalueType : std::false_type {};
+        struct IsUpvalueType : std::false_type { using type = void; };
 
         template<typename T>
-        struct IsUpvalueType<Upvalue<T>> : std::true_type {};
+        struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
+
+        template<>
+        struct IsUpvalueType<lua_State*> : std::true_type { using type = lua_State*; };
 
         template<size_t Value>
         using ValueContainer = std::integral_constant<size_t, Value>;
@@ -90,6 +93,7 @@ namespace Lua
                 }
             }
         };
+
         template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
@@ -122,7 +126,7 @@ namespace Lua
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
             if constexpr (IsUpvalueType<T>::value)
-                UpvalueReplacer<typename T::type>::Replace<UpvalueIndex>(l, std::get<ArgIndex + UpvalueIndex>(args));
+                UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<ArgIndex + UpvalueIndex>(args));
             return ReplaceUpvalues<
                 IncrementArgIndex<T, ArgIndex>::value,
                 IncrementUpvalueIndex<T, UpvalueIndex>::value,

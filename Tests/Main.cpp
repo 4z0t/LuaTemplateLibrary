@@ -107,9 +107,21 @@ struct Vector3f
         return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
     }
 
-    Vector3f operator+(const Vector3f& v)const
+    std::string ToString(lua_State* l)const
     {
-        return Sum(*this, v);
+        std::string  s{ lua_pushfstring(l, "Vector { %f, %f, %f }", x, y, z) };
+        lua_pop(l, 1);
+        return s;
+    }
+
+    /* Vector3f operator+(const Vector3f& v)const
+     {
+         return Sum(*this, v);
+     }*/
+
+    Vector3f operator+(const Vector3f* v)const
+    {
+        return Sum(*this, *v);
     }
 };
 
@@ -220,9 +232,9 @@ void Test()
             .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
             .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
             .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
-            .AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-            .AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-            .AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
+            //.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+            //.AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+            //.AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
             ;
     }
 
@@ -381,6 +393,7 @@ void Print(const MyUData* data)
 void ClassTest()
 {
     using namespace Lua;
+    using namespace std;
     try
     {
 
@@ -405,10 +418,11 @@ void ClassTest()
             .Add("x", Property<Vector3f, float, &Vector3f::x>{})
             .Add("y", Property<Vector3f, float, &Vector3f::y>{})
             .Add("z", Property<Vector3f, float, &Vector3f::z>{})
+            .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
+            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(lua_State*)>{})
+        ;
 
-            //.AddMethod("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{});
-            ;
-
+        //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
         lua_state.Run(
             "local v = Vector(1,2,3)       "
             "print(v.x)         "
@@ -424,6 +438,9 @@ void ClassTest()
             "ud.b = 5           "
             "print(ud.b)        "
             "ud:Double():Print() "
+            "local v1 = Vector(1,2,3) "
+            "local v2 = Vector(4,5,6) "
+            "print(v1+v2) "
         );
 
 

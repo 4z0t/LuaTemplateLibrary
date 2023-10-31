@@ -41,6 +41,17 @@ namespace Lua
     };
 
     template<>
+    struct StackType<lua_State*>
+    {
+        using TReturn = lua_State*;
+
+        static TReturn Get(lua_State* l, int index)
+        {
+            return l;
+        }
+    };
+
+    template<>
     struct StackType<char> : Internal::IntParser<char> {};
     template<>
     struct StackType<unsigned char> : Internal::IntParser<unsigned char> {};
