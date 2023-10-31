@@ -6,17 +6,17 @@ namespace Lua
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 
-    template<size_t N>
     struct StackPopper
     {
-        constexpr StackPopper(lua_State* l) : m_state(l) {}
+        StackPopper(lua_State* l, int n) : m_state(l), n(n) {}
 
         ~StackPopper()
         {
-            lua_pop(m_state, N);
+            lua_pop(m_state, n);
         }
     private:
         lua_State* m_state;
+        int n;
     };
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
@@ -77,7 +77,7 @@ namespace Lua
         }
         else
         {
-            StackPopper<1>{l};
+            StackPopper pop{ l, 1 };
             lua_call(l, static_cast<int>(n_args), 1);
             return GetValue<TReturn>(l, -1);
         }

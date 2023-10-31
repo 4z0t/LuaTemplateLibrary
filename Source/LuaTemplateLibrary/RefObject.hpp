@@ -242,7 +242,7 @@ namespace Lua
         template <int COMPARE_OP, typename T>
         bool Compare(const T& value)const
         {
-            StackPopper<2>{m_state};
+            StackPopper pop{ m_state, 2 };
             this->Push();
             PushValue(m_state, value);
             return lua_compare(m_state, -2, -1, COMPARE_OP);

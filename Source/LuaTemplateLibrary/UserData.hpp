@@ -157,7 +157,7 @@ namespace Lua
 
         static const char* GetClassName(lua_State* l)
         {
-            StackPopper<2>{l};
+            StackPopper pop{ l, 2 };
             ClassTable::Push(l);
             lua_pushstring(l, "className");
             lua_rawget(l, -2);
