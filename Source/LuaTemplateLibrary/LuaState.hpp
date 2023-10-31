@@ -5,13 +5,18 @@
 
 namespace Lua
 {
+    StateWrap* WrapState(lua_State* l)
+    {
+        return (StateWrap*)l;
+    }
+
     class StateWrap final
     {
     public:
 
         inline static StateWrap* Wrap(lua_State* l)
         {
-            return (StateWrap*)l;
+            return WrapState(l);
         }
 
         inline static StateWrap* Create()

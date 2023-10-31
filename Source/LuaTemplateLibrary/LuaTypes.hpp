@@ -3,6 +3,9 @@
 
 namespace Lua
 {
+    class StateWrap;
+    
+    StateWrap* WrapState(lua_State* l);
 
     enum class Type
     {
@@ -48,6 +51,17 @@ namespace Lua
         static TReturn Get(lua_State* l, int index)
         {
             return l;
+        }
+    };
+
+    template<>
+    struct StackType<StateWrap*>
+    {
+        using TReturn = StateWrap*;
+
+        static TReturn Get(lua_State* l, int index)
+        {
+            return WrapState(l);
         }
     };
 
