@@ -126,16 +126,12 @@ namespace Lua
 
         Class& SetIndexFunction(lua_CFunction func)
         {
-            UData::MetaTable::Push(m_state);
-            RawSetFunction("__index", func);
-            return *this;
+            return this->AddMetaMethod("__index", func);
         }
 
         Class& SetNewIndexFunction(lua_CFunction func)
         {
-            UData::MetaTable::Push(m_state);
-            RawSetFunction("__newindex", func);
-            return *this;
+            return this->AddMetaMethod("__newindex", func);
         }
 
         template<typename Base, typename Derived>
