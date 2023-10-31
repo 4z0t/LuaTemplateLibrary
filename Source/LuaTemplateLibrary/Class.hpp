@@ -82,7 +82,7 @@ namespace Lua
         template<typename ...TArgs>
         Class& AddConstructor()
         {
-            RegisterFunction(m_state, m_name.c_str(), Constructor<T, TArgs...>::Function);
+            RegisterFunction(m_state, m_name, Constructor<T, TArgs...>::Function);
             return *this;
         }
 

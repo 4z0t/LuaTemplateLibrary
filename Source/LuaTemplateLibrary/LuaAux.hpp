@@ -13,6 +13,11 @@ namespace Lua
         lua_setglobal(l, name);
     }
 
+    void RegisterFunction(lua_State* l, const std::string& name, lua_CFunction func)
+    {
+        return RegisterFunction(l, name.c_str(), func);
+    }
+
     template<typename T>
     T GetValue(lua_State* l, int index)
     {
