@@ -138,26 +138,29 @@ namespace Lua
             return *this;
         }
 
+        template<typename Base, typename Derived>
+        using EnableIfBaseOf = std::enable_if_t<std::is_base_of_v<Base, Derived>, Class&>;
+
         template<typename Element>
-        std::enable_if_t<std::is_base_of_v<MethodBase, Element>, Class&> Add(const char* name, const Element& element)
+        EnableIfBaseOf<MethodBase, Element> Add(const char* name, const Element& element)
         {
             return this->AddMethod(name, element);
         }
 
         template<typename Element>
-        std::enable_if_t<std::is_base_of_v<PropertyBase, Element>, Class&> Add(const char* name, const Element& element)
+        EnableIfBaseOf<PropertyBase, Element> Add(const char* name, const Element& element)
         {
             return this->AddProperty(name, element);
         }
 
         template<typename Element>
-        std::enable_if_t<std::is_base_of_v<GetterBase, Element>, Class&> Add(const char* name, const Element& element)
+        EnableIfBaseOf<GetterBase, Element> Add(const char* name, const Element& element)
         {
             return AddGetter(name, Element::Function);
         }
 
         template<typename Element>
-        std::enable_if_t<std::is_base_of_v<SetterBase, Element>, Class&> Add(const char* name, const Element& element)
+        EnableIfBaseOf<SetterBase, Element> Add(const char* name, const Element& element)
         {
             return AddSetter(name, Element::Function);
         }
