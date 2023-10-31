@@ -94,6 +94,50 @@ namespace Lua
             return *this;
         }
 
+        template<typename TProperty>
+        Class& AddProperty(const char* name, const TProperty&)
+        {
+            return AddGetter(name, TProperty::Get)
+                .AddSetter(name, TProperty::Set);
+        }
+
+        Class& AddGetter(const char* name, lua_CFunction func)
+        {
+            MakeIndexTable();
+            UData::IndexTable::Push(m_state);
+            RawSetFunction(name, func);
+            return *this;
+        }
+
+        Class& AddSetter(const char* name, lua_CFunction func)
+        {
+            MakeNewIndexTable();
+            UData::NewIndexTable::Push(m_state);
+            RawSetFunction(name, func);
+            return *this;
+        }
+
+        Class& AddMetaMethod(const char* name, lua_CFunction func)
+        {
+            UData::MetaTable::Push(m_state);
+            RawSetFunction(name, func);
+            return *this;
+        }
+
+        Class& SetIndexFunction(lua_CFunction func)
+        {
+            UData::MetaTable::Push(m_state);
+            RawSetFunction("__index", func);
+            return *this;
+        }
+
+        Class& SetNewIndexFunction(lua_CFunction func)
+        {
+            UData::MetaTable::Push(m_state);
+            RawSetFunction("__newindex", func);
+            return *this;
+        }
+
         template<typename Element>
         std::enable_if_t<std::is_base_of_v<MethodBase, Element>, Class&> Add(const char* name, const Element& element)
         {
@@ -101,75 +145,32 @@ namespace Lua
         }
 
         template<typename Element>
-        std::enable_if_t<std::is_base_of_v<PropertyBase, Element>, Class&> Add(const char* name, const Element&)
+        std::enable_if_t<std::is_base_of_v<PropertyBase, Element>, Class&> Add(const char* name, const Element& element)
         {
-            AddGetter(name, Element::Get);
-            AddSetter(name, Element::Set);
-            return *this;
+            return this->AddProperty(name, element);
         }
 
         template<typename Element>
         std::enable_if_t<std::is_base_of_v<GetterBase, Element>, Class&> Add(const char* name, const Element& element)
         {
-            AddGetter(name, Element::Function);
-            return *this;
+            return AddGetter(name, Element::Function);
         }
 
         template<typename Element>
         std::enable_if_t<std::is_base_of_v<SetterBase, Element>, Class&> Add(const char* name, const Element& element)
         {
-            AddSetter(name, Element::Function);
-            return *this;
+            return AddSetter(name, Element::Function);
         }
 
-        void AddGetter(const char* name, lua_CFunction func)
-        {
-            MakeIndexTable();
-            UData::IndexTable::Push(m_state);
-            PushValue(m_state, func);
-            lua_setfield(m_state, -2, name);
-            lua_pop(m_state, 1);
-        }
+    private:
 
-        void AddSetter(const char* name, lua_CFunction func)
+        void RawSetFunction(const char* name, lua_CFunction func)
         {
-            MakeNewIndexTable();
-            UData::NewIndexTable::Push(m_state);
-            PushValue(m_state, func);
-            lua_setfield(m_state, -2, name);
-            lua_pop(m_state, 1);
-        }
-
-        void AddMetaMethod(const char* name, lua_CFunction func)
-        {
-            UData::MetaTable::Push(m_state);
             lua_pushstring(m_state, name);
             lua_pushcfunction(m_state, func);
             lua_rawset(m_state, -3);
             lua_pop(m_state, 1);
         }
-
-        Class& SetIndexFunction(lua_CFunction func)
-        {
-            UData::MetaTable::Push(m_state);
-            lua_pushstring(m_state, "__index");
-            lua_pushcfunction(m_state, func);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
-            return *this;
-        }
-
-        Class& SetNewIndexFunction(lua_CFunction func)
-        {
-            UData::MetaTable::Push(m_state);
-            lua_pushstring(m_state, "__newindex");
-            lua_pushcfunction(m_state, func);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
-            return *this;
-        }
-
-    private:
 
         void MakeMetaTable()
         {
