@@ -205,7 +205,7 @@ namespace Lua
             return m_state;
         }
 
-        void Run(const char* const s)throw(Exception)
+        void Run(const char* const s) throw(Exception)
         {
             return m_state->Run(s);
         }
