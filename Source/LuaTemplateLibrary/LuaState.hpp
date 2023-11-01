@@ -96,6 +96,31 @@ namespace Lua
             return lua_atpanic(Unwrap(), func);
         }
 
+        void Remove(int index)
+        {
+            return lua_remove(Unwrap(), index);
+        }
+
+        void Rotate(int index, int n)
+        {
+            return lua_rotate(Unwrap(), index, n);
+        }
+
+        void Duplicate(int index)
+        {
+            return lua_pushvalue(Unwrap(), index);
+        }
+
+        void SetTable(int index)
+        {
+            return lua_settable(Unwrap(), index);
+        }
+
+        int GetTable(int index)
+        {
+            return lua_gettable(Unwrap(), index);
+        }
+
     private:
         StateWrap() = delete;
         ~StateWrap() = delete;
