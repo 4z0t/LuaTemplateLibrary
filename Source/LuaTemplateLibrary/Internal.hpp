@@ -12,6 +12,16 @@
 
 #define STATIC_FAIL(message) static_assert(false, message)
 
+inline void lua_setregp(lua_State* l, const void* p)
+{
+    return lua_rawsetp(l, LUA_REGISTRYINDEX, p);
+}
+
+inline int lua_getregp(lua_State* l, const void* p)
+{
+    return lua_rawgetp(l, LUA_REGISTRYINDEX, p);
+}
+
 namespace Lua::Internal
 {
     template<typename T>
@@ -59,14 +69,4 @@ namespace Lua::Internal
             lua_pushnumber(l, static_cast<lua_Number>(value));
         }
     };
-
-    inline void lua_setregp(lua_State* l, const void* p)
-    {
-        return lua_rawsetp(l, LUA_REGISTRYINDEX, p);
-    }
-
-    inline int lua_getregp(lua_State* l, const void* p)
-    {
-        return lua_rawgetp(l, LUA_REGISTRYINDEX, p);
-    }
 }
