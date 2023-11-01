@@ -10,6 +10,9 @@
 
 namespace Lua
 {
+    using Internal::lua_getregp;
+    using Internal::lua_setregp;
+
     template<typename T>
     struct Class;
 
