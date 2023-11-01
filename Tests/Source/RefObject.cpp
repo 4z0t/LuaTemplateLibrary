@@ -127,14 +127,14 @@ private:
     {
         if (!assigned)
             AssignTable(l);
-        lua_rawgetp(l, LUA_REGISTRYINDEX, GetIndex());
+        Lua::lua_getregp(l, GetIndex());
         assert(lua_istable(l, -1));
     }
 
     static void AssignTable(lua_State* l)
     {
         lua_newtable(l);
-        lua_rawsetp(l, LUA_REGISTRYINDEX, GetIndex());
+        Lua::lua_setregp(l, GetIndex());
         assigned = true;
     }
 
