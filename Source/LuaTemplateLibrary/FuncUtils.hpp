@@ -2,6 +2,7 @@
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
+#include "LuaState.hpp"
 
 namespace Lua
 {
@@ -12,6 +13,9 @@ namespace Lua
 
         template<typename T>
         struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
+
+        template<>
+        struct IsUpvalueType<StateWrap*> : std::true_type { using type = StateWrap*; };
 
         template<>
         struct IsUpvalueType<lua_State*> : std::true_type { using type = lua_State*; };

@@ -55,7 +55,7 @@ namespace Lua
             return PushValue(Unwrap(), value);
         }
 
-        void Pop(size_t n)
+        void Pop(size_t n = 1)
         {
             return lua_pop(Unwrap(), static_cast<int>(n));
         }
@@ -119,6 +119,12 @@ namespace Lua
         int GetTable(int index)
         {
             return lua_gettable(Unwrap(), index);
+        }
+
+        template<typename ...Ts>
+        const char* PushFormatString(const char* fmt, const Ts& ...args)
+        {
+            return lua_pushfstring(Unwrap(), fmt, args...);
         }
 
     private:
