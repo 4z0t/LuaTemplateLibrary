@@ -422,6 +422,10 @@ void ClassTest()
             .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(lua_State*)>{})
         ;
 
+        cout << typeid(&Vector3f::ToString).name() << endl;
+        cout << typeid(string(Vector3f::*)(lua_State*)const).name() << endl;
+        
+
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
         lua_state.Run(
             "local v = Vector(1,2,3)       "
@@ -440,6 +444,8 @@ void ClassTest()
             "ud:Double():Print() "
             "local v1 = Vector(1,2,3) "
             "local v2 = Vector(4,5,6) "
+            "print(v1+v2) "
+            "v1.w = 6 "
             "print(v1+v2) "
         );
 

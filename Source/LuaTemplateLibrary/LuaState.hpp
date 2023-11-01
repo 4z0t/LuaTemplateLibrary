@@ -41,59 +41,59 @@ namespace Lua
 
         void OpenLibs()
         {
-            return luaL_openlibs(Unwrap(this));
+            return luaL_openlibs(Unwrap());
         }
 
         bool DoFile(const char* name)
         {
-            return luaL_dofile(Unwrap(this), name);
+            return luaL_dofile(Unwrap(), name);
         }
 
         template<typename T>
         void Push(const T& value)
         {
-            return PushValue(Unwrap(this), value);
+            return PushValue(Unwrap(), value);
         }
 
         void Pop(size_t n)
         {
-            return lua_pop(Unwrap(this), static_cast<int>(n));
+            return lua_pop(Unwrap(), static_cast<int>(n));
         }
 
         void Close()
         {
-            lua_close(Unwrap(this));
+            lua_close(Unwrap());
         }
 
         template<typename ...Ts>
         void RegisterClosure(const char* name, lua_CFunction func, Ts&&... args)
         {
-            Lua::RegisterClosure(Unwrap(this), name, func, std::forward<Ts>(args)...);
+            Lua::RegisterClosure(Unwrap(), name, func, std::forward<Ts>(args)...);
         }
 
         template<typename TReturn = void, typename ...Ts>
         TReturn Call(const char* name, Ts&&... args)
         {
-            return Lua::CallFunction<TReturn>(Unwrap(this), name, std::forward<Ts>(args)...);
+            return Lua::CallFunction<TReturn>(Unwrap(), name, std::forward<Ts>(args)...);
         }
 
         template<typename T>
         T Get(int index)
         {
-            return GetValue<T>(Unwrap(this), index);
+            return GetValue<T>(Unwrap(), index);
         }
 
-        void Run(const char* const s)throw(Exception)
+        void Run(const char* const s) throw(Exception)
         {
-            if (luaL_dostring(Unwrap(this), s))
+            if (luaL_dostring(Unwrap(), s))
             {
-                lua_error(Unwrap(this));
+                lua_error(Unwrap());
             }
         }
 
         lua_CFunction SetAtPanicFuntion(lua_CFunction func)
         {
-            return lua_atpanic(this->Unwrap(), func);
+            return lua_atpanic(Unwrap(), func);
         }
 
     private:
