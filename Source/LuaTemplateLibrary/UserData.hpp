@@ -257,21 +257,21 @@ namespace Lua
     template<typename T>
     struct StackType<UserData<T>>
     {
-        using TReturn = UserData<T>;
+        using UD = UserData<T>;
 
         static bool Check(lua_State* l, int index)
         {
-            return UserData<T>::IsUserData(l, index);
+            return UD::IsUserData(l, index);
         }
 
-        static TReturn Get(lua_State* l, int index)
+        static UD Get(lua_State* l, int index)
         {
-            return UserData<T>::ValidateUserData(l, index);
+            return UD::ValidateUserData(l, index);
         }
 
         static void Push(lua_State* l, T&& value)
         {
-            UserData<T>::PushCopy(l, std::forward<T>(value));
+            UD::PushCopy(l, std::forward<T>(value));
         }
     };
 

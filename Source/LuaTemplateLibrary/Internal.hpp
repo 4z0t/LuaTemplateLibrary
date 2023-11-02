@@ -29,9 +29,7 @@ namespace Lua::Internal
     {
         static_assert(std::is_integral_v<T>, "Provided not integral type");
 
-        using TReturn = T;
-
-        static TReturn Get(lua_State* l, int index)
+        static T Get(lua_State* l, int index)
         {
             return static_cast<T>(luaL_checkinteger(l, index));
         }
@@ -52,9 +50,7 @@ namespace Lua::Internal
     {
         static_assert(std::is_floating_point_v<T>, "Provided not floating point type");
 
-        using TReturn = T;
-
-        static TReturn Get(lua_State* l, int index)
+        static T Get(lua_State* l, int index)
         {
             return static_cast<T>(luaL_checknumber(l, index));
         }

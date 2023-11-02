@@ -111,7 +111,7 @@ namespace Lua
         Iterator end()const { return Iterator(ParentClass(_This())); }
 
         template<typename T>
-        typename StackType<T>::TReturn To()const
+        T To()const
         {
             AutoPop pop(*this);
             return StackType<T>::Get(m_state, -1);
@@ -572,9 +572,7 @@ namespace Lua
     template<typename T>
     struct StackType<RefObject<T>>
     {
-        using TReturn = RefObject<T>;
-
-        static TReturn Get(lua_State* l, int index)
+        static RefObject<T> Get(lua_State* l, int index)
         {
             return RefObject<T>::FromStack(l, index);
         }
