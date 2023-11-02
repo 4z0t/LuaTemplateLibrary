@@ -309,4 +309,37 @@ TEST_F(UserDataTests, PropertyTests)
         ASSERT_TRUE(Result().Is<float>());
         ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
     }
+    {
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l);
+        
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UserDataValue<Vector3f>>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 0);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 0);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 0);
+    }
+
+    {
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l, 1, 2, 3);
+
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UserDataValue<Vector3f>>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 1);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 2);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 3);
+
+        auto v = vec.To<UserDataValue<Vector3f>>();
+        ASSERT_FLOAT_EQ(v->x, 1);
+        ASSERT_FLOAT_EQ(v->y, 2);
+        ASSERT_FLOAT_EQ(v->z, 3);
+
+    }
 }
