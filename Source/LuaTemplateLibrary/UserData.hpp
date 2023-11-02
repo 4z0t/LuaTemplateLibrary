@@ -203,12 +203,41 @@ namespace Lua
     };
 
     template<typename T>
-    struct UserDataValue : TypeBase<T*> {};
+    struct UserDataValue :TypeBase<T*>
+    {
+
+        UserDataValue() :UserDataValue(nullptr) {}
+
+        UserDataValue(T* value) :m_value(value) {}
+
+        operator T& ()
+        {
+            return *m_value;
+        }
+
+        operator T* ()
+        {
+            return m_value;
+        }
+
+        T* operator->()
+        {
+            return m_value;
+        }
+
+        T& operator*()
+        {
+            return *m_value;
+        }
+
+    private:
+        T* m_value = nullptr;
+    };
 
     template<typename T>
     struct StackType<UserDataValue<T>>
     {
-        using TReturn = T*;
+        using TReturn = UserDataValue<T>;
 
         static bool Check(lua_State* l, int index)
         {
