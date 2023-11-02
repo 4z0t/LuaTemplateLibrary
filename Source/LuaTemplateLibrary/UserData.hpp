@@ -68,15 +68,28 @@ namespace Lua
     };
 
     template<typename T>
-    struct UserData: UserDataValue<T>
+    struct UserData : UserDataValue<T>
     {
         using UserDataValue::UserDataValue;
+
+        static void* const  Allocate(lua_State* l)
+        {
+            void* const obj = lua_newuserdata(l, sizeof(T));
+            SetClassMetaTable(l);
+            return obj;
+        }
 
         static void CopyFunction(lua_State* l, T&& other)
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
-            new(lua_newuserdata(l, sizeof(T))) T(std::forward<T>(other));
-            SetClassMetaTable(l);
+            new(Allocate(l)) T(std::forward<T>(other));
+        }
+
+        template<typename ...TArgs>
+        static GRefObject Make(lua_State* l, TArgs&&... args)
+        {
+            new(Allocate(l)) T(std::forward<TArgs>(args)...);
+            return GRefObject::FromTop(l);
         }
 
         static void SetClassMetaTable(lua_State* l)
@@ -237,15 +250,6 @@ namespace Lua
             lua_pushstring(l, "className");
             lua_rawget(l, -2);
             return lua_tostring(l, -1);
-        }
-
-        template<typename ...TArgs>
-        static GRefObject Make(lua_State* l, TArgs&&... args)
-        {
-            void* obj = lua_newuserdata(l, sizeof(T));
-            new(obj) T(std::forward<TArgs>(args)...);
-            SetClassMetaTable(l);
-            return GRefObject::FromTop(l);
         }
     };
 

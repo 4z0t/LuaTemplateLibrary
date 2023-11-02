@@ -16,9 +16,7 @@ namespace Lua
         {
             ArgsTuple args;
             Constructor::GetArgs(l, args);
-            void* obj = lua_newuserdata(l, sizeof(C));
-            UnpackArgs(obj, args, std::index_sequence_for<TArgs...>{});
-            UserData<C>::SetClassMetaTable(l);
+            UnpackArgs(UserData<C>::Allocate(l), args, std::index_sequence_for<TArgs...>{});
             return 1;
         }
 

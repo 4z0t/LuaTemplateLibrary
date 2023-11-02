@@ -48,6 +48,11 @@ target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
 
+target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/Zi;/EHa>")
+target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
+target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
+target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
+
 add_custom_command(
         TARGET FreeTest_LTL  POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
