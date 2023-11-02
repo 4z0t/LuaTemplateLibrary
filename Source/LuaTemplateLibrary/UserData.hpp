@@ -22,9 +22,56 @@ namespace Lua
         }
     };
 
+    struct UserDataValueBase {};
+
     template<typename T>
-    struct UserData
+    struct UserDataValue :UserDataValueBase
     {
+        using Type = T*;
+
+        UserDataValue() :UserDataValue(nullptr) {}
+
+        UserDataValue(T* value) :m_value(value) {}
+
+        operator T& ()
+        {
+            return *m_value;
+        }
+
+        operator T* ()
+        {
+            return m_value;
+        }
+
+        const T* const operator->()const
+        {
+            return m_value;
+        }
+
+        const T& operator*()const
+        {
+            return *m_value;
+        }
+
+        T* const operator->()
+        {
+            return m_value;
+        }
+
+        T& operator*()
+        {
+            return *m_value;
+        }
+
+    private:
+        T* m_value = nullptr;
+    };
+
+    template<typename T>
+    struct UserData: UserDataValue<T>
+    {
+        using UserDataValue::UserDataValue;
+
         static void CopyFunction(lua_State* l, T&& other)
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
@@ -202,55 +249,10 @@ namespace Lua
         }
     };
 
-    struct UserDataValueBase {};
-
     template<typename T>
-    struct UserDataValue :UserDataValueBase
+    struct StackType<UserData<T>>
     {
-        using Type = T*;
-
-        UserDataValue() :UserDataValue(nullptr) {}
-
-        UserDataValue(T* value) :m_value(value) {}
-
-        operator T& ()
-        {
-            return *m_value;
-        }
-
-        operator T* ()
-        {
-            return m_value;
-        }
-
-        const T* const operator->()const
-        {
-            return m_value;
-        }
-
-        const T& operator*()const
-        {
-            return *m_value;
-        }
-
-        T* const operator->()
-        {
-            return m_value;
-        }
-
-        T& operator*()
-        {
-            return *m_value;
-        }
-
-    private:
-        T* m_value = nullptr;
-    };
-
-    template<typename T>
-    struct StackType<UserDataValue<T>>
-    {
-        using TReturn = UserDataValue<T>;
+        using TReturn = UserData<T>;
 
         static bool Check(lua_State* l, int index)
         {

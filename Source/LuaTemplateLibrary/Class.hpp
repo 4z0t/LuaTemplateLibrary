@@ -22,7 +22,7 @@ namespace Lua
         struct AddUserDataValue : TypeBase<T> {};
 
         template<>
-        struct AddUserDataValue<C> : TypeBase<UserDataValue<C>> {};
+        struct AddUserDataValue<C> : TypeBase<UserData<C>> {};
 
         template<typename T>
         using AUDV_t = typename AddUserDataValue<T>::type;
@@ -39,7 +39,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, UserDataValue<C>, AUDV_t<TArgs>...>::Function;
+            auto method = Closure<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
             c.AddMetaMethod(name, method);
         }
     };
@@ -56,7 +56,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, AUDV_t<TReturn>(UserDataValue<C>, AUDV_t<TArgs>...)>::Function;
+            auto method = Closure<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
             c.AddMetaMethod(name, method);
         }
     };

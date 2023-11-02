@@ -263,7 +263,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
-        .AddGetter("length", Closure<&Vector3f::Length, UserDataValue<Vector3f>>::Function)
+        .AddGetter("length", Closure<&Vector3f::Length, UserData<Vector3f>>::Function)
         ;
     {
 
@@ -325,7 +325,7 @@ TEST_F(UserDataTests, PropertyTests)
         auto vec = UDVector3f::Make(l);
 
         ASSERT_TRUE(vec.IsUserData());
-        ASSERT_TRUE(vec.Is<UserDataValue<Vector3f>>());
+        ASSERT_TRUE(vec.Is<UserData<Vector3f>>());
         ASSERT_TRUE(vec["x"].Is<float>());
         ASSERT_FLOAT_EQ(vec["x"].To<float>(), 0);
         ASSERT_TRUE(vec["y"].Is<float>());
@@ -339,7 +339,7 @@ TEST_F(UserDataTests, PropertyTests)
         auto vec = UDVector3f::Make(l, 1, 2, 3);
 
         ASSERT_TRUE(vec.IsUserData());
-        ASSERT_TRUE(vec.Is<UserDataValue<Vector3f>>());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
         ASSERT_TRUE(vec["x"].Is<float>());
         ASSERT_FLOAT_EQ(vec["x"].To<float>(), 1);
         ASSERT_TRUE(vec["y"].Is<float>());
@@ -347,19 +347,19 @@ TEST_F(UserDataTests, PropertyTests)
         ASSERT_TRUE(vec["z"].Is<float>());
         ASSERT_FLOAT_EQ(vec["z"].To<float>(), 3);
         {
-            Vector3f* v = vec.To<UserDataValue<Vector3f>>();
+            Vector3f* v = vec.To<UDVector3f>();
             ASSERT_FLOAT_EQ(v->x, 1);
             ASSERT_FLOAT_EQ(v->y, 2);
             ASSERT_FLOAT_EQ(v->z, 3);
         }
         {
-            Vector3f v = vec.To<UserDataValue<Vector3f>>();
+            Vector3f v = vec.To<UDVector3f>();
             ASSERT_FLOAT_EQ(v.x, 1);
             ASSERT_FLOAT_EQ(v.y, 2);
             ASSERT_FLOAT_EQ(v.z, 3);
         }
         {
-            auto v = vec.To<UserDataValue<Vector3f>>();
+            auto v = vec.To<UDVector3f>();
             ASSERT_FLOAT_EQ(v->x, 1);
             ASSERT_FLOAT_EQ(v->y, 2);
             ASSERT_FLOAT_EQ(v->z, 3);
