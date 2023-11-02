@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
 #include "Exception.hpp"
+#include "RefObject.hpp"
 
 namespace Lua
 {
@@ -191,6 +192,13 @@ namespace Lua
             return lua_tostring(l, -1);
         }
 
+        template<typename ...TArgs>
+        static GRefObject Make(lua_State* l, TArgs&&... args)
+        {
+            void* obj = lua_newuserdata(l, sizeof(T));
+            new(obj) T(std::forward<TArgs>(args)...);
+            return GRefObject::FromTop(l);
+        }
     };
 
     template<typename T>
