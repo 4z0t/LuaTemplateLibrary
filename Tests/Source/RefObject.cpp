@@ -325,7 +325,7 @@ TEST_F(UserDataTests, PropertyTests)
         auto vec = UDVector3f::Make(l);
 
         ASSERT_TRUE(vec.IsUserData());
-        ASSERT_TRUE(vec.Is<UserData<Vector3f>>());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
         ASSERT_TRUE(vec["x"].Is<float>());
         ASSERT_FLOAT_EQ(vec["x"].To<float>(), 0);
         ASSERT_TRUE(vec["y"].Is<float>());
