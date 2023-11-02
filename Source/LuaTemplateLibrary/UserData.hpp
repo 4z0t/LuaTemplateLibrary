@@ -63,6 +63,32 @@ namespace Lua
             luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
         }
 
+        static void ThrowNoMetaTableForUD(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "Expected userdata with metatable");
+        }
+
+        static bool IsUserData(lua_State* l, int index)
+        {
+            if (!lua_isuserdata(l, index))
+            {
+                return false;
+            }
+
+            if (!lua_getmetatable(l, index))
+            {
+                return false;
+            }
+
+            if (MetaTable::Push(l) == LUA_TNIL)
+            {
+                lua_pop(l, 1);
+                return false;
+            }
+            StackPopper pop{ l, 2 };
+            return lua_rawequal(l, -2, -1);
+        }
+
         static T* ValidateUserData(lua_State* l, int index)
         {
             if (!lua_isuserdata(l, index))
@@ -80,7 +106,8 @@ namespace Lua
             if (MetaTable::Push(l) == LUA_TNIL)
             {
                 lua_pop(l, 1);
-                return false;
+                ThrowNoMetaTableForUD(l, index);
+                return nullptr;
             }
 
             bool res = lua_rawequal(l, -2, -1);
@@ -173,6 +200,11 @@ namespace Lua
     struct StackType<UserDataValue<T>>
     {
         using TReturn = T*;
+
+        static bool Check(lua_State* l, int index)
+        {
+            return UserData<T>::IsUserData(l, index);
+        }
 
         static TReturn Get(lua_State* l, int index)
         {
