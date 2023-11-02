@@ -202,7 +202,7 @@ namespace Lua
         }
     };
 
-    struct UserDataValueBase{};
+    struct UserDataValueBase {};
 
     template<typename T>
     struct UserDataValue :UserDataValueBase
@@ -223,7 +223,7 @@ namespace Lua
             return m_value;
         }
 
-        const T* operator->()const
+        const T* const operator->()const
         {
             return m_value;
         }
@@ -233,7 +233,7 @@ namespace Lua
             return *m_value;
         }
 
-        T* operator->()
+        T* const operator->()
         {
             return m_value;
         }
