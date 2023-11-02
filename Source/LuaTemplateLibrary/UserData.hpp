@@ -79,7 +79,7 @@ namespace Lua
             return obj;
         }
 
-        static void CopyFunction(lua_State* l, T&& other)
+        static void PushCopy(lua_State* l, T&& other)
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
             new(Allocate(l)) T(std::forward<T>(other));
@@ -270,7 +270,7 @@ namespace Lua
 
         static void Push(lua_State* l, T&& value)
         {
-            UserData<T>::CopyFunction(l, std::forward<T>(value));
+            UserData<T>::PushCopy(l, std::forward<T>(value));
         }
     };
 
