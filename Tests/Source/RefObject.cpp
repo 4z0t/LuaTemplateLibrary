@@ -346,6 +346,7 @@ TEST_F(UserDataTests, PropertyTests)
         ASSERT_FLOAT_EQ(vec["y"].To<float>(), 2);
         ASSERT_TRUE(vec["z"].Is<float>());
         ASSERT_FLOAT_EQ(vec["z"].To<float>(), 3);
+        ASSERT_TRUE(vec["w"].Is<void>());
         {
             Vector3f* v = vec.To<UDVector3f>();
             ASSERT_FLOAT_EQ(v->x, 1);
