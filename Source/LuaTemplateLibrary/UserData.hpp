@@ -197,6 +197,7 @@ namespace Lua
         {
             void* obj = lua_newuserdata(l, sizeof(T));
             new(obj) T(std::forward<TArgs>(args)...);
+            SetClassMetaTable(l);
             return GRefObject::FromTop(l);
         }
     };
@@ -223,7 +224,6 @@ namespace Lua
         {
             UserData<T>::CopyFunction(l, std::forward<T>(value));
         }
-
     };
 
 }
