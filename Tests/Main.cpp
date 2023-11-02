@@ -381,8 +381,6 @@ struct MyUData
 
     int a, b, c;
 };
-template<typename T>
-using  UDValue = Lua::UserDataValue<T>;
 
 void Print(const MyUData* data)
 {
