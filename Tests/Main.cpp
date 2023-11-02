@@ -390,6 +390,11 @@ void Print(const MyUData* data)
     cout << "MyUData: " << data->a << ' ' << data->b << ' ' << data->c << endl;
 }
 
+float Dot(const Vector3f& v1, const Vector3f& v2)
+{
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
 void ClassTest()
 {
     using namespace Lua;
@@ -420,6 +425,7 @@ void ClassTest()
             .Add("z", Property<Vector3f, float, &Vector3f::z>{})
             .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
             .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(StateWrap*)>{})
+            .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
             ;
 
         cout << typeid(&Vector3f::ToString).name() << endl;
@@ -445,8 +451,9 @@ void ClassTest()
             "local v1 = Vector(1,2,3) "
             "local v2 = Vector(4,5,6) "
             "print(v1+v2) "
-            "v1.w = 6 "
+            //"v1.w = 6 "
             "print(v1+v2) "
+            "print(v1:Dot(v2)) "
         );
 
 
