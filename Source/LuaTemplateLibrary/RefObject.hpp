@@ -111,7 +111,7 @@ namespace Lua
         Iterator end()const { return Iterator(ParentClass(_This())); }
 
         template<typename T>
-        T To()const
+        typename StackType<T>::TReturn To()const
         {
             AutoPop pop(*this);
             return StackType<T>::Get(m_state, -1);
@@ -200,6 +200,12 @@ namespace Lua
         {
             AutoPop pop(*this);
             return lua_istable(m_state, -1);
+        }
+
+        bool IsUserData()const
+        {
+            AutoPop pop(*this);
+            return lua_isuserdata(m_state, -1);
         }
 
         Type Type()const
