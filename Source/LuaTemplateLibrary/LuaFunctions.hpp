@@ -177,7 +177,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static TReturn Call(Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -194,7 +198,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static TReturn Call(const Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -275,7 +283,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static UnwrapperReturn Call(Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -292,7 +304,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static UnwrapperReturn Call(const Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }

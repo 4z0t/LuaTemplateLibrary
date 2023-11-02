@@ -119,9 +119,9 @@ struct Vector3f
          return Sum(*this, v);
      }*/
 
-    Vector3f operator+(const Vector3f* v)const
+    Vector3f operator+(const Vector3f& v)const
     {
-        return Sum(*this, *v);
+        return Sum(*this, v);
     }
 };
 

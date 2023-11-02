@@ -202,9 +202,12 @@ namespace Lua
         }
     };
 
+    struct UserDataValueBase{};
+
     template<typename T>
-    struct UserDataValue :TypeBase<T*>
+    struct UserDataValue :UserDataValueBase
     {
+        using Type = T*;
 
         UserDataValue() :UserDataValue(nullptr) {}
 
@@ -218,6 +221,16 @@ namespace Lua
         operator T* ()
         {
             return m_value;
+        }
+
+        const T* operator->()const
+        {
+            return m_value;
+        }
+
+        const T& operator*()const
+        {
+            return *m_value;
         }
 
         T* operator->()
