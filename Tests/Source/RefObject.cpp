@@ -238,6 +238,54 @@ struct UserDataTests : TestBase
 
 };
 
+TEST_F(UserDataTests, MoveCtorTest)
+{
+    using namespace Lua;
+    struct CantCopy
+    {
+
+        CantCopy(int a) :a(a) {}
+        CantCopy(const CantCopy&) = delete;
+        CantCopy(CantCopy&& other)
+        {
+            a = std::move(other.a);
+        }
+
+        int Print()
+        {
+            return a;
+        }
+
+        CantCopy Dup()
+        {
+            return CantCopy(a * 2);
+        }
+
+        int a = 4;
+    };
+
+    Class<CantCopy>(l, "CantCopy")
+        .AddConstructor<Default<int>>()
+        .Add("Duplicate", Method<CantCopy, &CantCopy::Dup, CantCopy()>{})
+        .Add("Print", Method<CantCopy, &CantCopy::Print>{})
+        ;
+    Run("local a = CantCopy() "
+        "result = a:Print()"
+    );
+
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 0);
+
+    Run("local a = CantCopy(4) "
+        "result = a:Duplicate():Print()"
+    );
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 8);
+}
+
+
 TEST_F(UserDataTests, PropertyTests)
 {
     using namespace Lua;

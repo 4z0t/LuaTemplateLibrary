@@ -81,7 +81,7 @@ namespace Lua
 
         static void PushCopy(lua_State* l, T&& other)
         {
-            static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
+            static_assert(std::is_move_constructible_v<T>, "Can't move-construct type T!");
             new(Allocate(l)) T(std::forward<T>(other));
         }
 
