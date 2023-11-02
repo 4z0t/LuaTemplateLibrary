@@ -263,6 +263,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        .AddGetter("length", Closure<&Vector3f::Length, UserDataValue<Vector3f>>::Function)
         ;
     {
 
@@ -307,6 +308,13 @@ TEST_F(UserDataTests, PropertyTests)
         {
             Run("v = Vector(1,2,3)  "
                 "result = v:Length()  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v.length  "
             );
             ASSERT_TRUE(Result().Is<float>());
             ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
