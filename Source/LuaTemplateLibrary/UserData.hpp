@@ -109,26 +109,6 @@ namespace Lua
             return 0;
         }
 
-        static void ThrowInvalidUserData(lua_State* l, int index)
-        {
-            luaL_argerror(l, index, "invalind UserData");
-        }
-
-        static void ThrowWrongUserDataType(lua_State* l, int index)
-        {
-            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
-        }
-
-        static void ThrowWrongType(lua_State* l, int index)
-        {
-            luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
-        }
-
-        static void ThrowNoMetaTableForUD(lua_State* l, int index)
-        {
-            luaL_argerror(l, index, "Expected userdata with metatable");
-        }
-
         static bool IsUserData(lua_State* l, int index)
         {
             if (!lua_isuserdata(l, index))
@@ -250,6 +230,27 @@ namespace Lua
             lua_pushstring(l, "className");
             lua_rawget(l, -2);
             return lua_tostring(l, -1);
+        }
+
+    private:
+        static void ThrowInvalidUserData(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "invalind UserData");
+        }
+
+        static void ThrowWrongUserDataType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
+        }
+
+        static void ThrowWrongType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
+        }
+
+        static void ThrowNoMetaTableForUD(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "Expected userdata with metatable");
         }
     };
 
