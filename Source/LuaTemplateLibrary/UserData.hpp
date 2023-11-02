@@ -38,7 +38,7 @@ namespace Lua
             return *m_value;
         }
 
-        operator T* ()
+        operator T* const ()
         {
             return m_value;
         }
