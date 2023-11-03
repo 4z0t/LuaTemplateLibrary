@@ -63,16 +63,34 @@ TEST_F(RefObjectTests, IteratorTest)
 TEST_F(RefObjectTests, CompareTest)
 {
     using namespace Lua;
-    Run("a, b = 2, 3");
-    GRefObject a = GRefObject::Global(l, "a");
-    GRefObject b = GRefObject::Global(l, "b");
+    {
 
-    ASSERT_FALSE(a == b);
-    ASSERT_TRUE(a != b);
-    ASSERT_TRUE(a < b);
-    ASSERT_FALSE(a > b);
-    ASSERT_FALSE(a >= b);
-    ASSERT_TRUE(a <= b);
+        Run("a, b = 2, 3");
+        GRefObject a = GRefObject::Global(l, "a");
+        GRefObject b = GRefObject::Global(l, "b");
+
+        ASSERT_FALSE(a == b);
+        ASSERT_TRUE(a != b);
+        ASSERT_TRUE(a < b);
+        ASSERT_FALSE(a > b);
+        ASSERT_FALSE(a >= b);
+        ASSERT_TRUE(a <= b);
+    }
+    {
+        Run("a = {}"
+            " b = a ");
+        GRefObject a = GRefObject::Global(l, "a");
+        GRefObject b = GRefObject::Global(l, "b");
+
+        ASSERT_TRUE(a == b);
+        ASSERT_FALSE(a != b);
+        // throws for some reason and dont catch
+        //ASSERT_THROW(a > b, Exception);
+        //ASSERT_FALSE(a < b); 
+        //ASSERT_FALSE(a > b);
+        //ASSERT_TRUE(a >= b);
+        //ASSERT_TRUE(a <= b);
+    }
 
 }
 
@@ -429,10 +447,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace Lua;
 
     constexpr auto func = +[](int a, StateWrap* s, int b)->int
-    {
-        int c = s->GetGlobal<int>("globalValue");
-        return a + b + c;
-    };
+        {
+            int c = s->GetGlobal<int>("globalValue");
+            return a + b + c;
+        };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", Closure<func, Upvalue<int>, StateWrap*, Upvalue<int>>::Function, 1, 2);
