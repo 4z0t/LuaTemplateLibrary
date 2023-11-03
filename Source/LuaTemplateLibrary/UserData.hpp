@@ -22,53 +22,8 @@ namespace Lua
         }
     };
 
-    struct UserDataValueBase {};
-
     template<typename T>
-    struct UserDataValue :UserDataValueBase
-    {
-        using Type = T*;
-
-        UserDataValue() :UserDataValue(nullptr) {}
-
-        UserDataValue(T* value) :m_value(value) {}
-
-        operator T& ()
-        {
-            return *m_value;
-        }
-
-        operator T* const ()
-        {
-            return m_value;
-        }
-
-        const T* const operator->()const
-        {
-            return m_value;
-        }
-
-        const T& operator*()const
-        {
-            return *m_value;
-        }
-
-        T* const operator->()
-        {
-            return m_value;
-        }
-
-        T& operator*()
-        {
-            return *m_value;
-        }
-
-    private:
-        T* m_value = nullptr;
-    };
-
-    template<typename T>
-    struct UserData : UserDataValue<T>
+    struct UserData : Internal::UserDataValue<T>
     {
         using UserDataValue::UserDataValue;
 

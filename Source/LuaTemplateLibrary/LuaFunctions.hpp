@@ -128,6 +128,8 @@ namespace Lua
         using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
         using Indexes = std::index_sequence_for<TArgs...>;
 
+        using UserDataValueBase = Internal::UserDataValueBase;
+
     public:
         static int Function(lua_State* l)
         {
@@ -233,6 +235,8 @@ namespace Lua
 
         using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
         using Indexes = std::index_sequence_for<TArgs...>;
+
+        using UserDataValueBase = Internal::UserDataValueBase;
 
     public:
         static int Function(lua_State* l)
