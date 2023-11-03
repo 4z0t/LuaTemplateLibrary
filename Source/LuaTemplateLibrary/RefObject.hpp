@@ -202,6 +202,12 @@ namespace Lua
             return lua_istable(m_state, -1);
         }
 
+        bool IsUserData()const
+        {
+            AutoPop pop(*this);
+            return lua_isuserdata(m_state, -1);
+        }
+
         Type Type()const
         {
             AutoPop pop(*this);
@@ -566,9 +572,7 @@ namespace Lua
     template<typename T>
     struct StackType<RefObject<T>>
     {
-        using TReturn = RefObject<T>;
-
-        static TReturn Get(lua_State* l, int index)
+        static RefObject<T> Get(lua_State* l, int index)
         {
             return RefObject<T>::FromStack(l, index);
         }

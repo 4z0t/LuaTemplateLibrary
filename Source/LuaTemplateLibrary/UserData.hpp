@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
 #include "Exception.hpp"
+#include "RefObject.hpp"
 
 namespace Lua
 {
@@ -22,13 +23,28 @@ namespace Lua
     };
 
     template<typename T>
-    struct UserData
+    struct UserData : Internal::UserDataValue<T>
     {
-        static void CopyFunction(lua_State* l, T&& other)
+        using UserDataValue::UserDataValue;
+
+        static void* const  Allocate(lua_State* l)
         {
-            static_assert(std::is_copy_constructible_v<T>, "Can't copy construct type T!");
-            new(lua_newuserdata(l, sizeof(T))) T(std::forward<T>(other));
+            void* const obj = lua_newuserdata(l, sizeof(T));
             SetClassMetaTable(l);
+            return obj;
+        }
+
+        static void PushCopy(lua_State* l, T&& other)
+        {
+            static_assert(std::is_move_constructible_v<T>, "Can't move-construct type T!");
+            new(Allocate(l)) T(std::forward<T>(other));
+        }
+
+        template<typename ...TArgs>
+        static GRefObject Make(lua_State* l, TArgs&&... args)
+        {
+            new(Allocate(l)) T(std::forward<TArgs>(args)...);
+            return GRefObject::FromTop(l);
         }
 
         static void SetClassMetaTable(lua_State* l)
@@ -48,19 +64,25 @@ namespace Lua
             return 0;
         }
 
-        static void ThrowInvalidUserData(lua_State* l, int index)
+        static bool IsUserData(lua_State* l, int index)
         {
-            luaL_argerror(l, index, "invalind UserData");
-        }
+            if (!lua_isuserdata(l, index))
+            {
+                return false;
+            }
 
-        static void ThrowWrongUserDataType(lua_State* l, int index)
-        {
-            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
-        }
+            if (!lua_getmetatable(l, index))
+            {
+                return false;
+            }
 
-        static void ThrowWrongType(lua_State* l, int index)
-        {
-            luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
+            if (MetaTable::Push(l) == LUA_TNIL)
+            {
+                lua_pop(l, 1);
+                return false;
+            }
+            StackPopper pop{ l, 2 };
+            return lua_rawequal(l, -2, -1);
         }
 
         static T* ValidateUserData(lua_State* l, int index)
@@ -80,7 +102,8 @@ namespace Lua
             if (MetaTable::Push(l) == LUA_TNIL)
             {
                 lua_pop(l, 1);
-                return false;
+                ThrowNoMetaTableForUD(l, index);
+                return nullptr;
             }
 
             bool res = lua_rawequal(l, -2, -1);
@@ -164,26 +187,47 @@ namespace Lua
             return lua_tostring(l, -1);
         }
 
+    private:
+        static void ThrowInvalidUserData(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "invalind UserData");
+        }
+
+        static void ThrowWrongUserDataType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
+        }
+
+        static void ThrowWrongType(lua_State* l, int index)
+        {
+            luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
+        }
+
+        static void ThrowNoMetaTableForUD(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "Expected userdata with metatable");
+        }
     };
 
     template<typename T>
-    struct UserDataValue : TypeBase<T*> {};
-
-    template<typename T>
-    struct StackType<UserDataValue<T>>
+    struct StackType<UserData<T>>
     {
-        using TReturn = T*;
+        using UD = UserData<T>;
 
-        static TReturn Get(lua_State* l, int index)
+        static bool Check(lua_State* l, int index)
         {
-            return UserData<T>::ValidateUserData(l, index);
+            return UD::IsUserData(l, index);
+        }
+
+        static UD Get(lua_State* l, int index)
+        {
+            return UD::ValidateUserData(l, index);
         }
 
         static void Push(lua_State* l, T&& value)
         {
-            UserData<T>::CopyFunction(l, std::forward<T>(value));
+            UD::PushCopy(l, std::forward<T>(value));
         }
-
     };
 
 }

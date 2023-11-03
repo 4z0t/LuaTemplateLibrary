@@ -16,16 +16,14 @@ namespace Lua
         {
             ArgsTuple args;
             Constructor::GetArgs(l, args);
-            void* obj = lua_newuserdata(l, sizeof(C));
-            UnpackArgs(obj, args, std::index_sequence_for<TArgs...>{});
-            UserData<C>::SetClassMetaTable(l);
+            UnpackArgs(UserData<C>::Allocate(l), args, std::index_sequence_for<TArgs...>{});
             return 1;
         }
 
     private:
         static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
         }
 
         template <size_t ... Is>

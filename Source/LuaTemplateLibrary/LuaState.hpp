@@ -127,6 +127,14 @@ namespace Lua
             return lua_pushfstring(Unwrap(), fmt, args...);
         }
 
+        template<typename T>
+        T GetGlobal(const char* name)
+        {
+            StackPopper pop{ Unwrap(),1 };
+            lua_getglobal(Unwrap(), name);
+            return Get<T>(-1);
+        }
+
     private:
         StateWrap() = delete;
         ~StateWrap() = delete;

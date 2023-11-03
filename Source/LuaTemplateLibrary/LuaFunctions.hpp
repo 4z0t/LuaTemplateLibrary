@@ -113,51 +113,61 @@ namespace Lua
         }
     };
 
+    namespace Internal
+    {
+        template<typename ...TArgs>
+        struct FunctionHelper
+        {
+            using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
+            static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
+            {
+                return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
+            }
+
+            static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
+            {
+                return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
+            }
+        };
+    }
+
     template<typename FnClass>
     struct ClassFunction : public ClassClosure<FnClass> {
     };
 
     template<auto fn, typename ...TArgs>
-    struct Closure
+    struct Closure: Internal::FunctionHelper<TArgs...>
     {
         using FnType = decltype(fn);
 
         static_assert(std::is_invocable_v<FnType, Unwrap_t<TArgs>&...>, "Given function can't be called with such arguments!");
         using TReturn = std::invoke_result_t<FnType, Unwrap_t<TArgs>&...>;
 
-        using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
+        using ArgsTuple = typename FunctionHelper::ArgsTuple;
         using Indexes = std::index_sequence_for<TArgs...>;
+
+        using UserDataValueBase = Internal::UserDataValueBase;
 
     public:
         static int Function(lua_State* l)
         {
             ArgsTuple args;
-            Closure::GetArgs(l, args);
+            FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TReturn>)
             {
                 Closure::Call(args, Indexes{});
-                Closure::ReplaceUpvalues(l, args);
+                FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
                 TReturn result = Closure::Call(args, Indexes{});
-                Closure::ReplaceUpvalues(l, args);
+                FunctionHelper::ReplaceUpvalues(l, args);
                 size_t n_results = PushResult(l, result);
                 return static_cast<int>(n_results);
             }
         }
     private:
-        static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
-        {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
-        }
-
-        static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
-        {
-            return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
-        }
-
         template<typename R, typename D = R>
         struct CallHelper;
 
@@ -177,7 +187,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static TReturn Call(Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -194,7 +208,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static TReturn Call(const Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -214,7 +232,7 @@ namespace Lua
 
 
     template<auto fn, typename TReturn, typename ...TArgs>
-    struct Closure<fn, TReturn(TArgs...)>
+    struct Closure<fn, TReturn(TArgs...)>: Internal::FunctionHelper<TArgs...>
     {
         using FnType = decltype(fn);
 
@@ -223,39 +241,31 @@ namespace Lua
 
         static_assert(std::is_same_v<UnwrapperReturn, void> == std::is_same_v<TReturn, void>, "If function returns void you cannot return anything else but void!");
 
-        using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
+        using ArgsTuple = typename FunctionHelper::ArgsTuple;
         using Indexes = std::index_sequence_for<TArgs...>;
+
+        using UserDataValueBase = Internal::UserDataValueBase;
 
     public:
         static int Function(lua_State* l)
         {
             ArgsTuple args;
-            Closure::GetArgs(l, args);
+            FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<UnwrapperReturn>)
             {
                 Closure::Call(args, Indexes{});
-                Closure::ReplaceUpvalues(l, args);
+                FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
                 UnwrapperReturn result = Closure::Call(args, Indexes{});
-                Closure::ReplaceUpvalues(l, args);
+                FunctionHelper::ReplaceUpvalues(l, args);
                 StackType<TReturn>::Push(l, std::move(result));
                 return 1;
             }
         }
     private:
-        static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
-        {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
-        }
-
-        static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
-        {
-            return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
-        }
-
         template<typename R, typename D = R>
         struct CallHelper;
 
@@ -275,7 +285,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static UnwrapperReturn Call(Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }
@@ -292,7 +306,11 @@ namespace Lua
             template<class Class, typename ...Args>
             static UnwrapperReturn Call(const Class& arg, Args&... args)
             {
-                if constexpr (std::is_pointer_v<Class>)
+                if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                {
+                    return ((*arg).*fn)(args...);
+                }
+                else if constexpr (std::is_pointer_v<Class>)
                 {
                     return (arg->*fn)(args...);
                 }

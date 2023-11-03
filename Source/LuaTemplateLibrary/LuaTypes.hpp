@@ -4,7 +4,7 @@
 namespace Lua
 {
     class StateWrap;
-    
+
     StateWrap* WrapState(lua_State* l);
 
     enum class Type
@@ -24,8 +24,6 @@ namespace Lua
     template<typename T>
     struct StackType
     {
-        using TReturn = T;
-
         static T Get(lua_State* l, int index)
         {
             STATIC_FAIL("Not provided implementation for Get function");
@@ -46,9 +44,7 @@ namespace Lua
     template<>
     struct StackType<lua_State*>
     {
-        using TReturn = lua_State*;
-
-        static TReturn Get(lua_State* l, int index)
+        static lua_State* Get(lua_State* l, int index)
         {
             return l;
         }
@@ -57,9 +53,7 @@ namespace Lua
     template<>
     struct StackType<StateWrap*>
     {
-        using TReturn = StateWrap*;
-
-        static TReturn Get(lua_State* l, int index)
+        static StateWrap* Get(lua_State* l, int index)
         {
             return WrapState(l);
         }
@@ -116,9 +110,7 @@ namespace Lua
     template<>
     struct StackType<bool>
     {
-        using TReturn = bool;
-
-        static TReturn Get(lua_State* l, int index)
+        static bool Get(lua_State* l, int index)
         {
             return lua_toboolean(l, index);
         }
@@ -137,9 +129,7 @@ namespace Lua
     template<>
     struct StackType<const char*>
     {
-        using TReturn = const char*;
-
-        static TReturn Get(lua_State* l, int index)
+        static const char* Get(lua_State* l, int index)
         {
             return luaL_checkstring(l, index);
         }
@@ -158,9 +148,7 @@ namespace Lua
     template<>
     struct StackType<std::string> : public StackType<const char*>
     {
-        using TReturn = const char*;
-
-        static TReturn Get(lua_State* l, int index)
+        static std::string Get(lua_State* l, int index)
         {
             return { StackType<const char*>::Get(l, index) };
         }
@@ -174,9 +162,7 @@ namespace Lua
     template<>
     struct StackType<lua_CFunction>
     {
-        using TReturn = lua_CFunction;
-
-        static TReturn Get(lua_State* l, int index)
+        static lua_CFunction Get(lua_State* l, int index)
         {
             return lua_tocfunction(l, index);
         }
@@ -195,9 +181,7 @@ namespace Lua
     template<typename T>
     struct StackType<std::vector<T>>
     {
-        using TReturn = std::vector<T>;
-
-        static TReturn Get(lua_State* l, int index)
+        static std::vector<T> Get(lua_State* l, int index)
         {
             lua_pushvalue(l, index);
             auto size = lua_rawlen(l, -1);

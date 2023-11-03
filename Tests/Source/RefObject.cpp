@@ -238,6 +238,54 @@ struct UserDataTests : TestBase
 
 };
 
+TEST_F(UserDataTests, MoveCtorTest)
+{
+    using namespace Lua;
+    struct CantCopy
+    {
+
+        CantCopy(int a) :a(a) {}
+        CantCopy(const CantCopy&) = delete;
+        CantCopy(CantCopy&& other)
+        {
+            a = std::move(other.a);
+        }
+
+        int Print()
+        {
+            return a;
+        }
+
+        CantCopy Dup()
+        {
+            return CantCopy(a * 2);
+        }
+
+        int a = 4;
+    };
+
+    Class<CantCopy>(l, "CantCopy")
+        .AddConstructor<Default<int>>()
+        .Add("Duplicate", Method<CantCopy, &CantCopy::Dup, CantCopy()>{})
+        .Add("Print", Method<CantCopy, &CantCopy::Print>{})
+        ;
+    Run("local a = CantCopy() "
+        "result = a:Print()"
+    );
+
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 0);
+
+    Run("local a = CantCopy(4) "
+        "result = a:Duplicate():Print()"
+    );
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 8);
+}
+
+
 TEST_F(UserDataTests, PropertyTests)
 {
     using namespace Lua;
@@ -263,50 +311,134 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        .AddGetter("length", Closure<&Vector3f::Length, UserData<Vector3f>>::Function)
         ;
-    Run("v = Vector(1,2,3)  "
-        "result = v.x   "
-    );
-    ASSERT_TRUE(Result().Is<float>());
-    ASSERT_FLOAT_EQ(Result().To<float>(), 1.f);
-    Run(
-        "result = v.y   "
-    );
-    ASSERT_TRUE(Result().Is<float>());
-    ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
-    Run(
-        "result = v.z   "
-    );
-    ASSERT_TRUE(Result().Is<float>());
-    ASSERT_FLOAT_EQ(Result().To<float>(), 3.f);
     {
-        Run("v.x = 2        "
+
+        Run("v = Vector(1,2,3)  "
+            "result = v.x   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 1.f);
+        Run(
             "result = v.y   "
         );
         ASSERT_TRUE(Result().Is<float>());
         ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
-        Run("v.y = 4        "
-            "result = v.y   "
-        );
-        ASSERT_TRUE(Result().Is<float>());
-        ASSERT_FLOAT_EQ(Result().To<float>(), 4.f);
-        Run("v.z = 8        "
+        Run(
             "result = v.z   "
         );
         ASSERT_TRUE(Result().Is<float>());
-        ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
+        ASSERT_FLOAT_EQ(Result().To<float>(), 3.f);
+        {
+            Run("v.x = 2        "
+                "result = v.y   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
+            Run("v.y = 4        "
+                "result = v.y   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 4.f);
+            Run("v.z = 8        "
+                "result = v.z   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
+        }
+        {
+            ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
+            Run("result = v.w   "
+            );
+            ASSERT_TRUE(Result().Is<void>());
+        }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v:Length()  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v.length  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
     }
     {
-        ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
-        Run("result = v.w   "
-        );
-        ASSERT_TRUE(Result().Is<void>());
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l);
+
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 0);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 0);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 0);
     }
+
     {
-        Run("v = Vector(1,2,3)  "
-            "result = v:Length()  "
-        );
-        ASSERT_TRUE(Result().Is<float>());
-        ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l, 1, 2, 3);
+
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 1);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 2);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 3);
+        ASSERT_TRUE(vec["w"].Is<void>());
+        {
+            Vector3f* v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v->x, 1);
+            ASSERT_FLOAT_EQ(v->y, 2);
+            ASSERT_FLOAT_EQ(v->z, 3);
+        }
+        {
+            Vector3f v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v.x, 1);
+            ASSERT_FLOAT_EQ(v.y, 2);
+            ASSERT_FLOAT_EQ(v.z, 3);
+        }
+        {
+            auto v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v->x, 1);
+            ASSERT_FLOAT_EQ(v->y, 2);
+            ASSERT_FLOAT_EQ(v->z, 3);
+        }
     }
 }
+
+
+
+struct StateTests : TestBase
+{
+
+};
+
+
+TEST_F(StateTests, UpvalueTest)
+{
+    using namespace Lua;
+
+    constexpr auto func = +[](int a, StateWrap* s, int b)->int
+    {
+        int c = s->GetGlobal<int>("globalValue");
+        return a + b + c;
+    };
+
+    Run("globalValue = 4 ");
+    RegisterClosure(l, "Func", Closure<func, Upvalue<int>, StateWrap*, Upvalue<int>>::Function, 1, 2);
+    Run("result = Func()");
+
+    ASSERT_EQ(1 + 2 + 4, Result().To<int>());
+}
+
+
