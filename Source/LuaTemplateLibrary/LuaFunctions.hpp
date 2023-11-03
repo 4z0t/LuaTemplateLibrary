@@ -152,12 +152,12 @@ namespace Lua
     private:
         static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
         }
 
         static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
         }
 
         template<typename R, typename D = R>
@@ -260,12 +260,12 @@ namespace Lua
     private:
         static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
         }
 
         static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::ReplaceUpvalues<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
         }
 
         template<typename R, typename D = R>

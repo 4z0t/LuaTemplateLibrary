@@ -9,16 +9,19 @@ namespace Lua
     namespace FuncUtility
     {
         template<typename T>
+        struct NoIncrement : std::false_type {};
+
+        template<>
+        struct NoIncrement<StateWrap*> : std::true_type {};
+
+        template<>
+        struct NoIncrement<lua_State*> : std::true_type {};
+
+        template<typename T>
         struct IsUpvalueType : std::false_type { using type = void; };
 
         template<typename T>
         struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
-
-        template<>
-        struct IsUpvalueType<StateWrap*> : std::true_type { using type = StateWrap*; };
-
-        template<>
-        struct IsUpvalueType<lua_State*> : std::true_type { using type = lua_State*; };
 
         template<size_t Value>
         using ValueContainer = std::integral_constant<size_t, Value>;
@@ -33,10 +36,11 @@ namespace Lua
         struct Incrementer<false, Value> : ValueContainer<Value> {};
 
         template<typename T, size_t Index>
-        struct IncrementArgIndex : Incrementer<!IsUpvalueType<T>::value, Index> {};
+        struct IncrementArgIndex : Incrementer<!IsUpvalueType<T>::value && !NoIncrement<T>::value, Index> {};
 
         template<typename T, size_t Index>
-        struct IncrementUpvalueIndex : Incrementer<IsUpvalueType<T>::value, Index> {};
+        struct IncrementUpvalueIndex : Incrementer<IsUpvalueType<T>::value && !NoIncrement<T>::value, Index> {};
+
 
         template<typename T, typename Optional = void>
         struct ArgExtractor
@@ -98,17 +102,18 @@ namespace Lua
             }
         };
 
-        template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
+        template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
-            return ArgIndex + UpvalueIndex;
+            return TupleIndex;
         }
 
-        template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple, typename TArg, typename ...TArgs>
+        template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple, typename TArg, typename ...TArgs>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
-            std::get<ArgIndex + UpvalueIndex>(args) = ArgExtractor<TArg>::Get<ArgIndex, UpvalueIndex>(l);
+            std::get<TupleIndex>(args) = ArgExtractor<TArg>::Get<ArgIndex, UpvalueIndex>(l);
             return GetArgs<
+                TupleIndex + 1,
                 IncrementArgIndex<TArg, ArgIndex>::value,
                 IncrementUpvalueIndex<TArg, UpvalueIndex>::value,
                 TArgsTuple, TArgs...>(l, args);
@@ -117,21 +122,22 @@ namespace Lua
         template<typename TArgsTuple, typename ...TArgs>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
-            return GetArgs<0, 0, TArgsTuple, TArgs...>(l, args);
+            return GetArgs<0, 0, 0, TArgsTuple, TArgs...>(l, args);
         }
 
-        template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
+        template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
-            return ArgIndex + UpvalueIndex;
+            return TupleIndex;
         }
 
-        template<size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple, typename T, typename ...Ts>
+        template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple, typename T, typename ...Ts>
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
             if constexpr (IsUpvalueType<T>::value)
-                UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<ArgIndex + UpvalueIndex>(args));
+                UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
             return ReplaceUpvalues<
+                TupleIndex + 1,
                 IncrementArgIndex<T, ArgIndex>::value,
                 IncrementUpvalueIndex<T, UpvalueIndex>::value,
                 TArgsTuple, Ts...>(l, args);
@@ -140,7 +146,7 @@ namespace Lua
         template<typename TArgsTuple, typename ...Ts>
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
-            return ReplaceUpvalues<0, 0, TArgsTuple, Ts...>(l, args);
+            return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
     }

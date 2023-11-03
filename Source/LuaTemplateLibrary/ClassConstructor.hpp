@@ -23,7 +23,7 @@ namespace Lua
     private:
         static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
         {
-            return FuncUtility::GetArgs<0, 0, ArgsTuple, TArgs...>(l, args);
+            return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
         }
 
         template <size_t ... Is>
