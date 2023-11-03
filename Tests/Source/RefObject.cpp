@@ -428,16 +428,14 @@ TEST_F(StateTests, UpvalueTest)
 {
     using namespace Lua;
 
-    constexpr auto func = +[](int a, lua_State* l_, int b)->int
+    constexpr auto func = +[](int a, StateWrap* s, int b)->int
     {
-        lua_getglobal(l_, "globalValue");
-        int c = lua_tointeger(l_, -1);
-        lua_pop(l_, 1);
+        int c = s->GetGlobal<int>("globalValue");
         return a + b + c;
     };
 
     Run("globalValue = 4 ");
-    RegisterClosure(l, "Func", Closure<func, Upvalue<int>, lua_State*, Upvalue<int>>::Function, 1, 2);
+    RegisterClosure(l, "Func", Closure<func, Upvalue<int>, StateWrap*, Upvalue<int>>::Function, 1, 2);
     Run("result = Func()");
 
     ASSERT_EQ(1 + 2 + 4, Result().To<int>());
