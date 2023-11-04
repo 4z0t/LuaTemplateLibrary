@@ -152,12 +152,14 @@ namespace Lua
         template<typename Element>
         EnableIfBaseOf<GetterBase, Element> Add(const char* name, const Element& element)
         {
+            static_assert(std::is_same < T, typename Element::TClass>);
             return AddGetter(name, Element::Function);
         }
 
         template<typename Element>
         EnableIfBaseOf<SetterBase, Element> Add(const char* name, const Element& element)
         {
+            static_assert(std::is_same < T, typename Element::TClass>);
             return AddSetter(name, Element::Function);
         }
 
