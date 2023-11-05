@@ -97,6 +97,50 @@ namespace Lua
             lua_settable(m_state, m_index);
         }
 
+        template<typename R, typename T>
+        R RawGet(const T& key)const
+        {
+            StackPopper pop{ m_state, 1 };
+            PushValue(m_state, key);
+            lua_rawget(m_state, m_index);
+            return GetValue<R>(m_state, -1);
+        }
+
+        template<typename T>
+        StackObject RawGet(const T& key)const
+        {
+            PushValue(m_state, key);
+            lua_rawget(m_state, m_index);
+            return { m_state };
+        }
+
+        template<typename K, typename V>
+        void RawSet(const K& key, const V& value)
+        {
+            PushValue(m_state, key);
+            PushValue(m_state, value);
+            lua_rawset(m_state, m_index);
+        }
+
+        template<typename R>
+        R Len()const
+        {
+            StackPopper pop{ m_state, 1 };
+            lua_len(m_state, m_index);
+            return GetValue<R>(m_state, -1);
+        }
+
+        StackObject Len()const
+        {
+            lua_len(m_state, m_index);
+            return { m_state };
+        }
+
+        size_t RawLen()const
+        {
+            return lua_rawlen(m_state, m_index);
+        }
+
         ~StackObject()
         {
             if (lua_gettop(m_state) == m_index)
