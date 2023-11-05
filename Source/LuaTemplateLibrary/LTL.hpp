@@ -12,3 +12,4 @@
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
 #include "RefObject.hpp"
+#include "StackObject.hpp"
