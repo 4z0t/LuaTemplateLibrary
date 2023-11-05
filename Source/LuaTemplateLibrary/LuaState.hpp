@@ -170,11 +170,13 @@ namespace Lua
         {
             if (ptr == nullptr)
             {
-                ptr = static_cast<void*>(new char[nsize] {});
+                ptr = static_cast<void*>(new char[nsize]);
                 return ptr;
             }
+            if (nsize < osize && nsize * 2 > osize)
+                return ptr;
             size_t min_size = std::min(osize, nsize);
-            void* new_ptr = static_cast<void*>(new char[nsize] {});
+            void* new_ptr = static_cast<void*>(new char[nsize]);
             std::memcpy(new_ptr, ptr, min_size);
             Delete(ptr);
             return new_ptr;

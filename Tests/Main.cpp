@@ -417,7 +417,7 @@ void ClassTest()
             }
         };
 
-        State<MyAlloc> lua_state{};
+        State<OpNewAllocator> lua_state{};
         lua_state.OpenLibs();
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")
@@ -482,8 +482,48 @@ void ClassTest()
     }
 }
 
+template<typename T>
+double Measure()
+{
+    using namespace std;
+    Lua::State<T> s;
+    s.OpenLibs();
+    double start = GetSystemTime();
+
+    s.Run("local insert = table.insert  "
+        "for i = 1, 100 do "
+        "local t = {}   "
+        "for j = 1, 1000000 do "
+        " insert(t, j)  "
+        "end "
+        "end "
+    );
+
+    double end = GetSystemTime();
+    return end - start;
+}
+
+void PerfAllocTest()
+{
+    using namespace Lua;
+    using namespace std;
+    auto t = 0.0;
+    for (int i = 0; i < 10; i++)
+    {
+        t += Measure<void>();
+    }
+    cout << t / 10 << endl;
+    t = 0.0;
+    for (int i = 0; i < 10; i++)
+    {
+        t += Measure<OpNewAllocator>();
+    }
+    cout << t / 10 << endl;
+}
+
 int main()
 {
-    ClassTest();
+    //ClassTest();
     //Test();
+    PerfAllocTest();
 }
