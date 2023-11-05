@@ -12,7 +12,7 @@ namespace Lua
         StackObject(lua_State* l, int index) : m_state(l), m_index(PushIndex(l, index)) {}
 
         template<typename T>
-        StackObject(const RefObject<T>& obj) :m_state(obj.GetState()), m_index(PushRefObject(obj)) {}
+        StackObject(const RefObject<T>& obj) : m_state(obj.GetState()), m_index(PushRefObject(obj)) {}
 
         StackObject() = delete;
         StackObject(const StackObject&) = delete;
@@ -70,6 +70,15 @@ namespace Lua
         bool operator!=(const T& value)const
         {
             return !(*this == value);
+        }
+
+        template<typename R, typename T>
+        R Get(const T& key)const
+        {
+            StackPopper pop{ m_state, 1 };
+            PushValue(m_state, key);
+            lua_gettable(m_state, m_index);
+            return GetValue<R>(m_state, -1);
         }
 
         template<typename T>

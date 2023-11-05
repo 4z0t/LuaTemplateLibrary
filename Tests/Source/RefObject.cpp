@@ -574,6 +574,18 @@ TEST_F(StackObjectTest, Tests)
     AssertEmptyStack();
 
     {
+        Run("a = {}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get<int>(key);
+        ASSERT_EQ(b2, 3);
+    }
+    AssertEmptyStack();
+
+    {
         Run("a = 'Hello'");
         GRefObject a = GRefObject::Global(l, "a");
         StackObject stack_a = StackObject::FromValue(l, a);
