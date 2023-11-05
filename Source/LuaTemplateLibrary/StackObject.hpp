@@ -141,13 +141,20 @@ namespace Lua
             return lua_rawlen(m_state, m_index);
         }
 
-        StackObject GetMetaTable()
+        StackObject GetMetaTable()const
         {
             if (!lua_getmetatable(m_state, m_index))
             {
                 lua_pushnil(m_state);
             }
             return { m_state };
+        }
+
+        template<typename T>
+        void SetMetaTable(const T& value)
+        {
+            PushValue(m_state, value);
+            lua_setmetatable(m_state, m_index);
         }
 
         ~StackObject()
