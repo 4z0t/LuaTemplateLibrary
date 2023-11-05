@@ -141,6 +141,15 @@ namespace Lua
             return lua_rawlen(m_state, m_index);
         }
 
+        StackObject GetMetaTable()
+        {
+            if (!lua_getmetatable(m_state, m_index))
+            {
+                lua_pushnil(m_state);
+            }
+            return { m_state };
+        }
+
         ~StackObject()
         {
             if (lua_gettop(m_state) == m_index)
