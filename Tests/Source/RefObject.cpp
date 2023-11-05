@@ -481,6 +481,12 @@ struct StackObjectTest : TestBase
 
 TEST_F(StackObjectTest, Tests)
 {
+
+    const auto AssertEmptyStack = [&]()
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
+
     using namespace Lua;
     {
 
@@ -489,11 +495,68 @@ TEST_F(StackObjectTest, Tests)
         ASSERT_TRUE(so.Is<float>());
         lua_pop(l, 1);
     }
+    AssertEmptyStack();
     {
 
         StackObject so = StackObject::FromValue(l, 1);
         ASSERT_TRUE(so.Is<int>());
         ASSERT_EQ(so.To<int>(), 1);
     }
+    AssertEmptyStack();
+    {
+        StackObject so = StackObject::FromValue(l, "Hello");
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+    {
+        StackObject so = StackObject::FromValue(l, false);
+        ASSERT_TRUE(so.Is<bool>());
+        ASSERT_EQ(so.To<bool>(), false);
+    }
+    AssertEmptyStack();
 
+    {
+        StackObject s1 = StackObject::FromValue(l, 1);
+        StackObject s2 = StackObject::FromValue(l, 2);
+        ASSERT_FALSE(s1 == s2);
+        ASSERT_TRUE(s1 != s2);
+        ASSERT_TRUE(s1 == 1);
+        ASSERT_TRUE(s2 == 2);
+
+
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a, b = 3, 'Hi'");
+        StackObject s1 = StackObject::Global(l, "a");
+        StackObject s2 = StackObject::Global(l, "b");
+        ASSERT_TRUE(s1.Is<int>());
+        ASSERT_TRUE(s2.Is<const char*>());
+        ASSERT_TRUE(s1 == 3);
+        ASSERT_TRUE(s2 == "Hi");
+
+    }
+    AssertEmptyStack();
+
+
+    {
+        Run("a = {b = 3}");
+        StackObject a = StackObject::Global(l, "a");
+        auto b = a.Get("b");
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = {b = 3}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b = a.Get(key);
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
 }
