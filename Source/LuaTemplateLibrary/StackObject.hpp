@@ -99,7 +99,14 @@ namespace Lua
 
         ~StackObject()
         {
-            lua_remove(m_state, m_index);
+            if (lua_gettop(m_state) == m_index)
+            {
+                lua_pop(m_state, 1);
+            }
+            else
+            {
+                lua_remove(m_state, m_index);
+            }
             /*
             * lua_pushnil(m_state);
             * lua_replace(m_state, m_index);
