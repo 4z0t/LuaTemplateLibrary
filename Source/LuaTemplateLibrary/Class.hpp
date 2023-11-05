@@ -77,7 +77,8 @@ namespace Lua
             }
         }
 
-        Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
+        template<typename TAlloc>
+        Class(const State<TAlloc>& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
 
         template<typename ...TArgs>
         Class& AddConstructor()
@@ -152,14 +153,14 @@ namespace Lua
         template<typename Element>
         EnableIfBaseOf<GetterBase, Element> Add(const char* name, const Element& element)
         {
-            static_assert(std::is_same < T, typename Element::TClass>);
+            static_assert(std::is_same_v<T, typename Element::TClass>);
             return AddGetter(name, Element::Function);
         }
 
         template<typename Element>
         EnableIfBaseOf<SetterBase, Element> Add(const char* name, const Element& element)
         {
-            static_assert(std::is_same < T, typename Element::TClass>);
+            static_assert(std::is_same_v<T, typename Element::TClass>);
             return AddSetter(name, Element::Function);
         }
 

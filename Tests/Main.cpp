@@ -399,8 +399,25 @@ void ClassTest()
     using namespace std;
     try
     {
+        struct MyAlloc :OpNewAllocator
+        {
+            static void* Function(void* ud, void* ptr, size_t osize, size_t nsize)
+            {
+                if (nsize == 0)
+                {
+                    cout << "Clearing mem at " << ptr << endl;
+                    Delete(ptr);
+                    return nullptr;
+                }
+                else
+                {
+                    cout << "Allocation mem at " << ptr << " with new size " << nsize << endl;
+                    return NewMem(ptr, osize, nsize);
+                }
+            }
+        };
 
-        State lua_state{};
+        State<MyAlloc> lua_state{};
         lua_state.OpenLibs();
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")

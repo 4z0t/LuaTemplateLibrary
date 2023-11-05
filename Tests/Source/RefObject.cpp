@@ -460,3 +460,13 @@ TEST_F(StateTests, UpvalueTest)
 }
 
 
+TEST_F(StateTests, AllocTest)
+{
+    using namespace Lua;
+
+    State<OpNewAllocator> s;
+    s.Run("result = 4");
+    ASSERT_TRUE(GRefObject::Global(s, "result").Is<int>());
+    ASSERT_EQ(GRefObject::Global(s, "result").To<int>(), 4);
+
+}

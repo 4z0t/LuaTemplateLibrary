@@ -30,7 +30,8 @@ namespace Lua
     public:
         RefObjectBase() {};
         RefObjectBase(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
-        RefObjectBase(const State& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
+        template<typename T>
+        RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
 
         class AutoPop
         {
@@ -296,7 +297,7 @@ namespace Lua
         lua_State* m_state = nullptr;
     };
 
-    template<typename RefAccess>
+    template<typename RefAccess = RefGlobalAccess>
     class RefObject;
 
     template<typename RefAccess>
@@ -391,7 +392,8 @@ namespace Lua
             return obj;
         }
 
-        static RefObject Global(const State& state, const char* key = "_G")
+        template<typename T>
+        static RefObject Global(const State<T>& state, const char* key = "_G")
         {
             return Global(state.GetState()->Unwrap(), key);
         }
@@ -404,7 +406,8 @@ namespace Lua
             return obj;
         }
 
-        static RefObject MakeTable(const State& state, int narr = 0, int nhash = 0)
+        template<typename T>
+        static RefObject MakeTable(const State<T>& state, int narr = 0, int nhash = 0)
         {
             return MakeTable(state.GetState()->Unwrap(), narr, nhash);
         }
@@ -417,7 +420,8 @@ namespace Lua
             return obj;
         }
 
-        static RefObject FromStack(const State& state, int index)
+        template<typename T>
+        static RefObject FromStack(const State<T>& state, int index)
         {
             return FromStack(state.GetState()->Unwrap(), index);
         }
@@ -429,7 +433,8 @@ namespace Lua
             return obj;
         }
 
-        static RefObject FromTop(const State& state)
+        template<typename T>
+        static RefObject FromTop(const State<T>& state)
         {
             return FromTop(state.GetState()->Unwrap());
         }
@@ -531,7 +536,8 @@ namespace Lua
     private:
         RefTableObject() :Base() {};
         RefTableObject(lua_State* l) noexcept :Base(l) { };
-        RefTableObject(const State& state) noexcept : Base(state) {};
+        template<typename T>
+        RefTableObject(const State<T>& state) noexcept : Base(state) {};
         RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
         {
             obj.PushKey();

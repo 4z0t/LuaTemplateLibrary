@@ -96,6 +96,11 @@ namespace Lua
             return lua_atpanic(Unwrap(), func);
         }
 
+        void SetAllocFunction(lua_Alloc func, void* ud = nullptr)
+        {
+            return lua_setallocf(Unwrap(), func, ud);
+        }
+
         void Remove(int index)
         {
             return lua_remove(Unwrap(), index);
@@ -141,12 +146,53 @@ namespace Lua
 
     };
 
+    struct OpNewAllocator
+    {
+        static void* Function(void* ud, void* ptr, size_t osize, size_t nsize)
+        {
+            if (nsize == 0)
+            {
+                Delete(ptr);
+                return nullptr;
+            }
+            else
+            {
+                return NewMem(ptr, osize, nsize);
+            }
+        }
+    protected:
+        static void Delete(void* ptr)
+        {
+            delete[] static_cast<char*>(ptr);
+        }
+
+        static void* NewMem(void* ptr, size_t osize, size_t nsize)
+        {
+            if (ptr == nullptr)
+            {
+                ptr = static_cast<void*>(new char[nsize] {});
+                return ptr;
+            }
+            size_t min_size = std::min(osize, nsize);
+            void* new_ptr = static_cast<void*>(new char[nsize] {});
+            std::memcpy(new_ptr, ptr, min_size);
+            Delete(ptr);
+            return new_ptr;
+        }
+    };
+
+    template<typename Allocator = void>
     class State
     {
     public:
         State()
         {
             m_state = StateWrap::Create();
+            if constexpr (!std::is_void_v<Allocator>)
+            {
+                //static_assert(std::is_same_v<decltype(Allocator::Function), lua_Alloc>, "Expected lua_Alloc function");
+                m_state->SetAllocFunction(Allocator::Function);
+            }
         }
         State(const State&) = delete;
         State& operator=(const State&) = delete;

@@ -239,7 +239,7 @@ namespace Lua
         static_assert(std::is_invocable_v<FnType, Unwrap_t<TArgs>&...>, "Given function can't be called with such arguments!");
         using UnwrapperReturn = std::invoke_result_t<FnType, Unwrap_t<TArgs>&...>;
 
-        static_assert(std::is_same_v<UnwrapperReturn, void> == std::is_same_v<TReturn, void>, "If function returns void you cannot return anything else but void!");
+        static_assert(std::is_void_v<UnwrapperReturn> == std::is_void_v<TReturn>, "If function returns void you cannot return anything else but void!");
 
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
         using Indexes = std::index_sequence_for<TArgs...>;
