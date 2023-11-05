@@ -490,11 +490,16 @@ double Measure()
     s.OpenLibs();
     double start = GetSystemTime();
 
-    s.Run("local insert = table.insert  "
-        "for i = 1, 100 do "
+    s.Run(
+        "local insert = table.insert  "
+        "local remove = table.remove "
+        "for i = 1, 10 do "
         "local t = {}   "
         "for j = 1, 1000000 do "
         " insert(t, j)  "
+        "end "
+        "for j = 1, 1000000 do "
+        " remove(t)  "
         "end "
         "end "
     );
@@ -508,7 +513,7 @@ void PerfAllocTest()
     using namespace Lua;
     using namespace std;
     auto t = 0.0;
-    const auto n = 1;
+    const auto n = 10;
     for (int i = 0; i < n; i++)
     {
         t += Measure<void>();
