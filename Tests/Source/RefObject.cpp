@@ -470,3 +470,30 @@ TEST_F(StateTests, AllocTest)
     ASSERT_EQ(GRefObject::Global(s, "result").To<int>(), 4);
 
 }
+
+
+
+struct StackObjectTest : TestBase
+{
+
+};
+
+
+TEST_F(StackObjectTest, Tests)
+{
+    using namespace Lua;
+    {
+
+        lua_pushnumber(l, 1);
+        StackObject so{ l,-1 };
+        ASSERT_TRUE(so.Is<float>());
+        lua_pop(l, 1);
+    }
+    {
+
+        StackObject so = StackObject::FromValue(l, 1);
+        ASSERT_TRUE(so.Is<int>());
+        ASSERT_EQ(so.To<int>(), 1);
+    }
+
+}
