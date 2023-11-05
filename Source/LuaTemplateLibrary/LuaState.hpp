@@ -155,10 +155,7 @@ namespace Lua
                 Delete(ptr);
                 return nullptr;
             }
-            else
-            {
-                return NewMem(ptr, osize, nsize);
-            }
+            return NewMem(ptr, osize, nsize);
         }
     protected:
         static void Delete(void* ptr)
