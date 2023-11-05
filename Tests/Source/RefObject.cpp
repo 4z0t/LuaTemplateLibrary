@@ -559,4 +559,17 @@ TEST_F(StackObjectTest, Tests)
         ASSERT_EQ(b.To<int>(), 3);
     }
     AssertEmptyStack();
+
+    {
+        Run("a = {}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get(key);
+        ASSERT_TRUE(b2.Is<int>());
+        ASSERT_EQ(b2.To<int>(), 3);
+    }
+    AssertEmptyStack();
 }
