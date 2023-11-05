@@ -508,17 +508,18 @@ void PerfAllocTest()
     using namespace Lua;
     using namespace std;
     auto t = 0.0;
-    for (int i = 0; i < 10; i++)
+    const auto n = 1;
+    for (int i = 0; i < n; i++)
     {
         t += Measure<void>();
     }
-    cout << t / 10 << endl;
+    cout << t / n << endl;
     t = 0.0;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < n; i++)
     {
         t += Measure<OpNewAllocator>();
     }
-    cout << t / 10 << endl;
+    cout << t / n << endl;
 }
 
 int main()
