@@ -234,7 +234,7 @@ namespace Lua
             return os << obj.ToString();
         }
 
-        lua_State* GetState()const
+        lua_State*const GetState()const
         {
             return this->m_state;
         }

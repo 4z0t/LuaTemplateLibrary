@@ -572,4 +572,22 @@ TEST_F(StackObjectTest, Tests)
         ASSERT_EQ(b2.To<int>(), 3);
     }
     AssertEmptyStack();
+
+    {
+        Run("a = 'Hello'");
+        GRefObject a = GRefObject::Global(l, "a");
+        StackObject stack_a = StackObject::FromValue(l, a);
+        ASSERT_TRUE(stack_a.Is<const char*>());
+        ASSERT_STREQ(stack_a.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = 'Hello'");
+        GRefObject a = GRefObject::Global(l, "a");
+        StackObject stack_a = a;
+        ASSERT_TRUE(stack_a.Is<const char*>());
+        ASSERT_STREQ(stack_a.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
 }

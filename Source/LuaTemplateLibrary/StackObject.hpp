@@ -2,6 +2,7 @@
 #include "LuaAux.hpp"
 #include "LuaState.hpp"
 #include "LuaTypes.hpp"
+#include "RefObject.hpp"
 
 namespace Lua
 {
@@ -10,12 +11,16 @@ namespace Lua
     public:
         StackObject(lua_State* l, int index) : m_state(l), m_index(PushIndex(l, index)) {}
 
+        template<typename T>
+        StackObject(const RefObject<T>& obj) :m_state(obj.GetState()), m_index(PushRefObject(obj)) {}
+
         StackObject() = delete;
         StackObject(const StackObject&) = delete;
         StackObject(StackObject&&) = delete;
 
         StackObject& operator=(const StackObject&) = delete;
         StackObject& operator=(StackObject&&) = delete;
+
 
         template<typename T>
         T To()const
@@ -105,6 +110,13 @@ namespace Lua
         {
             lua_pushvalue(l, index);
             return lua_absindex(l, -1);
+        }
+
+        template<typename T>
+        static int PushRefObject(const RefObject<T>& obj)
+        {
+            obj.Push();
+            return lua_absindex(obj.GetState(), -1);
         }
 
         lua_State* const m_state;
