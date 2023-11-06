@@ -6,21 +6,11 @@
 
 namespace Lua
 {
-    class StackObject
+    class StackObjectView
     {
     public:
-        StackObject(lua_State* l, int index) : m_state(l), m_index(PushIndex(l, index)) {}
-
-        template<typename T>
-        StackObject(const RefObject<T>& obj) : m_state(obj.GetState()), m_index(PushRefObject(obj)) {}
-
-        StackObject() = delete;
-        StackObject(const StackObject&) = delete;
-        StackObject(StackObject&&) = delete;
-
-        StackObject& operator=(const StackObject&) = delete;
-        StackObject& operator=(StackObject&&) = delete;
-
+        StackObjectView() = delete;
+        StackObjectView(lua_State* l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
 
         template<typename T>
         T To()const
@@ -32,19 +22,6 @@ namespace Lua
         bool Is()const
         {
             return StackType<T>::Check(m_state, m_index);
-        }
-
-        template<typename T>
-        static StackObject FromValue(lua_State* l, const T& value)
-        {
-            PushValue(l, value);
-            return StackObject(l);
-        }
-
-        static StackObject Global(lua_State* l, const char* name)
-        {
-            lua_getglobal(l, name);
-            return StackObject(l);
         }
 
         void Push()const
@@ -61,7 +38,7 @@ namespace Lua
         }
 
         template<>
-        bool operator==(const StackObject& value)const
+        bool operator==(const StackObjectView& value)const
         {
             return m_state == value.m_state && lua_compare(m_state, m_index, value.m_index, LUA_OPEQ);
         }
@@ -82,7 +59,7 @@ namespace Lua
         }
 
         template<typename T>
-        StackObject Get(const T& key)const
+        StackObjectView Get(const T& key)const
         {
             PushValue(m_state, key);
             lua_gettable(m_state, m_index);
@@ -107,7 +84,7 @@ namespace Lua
         }
 
         template<typename T>
-        StackObject RawGet(const T& key)const
+        StackObjectView RawGet(const T& key)const
         {
             PushValue(m_state, key);
             lua_rawget(m_state, m_index);
@@ -130,7 +107,7 @@ namespace Lua
             return GetValue<R>(m_state, -1);
         }
 
-        StackObject Len()const
+        StackObjectView Len()const
         {
             lua_len(m_state, m_index);
             return { m_state };
@@ -141,7 +118,7 @@ namespace Lua
             return lua_rawlen(m_state, m_index);
         }
 
-        StackObject GetMetaTable()const
+        StackObjectView GetMetaTable()const
         {
             if (!lua_getmetatable(m_state, m_index))
             {
@@ -155,6 +132,72 @@ namespace Lua
         {
             PushValue(m_state, value);
             lua_setmetatable(m_state, m_index);
+        }
+
+        ~StackObjectView() {}
+
+        lua_State* const GetState()const
+        {
+            return m_state;
+        }
+    protected:
+        lua_State* const m_state;
+        const int m_index;
+    };
+
+
+    class StackObject : public StackObjectView
+    {
+    public:
+        StackObject(lua_State* l, int index) : StackObjectView(l, PushIndex(l, index)) {}
+
+        template<typename T>
+        StackObject(const RefObject<T>& obj) : StackObjectView(obj.GetState(), PushRefObject(obj)) {}
+
+        StackObject() = delete;
+        StackObject(const StackObject&) = delete;
+        StackObject(StackObject&&) = delete;
+
+        StackObject& operator=(const StackObject&) = delete;
+        StackObject& operator=(StackObject&&) = delete;
+
+        template<typename T>
+        static StackObject FromValue(lua_State* l, const T& value)
+        {
+            PushValue(l, value);
+            return StackObject{ l };
+        }
+
+        static StackObject Global(lua_State* l, const char* name)
+        {
+            lua_getglobal(l, name);
+            return StackObject{ l };
+        }
+
+        using StackObjectView::Get;
+
+        template<typename T>
+        StackObject Get(const T& key)const
+        {
+            return StackObjectView::Get(key);
+        }
+
+        using StackObjectView::RawGet;
+
+        template<typename T>
+        StackObject RawGet(const T& key)const
+        {
+            return StackObjectView::RawGet(key);
+        }
+
+        StackObject GetMetaTable()const
+        {
+            return StackObjectView::GetMetaTable();
+        }
+
+        StackObject Len()const
+        {
+            return StackObjectView::Len();
         }
 
         ~StackObject()
@@ -173,30 +216,22 @@ namespace Lua
             */
         }
 
-        lua_State* const GetState()const
-        {
-            return m_state;
-        }
-
     protected:
-
-        StackObject(lua_State* l) : m_state(l), m_index(lua_absindex(l, -1)) {}
+        StackObject(StackObjectView&& view) :StackObjectView(view) {}
+        StackObject(lua_State* l) : StackObjectView(l, -1) {}
 
         static int PushIndex(lua_State* l, int index)
         {
             lua_pushvalue(l, index);
-            return lua_absindex(l, -1);
+            return index;
         }
 
         template<typename T>
         static int PushRefObject(const RefObject<T>& obj)
         {
             obj.Push();
-            return lua_absindex(obj.GetState(), -1);
+            return -1;
         }
-
-        lua_State* const m_state;
-        const int m_index;
     };
 
 
