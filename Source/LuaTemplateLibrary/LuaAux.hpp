@@ -15,8 +15,8 @@ namespace Lua
             lua_pop(m_state, n);
         }
     private:
-        lua_State* m_state;
-        int n;
+        lua_State* const m_state;
+        const int n;
     };
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
