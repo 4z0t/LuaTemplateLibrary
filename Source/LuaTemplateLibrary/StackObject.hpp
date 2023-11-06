@@ -134,6 +134,12 @@ namespace Lua
             lua_setmetatable(m_state, m_index);
         }
 
+        static StackObjectView Global(lua_State* l, const char* name)
+        {
+            lua_getglobal(l, name);
+            return StackObjectView{ l };
+        }
+
         ~StackObjectView() {}
 
         lua_State* const GetState()const
@@ -170,8 +176,7 @@ namespace Lua
 
         static StackObject Global(lua_State* l, const char* name)
         {
-            lua_getglobal(l, name);
-            return StackObject{ l };
+            return StackObjectView::Global(l, name);
         }
 
         using StackObjectView::Get;
