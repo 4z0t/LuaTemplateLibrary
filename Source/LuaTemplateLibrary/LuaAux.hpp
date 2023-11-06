@@ -6,7 +6,7 @@ namespace Lua
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 
-    struct StackPopper
+    struct StackPopper final
     {
         StackPopper(lua_State* l, int n) : m_state(l), n(n) {}
 
@@ -18,6 +18,21 @@ namespace Lua
         lua_State* const m_state;
         const int n;
     };
+
+    struct StackRestorer final
+    {
+        StackRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
+
+        ~StackRestorer()
+        {
+            lua_settop(m_state, m_top);
+        }
+
+    private:
+        lua_State* const m_state;
+        const int m_top;
+    };
+
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
