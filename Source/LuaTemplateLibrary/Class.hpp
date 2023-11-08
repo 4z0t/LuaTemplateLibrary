@@ -5,6 +5,7 @@
 #include "LuaState.hpp"
 #include "ClassConstructor.hpp"
 #include "Property.hpp"
+#include "StackObject.hpp"
 
 #define lua_regptr_isnt_set(l, p) assert(lua_getregp(l, p) == LUA_TNIL)
 
@@ -168,10 +169,9 @@ namespace Lua
 
         void RawSetFunction(const char* name, lua_CFunction func)
         {
-            lua_pushstring(m_state, name);
-            lua_pushcfunction(m_state, func);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
+            StackPopper pop{ m_state,1 };
+            StackObjectView table{ m_state };
+            table.RawSet(name, func);
         }
 
         void MakeMetaTable()
@@ -179,9 +179,8 @@ namespace Lua
             lua_regptr_isnt_set(m_state, UData::MetaTable::GetKey());
 
             lua_newtable(m_state);
-            lua_pushstring(m_state, "__index");
-            lua_pushvalue(m_state, -2);
-            lua_rawset(m_state, -3);
+            StackObjectView metaTable{ m_state };
+            metaTable.RawSet("__index", metaTable);
             lua_setregp(m_state, UData::MetaTable::GetKey());
         }
 
@@ -190,9 +189,8 @@ namespace Lua
             lua_regptr_isnt_set(m_state, UData::ClassTable::GetKey());
 
             lua_newtable(m_state);
-            lua_pushstring(m_state, "className");
-            lua_pushstring(m_state, m_name.c_str());
-            lua_rawset(m_state, -3);
+            StackObjectView classTable{ m_state };
+            classTable.RawSet("className", m_name.c_str());
             lua_setregp(m_state, UData::ClassTable::GetKey());
         }
 
