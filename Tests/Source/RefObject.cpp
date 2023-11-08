@@ -603,3 +603,120 @@ TEST_F(StackObjectTest, Tests)
     }
     AssertEmptyStack();
 }
+
+
+struct StackObjectViewTest : TestBase
+{
+
+};
+
+
+TEST_F(StackObjectViewTest, Tests)
+{
+
+    const auto AssertEmptyStack = [&]()
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
+
+    using namespace Lua;
+    {
+        const StackRestorer rst{ l };
+        lua_pushnumber(l, 1);
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<float>());
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, 1);
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<int>());
+        ASSERT_EQ(so.To<int>(), 1);
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, "Hello");
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, false);
+        StackObjectView so{ l };
+        ASSERT_EQ(so.To<bool>(), false);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, 1);
+        StackObjectView s1{ l };
+        PushValue(l, 2);
+        StackObjectView s2{ l };
+        ASSERT_FALSE(s1 == s2);
+        ASSERT_TRUE(s1 != s2);
+        ASSERT_TRUE(s1 == 1);
+        ASSERT_TRUE(s2 == 2);
+
+
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        Run("a = {b = 3}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        auto b = a.Get("b");
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {b = 3}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b = a.Get(key);
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get(key);
+        ASSERT_TRUE(b2.Is<int>());
+        ASSERT_EQ(b2.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get<int>(key);
+        ASSERT_EQ(b2, 3);
+    }
+    AssertEmptyStack();
+}
