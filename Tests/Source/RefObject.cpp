@@ -620,6 +620,7 @@ TEST_F(StackObjectViewTest, Tests)
         };
 
     using namespace Lua;
+    using namespace std;
     {
         const StackRestorer rst{ l };
         lua_pushnumber(l, 1);
@@ -641,6 +642,19 @@ TEST_F(StackObjectViewTest, Tests)
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<const char*>());
         ASSERT_STREQ(so.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, string_view{ "Hello" });
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_TRUE(so.Is<string_view>());
+        ASSERT_TRUE(so.Is<string>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+        ASSERT_EQ(so.To<string_view>(), string_view{ "Hello" });
+        ASSERT_EQ(so.To<string>(), string{ "Hello" });
     }
     AssertEmptyStack();
     {

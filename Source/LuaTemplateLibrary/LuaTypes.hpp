@@ -127,37 +127,11 @@ namespace Lua
     };
 
     template<>
-    struct StackType<const char*>
-    {
-        static const char* Get(lua_State* l, int index)
-        {
-            return luaL_checkstring(l, index);
-        }
-
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_isstring(l, index);
-        }
-
-        static void Push(lua_State* l, const char* value)
-        {
-            lua_pushstring(l, value);
-        }
-    };
-
+    struct StackType<const char*> : Internal::StringParser<const char*> {};
     template<>
-    struct StackType<std::string> : public StackType<const char*>
-    {
-        static std::string Get(lua_State* l, int index)
-        {
-            return { StackType<const char*>::Get(l, index) };
-        }
-
-        static void Push(lua_State* l, const std::string& value)
-        {
-            StackType<const char*>::Push(l, value.c_str());
-        }
-    };
+    struct StackType<std::string> : Internal::StringParser<std::string> {};
+    template<>
+    struct StackType<std::string_view> : Internal::StringParser<std::string_view> {};
 
     template<>
     struct StackType<lua_CFunction>
