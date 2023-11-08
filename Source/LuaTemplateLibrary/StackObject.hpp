@@ -18,6 +18,12 @@ namespace Lua
             return StackType<T>::Get(m_state, m_index);
         }
 
+        template<Type LType>
+        bool Is()const
+        {
+            return lua_type(m_state, m_index) == static_cast<int>(LType);
+        }
+
         template<typename T>
         bool Is()const
         {
