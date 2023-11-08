@@ -626,6 +626,7 @@ TEST_F(StackObjectViewTest, Tests)
         lua_pushnumber(l, 1);
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<float>());
+        ASSERT_TRUE(so.Is<Type::Number>());
     }
     AssertEmptyStack();
     {
@@ -633,6 +634,7 @@ TEST_F(StackObjectViewTest, Tests)
         PushValue(l, 1);
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<int>());
+        ASSERT_TRUE(so.Is<Type::Number>());
         ASSERT_EQ(so.To<int>(), 1);
     }
     AssertEmptyStack();
@@ -641,6 +643,7 @@ TEST_F(StackObjectViewTest, Tests)
         PushValue(l, "Hello");
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_TRUE(so.Is<Type::String>());
         ASSERT_STREQ(so.To<const char*>(), "Hello");
     }
     AssertEmptyStack();
@@ -650,6 +653,7 @@ TEST_F(StackObjectViewTest, Tests)
         PushValue(l, string_view{ "Hello" });
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_TRUE(so.Is<Type::String>());
         ASSERT_TRUE(so.Is<string_view>());
         ASSERT_TRUE(so.Is<string>());
         ASSERT_STREQ(so.To<const char*>(), "Hello");
@@ -661,6 +665,8 @@ TEST_F(StackObjectViewTest, Tests)
         const StackRestorer rst{ l };
         PushValue(l, false);
         StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<bool>());
+        ASSERT_TRUE(so.Is<Type::Boolean>());
         ASSERT_EQ(so.To<bool>(), false);
     }
     AssertEmptyStack();
@@ -686,6 +692,7 @@ TEST_F(StackObjectViewTest, Tests)
         StackObjectView a{ l };
         auto b = a.Get("b");
         ASSERT_TRUE(b.Is<int>());
+        ASSERT_TRUE(b.Is<Type::Number>());
         ASSERT_EQ(b.To<int>(), 3);
     }
     AssertEmptyStack();
@@ -712,6 +719,7 @@ TEST_F(StackObjectViewTest, Tests)
         StackObjectView key{ l };
         auto b1 = a.Get(key);
         ASSERT_TRUE(b1.Is<void>());
+        ASSERT_TRUE(b1.Is<Type::Nil>());
         a.Set("b", 3);
         auto b2 = a.Get(key);
         ASSERT_TRUE(b2.Is<int>());
