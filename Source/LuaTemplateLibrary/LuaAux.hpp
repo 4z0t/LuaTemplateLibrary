@@ -42,6 +42,22 @@ namespace Lua
         const int m_top;
     };
 
+    template<int Index>
+    struct StackIndex {};
+
+    template<int Index>
+    struct StackType<StackIndex<Index>>
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return !lua_isnone(l, index);
+        }
+
+        static void Push(lua_State* l, const StackIndex<Index>&)
+        {
+            lua_pushvalue(l, Index);
+        }
+    };
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
