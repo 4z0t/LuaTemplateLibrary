@@ -24,7 +24,7 @@ namespace Lua
             return Wrap(luaL_newstate());
         }
 
-        inline static StateWrap* Create(lua_Alloc f)
+        static StateWrap* Create(lua_Alloc f)
         {
             auto s = Wrap(lua_newstate(f, nullptr));
             s->SetAllocFunction(f);
@@ -201,7 +201,9 @@ namespace Lua
             }
         }
         State(const State&) = delete;
+        State(State&&) = delete;
         State& operator=(const State&) = delete;
+        State& operator=(State&&) = delete;
 
         ~State()
         {
