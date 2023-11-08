@@ -234,7 +234,7 @@ namespace Lua
             return os << obj.ToString();
         }
 
-        lua_State*const GetState()const
+        lua_State* const GetState()const
         {
             return this->m_state;
         }
@@ -384,48 +384,6 @@ namespace Lua
             return obj;
         }
 
-        static RefObject Global(lua_State* l, const char* key)
-        {
-            RefObject obj{ l };
-            lua_getglobal(l, key);
-            obj.Ref();
-            return obj;
-        }
-
-        template<typename T>
-        static RefObject Global(const State<T>& state, const char* key = "_G")
-        {
-            return Global(state.GetState()->Unwrap(), key);
-        }
-
-        static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
-        {
-            RefObject obj{ l };
-            lua_createtable(l, narr, nhash);
-            obj.Ref();
-            return obj;
-        }
-
-        template<typename T>
-        static RefObject MakeTable(const State<T>& state, int narr = 0, int nhash = 0)
-        {
-            return MakeTable(state.GetState()->Unwrap(), narr, nhash);
-        }
-
-        static RefObject FromStack(lua_State* l, int index)
-        {
-            RefObject obj{ l };
-            lua_pushvalue(l, index);
-            obj.Ref();
-            return obj;
-        }
-
-        template<typename T>
-        static RefObject FromStack(const State<T>& state, int index)
-        {
-            return FromStack(state.GetState()->Unwrap(), index);
-        }
-
         static RefObject FromTop(lua_State* l)
         {
             RefObject obj{ l };
@@ -437,6 +395,42 @@ namespace Lua
         static RefObject FromTop(const State<T>& state)
         {
             return FromTop(state.GetState()->Unwrap());
+        }
+
+        static RefObject Global(lua_State* l, const char* key)
+        {
+            lua_getglobal(l, key);
+            return FromTop(l);
+        }
+
+        template<typename T>
+        static RefObject Global(const State<T>& state, const char* key = "_G")
+        {
+            return Global(state.GetState()->Unwrap(), key);
+        }
+
+        static RefObject MakeTable(lua_State* l, int narr = 0, int nhash = 0)
+        {
+            lua_createtable(l, narr, nhash);
+            return FromTop(l);
+        }
+
+        template<typename T>
+        static RefObject MakeTable(const State<T>& state, int narr = 0, int nhash = 0)
+        {
+            return MakeTable(state.GetState()->Unwrap(), narr, nhash);
+        }
+
+        static RefObject FromStack(lua_State* l, int index)
+        {
+            lua_pushvalue(l, index);
+            return FromTop(l);
+        }
+
+        template<typename T>
+        static RefObject FromStack(const State<T>& state, int index)
+        {
+            return FromStack(state.GetState()->Unwrap(), index);
         }
 
         void Push()const
