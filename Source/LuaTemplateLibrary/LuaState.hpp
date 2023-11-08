@@ -262,7 +262,7 @@ namespace Lua
             return m_state->Get<T>(index);
         }
 
-        const StateWrap* GetState()const
+        StateWrap* const GetState()const
         {
             return m_state;
         }
