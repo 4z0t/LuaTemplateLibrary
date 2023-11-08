@@ -151,6 +151,25 @@ namespace Lua
         const int m_index;
     };
 
+    template<>
+    struct StackType<StackObjectView>
+    {
+        static StackObjectView Get(lua_State* l, int index)
+        {
+            return { l, index };
+        }
+
+        static bool Check(lua_State* l, int index)
+        {
+            return !lua_isnone(l, index);
+        }
+
+        static void Push(lua_State* l, const StackObjectView& value)
+        {
+            assert(value.GetState() == l);
+            value.Push();
+        }
+    };
 
     class StackObject : public StackObjectView
     {
