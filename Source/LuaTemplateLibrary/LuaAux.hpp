@@ -14,6 +14,11 @@ namespace Lua
         {
             lua_pop(m_state, n);
         }
+
+        StackPopper(const StackPopper&) = delete;
+        StackPopper(StackPopper&&) = delete;
+        StackPopper& operator=(const StackPopper&) = delete;
+        StackPopper& operator=(StackPopper&&) = delete;
     private:
         lua_State* const m_state;
         const int n;
@@ -28,6 +33,10 @@ namespace Lua
             lua_settop(m_state, m_top);
         }
 
+        StackRestorer(const StackRestorer&) = delete;
+        StackRestorer(StackRestorer&&) = delete;
+        StackRestorer& operator=(const StackRestorer&) = delete;
+        StackRestorer& operator=(StackRestorer&&) = delete;
     private:
         lua_State* const m_state;
         const int m_top;
