@@ -78,7 +78,8 @@ TEST_F(RefObjectTests, CompareTest)
     }
     {
         Run("a = {}"
-            " b = a ");
+            " b = a "
+        );
         GRefObject a = GRefObject::Global(l, "a");
         GRefObject b = GRefObject::Global(l, "b");
 

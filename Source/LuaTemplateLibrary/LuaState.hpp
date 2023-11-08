@@ -24,6 +24,13 @@ namespace Lua
             return Wrap(luaL_newstate());
         }
 
+        inline static StateWrap* Create(lua_Alloc f)
+        {
+            auto s = Wrap(lua_newstate(f, nullptr));
+            s->SetAllocFunction(f);
+            return s;
+        }
+
         inline static lua_State* Unwrap(const StateWrap* s)
         {
             return (lua_State*)s;
@@ -184,11 +191,13 @@ namespace Lua
     public:
         State()
         {
-            m_state = StateWrap::Create();
             if constexpr (!std::is_void_v<Allocator>)
             {
-                //static_assert(std::is_same_v<decltype(Allocator::Function), lua_Alloc>, "Expected lua_Alloc function");
-                m_state->SetAllocFunction(Allocator::Function);
+                m_state = StateWrap::Create(Allocator::Function);
+            }
+            else
+            {
+                m_state = StateWrap::Create();
             }
         }
         State(const State&) = delete;
