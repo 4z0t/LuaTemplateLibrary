@@ -190,7 +190,7 @@ namespace Lua
 
             lua_newtable(m_state);
             StackObjectView classTable{ m_state };
-            classTable.RawSet("className", m_name.c_str());
+            classTable.RawSet("className", m_name);
             lua_setregp(m_state, UData::ClassTable::GetKey());
         }
 
