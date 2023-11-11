@@ -24,9 +24,9 @@ namespace Lua
             return Wrap(luaL_newstate());
         }
 
-        static StateWrap* Create(lua_Alloc f)
+        static StateWrap* Create(lua_Alloc f, void* ud = nullptr)
         {
-            auto s = Wrap(lua_newstate(f, nullptr));
+            auto s = Wrap(lua_newstate(f, ud));
             s->SetAllocFunction(f);
             return s;
         }
@@ -189,17 +189,18 @@ namespace Lua
     class State
     {
     public:
-        State()
+        State(void* obj = nullptr)
         {
             if constexpr (!std::is_void_v<Allocator>)
             {
-                m_state = StateWrap::Create(Allocator::Function);
+                m_state = StateWrap::Create(Allocator::Function, obj);
             }
             else
             {
                 m_state = StateWrap::Create();
             }
         }
+
         State(const State&) = delete;
         State(State&&) = delete;
         State& operator=(const State&) = delete;
