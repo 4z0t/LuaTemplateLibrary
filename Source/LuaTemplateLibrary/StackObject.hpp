@@ -290,6 +290,12 @@ namespace Lua
         }
     };
 
+    template<>
+    bool StackObjectView::RawEqual(const StackObject& value)
+    {
+        return StackObjectView::RawEqual(static_cast<const StackObjectView&>(value));
+    }
+
 
 
     template<>
