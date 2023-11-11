@@ -253,7 +253,7 @@ namespace Lua
         template<>
         bool RawEqual(const StackObject& value)
         {
-            return StackObjectView::RawEqual(static_cast<StackObjectView>(value));
+            return StackObjectView::RawEqual(static_cast<const StackObjectView&>(value));
         }
 
         ~StackObject()
