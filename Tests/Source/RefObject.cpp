@@ -448,10 +448,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace Lua;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-        {
-            int c = s->GetGlobal<int>("globalValue");
-            return a + b + c;
-        };
+    {
+        int c = s->GetGlobal<int>("globalValue");
+        return a + b + c;
+    };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", Closure<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -484,9 +484,9 @@ TEST_F(StackObjectTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
+    {
+        ASSERT_TRUE(lua_gettop(l) == 0);
+    };
 
     using namespace Lua;
     {
@@ -533,10 +533,13 @@ TEST_F(StackObjectTest, Tests)
         Run("a, b = 3, 'Hi'");
         StackObject s1 = StackObject::Global(l, "a");
         StackObject s2 = StackObject::Global(l, "b");
+        StackObject s3 = StackObject::Global(l, "a");
         ASSERT_TRUE(s1.Is<int>());
         ASSERT_TRUE(s2.Is<const char*>());
         ASSERT_TRUE(s1 == 3);
-        ASSERT_TRUE(s2 == "Hi");
+        ASSERT_TRUE(s1.RawEqual(3));
+        ASSERT_TRUE(s1.RawEqual(s3));
+        ASSERT_TRUE(s2.RawEqual("Hi"));
 
     }
     AssertEmptyStack();
@@ -616,9 +619,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
+    {
+        ASSERT_TRUE(lua_gettop(l) == 0);
+    };
 
     using namespace Lua;
     using namespace std;

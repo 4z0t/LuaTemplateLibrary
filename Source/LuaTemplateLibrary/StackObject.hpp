@@ -244,6 +244,18 @@ namespace Lua
             return StackObjectView::Len();
         }
 
+        template<typename T>
+        bool RawEqual(const T& value)
+        {
+            return StackObjectView::RawEqual(value);
+        }
+
+        template<>
+        bool RawEqual(const StackObject& value)
+        {
+            return StackObjectView::RawEqual(static_cast<StackObjectView>(value));
+        }
+
         ~StackObject()
         {
             if (lua_gettop(m_state) == m_index)
