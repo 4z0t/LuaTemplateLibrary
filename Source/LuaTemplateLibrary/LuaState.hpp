@@ -193,11 +193,11 @@ namespace Lua
         {
             if constexpr (!std::is_void_v<Allocator>)
             {
-                m_state = CState::Create(Allocator::Function, obj);
+                m_cstate = CState::Create(Allocator::Function, obj);
             }
             else
             {
-                m_state = CState::Create();
+                m_cstate = CState::Create();
             }
         }
 
@@ -208,30 +208,30 @@ namespace Lua
 
         ~State()
         {
-            if (m_state)
-                m_state->Close();
-            m_state = nullptr;
+            if (m_cstate)
+                m_cstate->Close();
+            m_cstate = nullptr;
         }
 
         void ThrowExceptions()
         {
-            m_state->SetAtPanicFuntion(Exception::PanicFunc);
+            m_cstate->SetAtPanicFuntion(Exception::PanicFunc);
         }
 
         void OpenLibs()
         {
-            return m_state->OpenLibs();
+            return m_cstate->OpenLibs();
         }
 
         template<typename T>
         void Push(const T& value)
         {
-            return m_state->Push<T>(value);
+            return m_cstate->Push<T>(value);
         }
 
         void Pop(size_t n)
         {
-            return m_state->Pop(n);
+            return m_cstate->Pop(n);
         }
 
         State& AddFunction(const char* const name, lua_CFunction func)
@@ -242,35 +242,35 @@ namespace Lua
         template<typename ...Ts>
         State& AddClosure(const char* const name, lua_CFunction func, Ts&&... args)
         {
-            m_state->RegisterClosure(name, func, std::forward<Ts>(args)...);
+            m_cstate->RegisterClosure(name, func, std::forward<Ts>(args)...);
             return *this;
         }
 
         bool DoFile(const char* const path)
         {
-            return m_state->DoFile(path);
+            return m_cstate->DoFile(path);
         }
 
         template<typename TReturn = void, typename ...Ts>
         TReturn Call(const char* name, Ts&&... args)
         {
-            return m_state->Call<TReturn>(name, std::forward<Ts>(args)...);
+            return m_cstate->Call<TReturn>(name, std::forward<Ts>(args)...);
         }
 
         template<typename T>
         T To(int index)
         {
-            return m_state->Get<T>(index);
+            return m_cstate->Get<T>(index);
         }
 
         CState* const GetState()const
         {
-            return m_state;
+            return m_cstate;
         }
 
         void Run(const char* const s) throw(Exception)
         {
-            return m_state->Run(s);
+            return m_cstate->Run(s);
         }
 
         void Run(const std::string& s)
@@ -281,14 +281,14 @@ namespace Lua
         template<typename T>
         State& SetGlobal(const char* name, const T& value)
         {
-            PushValue(m_state->Unwrap(), value);
-            lua_setglobal(m_state->Unwrap(), name);
+            PushValue(m_cstate->Unwrap(), value);
+            lua_setglobal(m_cstate->Unwrap(), name);
 
             return *this;
         }
 
     private:
-        CState* m_state = nullptr;
+        CState* m_cstate = nullptr;
 
     };
 }
