@@ -50,6 +50,20 @@ namespace Lua
         }
 
         template<typename T>
+        bool RawEqual(const T& value)
+        {
+            StackPopper pop{ m_state,1 };
+            PushValue(m_state, value);
+            return lua_rawequal(m_state, m_index, -1);
+        }
+
+        template<>
+        bool RawEqual(const StackObjectView& value)
+        {
+            return lua_rawequal(m_state, m_index, value.m_index);
+        }
+
+        template<typename T>
         bool operator!=(const T& value)const
         {
             return !(*this == value);
