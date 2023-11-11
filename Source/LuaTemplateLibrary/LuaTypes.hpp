@@ -3,9 +3,9 @@
 
 namespace Lua
 {
-    class StateWrap;
+    class CState;
 
-    StateWrap* WrapState(lua_State* l);
+    CState* WrapState(lua_State* l);
 
     enum class Type
     {
@@ -51,9 +51,9 @@ namespace Lua
     };
 
     template<>
-    struct StackType<StateWrap*>
+    struct StackType<CState*>
     {
-        static StateWrap* Get(lua_State* l, int index)
+        static CState* Get(lua_State* l, int index)
         {
             return WrapState(l);
         }

@@ -5,45 +5,45 @@
 
 namespace Lua
 {
-    StateWrap* WrapState(lua_State* l)
+    CState* WrapState(lua_State* l)
     {
-        return (StateWrap*)l;
+        return (CState*)l;
     }
 
-    class StateWrap final
+    class CState final
     {
     public:
 
-        inline static StateWrap* Wrap(lua_State* l)
+        inline static CState* Wrap(lua_State* l)
         {
             return WrapState(l);
         }
 
-        inline static StateWrap* Create()
+        inline static CState* Create()
         {
             return Wrap(luaL_newstate());
         }
 
-        static StateWrap* Create(lua_Alloc f, void* ud = nullptr)
+        static CState* Create(lua_Alloc f, void* ud = nullptr)
         {
             auto s = Wrap(lua_newstate(f, ud));
             s->SetAllocFunction(f);
             return s;
         }
 
-        inline static lua_State* Unwrap(const StateWrap* s)
+        inline static lua_State* Unwrap(const CState* s)
         {
             return (lua_State*)s;
         }
 
         inline lua_State* Unwrap()const
         {
-            return StateWrap::Unwrap(this);
+            return CState::Unwrap(this);
         }
 
         inline lua_State* Unwrap()
         {
-            return StateWrap::Unwrap(this);
+            return CState::Unwrap(this);
         }
 
         void OpenLibs()
@@ -148,8 +148,8 @@ namespace Lua
         }
 
     private:
-        StateWrap() = delete;
-        ~StateWrap() = delete;
+        CState() = delete;
+        ~CState() = delete;
 
     };
 
@@ -193,11 +193,11 @@ namespace Lua
         {
             if constexpr (!std::is_void_v<Allocator>)
             {
-                m_state = StateWrap::Create(Allocator::Function, obj);
+                m_state = CState::Create(Allocator::Function, obj);
             }
             else
             {
-                m_state = StateWrap::Create();
+                m_state = CState::Create();
             }
         }
 
@@ -263,7 +263,7 @@ namespace Lua
             return m_state->Get<T>(index);
         }
 
-        StateWrap* const GetState()const
+        CState* const GetState()const
         {
             return m_state;
         }
@@ -288,7 +288,7 @@ namespace Lua
         }
 
     private:
-        StateWrap* m_state = nullptr;
+        CState* m_state = nullptr;
 
     };
 }

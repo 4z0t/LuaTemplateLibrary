@@ -107,7 +107,7 @@ struct Vector3f
         return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
     }
 
-    std::string ToString(Lua::StateWrap* state)const
+    std::string ToString(Lua::CState* state)const
     {
         std::string  s{ state->PushFormatString("Vector { %f, %f, %f }", x, y, z) };
         state->Pop();
@@ -439,12 +439,12 @@ void ClassTest()
             .Add("y", Property<Vector3f, float, &Vector3f::y>{})
             .Add("z", Property<Vector3f, float, &Vector3f::z>{})
             .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
-            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(StateWrap*)>{})
+            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(CState*)>{})
             .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
             ;
 
         cout << typeid(&Vector3f::ToString).name() << endl;
-        cout << typeid(string(Vector3f::*)(StateWrap*)const).name() << endl;
+        cout << typeid(string(Vector3f::*)(CState*)const).name() << endl;
 
 
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;

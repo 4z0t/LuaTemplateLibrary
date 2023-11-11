@@ -12,7 +12,7 @@ namespace Lua
         struct NoIncrement : std::false_type {};
 
         template<>
-        struct NoIncrement<StateWrap*> : std::true_type {};
+        struct NoIncrement<CState*> : std::true_type {};
 
         template<>
         struct NoIncrement<lua_State*> : std::true_type {};
