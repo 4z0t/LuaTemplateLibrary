@@ -27,7 +27,10 @@ namespace Lua
     };
 
     template<typename T>
-    struct Unwrap<T, std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>>
+    using EnableIfUnwrappable = std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>;
+
+    template<typename T>
+    struct Unwrap<T, EnableIfUnwrappable<T>>
     {
         using type = typename T::type;
     };
