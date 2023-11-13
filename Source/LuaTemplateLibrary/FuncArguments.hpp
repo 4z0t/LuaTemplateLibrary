@@ -39,7 +39,7 @@ namespace Lua
     using Unwrap_t = typename Unwrap<T, DerivedFromSuper>::type;
 
     template<typename T>
-    struct  Default : TypeBase<T>
+    struct  Default : OptionalBase<T>
     {
         static  T value;
     };

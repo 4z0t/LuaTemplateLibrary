@@ -50,7 +50,17 @@ namespace Lua
 
         static bool MatchArgumentCount(lua_State* l)
         {
-            return sizeof... (TArgs) == lua_gettop(l);
+            constexpr size_t max_arg_count = sizeof... (TArgs);
+            constexpr size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+            if constexpr (min_arg_count == max_arg_count)
+            {
+                return max_arg_count == lua_gettop(l);
+            }
+            else
+            {
+                int n = lua_gettop(l);
+                return n >= min_arg_count && n <= max_arg_count;
+            }
         }
 
         static int Function(lua_State* l)

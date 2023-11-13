@@ -41,6 +41,11 @@ namespace Lua
         template<typename T, size_t Index>
         struct IncrementUpvalueIndex : Incrementer<IsUpvalueType<T>::value && !NoIncrement<T>::value, Index> {};
 
+        template<typename T, typename IsOptional = void>
+        struct IsOptionalArgumentType : std::false_type {};
+
+        template<typename T>
+        struct IsOptionalArgumentType<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>> : std::true_type {};
 
         template<typename T, typename Optional = void>
         struct ArgExtractor
@@ -59,24 +64,6 @@ namespace Lua
         };
 
         template<typename T>
-        struct ArgExtractor<Default<T>>
-        {
-            template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
-            {
-                if (StackType<T>::Check(l, ArgI + 1))
-                    return StackType<T>::Get(l, ArgI + 1);
-                return Default<T>::value;
-            }
-
-            template<size_t ArgI, size_t UpvalueI>
-            static constexpr bool Check(lua_State* l)
-            {
-                return StackType<T>::Check(l, ArgI + 1) || lua_isnoneornil(L, ArgI + 1);
-            }
-        };
-
-        template<typename T>
         struct ArgExtractor<Upvalue<T>>
         {
             template<size_t ArgI, size_t UpvalueI>
@@ -85,7 +72,6 @@ namespace Lua
                 return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
             }
         };
-
 
         template<typename T>
         struct ArgExtractor<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>>
@@ -97,6 +83,12 @@ namespace Lua
                 if (StackType<TReturn>::Check(l, ArgI + 1))
                     return StackType<TReturn>::Get(l, ArgI + 1);
                 return T::value;
+            }
+
+            template<size_t ArgI, size_t UpvalueI>
+            static constexpr bool Check(lua_State* l)
+            {
+                return StackType<TReturn>::Check(l, ArgI + 1) || lua_isnoneornil(l, ArgI + 1);
             }
         };
 
@@ -187,6 +179,32 @@ namespace Lua
         constexpr bool MatchesTypes(lua_State* l)
         {
             return MatchesTypes<0, 0, Ts...>(l);
+        }
+
+        template<size_t ArgIndex>
+        constexpr size_t MinArgumentCount()
+        {
+            static_assert(ArgIndex == 0, "???");
+            return ArgIndex;
+        }
+
+        template<size_t ArgIndex, typename T, typename ...Ts>
+        constexpr size_t MinArgumentCount()
+        {
+            if constexpr (!IsOptionalArgumentType<T>::value)
+            {
+                return ArgIndex;
+            }
+            else
+            {
+                return MinArgumentCount<ArgIndex - 1, Ts...>();
+            }
+        }
+
+        template<typename ...Ts>
+        constexpr size_t MinArgumentCount()
+        {
+            return MinArgumentCount<sizeof ... (Ts), Ts...>();
         }
     }
 }
