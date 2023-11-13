@@ -773,6 +773,8 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("true,2,3", false);
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", false);
         ASSERT_MATCHES("1,2", false);
         ASSERT_MATCHES("nil,1,2", false);
@@ -794,6 +796,7 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", true);
         ASSERT_MATCHES("1,2", true);
         ASSERT_MATCHES("nil,1,2", true);
@@ -815,6 +818,7 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", true);
         ASSERT_MATCHES("1,2", true);
         ASSERT_MATCHES("nil,1,2", true);
@@ -836,6 +840,7 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", true);
         ASSERT_MATCHES("1,2", true);
         ASSERT_MATCHES("nil,1,2", true);
@@ -857,6 +862,7 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", true);
         ASSERT_MATCHES("1,2", true);
         ASSERT_MATCHES("nil,1,2", false);
@@ -877,6 +883,7 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("1,false,3", false);
         ASSERT_MATCHES("1,'hello',3", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
         ASSERT_MATCHES("1", false);
         ASSERT_MATCHES("1,2", true);
         ASSERT_MATCHES("nil,1,2", true);
