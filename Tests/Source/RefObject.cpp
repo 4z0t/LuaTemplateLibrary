@@ -448,10 +448,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace Lua;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-    {
-        int c = s->GetGlobal<int>("globalValue");
-        return a + b + c;
-    };
+        {
+            int c = s->GetGlobal<int>("globalValue");
+            return a + b + c;
+        };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", Closure<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -484,9 +484,9 @@ TEST_F(StackObjectTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-    {
-        ASSERT_TRUE(lua_gettop(l) == 0);
-    };
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
 
     using namespace Lua;
     {
@@ -619,9 +619,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-    {
-        ASSERT_TRUE(lua_gettop(l) == 0);
-    };
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
 
     using namespace Lua;
     using namespace std;
@@ -745,4 +745,44 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_EQ(b2, 3);
     }
     AssertEmptyStack();
+}
+
+
+struct TypeMatchingTests : TestBase
+{
+
+};
+
+TEST_F(TypeMatchingTests, Tests)
+{
+    using namespace Lua;
+#define ASSERT_MATCHES(s, res)\
+    Run("result = Match(" s ")"); \
+    ASSERT_TRUE(Result().Is<bool>()); \
+    ASSERT_EQ(Result().To<bool>(), res)
+
+    {
+        RegisterFunction(l, "Match", MatchArgumentTypes<int, int, int>::Function);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1", false);
+        ASSERT_MATCHES("1,2", false);
+        ASSERT_MATCHES("nil,1,2", false);
+        ASSERT_MATCHES("nil, 1,2 ", false);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("", false);
+
+
+
+    }
+
+
+#undef ASSERT_MATCHES
 }

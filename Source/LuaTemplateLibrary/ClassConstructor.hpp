@@ -48,9 +48,15 @@ namespace Lua
             return FuncUtility::MatchesTypes<TArgs...>(l);
         }
 
+        static bool MatchArgumentCount(lua_State* l)
+        {
+            return sizeof... (TArgs) == lua_gettop(l);
+        }
+
         static int Function(lua_State* l)
         {
-            lua_pushboolean(l, Predicate(l));
+
+            lua_pushboolean(l, MatchArgumentCount(l) && Predicate(l));
             return 1;
         }
     };

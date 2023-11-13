@@ -161,6 +161,12 @@ namespace Lua
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
+        template<size_t ArgIndex, size_t UpvalueIndex>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            return true;
+        }
+
         template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
         constexpr bool MatchesTypes(lua_State* l)
         {
@@ -171,10 +177,10 @@ namespace Lua
                     return false;
                 }
             }
-            return ReplaceUpvalues<
+            return MatchesTypes<
                 IncrementArgIndex<T, ArgIndex>::value,
                 IncrementUpvalueIndex<T, UpvalueIndex>::value,
-                TArgsTuple, Ts...>(l, args);
+                Ts...>(l);
         }
 
         template<typename ...Ts>
