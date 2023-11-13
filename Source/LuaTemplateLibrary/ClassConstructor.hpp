@@ -43,6 +43,9 @@ namespace Lua
     template<typename ...TArgs>
     struct MatchArgumentTypes
     {
+        static constexpr size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
+        static constexpr size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+
         static bool Predicate(lua_State* l)
         {
             return FuncUtility::MatchesTypes<TArgs...>(l);
@@ -50,8 +53,6 @@ namespace Lua
 
         static bool MatchArgumentCount(lua_State* l)
         {
-            constexpr size_t max_arg_count = sizeof... (TArgs);
-            constexpr size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
             if constexpr (min_arg_count == max_arg_count)
             {
                 return max_arg_count == lua_gettop(l);

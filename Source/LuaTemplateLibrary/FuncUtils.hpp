@@ -195,16 +195,38 @@ namespace Lua
             {
                 return ArgIndex;
             }
+            else if constexpr (IsUpvalueType<T>::value && !NoIncrement<T>::value)
+            {
+                return MinArgumentCount<ArgIndex, Ts...>();
+            }
             else
             {
                 return MinArgumentCount<ArgIndex - 1, Ts...>();
             }
         }
 
+        template<size_t ArgIndex>
+        constexpr size_t MaxArgumentCount()
+        {
+            return ArgIndex;
+        }
+
+        template<size_t ArgIndex, typename T, typename ...Ts>
+        constexpr size_t MaxArgumentCount()
+        {
+            return MaxArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
+        }
+
+        template<typename ...Ts>
+        constexpr size_t MaxArgumentCount()
+        {
+            return MaxArgumentCount<0, Ts...>();
+        }
+
         template<typename ...Ts>
         constexpr size_t MinArgumentCount()
         {
-            return MinArgumentCount<sizeof ... (Ts), Ts...>();
+            return MinArgumentCount<MaxArgumentCount<Ts...>(), Ts...>();
         }
     }
 }

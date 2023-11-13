@@ -762,7 +762,10 @@ TEST_F(TypeMatchingTests, Tests)
     ASSERT_EQ(Result().To<bool>(), res)
 
     {
-        RegisterFunction(l, "Match", MatchArgumentTypes<int, int, int>::Function);
+        using Match = typename MatchArgumentTypes<int, int, int>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 3);
+        RegisterFunction(l, "Match", Match::Function);
 
         ASSERT_MATCHES("1,2,3", true);
         ASSERT_MATCHES("1,0,3", true);
@@ -780,7 +783,32 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("", false);
     }
     {
-        RegisterFunction(l, "Match", MatchArgumentTypes<Default<int>, Default<int>, Default<int>>::Function);
+        using Match = typename MatchArgumentTypes<Default<int>, Default<int>, Default<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 0);
+        RegisterFunction(l, "Match", Match::Function);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, 1,2 ", true);
+        ASSERT_MATCHES("nil, nil, 1", true);
+        ASSERT_MATCHES("nil, nil, nil", true);
+        ASSERT_MATCHES("", true);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, Default<int>, Default<int>, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 0);
+        RegisterClosure(l, "Match", Match::Function, 1);
 
         ASSERT_MATCHES("1,2,3", true);
         ASSERT_MATCHES("1,0,3", true);
