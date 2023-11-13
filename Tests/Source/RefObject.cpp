@@ -778,11 +778,25 @@ TEST_F(TypeMatchingTests, Tests)
         ASSERT_MATCHES("nil, nil, nil", false);
         ASSERT_MATCHES("1,2,3,4,5", false);
         ASSERT_MATCHES("", false);
-
-
-
     }
+    {
+        RegisterFunction(l, "Match", MatchArgumentTypes<Default<int>, Default<int>, Default<int>>::Function);
 
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, 1,2 ", true);
+        ASSERT_MATCHES("nil, nil, 1", true);
+        ASSERT_MATCHES("nil, nil, nil", true);
+        ASSERT_MATCHES("", true);
+    }
 
 #undef ASSERT_MATCHES
 }
