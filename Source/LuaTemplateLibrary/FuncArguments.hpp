@@ -48,7 +48,7 @@ namespace Lua
     T Default<T>::value{};
 
     template<typename T>
-    struct Upvalue :TypeBase<T> {};
+    struct Upvalue final :TypeBase<T> {};
 }
 
 #define LuaOptionalArg(name_, type_, value_) \
