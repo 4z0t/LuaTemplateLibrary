@@ -46,12 +46,12 @@ namespace Lua
         static constexpr size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
         static constexpr size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
 
-        static bool Predicate(lua_State* l)
+        static constexpr bool Predicate(lua_State* l)
         {
             return FuncUtility::MatchesTypes<TArgs...>(l);
         }
 
-        static bool MatchArgumentCount(lua_State* l)
+        static constexpr bool MatchArgumentCount(lua_State* l)
         {
             if constexpr (min_arg_count == max_arg_count)
             {

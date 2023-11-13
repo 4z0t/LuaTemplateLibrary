@@ -548,11 +548,25 @@ void StackObjectTest()
 }
 
 
+void TypeMatching()
+{
+    using namespace Lua;
+    using namespace std;
+    State s;
+
+    s.AddClosure("Match", MatchArgumentTypes<int, int, Default<int>>::Function);
+    s.Run("a = Match(1,2)");
+    cout << GRefObject::Global(s, "a").To<bool>() << endl;
+
+}
+
+
 int main()
 {
     //ClassTest();
     //Test();
     //PerfAllocTest();
 
-    StackObjectTest();
+    //StackObjectTest();
+    TypeMatching();
 }
