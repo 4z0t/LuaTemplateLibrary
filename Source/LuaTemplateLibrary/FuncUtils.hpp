@@ -181,28 +181,39 @@ namespace Lua
             return MatchesTypes<0, 0, Ts...>(l);
         }
 
+        struct MinArgCRes {
+            size_t n;
+            bool ret;
+        };
+
         template<size_t ArgIndex>
-        constexpr size_t MinArgumentCount()
+        constexpr MinArgCRes MinArgumentCount()
         {
-            static_assert(ArgIndex == 0, "???");
-            return ArgIndex;
+            return { ArgIndex, false };
         }
 
         template<size_t ArgIndex, typename T, typename ...Ts>
-        constexpr size_t MinArgumentCount()
+        constexpr MinArgCRes MinArgumentCount()
         {
-            if constexpr (!IsOptionalArgumentType<T>::value)
+            constexpr auto r = MinArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
+            if  constexpr (r.ret)
             {
-                return ArgIndex;
+                return r;
             }
-            else if constexpr (IsUpvalueType<T>::value && !NoIncrement<T>::value)
+            else if constexpr (IsUpvalueType<T>::value || NoIncrement<T>::value || IsOptionalArgumentType<T>::value)
             {
-                return MinArgumentCount<ArgIndex, Ts...>();
+                return { ArgIndex , false };
             }
             else
             {
-                return MinArgumentCount<ArgIndex - 1, Ts...>();
+                return { r.n , true };
             }
+        }
+
+        template<typename ...Ts>
+        constexpr size_t MinArgumentCount()
+        {
+            return MinArgumentCount<0, Ts...>().n;
         }
 
         template<size_t ArgIndex>
@@ -223,10 +234,5 @@ namespace Lua
             return MaxArgumentCount<0, Ts...>();
         }
 
-        template<typename ...Ts>
-        constexpr size_t MinArgumentCount()
-        {
-            return MinArgumentCount<MaxArgumentCount<Ts...>(), Ts...>();
-        }
     }
 }

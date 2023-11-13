@@ -21,6 +21,14 @@ namespace Lua
         Thread = LUA_TTHREAD,
     };
 
+    struct AlwaysValid
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return true;
+        }
+    };
+
     template<typename T>
     struct StackType
     {
@@ -42,7 +50,7 @@ namespace Lua
     };
 
     template<>
-    struct StackType<lua_State*>
+    struct StackType<lua_State*> : AlwaysValid
     {
         static lua_State* Get(lua_State* l, int index)
         {
@@ -51,7 +59,7 @@ namespace Lua
     };
 
     template<>
-    struct StackType<CState*>
+    struct StackType<CState*> : AlwaysValid
     {
         static CState* Get(lua_State* l, int index)
         {
