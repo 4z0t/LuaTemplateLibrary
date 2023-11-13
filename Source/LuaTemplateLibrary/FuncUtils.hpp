@@ -50,6 +50,12 @@ namespace Lua
             {
                 return StackType<T>::Get(l, ArgI + 1);
             }
+
+            template<size_t ArgI, size_t UpvalueI>
+            static constexpr bool Check(lua_State* l)
+            {
+                return StackType<T>::Check(l, ArgI + 1);
+            }
         };
 
         template<typename T>
@@ -61,6 +67,12 @@ namespace Lua
                 if (StackType<T>::Check(l, ArgI + 1))
                     return StackType<T>::Get(l, ArgI + 1);
                 return Default<T>::value;
+            }
+
+            template<size_t ArgI, size_t UpvalueI>
+            static constexpr bool Check(lua_State* l)
+            {
+                return StackType<T>::Check(l, ArgI + 1) || lua_isnoneornil(L, ArgI + 1);
             }
         };
 
@@ -149,5 +161,26 @@ namespace Lua
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
+        template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            if constexpr (!IsUpvalueType<T>::value)
+            {
+                if (!ArgExtractor<T>::Check<ArgIndex, UpvalueIndex>(l))
+                {
+                    return false;
+                }
+            }
+            return ReplaceUpvalues<
+                IncrementArgIndex<T, ArgIndex>::value,
+                IncrementUpvalueIndex<T, UpvalueIndex>::value,
+                TArgsTuple, Ts...>(l, args);
+        }
+
+        template<typename ...Ts>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            return MatchesTypes<0, 0, Ts...>(l);
+        }
     }
 }

@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
 #include "UserData.hpp"
+#include "FuncUtils.hpp"
 
 
 namespace Lua
@@ -36,6 +37,21 @@ namespace Lua
         {
             static_assert(std::is_constructible_v<C, Unwrap_t<TArgs>...>, "Object of class C can't be constructed with such arguments!");
             new(object) C(args...);
+        }
+    };
+
+    template<typename ...TArgs>
+    struct MatchArgumentTypes
+    {
+        static bool Predicate(lua_State* l)
+        {
+            return FuncUtility::MatchesTypes<TArgs...>(l);
+        }
+
+        static int Function(lua_State* l)
+        {
+            lua_pushboolean(l, Predicate(l));
+            return 1;
         }
     };
 }
