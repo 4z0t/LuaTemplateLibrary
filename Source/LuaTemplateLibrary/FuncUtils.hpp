@@ -120,7 +120,9 @@ namespace Lua
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
             if constexpr (IsUpvalueType<T>::value)
+            {
                 UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
+            }
             return ReplaceUpvalues<
                 TupleIndex + 1,
                 IncrementArgIndex<T, ArgIndex>::value,
