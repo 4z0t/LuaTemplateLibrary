@@ -115,8 +115,10 @@ namespace Lua
 
     namespace Internal
     {
+        struct CFunctionBase {};
+
         template<typename ...TArgs>
-        struct FunctionHelper
+        struct FunctionHelper :CFunctionBase
         {
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
             static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
@@ -136,7 +138,7 @@ namespace Lua
     };
 
     template<auto fn, typename ...TArgs>
-    struct Closure: Internal::FunctionHelper<TArgs...>
+    struct Closure : Internal::FunctionHelper<TArgs...>
     {
         using FnType = decltype(fn);
 
@@ -232,7 +234,7 @@ namespace Lua
 
 
     template<auto fn, typename TReturn, typename ...TArgs>
-    struct Closure<fn, TReturn(TArgs...)>: Internal::FunctionHelper<TArgs...>
+    struct Closure<fn, TReturn(TArgs...)> : Internal::FunctionHelper<TArgs...>
     {
         using FnType = decltype(fn);
 
