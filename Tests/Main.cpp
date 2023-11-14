@@ -214,7 +214,9 @@ void Test()
     {
 
         Vector3f v{ 1,2,3 };
-        lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
+        lua_state
+            /*
+            .AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
             .AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
             .AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
             .AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
@@ -232,6 +234,7 @@ void Test()
             .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
             .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
             .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
+            */
             //.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
             //.AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
             //.AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
@@ -474,7 +477,7 @@ void ClassTest()
 
 
 
-        
+
     }
     catch (Exception& ex)
     {

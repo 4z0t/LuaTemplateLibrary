@@ -5,6 +5,7 @@
 
 namespace Lua
 {
+    /*
     template<auto fn, typename ...TUpvalues>
     struct CClosure
     {
@@ -116,6 +117,7 @@ namespace Lua
     template<typename FnClass>
     struct ClassFunction : public ClassClosure<FnClass> {
     };
+    */
 
     namespace Internal
     {
