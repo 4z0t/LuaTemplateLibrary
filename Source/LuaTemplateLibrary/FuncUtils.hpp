@@ -45,13 +45,13 @@ namespace Lua
         struct IsOptionalArgumentType : std::false_type {};
 
         template<typename T>
-        struct IsOptionalArgumentType<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>> : std::true_type {};
+        struct IsOptionalArgumentType<T, EnableIfOptionalArg<T>> : std::true_type {};
 
-        template<typename T, typename Optional = void>
+        template<typename T>
         struct ArgExtractor
         {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr auto Get(lua_State* l)
             {
                 return StackType<T>::Get(l, ArgI + 1);
             }
@@ -67,28 +67,9 @@ namespace Lua
         struct ArgExtractor<Upvalue<T>>
         {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr auto Get(lua_State* l)
             {
                 return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
-            }
-        };
-
-        template<typename T>
-        struct ArgExtractor<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>>
-        {
-            using TReturn = typename T::type;
-            template<size_t ArgI, size_t UpvalueI>
-            static constexpr TReturn Get(lua_State* l)
-            {
-                if (StackType<TReturn>::Check(l, ArgI + 1))
-                    return StackType<TReturn>::Get(l, ArgI + 1);
-                return T::value;
-            }
-
-            template<size_t ArgI, size_t UpvalueI>
-            static constexpr bool Check(lua_State* l)
-            {
-                return StackType<TReturn>::Check(l, ArgI + 1) || lua_isnoneornil(l, ArgI + 1);
             }
         };
 

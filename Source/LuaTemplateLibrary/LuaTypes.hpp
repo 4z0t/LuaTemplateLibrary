@@ -29,7 +29,7 @@ namespace Lua
         }
     };
 
-    template<typename T>
+    template<typename T, typename Extension = void>
     struct StackType
     {
         static T Get(lua_State* l, int index)

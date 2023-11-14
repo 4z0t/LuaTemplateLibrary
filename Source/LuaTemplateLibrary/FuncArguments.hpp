@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <iostream>
 #include <vector>
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
@@ -30,6 +31,9 @@ namespace Lua
     using EnableIfUnwrappable = std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>;
 
     template<typename T>
+    using EnableIfOptionalArg = std::enable_if_t<std::is_base_of_v<OptionalArg, T>>;
+
+    template<typename T>
     struct Unwrap<T, EnableIfUnwrappable<T>>
     {
         using type = typename T::type;
@@ -49,6 +53,24 @@ namespace Lua
 
     template<typename T>
     struct Upvalue final :TypeBase<T> {};
+
+    template<typename T>
+    struct StackType<T, EnableIfOptionalArg<T>>
+    {
+        using TReturn = Unwrap_t<T>;
+
+        static constexpr TReturn Get(lua_State* l, int index)
+        {
+            if (StackType<TReturn>::Check(l, index))
+                return StackType<TReturn>::Get(l, index);
+            return T::value;
+        }
+
+        static constexpr bool Check(lua_State* l, int index)
+        {
+            return StackType<TReturn>::Check(l, index) || lua_isnoneornil(l, index);
+        }
+    };
 }
 
 #define LuaOptionalArg(name_, type_, value_) \
