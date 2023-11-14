@@ -265,7 +265,7 @@ TEST_F(UserDataTests, MoveCtorTest)
 
         CantCopy(int a) :a(a) {}
         CantCopy(const CantCopy&) = delete;
-        CantCopy(CantCopy&& other)
+        CantCopy(CantCopy&& other)noexcept
         {
             a = std::move(other.a);
         }
@@ -330,7 +330,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
-        .AddGetter("length", Closure<&Vector3f::Length, UserData<Vector3f>>::Function)
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>::Function)
         ;
     {
 
@@ -454,7 +454,7 @@ TEST_F(StateTests, UpvalueTest)
         };
 
     Run("globalValue = 4 ");
-    RegisterClosure(l, "Func", Closure<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
+    RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
     Run("result = Func()");
 
     ASSERT_EQ(1 + 2 + 4, Result().To<int>());
@@ -828,7 +828,7 @@ TEST_F(TypeMatchingTests, Tests)
     }
 
     {
-        using Match = typename MatchArgumentTypes<Default<int>, lua_State* ,Default<int>, Default<int>, Upvalue<int>>;
+        using Match = typename MatchArgumentTypes<Default<int>, lua_State*, Default<int>, Default<int>, Upvalue<int>>;
         ASSERT_EQ(Match::max_arg_count, 3);
         ASSERT_EQ(Match::min_arg_count, 0);
         RegisterClosure(l, "Match", Match::Function, 1);

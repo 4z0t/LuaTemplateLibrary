@@ -227,17 +227,17 @@ void Test()
             .AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
             .AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
             .AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-            .AddFunction("MyFunc", Lua::Closure<myfunc, float, float>::Function)
-            .AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
-            .AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
-            .AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
-            .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
-            .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
+            .AddFunction("MyFunc", Lua::CFunction<myfunc, float, float>::Function)
+            .AddFunction("Def", Lua::CFunction<TestDefault, double, Default<double>>::Function)
+            .AddClosure("Upval", Lua::CFunction<TestDefault, double, Upvalue<double>>::Function, 1.f)
+            .AddClosure("Opt", Lua::CFunction<TestDefault, double, OptionalDoubleHalf>::Function)
+            .AddClosure("PrintInc", Lua::CFunction<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
+            .AddClosure("SayBye", Lua::CFunction<Say, OptStringValue>::Function)
             .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
             */
-            //.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-            //.AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-            //.AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
+            //.AddFunction("VecSum2", Lua::CFunction<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+            //.AddClosure("VecPtr", Lua::CFunction<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+            //.AddClosure("CoolFunction", Lua::CFunction<CoolFunction, GRefObject>::Function)
             ;
     }
 
@@ -292,7 +292,7 @@ void Test()
     cout << obj4[obj4[1.1]].ToString() << endl;
     cout << obj4[obj4[2.5]].ToString() << endl;
     cout << obj4[obj4].ToString() << endl;
-    obj4["func"] = Closure<CoolFunction, GRefObject>::Function;
+    obj4["func"] = CFunction<CoolFunction, GRefObject>::Function;
 
     cout << lua_state.Call<GRefObject>("Main", obj4) << endl;
 

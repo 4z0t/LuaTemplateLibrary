@@ -40,7 +40,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
+            auto method = CFunction<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
             c.AddMetaMethod(name, method);
         }
     };
@@ -57,7 +57,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
+            auto method = CFunction<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
             c.AddMetaMethod(name, method);
         }
     };

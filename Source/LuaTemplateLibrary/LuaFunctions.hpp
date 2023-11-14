@@ -210,7 +210,7 @@ namespace Lua
     }
 
     template<auto fn, typename ...TArgs>
-    struct Closure : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
+    struct CFunction : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
     {
         using TReturn = typename FunctionCaller::TReturn;
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
@@ -238,7 +238,7 @@ namespace Lua
     };
 
     template<auto fn, typename TRet, typename ...TArgs>
-    struct Closure<fn, TRet(TArgs...)> : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
+    struct CFunction<fn, TRet(TArgs...)> : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
     {
         using TUnwrappedReturn = typename FunctionCaller::TReturn;
         static_assert(std::is_void_v<TUnwrappedReturn> == std::is_void_v<TRet>, "If function returns void you cannot return anything else but void!");
