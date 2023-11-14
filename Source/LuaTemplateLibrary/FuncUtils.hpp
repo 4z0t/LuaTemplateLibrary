@@ -162,19 +162,19 @@ namespace Lua
             return MatchesTypes<0, 0, Ts...>(l);
         }
 
-        struct MinArgCRes {
+        struct MinArgumentCountResult {
             size_t n;
             bool ret;
         };
 
         template<size_t ArgIndex>
-        constexpr MinArgCRes MinArgumentCount()
+        constexpr MinArgumentCountResult MinArgumentCount()
         {
             return { ArgIndex, false };
         }
 
         template<size_t ArgIndex, typename T, typename ...Ts>
-        constexpr MinArgCRes MinArgumentCount()
+        constexpr MinArgumentCountResult MinArgumentCount()
         {
             constexpr auto r = MinArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
             if  constexpr (r.ret)
