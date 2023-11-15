@@ -20,7 +20,7 @@ namespace Lua
     {
         static std::vector<T> Get(lua_State* l, int index)
         {
-            StackObjectView table{ l };
+            StackObjectView table{ l , index };
 
             auto size = table.RawLen();
             std::vector<T> result(size);
@@ -48,7 +48,7 @@ namespace Lua
 
         static Type Get(lua_State* l, int index)
         {
-            StackObjectView table{ l };
+            StackObjectView table{ l, index };
             Type result{};
 
             lua_pushnil(l);
