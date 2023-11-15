@@ -753,7 +753,8 @@ struct TypeMatchingTests : TestBase
 
 };
 
-TEST_F(TypeMatchingTests, Tests)
+TEST_F(TypeMatchingTests, MatchArgumentTypesTests)
+
 {
     using namespace Lua;
 #define ASSERT_MATCHES(s, res)\
@@ -937,4 +938,21 @@ TEST_F(TypeMatchingTests, Tests)
     }
 
 #undef ASSERT_MATCHES
+}
+
+
+TEST_F(TypeMatchingTests, UpvalueMatcingTests)
+{
+    using namespace Lua;
+    using namespace Lua::FuncUtility;
+    {
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, float, bool, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, float, bool, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>, int, float, bool>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, Upvalue<float>, Upvalue<bool>, float, bool>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, int, float, bool, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, Upvalue<int>, float, Upvalue<float>, bool, Upvalue<bool>>::value));
+    }
 }

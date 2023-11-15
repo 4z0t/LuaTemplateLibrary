@@ -136,6 +136,51 @@ namespace Lua
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
+        template<typename ...TUpvalues>
+        struct MatchUpvalues;
+
+        template<typename TUpvalue, typename ...TUpvalues>
+        struct MatchUpvalues<TUpvalue, TUpvalues...>
+        {
+            template<typename ...TArgs>
+            struct Matches;
+
+            template<typename TArg, typename ...TArgs>
+            struct Matches<TArg, TArgs...>
+            {
+                constexpr static bool value = IsUpvalueType<TArg>::value ?
+                    (std::is_same_v<Unwrap_t<TArg>, TUpvalue> &&
+                        MatchUpvalues<TUpvalues...>::Matches<TArgs...>::value) :
+                    MatchUpvalues<TUpvalue, TUpvalues...>::Matches<TArgs...>::value;
+            };
+
+            template<>
+            struct Matches<>
+            {
+                constexpr static bool value = false;
+            };
+        };
+
+        template<>
+        struct MatchUpvalues<>
+        {
+            template<typename ...TArgs>
+            struct Matches;
+
+            template<typename TArg, typename ...TArgs>
+            struct Matches<TArg, TArgs...>
+            {
+                constexpr static bool value = IsUpvalueType<TArg>::value ? false : MatchUpvalues<>::Matches<TArgs...>::value;
+            };
+
+            template<>
+            struct Matches<>
+            {
+                constexpr static bool value = true;
+            };
+        };
+
+
         template<size_t ArgIndex, size_t UpvalueIndex>
         constexpr bool MatchesTypes(lua_State* l)
         {
