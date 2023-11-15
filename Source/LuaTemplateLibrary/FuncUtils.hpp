@@ -181,6 +181,21 @@ namespace Lua
         };
 
 
+        template<typename ...TArgs>
+        struct HasUpvalues;
+
+        template<>
+        struct HasUpvalues<>
+        {
+            constexpr static bool value = false;
+        };
+
+        template<typename TArg, typename ...TArgs>
+        struct HasUpvalues<TArg, TArgs...>
+        {
+            constexpr static bool value = IsUpvalueType<TArg>::value || HasUpvalues<TArgs...>::value;
+        };
+
         template<size_t ArgIndex, size_t UpvalueIndex>
         constexpr bool MatchesTypes(lua_State* l)
         {
