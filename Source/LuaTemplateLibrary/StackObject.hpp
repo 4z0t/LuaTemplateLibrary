@@ -111,6 +111,21 @@ namespace Lua
             return { m_state };
         }
 
+        template<typename R>
+        R RawGetI(int i)const
+        {
+            StackPopper pop{ m_state, 1 };
+            lua_rawgeti(m_state, m_index, i);
+            return GetValue<R>(m_state, -1);
+        }
+
+        template<typename V>
+        void RawSetI(int i, const V& value)
+        {
+            PushValue(m_state, value);
+            lua_rawseti(m_state, m_index, i);
+        }
+
         template<typename K, typename V>
         void RawSet(const K& key, const V& value)
         {
