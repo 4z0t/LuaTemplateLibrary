@@ -57,7 +57,7 @@ namespace Lua
     template<typename T>
     struct Upvalue final :TypeBase<T>
     {
-        static_assert(!IsUpvalueType<T>::value, "Upvalue can't be an Upvalue of Upvalue type");
+        static_assert(!IsUpvalueType<T>::value, "T can't be an Upvalue");
     };
 
     template<typename T>
