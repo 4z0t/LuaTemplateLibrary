@@ -115,7 +115,7 @@ namespace Lua
         {
             if constexpr (IsUpvalueType<T>::value)
             {
-                UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
+                UpvalueReplacer<Unwrap_t<T>>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
             }
             return ReplaceUpvalues<
                 TupleIndex + 1,

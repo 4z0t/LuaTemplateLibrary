@@ -55,16 +55,16 @@ namespace Lua
     struct IsUpvalueType;
 
     template<typename T>
-    struct Upvalue final :TypeBase<T> 
+    struct Upvalue final :TypeBase<T>
     {
         static_assert(!IsUpvalueType<T>::value, "Upvalue can't be an Upvalue of Upvalue type");
     };
 
     template<typename T>
-    struct IsUpvalueType : std::false_type { using type = void; };
+    struct IsUpvalueType : std::false_type {};
 
     template<typename T>
-    struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
+    struct IsUpvalueType<Upvalue<T>> : std::true_type {};
 
     template<typename T>
     struct StackType<T, EnableIfOptionalArg<T>>
