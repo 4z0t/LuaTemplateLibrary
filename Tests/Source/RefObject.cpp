@@ -980,3 +980,60 @@ TEST_F(TypeMatchingTests, UpvalueMatcingTests)
 
     }
 }
+
+
+struct STDContainersTests : TestBase
+{
+
+};
+
+TEST_F(STDContainersTests, UnorderedMapTests)
+{
+    using namespace Lua;
+    using namespace std;
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<int, int>;
+        TestType v1 = {
+            {1,2},
+            {0, 4},
+            {4,3},
+            {7,-1}
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<string, int>;
+        TestType v1 = {
+            {"a",2},
+            {"b", 4},
+            {"bcd",3},
+            {"s",-1}
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<string, GRefObject>;
+        TestType v1 = {
+            {"a",{l,2}},
+            {"b",{l,3}},
+            {"c",{l,4}},
+            {"d",{l,5}},
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+
+    }
+
+
+}

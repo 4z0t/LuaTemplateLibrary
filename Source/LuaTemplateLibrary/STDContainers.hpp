@@ -75,8 +75,6 @@ namespace Lua
             {
                 table.RawSet(k, v);
             }
-
-            return result;
         }
     };
 
