@@ -166,6 +166,11 @@ namespace Lua
         {
             return m_state;
         }
+
+        const int GetIndex()const
+        {
+            return m_index;
+        }
     protected:
         lua_State* const m_state;
         const int m_index;
