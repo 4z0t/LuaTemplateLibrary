@@ -17,12 +17,6 @@ namespace Lua
         template<>
         struct NoIncrement<lua_State*> : std::true_type {};
 
-        template<typename T>
-        struct IsUpvalueType : std::false_type { using type = void; };
-
-        template<typename T>
-        struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
-
         template<size_t Value>
         using ValueContainer = std::integral_constant<size_t, Value>;
 
