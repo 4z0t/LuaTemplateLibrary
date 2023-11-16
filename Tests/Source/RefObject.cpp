@@ -987,6 +987,23 @@ struct STDContainersTests : TestBase
 
 };
 
+TEST_F(STDContainersTests, VectorTests)
+{
+    using namespace Lua;
+    using namespace std;
+
+    {
+        StackRestorer rst{ l };
+        using TestType = vector<int>;
+        TestType v1 = { 1,2,3,4,54 };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+
+}
+
 TEST_F(STDContainersTests, UnorderedMapTests)
 {
     using namespace Lua;
