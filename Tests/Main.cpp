@@ -107,7 +107,7 @@ struct Vector3f
         return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
     }
 
-    std::string ToString(Lua::StateWrap* state)const
+    std::string ToString(Lua::CState* state)const
     {
         std::string  s{ state->PushFormatString("Vector { %f, %f, %f }", x, y, z) };
         state->Pop();
@@ -214,7 +214,9 @@ void Test()
     {
 
         Vector3f v{ 1,2,3 };
-        lua_state.AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
+        lua_state
+            /*
+            .AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
             .AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
             .AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
             .AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
@@ -225,16 +227,17 @@ void Test()
             .AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
             .AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
             .AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-            .AddFunction("MyFunc", Lua::Closure<myfunc, float, float>::Function)
-            .AddFunction("Def", Lua::Closure<TestDefault, double, Default<double>>::Function)
-            .AddClosure("Upval", Lua::Closure<TestDefault, double, Upvalue<double>>::Function, 1.f)
-            .AddClosure("Opt", Lua::Closure<TestDefault, double, OptionalDoubleHalf>::Function)
-            .AddClosure("PrintInc", Lua::Closure<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
-            .AddClosure("SayBye", Lua::Closure<Say, OptStringValue>::Function)
+            .AddFunction("MyFunc", Lua::CFunction<myfunc, float, float>::Function)
+            .AddFunction("Def", Lua::CFunction<TestDefault, double, Default<double>>::Function)
+            .AddClosure("Upval", Lua::CFunction<TestDefault, double, Upvalue<double>>::Function, 1.f)
+            .AddClosure("Opt", Lua::CFunction<TestDefault, double, OptionalDoubleHalf>::Function)
+            .AddClosure("PrintInc", Lua::CFunction<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
+            .AddClosure("SayBye", Lua::CFunction<Say, OptStringValue>::Function)
             .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
-            //.AddFunction("VecSum2", Lua::Closure<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-            //.AddClosure("VecPtr", Lua::Closure<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-            //.AddClosure("CoolFunction", Lua::Closure<CoolFunction, GRefObject>::Function)
+            */
+            //.AddFunction("VecSum2", Lua::CFunction<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+            //.AddClosure("VecPtr", Lua::CFunction<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+            //.AddClosure("CoolFunction", Lua::CFunction<CoolFunction, GRefObject>::Function)
             ;
     }
 
@@ -289,7 +292,7 @@ void Test()
     cout << obj4[obj4[1.1]].ToString() << endl;
     cout << obj4[obj4[2.5]].ToString() << endl;
     cout << obj4[obj4].ToString() << endl;
-    obj4["func"] = Closure<CoolFunction, GRefObject>::Function;
+    obj4["func"] = CFunction<CoolFunction, GRefObject>::Function;
 
     cout << lua_state.Call<GRefObject>("Main", obj4) << endl;
 
@@ -399,8 +402,25 @@ void ClassTest()
     using namespace std;
     try
     {
+        struct MyAlloc :OpNewAllocator
+        {
+            static void* Function(void* ud, void* ptr, size_t osize, size_t nsize)
+            {
+                if (nsize == 0)
+                {
+                    cout << "Clearing mem at " << ptr << endl;
+                    Delete(ptr);
+                    return nullptr;
+                }
+                else
+                {
+                    cout << "Allocation mem at " << ptr << " with new size " << nsize << endl;
+                    return NewMem(ptr, osize, nsize);
+                }
+            }
+        };
 
-        State lua_state{};
+        State<OpNewAllocator> lua_state{};
         lua_state.OpenLibs();
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")
@@ -422,12 +442,12 @@ void ClassTest()
             .Add("y", Property<Vector3f, float, &Vector3f::y>{})
             .Add("z", Property<Vector3f, float, &Vector3f::z>{})
             .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
-            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(StateWrap*)>{})
+            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(CState*)>{})
             .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
             ;
 
         cout << typeid(&Vector3f::ToString).name() << endl;
-        cout << typeid(string(Vector3f::*)(StateWrap*)const).name() << endl;
+        cout << typeid(string(Vector3f::*)(CState*)const).name() << endl;
 
 
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
@@ -452,6 +472,7 @@ void ClassTest()
             //"v1.w = 6 "
             "print(v1+v2) "
             "print(v1:Dot(v2)) "
+            "print({}<{}) "
         );
 
 
@@ -464,8 +485,91 @@ void ClassTest()
     }
 }
 
+template<typename T>
+double Measure()
+{
+    using namespace std;
+    Lua::State<T> s;
+    s.OpenLibs();
+    double start = GetSystemTime();
+
+    s.Run(
+        "local insert = table.insert  "
+        "local remove = table.remove "
+        "for i = 1, 10 do "
+        "local t = {}   "
+        "for j = 1, 1000000 do "
+        " insert(t, j)  "
+        "end "
+        "for j = 1, 1000000 do "
+        " remove(t)  "
+        "end "
+        "end "
+    );
+
+    double end = GetSystemTime();
+    return end - start;
+}
+
+void PerfAllocTest()
+{
+    using namespace Lua;
+    using namespace std;
+    auto t = 0.0;
+    const auto n = 10;
+    for (int i = 0; i < n; i++)
+    {
+        t += Measure<void>();
+    }
+    cout << t / n << endl;
+    t = 0.0;
+    for (int i = 0; i < n; i++)
+    {
+        t += Measure<OpNewAllocator>();
+    }
+    cout << t / n << endl;
+}
+
+
+
+void StackObjectTest()
+{
+    using namespace Lua;
+    using namespace std;
+
+    State s;
+
+    StackObject s1 = StackObject::FromValue(s.GetState()->Unwrap(), 1);
+    StackObject s2 = StackObject::FromValue(s.GetState()->Unwrap(), 2);
+    StackObjectView s3{ s.GetState()->Unwrap() };
+
+    cout << s1.RawEqual(s2) << endl;
+    cout << s1.RawEqual(s3) << endl;
+    cout << s3.RawEqual(s1) << endl;
+
+
+}
+
+
+void TypeMatching()
+{
+    using namespace Lua;
+    using namespace std;
+    State s;
+
+    s.AddClosure("Match", MatchArgumentTypes<int, int, Default<int>>::Function);
+    s.Run("a = Match(1,2)");
+    cout << GRefObject::Global(s, "a").To<bool>() << endl;
+
+}
+
+
 int main()
 {
-    ClassTest();
+    //ClassTest();
     //Test();
+    //PerfAllocTest();
+
+    //StackObjectTest();
+    TypeMatching();
 }

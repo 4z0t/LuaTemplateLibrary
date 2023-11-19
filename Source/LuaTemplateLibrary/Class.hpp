@@ -5,6 +5,7 @@
 #include "LuaState.hpp"
 #include "ClassConstructor.hpp"
 #include "Property.hpp"
+#include "StackObject.hpp"
 
 #define lua_regptr_isnt_set(l, p) assert(lua_getregp(l, p) == LUA_TNIL)
 
@@ -39,7 +40,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
+            auto method = CFunction<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
             c.AddMetaMethod(name, method);
         }
     };
@@ -56,7 +57,7 @@ namespace Lua
 
         static void AddMethod(TClass& c, const char* name)
         {
-            auto method = Closure<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
+            auto method = CFunction<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
             c.AddMetaMethod(name, method);
         }
     };
@@ -77,7 +78,8 @@ namespace Lua
             }
         }
 
-        Class(const State& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
+        template<typename TAlloc>
+        Class(const State<TAlloc>& state, const char* name) : Class(state.GetState()->Unwrap(), name) {}
 
         template<typename ...TArgs>
         Class& AddConstructor()
@@ -152,12 +154,14 @@ namespace Lua
         template<typename Element>
         EnableIfBaseOf<GetterBase, Element> Add(const char* name, const Element& element)
         {
+            static_assert(std::is_same_v<T, typename Element::TClass>);
             return AddGetter(name, Element::Function);
         }
 
         template<typename Element>
         EnableIfBaseOf<SetterBase, Element> Add(const char* name, const Element& element)
         {
+            static_assert(std::is_same_v<T, typename Element::TClass>);
             return AddSetter(name, Element::Function);
         }
 
@@ -165,10 +169,9 @@ namespace Lua
 
         void RawSetFunction(const char* name, lua_CFunction func)
         {
-            lua_pushstring(m_state, name);
-            lua_pushcfunction(m_state, func);
-            lua_rawset(m_state, -3);
-            lua_pop(m_state, 1);
+            StackPopper pop{ m_state,1 };
+            StackObjectView table{ m_state };
+            table.RawSet(name, func);
         }
 
         void MakeMetaTable()
@@ -176,9 +179,8 @@ namespace Lua
             lua_regptr_isnt_set(m_state, UData::MetaTable::GetKey());
 
             lua_newtable(m_state);
-            lua_pushstring(m_state, "__index");
-            lua_pushvalue(m_state, -2);
-            lua_rawset(m_state, -3);
+            StackObjectView metaTable{ m_state };
+            metaTable.RawSet("__index", metaTable);
             lua_setregp(m_state, UData::MetaTable::GetKey());
         }
 
@@ -187,9 +189,8 @@ namespace Lua
             lua_regptr_isnt_set(m_state, UData::ClassTable::GetKey());
 
             lua_newtable(m_state);
-            lua_pushstring(m_state, "className");
-            lua_pushstring(m_state, m_name.c_str());
-            lua_rawset(m_state, -3);
+            StackObjectView classTable{ m_state };
+            classTable.RawSet("className", m_name);
             lua_setregp(m_state, UData::ClassTable::GetKey());
         }
 

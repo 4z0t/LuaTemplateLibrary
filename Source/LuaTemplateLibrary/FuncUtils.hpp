@@ -12,16 +12,10 @@ namespace Lua
         struct NoIncrement : std::false_type {};
 
         template<>
-        struct NoIncrement<StateWrap*> : std::true_type {};
+        struct NoIncrement<CState*> : std::true_type {};
 
         template<>
         struct NoIncrement<lua_State*> : std::true_type {};
-
-        template<typename T>
-        struct IsUpvalueType : std::false_type { using type = void; };
-
-        template<typename T>
-        struct IsUpvalueType<Upvalue<T>> : std::true_type { using type = typename T; };
 
         template<size_t Value>
         using ValueContainer = std::integral_constant<size_t, Value>;
@@ -41,26 +35,25 @@ namespace Lua
         template<typename T, size_t Index>
         struct IncrementUpvalueIndex : Incrementer<IsUpvalueType<T>::value && !NoIncrement<T>::value, Index> {};
 
+        template<typename T, typename IsOptional = void>
+        struct IsOptionalArgumentType : std::false_type {};
 
-        template<typename T, typename Optional = void>
+        template<typename T>
+        struct IsOptionalArgumentType<T, EnableIfOptionalArg<T>> : std::true_type {};
+
+        template<typename T>
         struct ArgExtractor
         {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr auto Get(lua_State* l)
             {
                 return StackType<T>::Get(l, ArgI + 1);
             }
-        };
 
-        template<typename T>
-        struct ArgExtractor<Default<T>>
-        {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr bool Check(lua_State* l)
             {
-                if (StackType<T>::Check(l, ArgI + 1))
-                    return StackType<T>::Get(l, ArgI + 1);
-                return Default<T>::value;
+                return StackType<T>::Check(l, ArgI + 1);
             }
         };
 
@@ -68,23 +61,9 @@ namespace Lua
         struct ArgExtractor<Upvalue<T>>
         {
             template<size_t ArgI, size_t UpvalueI>
-            static constexpr T Get(lua_State* l)
+            static constexpr auto Get(lua_State* l)
             {
                 return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
-            }
-        };
-
-
-        template<typename T>
-        struct ArgExtractor<T, std::enable_if_t<std::is_base_of_v<OptionalArg, T>>>
-        {
-            using TReturn = typename T::type;
-            template<size_t ArgI, size_t UpvalueI>
-            static constexpr TReturn Get(lua_State* l)
-            {
-                if (StackType<TReturn>::Check(l, ArgI + 1))
-                    return StackType<TReturn>::Get(l, ArgI + 1);
-                return T::value;
             }
         };
 
@@ -135,7 +114,9 @@ namespace Lua
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
             if constexpr (IsUpvalueType<T>::value)
-                UpvalueReplacer<typename IsUpvalueType<T>::type>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
+            {
+                UpvalueReplacer<Unwrap_t<T>>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
+            }
             return ReplaceUpvalues<
                 TupleIndex + 1,
                 IncrementArgIndex<T, ArgIndex>::value,
@@ -147,6 +128,140 @@ namespace Lua
         constexpr size_t ReplaceUpvalues(lua_State* l, TArgsTuple& args)
         {
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
+        }
+
+        template<typename ...TUpvalues>
+        struct MatchUpvalues;
+
+        template<typename TUpvalue, typename ...TUpvalues>
+        struct MatchUpvalues<TUpvalue, TUpvalues...>
+        {
+            template<typename ...TArgs>
+            struct Matches;
+
+            template<typename TArg, typename ...TArgs>
+            struct Matches<TArg, TArgs...>
+            {
+                constexpr static bool value = IsUpvalueType<TArg>::value ?
+                    (std::is_same_v<Unwrap_t<TArg>, TUpvalue> &&
+                        MatchUpvalues<TUpvalues...>::Matches<TArgs...>::value) :
+                    MatchUpvalues<TUpvalue, TUpvalues...>::Matches<TArgs...>::value;
+            };
+
+            template<>
+            struct Matches<>
+            {
+                constexpr static bool value = false;
+            };
+        };
+
+        template<>
+        struct MatchUpvalues<>
+        {
+            template<typename ...TArgs>
+            struct Matches;
+
+            template<typename TArg, typename ...TArgs>
+            struct Matches<TArg, TArgs...>
+            {
+                constexpr static bool value = IsUpvalueType<TArg>::value ? false : MatchUpvalues<>::Matches<TArgs...>::value;
+            };
+
+            template<>
+            struct Matches<>
+            {
+                constexpr static bool value = true;
+            };
+        };
+
+        template<typename ...TArgs>
+        struct HasUpvalues;
+
+        template<>
+        struct HasUpvalues<> : std::false_type {};
+
+        template<typename TArg, typename ...TArgs>
+        struct HasUpvalues<TArg, TArgs...> : std::bool_constant<IsUpvalueType<TArg>::value || HasUpvalues<TArgs...>::value> {};
+
+        template<size_t ArgIndex, size_t UpvalueIndex>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            return true;
+        }
+
+        template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            if constexpr (!IsUpvalueType<T>::value)
+            {
+                if (!ArgExtractor<T>::Check<ArgIndex, UpvalueIndex>(l))
+                {
+                    return false;
+                }
+            }
+            return MatchesTypes<
+                IncrementArgIndex<T, ArgIndex>::value,
+                IncrementUpvalueIndex<T, UpvalueIndex>::value,
+                Ts...>(l);
+        }
+
+        template<typename ...Ts>
+        constexpr bool MatchesTypes(lua_State* l)
+        {
+            return MatchesTypes<0, 0, Ts...>(l);
+        }
+
+        struct MinArgumentCountResult {
+            size_t n;
+            bool ret;
+        };
+
+        template<size_t ArgIndex>
+        constexpr MinArgumentCountResult MinArgumentCount()
+        {
+            return { ArgIndex, false };
+        }
+
+        template<size_t ArgIndex, typename T, typename ...Ts>
+        constexpr MinArgumentCountResult MinArgumentCount()
+        {
+            constexpr auto r = MinArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
+            if  constexpr (r.ret)
+            {
+                return r;
+            }
+            else if constexpr (IsUpvalueType<T>::value || NoIncrement<T>::value || IsOptionalArgumentType<T>::value)
+            {
+                return { ArgIndex , false };
+            }
+            else
+            {
+                return { r.n , true };
+            }
+        }
+
+        template<typename ...Ts>
+        constexpr size_t MinArgumentCount()
+        {
+            return MinArgumentCount<0, Ts...>().n;
+        }
+
+        template<size_t ArgIndex>
+        constexpr size_t MaxArgumentCount()
+        {
+            return ArgIndex;
+        }
+
+        template<size_t ArgIndex, typename T, typename ...Ts>
+        constexpr size_t MaxArgumentCount()
+        {
+            return MaxArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
+        }
+
+        template<typename ...Ts>
+        constexpr size_t MaxArgumentCount()
+        {
+            return MaxArgumentCount<0, Ts...>();
         }
 
     }

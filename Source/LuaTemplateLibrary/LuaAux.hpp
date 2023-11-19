@@ -6,7 +6,7 @@ namespace Lua
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 
-    struct StackPopper
+    struct StackPopper final
     {
         StackPopper(lua_State* l, int n) : m_state(l), n(n) {}
 
@@ -14,9 +14,49 @@ namespace Lua
         {
             lua_pop(m_state, n);
         }
+
+        StackPopper(const StackPopper&) = delete;
+        StackPopper(StackPopper&&) = delete;
+        StackPopper& operator=(const StackPopper&) = delete;
+        StackPopper& operator=(StackPopper&&) = delete;
     private:
-        lua_State* m_state;
-        int n;
+        lua_State* const m_state;
+        const int n;
+    };
+
+    struct StackRestorer final
+    {
+        StackRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
+
+        ~StackRestorer()
+        {
+            lua_settop(m_state, m_top);
+        }
+
+        StackRestorer(const StackRestorer&) = delete;
+        StackRestorer(StackRestorer&&) = delete;
+        StackRestorer& operator=(const StackRestorer&) = delete;
+        StackRestorer& operator=(StackRestorer&&) = delete;
+    private:
+        lua_State* const m_state;
+        const int m_top;
+    };
+
+    template<int Index>
+    struct StackIndex {};
+
+    template<int Index>
+    struct StackType<StackIndex<Index>>
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return !lua_isnone(l, index);
+        }
+
+        static void Push(lua_State* l, const StackIndex<Index>&)
+        {
+            lua_pushvalue(l, Index);
+        }
     };
 
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)

@@ -5,38 +5,45 @@
 
 namespace Lua
 {
-    StateWrap* WrapState(lua_State* l)
+    CState* WrapState(lua_State* l)
     {
-        return (StateWrap*)l;
+        return (CState*)l;
     }
 
-    class StateWrap final
+    class CState final
     {
     public:
 
-        inline static StateWrap* Wrap(lua_State* l)
+        inline static CState* Wrap(lua_State* l)
         {
             return WrapState(l);
         }
 
-        inline static StateWrap* Create()
+        inline static CState* Create()
         {
             return Wrap(luaL_newstate());
         }
 
-        inline static lua_State* Unwrap(const StateWrap* s)
+        static CState* Create(lua_Alloc f, void* ud = nullptr)
+        {
+            auto s = Wrap(lua_newstate(f, ud));
+            s->SetAllocFunction(f);
+            return s;
+        }
+
+        inline static lua_State* Unwrap(const CState* s)
         {
             return (lua_State*)s;
         }
 
         inline lua_State* Unwrap()const
         {
-            return StateWrap::Unwrap(this);
+            return CState::Unwrap(this);
         }
 
         inline lua_State* Unwrap()
         {
-            return StateWrap::Unwrap(this);
+            return CState::Unwrap(this);
         }
 
         void OpenLibs()
@@ -96,6 +103,11 @@ namespace Lua
             return lua_atpanic(Unwrap(), func);
         }
 
+        void SetAllocFunction(lua_Alloc func, void* ud = nullptr)
+        {
+            return lua_setallocf(Unwrap(), func, ud);
+        }
+
         void Remove(int index)
         {
             return lua_remove(Unwrap(), index);
@@ -136,47 +148,90 @@ namespace Lua
         }
 
     private:
-        StateWrap() = delete;
-        ~StateWrap() = delete;
+        CState() = delete;
+        ~CState() = delete;
 
     };
 
+    struct OpNewAllocator
+    {
+        static void* Function(void* ud, void* ptr, size_t osize, size_t nsize)
+        {
+            if (nsize == 0)
+            {
+                Delete(ptr);
+                return nullptr;
+            }
+            return NewMem(ptr, osize, nsize);
+        }
+    protected:
+        static void Delete(void* ptr)
+        {
+            delete[] static_cast<char*>(ptr);
+        }
+
+        static void* NewMem(void* ptr, size_t osize, size_t nsize)
+        {
+            if (ptr == nullptr)
+            {
+                ptr = static_cast<void*>(new char[nsize]);
+                return ptr;
+            }
+            size_t min_size = std::min(osize, nsize);
+            void* new_ptr = static_cast<void*>(new char[nsize]);
+            std::memcpy(new_ptr, ptr, min_size);
+            Delete(ptr);
+            return new_ptr;
+        }
+    };
+
+    template<typename Allocator = void>
     class State
     {
     public:
-        State()
+        State(void* obj = nullptr)
         {
-            m_state = StateWrap::Create();
+            if constexpr (!std::is_void_v<Allocator>)
+            {
+                m_cstate = CState::Create(Allocator::Function, obj);
+            }
+            else
+            {
+                m_cstate = CState::Create();
+            }
         }
+
         State(const State&) = delete;
+        State(State&&) = delete;
         State& operator=(const State&) = delete;
+        State& operator=(State&&) = delete;
 
         ~State()
         {
-            if (m_state)
-                m_state->Close();
-            m_state = nullptr;
+            if (m_cstate)
+                m_cstate->Close();
+            m_cstate = nullptr;
         }
 
         void ThrowExceptions()
         {
-            m_state->SetAtPanicFuntion(Exception::PanicFunc);
+            m_cstate->SetAtPanicFuntion(Exception::PanicFunc);
         }
 
         void OpenLibs()
         {
-            return m_state->OpenLibs();
+            return m_cstate->OpenLibs();
         }
 
         template<typename T>
         void Push(const T& value)
         {
-            return m_state->Push<T>(value);
+            return m_cstate->Push<T>(value);
         }
 
         void Pop(size_t n)
         {
-            return m_state->Pop(n);
+            return m_cstate->Pop(n);
         }
 
         State& AddFunction(const char* const name, lua_CFunction func)
@@ -187,35 +242,35 @@ namespace Lua
         template<typename ...Ts>
         State& AddClosure(const char* const name, lua_CFunction func, Ts&&... args)
         {
-            m_state->RegisterClosure(name, func, std::forward<Ts>(args)...);
+            m_cstate->RegisterClosure(name, func, std::forward<Ts>(args)...);
             return *this;
         }
 
         bool DoFile(const char* const path)
         {
-            return m_state->DoFile(path);
+            return m_cstate->DoFile(path);
         }
 
         template<typename TReturn = void, typename ...Ts>
         TReturn Call(const char* name, Ts&&... args)
         {
-            return m_state->Call<TReturn>(name, std::forward<Ts>(args)...);
+            return m_cstate->Call<TReturn>(name, std::forward<Ts>(args)...);
         }
 
         template<typename T>
         T To(int index)
         {
-            return m_state->Get<T>(index);
+            return m_cstate->Get<T>(index);
         }
 
-        const StateWrap* GetState()const
+        CState* const GetState()const
         {
-            return m_state;
+            return m_cstate;
         }
 
         void Run(const char* const s) throw(Exception)
         {
-            return m_state->Run(s);
+            return m_cstate->Run(s);
         }
 
         void Run(const std::string& s)
@@ -226,14 +281,14 @@ namespace Lua
         template<typename T>
         State& SetGlobal(const char* name, const T& value)
         {
-            PushValue(m_state->Unwrap(), value);
-            lua_setglobal(m_state->Unwrap(), name);
+            PushValue(m_cstate->Unwrap(), value);
+            lua_setglobal(m_cstate->Unwrap(), name);
 
             return *this;
         }
 
     private:
-        StateWrap* m_state = nullptr;
+        CState* m_cstate = nullptr;
 
     };
 }

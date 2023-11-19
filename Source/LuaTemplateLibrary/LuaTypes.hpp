@@ -3,9 +3,9 @@
 
 namespace Lua
 {
-    class StateWrap;
+    class CState;
 
-    StateWrap* WrapState(lua_State* l);
+    CState* WrapState(lua_State* l);
 
     enum class Type
     {
@@ -21,7 +21,15 @@ namespace Lua
         Thread = LUA_TTHREAD,
     };
 
-    template<typename T>
+    struct AlwaysValid
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return true;
+        }
+    };
+
+    template<typename T, typename Extension = void>
     struct StackType
     {
         static T Get(lua_State* l, int index)
@@ -42,7 +50,7 @@ namespace Lua
     };
 
     template<>
-    struct StackType<lua_State*>
+    struct StackType<lua_State*> : AlwaysValid
     {
         static lua_State* Get(lua_State* l, int index)
         {
@@ -51,9 +59,9 @@ namespace Lua
     };
 
     template<>
-    struct StackType<StateWrap*>
+    struct StackType<CState*> : AlwaysValid
     {
-        static StateWrap* Get(lua_State* l, int index)
+        static CState* Get(lua_State* l, int index)
         {
             return WrapState(l);
         }
@@ -127,37 +135,11 @@ namespace Lua
     };
 
     template<>
-    struct StackType<const char*>
-    {
-        static const char* Get(lua_State* l, int index)
-        {
-            return luaL_checkstring(l, index);
-        }
-
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_isstring(l, index);
-        }
-
-        static void Push(lua_State* l, const char* value)
-        {
-            lua_pushstring(l, value);
-        }
-    };
-
+    struct StackType<const char*> : Internal::StringParser<const char*> {};
     template<>
-    struct StackType<std::string> : public StackType<const char*>
-    {
-        static std::string Get(lua_State* l, int index)
-        {
-            return { StackType<const char*>::Get(l, index) };
-        }
-
-        static void Push(lua_State* l, const std::string& value)
-        {
-            StackType<const char*>::Push(l, value.c_str());
-        }
-    };
+    struct StackType<std::string> : Internal::StringParser<std::string> {};
+    template<>
+    struct StackType<std::string_view> : Internal::StringParser<std::string_view> {};
 
     template<>
     struct StackType<lua_CFunction>
@@ -175,38 +157,6 @@ namespace Lua
         static void Push(lua_State* l, lua_CFunction value)
         {
             lua_pushcfunction(l, value);
-        }
-    };
-
-    template<typename T>
-    struct StackType<std::vector<T>>
-    {
-        static std::vector<T> Get(lua_State* l, int index)
-        {
-            lua_pushvalue(l, index);
-            auto size = lua_rawlen(l, -1);
-            std::vector<T> result(size);
-            for (size_t i = 0; i < size; i++) {
-                lua_rawgeti(l, -1, i + 1);
-                result[i] = StackType<T>::Get(l, -1);
-                lua_pop(l, 1);
-            }
-            lua_pop(l, 1);
-            return result;
-        }
-
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_istable(l, index);
-        }
-
-        static void Push(lua_State* l, const std::vector<T>& value)
-        {
-            lua_createtable(l, value.size(), 0);
-            for (size_t i = 0; i < value.size(); i++) {
-                PushValue(l, value[i]);
-                lua_rawseti(l, -2, i + 1);
-            }
         }
     };
 }

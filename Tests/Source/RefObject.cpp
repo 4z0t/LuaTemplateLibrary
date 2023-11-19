@@ -63,16 +63,35 @@ TEST_F(RefObjectTests, IteratorTest)
 TEST_F(RefObjectTests, CompareTest)
 {
     using namespace Lua;
-    Run("a, b = 2, 3");
-    GRefObject a = GRefObject::Global(l, "a");
-    GRefObject b = GRefObject::Global(l, "b");
+    {
 
-    ASSERT_FALSE(a == b);
-    ASSERT_TRUE(a != b);
-    ASSERT_TRUE(a < b);
-    ASSERT_FALSE(a > b);
-    ASSERT_FALSE(a >= b);
-    ASSERT_TRUE(a <= b);
+        Run("a, b = 2, 3");
+        GRefObject a = GRefObject::Global(l, "a");
+        GRefObject b = GRefObject::Global(l, "b");
+
+        ASSERT_FALSE(a == b);
+        ASSERT_TRUE(a != b);
+        ASSERT_TRUE(a < b);
+        ASSERT_FALSE(a > b);
+        ASSERT_FALSE(a >= b);
+        ASSERT_TRUE(a <= b);
+    }
+    {
+        Run("a = {}"
+            " b = a "
+        );
+        GRefObject a = GRefObject::Global(l, "a");
+        GRefObject b = GRefObject::Global(l, "b");
+
+        ASSERT_TRUE(a == b);
+        ASSERT_FALSE(a != b);
+        // throws for some reason and dont catch
+        //ASSERT_THROW(a > b, Exception);
+        //ASSERT_FALSE(a < b); 
+        //ASSERT_FALSE(a > b);
+        //ASSERT_TRUE(a >= b);
+        //ASSERT_TRUE(a <= b);
+    }
 
 }
 
@@ -246,7 +265,7 @@ TEST_F(UserDataTests, MoveCtorTest)
 
         CantCopy(int a) :a(a) {}
         CantCopy(const CantCopy&) = delete;
-        CantCopy(CantCopy&& other)
+        CantCopy(CantCopy&& other)noexcept
         {
             a = std::move(other.a);
         }
@@ -311,7 +330,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
-        .AddGetter("length", Closure<&Vector3f::Length, UserData<Vector3f>>::Function)
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>::Function)
         ;
     {
 
@@ -428,17 +447,610 @@ TEST_F(StateTests, UpvalueTest)
 {
     using namespace Lua;
 
-    constexpr auto func = +[](int a, StateWrap* s, int b)->int
-    {
-        int c = s->GetGlobal<int>("globalValue");
-        return a + b + c;
-    };
+    constexpr auto func = +[](int a, CState* s, int b)->int
+        {
+            int c = s->GetGlobal<int>("globalValue");
+            return a + b + c;
+        };
 
     Run("globalValue = 4 ");
-    RegisterClosure(l, "Func", Closure<func, Upvalue<int>, StateWrap*, Upvalue<int>>::Function, 1, 2);
+    RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
     Run("result = Func()");
 
     ASSERT_EQ(1 + 2 + 4, Result().To<int>());
 }
 
 
+TEST_F(StateTests, AllocTest)
+{
+    using namespace Lua;
+
+    State<OpNewAllocator> s;
+    s.Run("result = 4");
+    ASSERT_TRUE(GRefObject::Global(s, "result").Is<int>());
+    ASSERT_EQ(GRefObject::Global(s, "result").To<int>(), 4);
+
+}
+
+
+
+struct StackObjectTest : TestBase
+{
+
+};
+
+
+TEST_F(StackObjectTest, Tests)
+{
+
+    const auto AssertEmptyStack = [&]()
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
+
+    using namespace Lua;
+    {
+
+        lua_pushnumber(l, 1);
+        StackObject so{ l,-1 };
+        ASSERT_TRUE(so.Is<float>());
+        lua_pop(l, 1);
+    }
+    AssertEmptyStack();
+    {
+
+        StackObject so = StackObject::FromValue(l, 1);
+        ASSERT_TRUE(so.Is<int>());
+        ASSERT_EQ(so.To<int>(), 1);
+    }
+    AssertEmptyStack();
+    {
+        StackObject so = StackObject::FromValue(l, "Hello");
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+    {
+        StackObject so = StackObject::FromValue(l, false);
+        ASSERT_TRUE(so.Is<bool>());
+        ASSERT_EQ(so.To<bool>(), false);
+    }
+    AssertEmptyStack();
+
+    {
+        StackObject s1 = StackObject::FromValue(l, 1);
+        StackObject s2 = StackObject::FromValue(l, 2);
+        ASSERT_FALSE(s1 == s2);
+        ASSERT_TRUE(s1 != s2);
+        ASSERT_TRUE(s1 == 1);
+        ASSERT_TRUE(s2 == 2);
+
+
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a, b = 3, 'Hi'");
+        StackObject s1 = StackObject::Global(l, "a");
+        StackObject s2 = StackObject::Global(l, "b");
+        StackObject s3 = StackObject::Global(l, "a");
+        ASSERT_TRUE(s1.Is<int>());
+        ASSERT_TRUE(s2.Is<const char*>());
+        ASSERT_TRUE(s1 == 3);
+        ASSERT_TRUE(s1.RawEqual(3));
+        ASSERT_TRUE(s1.RawEqual(s3));
+        ASSERT_TRUE(s2.RawEqual("Hi"));
+
+    }
+    AssertEmptyStack();
+
+
+    {
+        Run("a = {b = 3}");
+        StackObject a = StackObject::Global(l, "a");
+        auto b = a.Get("b");
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = {b = 3}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b = a.Get(key);
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = {}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get(key);
+        ASSERT_TRUE(b2.Is<int>());
+        ASSERT_EQ(b2.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = {}");
+        StackObject a = StackObject::Global(l, "a");
+        StackObject key = StackObject::FromValue(l, "b");
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get<int>(key);
+        ASSERT_EQ(b2, 3);
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = 'Hello'");
+        GRefObject a = GRefObject::Global(l, "a");
+        StackObject stack_a = StackObject::FromValue(l, a);
+        ASSERT_TRUE(stack_a.Is<const char*>());
+        ASSERT_STREQ(stack_a.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+
+    {
+        Run("a = 'Hello'");
+        GRefObject a = GRefObject::Global(l, "a");
+        StackObject stack_a = a;
+        ASSERT_TRUE(stack_a.Is<const char*>());
+        ASSERT_STREQ(stack_a.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+}
+
+
+struct StackObjectViewTest : TestBase
+{
+
+};
+
+
+TEST_F(StackObjectViewTest, Tests)
+{
+
+    const auto AssertEmptyStack = [&]()
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
+
+    using namespace Lua;
+    using namespace std;
+    {
+        const StackRestorer rst{ l };
+        lua_pushnumber(l, 1);
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<float>());
+        ASSERT_TRUE(so.Is<Type::Number>());
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, 1);
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<int>());
+        ASSERT_TRUE(so.Is<Type::Number>());
+        ASSERT_EQ(so.To<int>(), 1);
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, "Hello");
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_TRUE(so.Is<Type::String>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, string_view{ "Hello" });
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<const char*>());
+        ASSERT_TRUE(so.Is<Type::String>());
+        ASSERT_TRUE(so.Is<string_view>());
+        ASSERT_TRUE(so.Is<string>());
+        ASSERT_STREQ(so.To<const char*>(), "Hello");
+        ASSERT_EQ(so.To<string_view>(), string_view{ "Hello" });
+        ASSERT_EQ(so.To<string>(), string{ "Hello" });
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, false);
+        StackObjectView so{ l };
+        ASSERT_TRUE(so.Is<bool>());
+        ASSERT_TRUE(so.Is<Type::Boolean>());
+        ASSERT_EQ(so.To<bool>(), false);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, 1);
+        StackObjectView s1{ l };
+        PushValue(l, 2);
+        StackObjectView s2{ l };
+        ASSERT_FALSE(s1 == s2);
+        ASSERT_TRUE(s1 != s2);
+        ASSERT_TRUE(s1 == 1);
+        ASSERT_TRUE(s2 == 2);
+
+
+    }
+    AssertEmptyStack();
+    {
+        const StackRestorer rst{ l };
+        Run("a = {b = 3}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        auto b = a.Get("b");
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_TRUE(b.Is<Type::Number>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {b = 3}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b = a.Get(key);
+        ASSERT_TRUE(b.Is<int>());
+        ASSERT_EQ(b.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        ASSERT_TRUE(b1.Is<Type::Nil>());
+        a.Set("b", 3);
+        auto b2 = a.Get(key);
+        ASSERT_TRUE(b2.Is<int>());
+        ASSERT_EQ(b2.To<int>(), 3);
+    }
+    AssertEmptyStack();
+
+    {
+        const StackRestorer rst{ l };
+        Run("a = {}");
+        lua_getglobal(l, "a");
+        StackObjectView a{ l };
+        PushValue(l, "b");
+        StackObjectView key{ l };
+        auto b1 = a.Get(key);
+        ASSERT_TRUE(b1.Is<void>());
+        a.Set("b", 3);
+        auto b2 = a.Get<int>(key);
+        ASSERT_EQ(b2, 3);
+    }
+    AssertEmptyStack();
+}
+
+
+struct TypeMatchingTests : TestBase
+{
+
+};
+
+TEST_F(TypeMatchingTests, MatchArgumentTypesTests)
+
+{
+    using namespace Lua;
+#define ASSERT_MATCHES(s, res)\
+    Run("result = Match(" s ")"); \
+    ASSERT_TRUE(Result().Is<bool>()); \
+    ASSERT_EQ(Result().To<bool>(), res)
+
+    {
+        using Match = typename MatchArgumentTypes<int, int, int>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 3);
+        RegisterFunction(l, "Match", Match::Function);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", false);
+        ASSERT_MATCHES("1,2", false);
+        ASSERT_MATCHES("nil,1,2", false);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("", false);
+    }
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, Default<int>, Default<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 0);
+        RegisterFunction(l, "Match", Match::Function);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", true);
+        ASSERT_MATCHES("nil, nil, nil", true);
+        ASSERT_MATCHES("", true);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, Default<int>, Default<int>, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 0);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", true);
+        ASSERT_MATCHES("nil, nil, nil", true);
+        ASSERT_MATCHES("", true);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, lua_State*, Default<int>, Default<int>, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 0);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", true);
+        ASSERT_MATCHES("nil, nil, nil", true);
+        ASSERT_MATCHES("", true);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<int, lua_State*, Default<int>, Default<int>, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 1);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", true);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", false);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("", false);
+    }
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, lua_State*, int, Default<int>, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 2);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", false);
+        ASSERT_MATCHES("1,2", true);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("", false);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<Default<int>, lua_State*, int, int, Upvalue<int>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 3);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", false);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", false);
+        ASSERT_MATCHES("1,2", false);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("", false);
+    }
+
+    {
+        using Match = typename MatchArgumentTypes<Default<float>, lua_State*, float, float, Upvalue<float>>;
+        ASSERT_EQ(Match::max_arg_count, 3);
+        ASSERT_EQ(Match::min_arg_count, 3);
+        RegisterClosure(l, "Match", Match::Function, 1);
+
+        ASSERT_MATCHES("1,2,3", true);
+        ASSERT_MATCHES("1,0,3", true);
+        ASSERT_MATCHES("1.2,2,3", true);
+        ASSERT_MATCHES("true,2,3", false);
+        ASSERT_MATCHES("1,false,3", false);
+        ASSERT_MATCHES("1,'hello',3", false);
+        ASSERT_MATCHES("1,2,3,4,5", false);
+        ASSERT_MATCHES("1,2,3,4", false);
+        ASSERT_MATCHES("1", false);
+        ASSERT_MATCHES("1,2", false);
+        ASSERT_MATCHES("nil,1,2", true);
+        ASSERT_MATCHES("nil, nil, 1", false);
+        ASSERT_MATCHES("nil, nil, nil", false);
+        ASSERT_MATCHES("", false);
+    }
+
+#undef ASSERT_MATCHES
+}
+
+
+TEST_F(TypeMatchingTests, UpvalueMatcingTests)
+{
+    using namespace Lua;
+    using namespace Lua::FuncUtility;
+    {
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, float, bool, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, float, bool, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>, int, float, bool>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, Upvalue<float>, Upvalue<bool>, float, bool>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, int, float, bool, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, Upvalue<int>, float, Upvalue<float>, bool, Upvalue<bool>>::value));
+
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, Upvalue<bool>>::value));
+
+        ASSERT_TRUE((MatchUpvalues<>::Matches<>::value));
+        ASSERT_TRUE((MatchUpvalues<>::Matches<int, float, bool>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<int>>::value));
+        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, Upvalue<bool>>::value));
+    }
+
+    {
+
+    }
+}
+
+
+struct STDContainersTests : TestBase
+{
+
+};
+
+TEST_F(STDContainersTests, VectorTests)
+{
+    using namespace Lua;
+    using namespace std;
+
+    {
+        StackRestorer rst{ l };
+        using TestType = vector<int>;
+        TestType v1 = { 1,2,3,4,54 };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+
+}
+
+TEST_F(STDContainersTests, UnorderedMapTests)
+{
+    using namespace Lua;
+    using namespace std;
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<int, int>;
+        TestType v1 = {
+            {1,2},
+            {0, 4},
+            {4,3},
+            {7,-1}
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<string, int>;
+        TestType v1 = {
+            {"a",2},
+            {"b", 4},
+            {"bcd",3},
+            {"s",-1}
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+    }
+
+    {
+        StackRestorer rst{ l };
+        using TestType = unordered_map<string, GRefObject>;
+        TestType v1 = {
+            {"a",{l,2}},
+            {"b",{l,3}},
+            {"c",{l,4}},
+            {"d",{l,5}},
+        };
+        PushValue(l, v1);
+        auto  v2 = GetValue<TestType>(l, -1);
+        ASSERT_EQ(v1, v2);
+
+    }
+
+
+}

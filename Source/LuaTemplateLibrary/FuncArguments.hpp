@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <iostream>
 #include <vector>
+#include "LuaTypes.hpp"
 
 namespace Lua
 {
@@ -27,7 +28,13 @@ namespace Lua
     };
 
     template<typename T>
-    struct Unwrap<T, std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>>
+    using EnableIfUnwrappable = std::enable_if_t<std::is_base_of_v<UnwrapTypeBase, T>>;
+
+    template<typename T>
+    using EnableIfOptionalArg = std::enable_if_t<std::is_base_of_v<OptionalArg, T>>;
+
+    template<typename T>
+    struct Unwrap<T, EnableIfUnwrappable<T>>
     {
         using type = typename T::type;
     };
@@ -36,7 +43,7 @@ namespace Lua
     using Unwrap_t = typename Unwrap<T, DerivedFromSuper>::type;
 
     template<typename T>
-    struct  Default : TypeBase<T>
+    struct  Default : OptionalBase<T>
     {
         static  T value;
     };
@@ -45,7 +52,37 @@ namespace Lua
     T Default<T>::value{};
 
     template<typename T>
-    struct Upvalue :TypeBase<T> {};
+    struct IsUpvalueType;
+
+    template<typename T>
+    struct Upvalue final :TypeBase<T>
+    {
+        static_assert(!IsUpvalueType<T>::value, "T can't be an Upvalue");
+    };
+
+    template<typename T>
+    struct IsUpvalueType : std::false_type {};
+
+    template<typename T>
+    struct IsUpvalueType<Upvalue<T>> : std::true_type {};
+
+    template<typename T>
+    struct StackType<T, EnableIfOptionalArg<T>>
+    {
+        using TReturn = Unwrap_t<T>;
+
+        static constexpr TReturn Get(lua_State* l, int index)
+        {
+            if (StackType<TReturn>::Check(l, index))
+                return StackType<TReturn>::Get(l, index);
+            return T::value;
+        }
+
+        static constexpr bool Check(lua_State* l, int index)
+        {
+            return StackType<TReturn>::Check(l, index) || lua_isnoneornil(l, index);
+        }
+    };
 }
 
 #define LuaOptionalArg(name_, type_, value_) \

@@ -15,6 +15,8 @@ namespace Lua
     template<class C, typename T, T C::* Field>
     struct Getter :public GetterBase
     {
+        using TClass = C;
+
         static int Function(lua_State* l)
         {
             C* ud = UserData<C>::ValidateUserData(l, 1);
@@ -27,6 +29,8 @@ namespace Lua
     template<class C, typename T, T C::* Field>
     struct Setter :public SetterBase
     {
+        using TClass = C;
+
         static int Function(lua_State* l)
         {
             C* ud = UserData<C>::ValidateUserData(l, 1);
@@ -39,6 +43,8 @@ namespace Lua
     template<class C, typename T, T C::* Field>
     struct Property : public PropertyBase
     {
+        using TClass = C;
+
         static int Get(lua_State* l)
         {
             return Getter<C, T, Field>::Function(l);

@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
 #include "UserData.hpp"
+#include "FuncUtils.hpp"
 
 
 namespace Lua
@@ -36,6 +37,38 @@ namespace Lua
         {
             static_assert(std::is_constructible_v<C, Unwrap_t<TArgs>...>, "Object of class C can't be constructed with such arguments!");
             new(object) C(args...);
+        }
+    };
+
+    template<typename ...TArgs>
+    struct MatchArgumentTypes
+    {
+        static constexpr size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
+        static constexpr size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+
+        static constexpr bool Predicate(lua_State* l)
+        {
+            return FuncUtility::MatchesTypes<TArgs...>(l);
+        }
+
+        static constexpr bool MatchArgumentCount(lua_State* l)
+        {
+            if constexpr (min_arg_count == max_arg_count)
+            {
+                return max_arg_count == lua_gettop(l);
+            }
+            else
+            {
+                int n = lua_gettop(l);
+                return n >= min_arg_count && n <= max_arg_count;
+            }
+        }
+
+        static int Function(lua_State* l)
+        {
+
+            lua_pushboolean(l, MatchArgumentCount(l) && Predicate(l));
+            return 1;
         }
     };
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Internal.hpp"
 #include "LuaTypes.hpp"
+#include "STDContainers.hpp"
 #include "LuaAux.hpp"
 #include "Property.hpp"
 #include "ClassConstructor.hpp"
@@ -12,3 +13,4 @@
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
 #include "RefObject.hpp"
+#include "StackObject.hpp"

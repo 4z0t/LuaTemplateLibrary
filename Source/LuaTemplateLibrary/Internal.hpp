@@ -66,6 +66,31 @@ namespace Lua::Internal
         }
     };
 
+    template<typename T>
+    struct StringParser
+    {
+        static T Get(lua_State* l, int index)
+        {
+            return { luaL_checkstring(l, index) };
+        }
+
+        static bool Check(lua_State* l, int index)
+        {
+            return lua_isstring(l, index);
+        }
+
+        static void Push(lua_State* l, const T& value)
+        {
+            if constexpr (std::is_pointer_v<T>)
+            {
+                lua_pushstring(l, value);
+            }
+            else
+            {
+                lua_pushstring(l, value.data());
+            }
+        }
+    };
 
     struct UserDataValueBase {};
 
