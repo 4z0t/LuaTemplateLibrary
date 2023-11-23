@@ -80,9 +80,9 @@ namespace Lua
     {
         static constexpr T Get(lua_State* l, int index)
         {
-            if (StackType<T>::Check(l, index))
-                return StackType<T>::Get(l, index);
-            return OptType::value;
+            if (lua_isnoneornil(l, index))
+                return OptType::value;
+            return StackType<T>::Get(l, index);
         }
     };
 
