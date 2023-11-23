@@ -67,22 +67,51 @@ namespace Lua
     struct IsUpvalueType<Upvalue<T>> : std::true_type {};
 
     template<typename T>
-    struct StackType<T, EnableIfOptionalArg<T>>
+    struct CheckOptional
     {
-        using TReturn = Unwrap_t<T>;
-
-        static constexpr TReturn Get(lua_State* l, int index)
-        {
-            if (StackType<TReturn>::Check(l, index))
-                return StackType<TReturn>::Get(l, index);
-            return T::value;
-        }
-
         static constexpr bool Check(lua_State* l, int index)
         {
-            return StackType<TReturn>::Check(l, index) || lua_isnoneornil(l, index);
+            return StackType<T>::Check(l, index) || lua_isnoneornil(l, index);
         }
     };
+
+    template<typename OptType, typename T>
+    struct GetOptional
+    {
+        static constexpr T Get(lua_State* l, int index)
+        {
+            if (StackType<T>::Check(l, index))
+                return StackType<T>::Get(l, index);
+            return OptType::value;
+        }
+    };
+
+    template<typename OptType>
+    struct GetOptional<OptType, int> :Internal::OptionalInteger<OptType, int> {};
+    template<typename OptType>
+    struct GetOptional<OptType, unsigned int> :Internal::OptionalInteger<OptType, unsigned int> {};
+    template<typename OptType>
+    struct GetOptional<OptType, char> :Internal::OptionalInteger<OptType, char> {};
+    template<typename OptType>
+    struct GetOptional<OptType, unsigned char> :Internal::OptionalInteger<OptType, unsigned char> {};
+    template<typename OptType>
+    struct GetOptional<OptType, short> :Internal::OptionalInteger<OptType, short> {};
+    template<typename OptType>
+    struct GetOptional<OptType, unsigned short> :Internal::OptionalInteger<OptType, unsigned short> {};
+    template<typename OptType>
+    struct GetOptional<OptType, long long> :Internal::OptionalInteger<OptType, long long> {};
+    template<typename OptType>
+    struct GetOptional<OptType, unsigned long long> :Internal::OptionalInteger<OptType, unsigned long long> {};
+
+    template<typename OptType>
+    struct GetOptional<OptType, float> :Internal::OptionalFloat<OptType, float> {};
+    template<typename OptType>
+    struct GetOptional<OptType, double> :Internal::OptionalFloat<OptType, double> {};
+    template<typename OptType>
+    struct GetOptional<OptType, long double> :Internal::OptionalFloat<OptType, long double> {};
+
+    template<typename T>
+    struct StackType<T, EnableIfOptionalArg<T>> : CheckOptional<Unwrap_t<T>>, GetOptional<T, Unwrap_t<T>> {};
 }
 
 #define LuaOptionalArg(name_, type_, value_) \

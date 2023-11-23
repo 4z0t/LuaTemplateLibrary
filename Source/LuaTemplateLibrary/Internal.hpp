@@ -92,6 +92,32 @@ namespace Lua::Internal
         }
     };
 
+    template<typename OptType, typename T>
+    struct OptionalInteger
+    {
+        static_assert(std::is_integral_v<T>, "Provided not integral type");
+
+        static constexpr T Get(lua_State* l, int index)
+        {
+            return static_cast<T>(
+                luaL_optinteger(l, index, static_cast<lua_Integer>(OptType::value))
+                );
+        }
+    };
+
+    template<typename OptType, typename T>
+    struct OptionalFloat
+    {
+        static_assert(std::is_floating_point_v<T>, "Provided not floating point type");
+
+        static constexpr T Get(lua_State* l, int index)
+        {
+            return static_cast<T>(
+                luaL_optnumber(l, index, static_cast<lua_Number>(OptType::value))
+                );
+        }
+    };
+
     struct UserDataValueBase {};
 
     template<typename T>
