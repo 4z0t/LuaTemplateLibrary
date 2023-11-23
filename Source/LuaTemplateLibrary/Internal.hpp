@@ -97,8 +97,6 @@ namespace Lua::Internal
     template<typename T>
     struct UserDataValue :UserDataValueBase
     {
-        using Type = T*;
-
         UserDataValue() :UserDataValue(nullptr) {}
 
         UserDataValue(T* value) :m_value(value) {}
