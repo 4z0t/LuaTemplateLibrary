@@ -40,6 +40,12 @@ namespace Lua
             new(Allocate(l)) T(std::forward<T>(other));
         }
 
+        template<typename Alloc, typename ...TArgs>
+        static GRefObject Make(const State<Alloc>& s, TArgs&&... args)
+        {
+            return Make(s.GetState()->Unwrap(), std::forward<TArgs>(args)...);
+        }
+
         template<typename ...TArgs>
         static GRefObject Make(lua_State* l, TArgs&&... args)
         {
