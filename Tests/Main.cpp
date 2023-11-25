@@ -474,10 +474,12 @@ void ClassTest()
             //"v1.w = 6 "
             "print(v1+v2) "
             "print(v1:Dot(v2)) "
-            "print(getmetatable(ud)) "
+            "local ud2 = ud.Double(v1) "
+            "print(ud2.a) "
+            /*"print(getmetatable(ud)) "
             "print(getmetatable(ud).__gc) "
             "getmetatable(ud).__gc = nil "
-            "print(getmetatable(ud).__gc) "
+            "print(getmetatable(ud).__gc) "*/
         );
 
 
