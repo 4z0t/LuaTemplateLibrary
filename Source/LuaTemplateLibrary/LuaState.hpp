@@ -2,9 +2,15 @@
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
 #include "Exception.hpp"
+#include "RefObject.hpp"
 
 namespace Lua
 {
+    template<typename T>
+    class UserData;
+
+
+
     CState* WrapState(lua_State* l)
     {
         return (CState*)l;
@@ -285,6 +291,12 @@ namespace Lua
             lua_setglobal(m_cstate->Unwrap(), name);
 
             return *this;
+        }
+
+        template<typename TClass, typename ...TArgs>
+        GRefObject MakeUserData(TArgs&&... args)
+        {
+            return UserData<TClass>::Make(m_cstate->Unwrap(), std::forward<TArgs>(args)...);
         }
 
     private:

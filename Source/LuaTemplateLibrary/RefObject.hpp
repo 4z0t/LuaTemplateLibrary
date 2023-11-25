@@ -1,6 +1,5 @@
 #pragma once
 #include "LuaAux.hpp"
-#include "LuaState.hpp"
 #include "LuaTypes.hpp"
 
 namespace Lua
@@ -23,6 +22,9 @@ namespace Lua
             lua_rawgeti(l, LUA_REGISTRYINDEX, ref);
         }
     };
+
+    template<typename T>
+    class State;
 
     template<typename RefClass, typename ParentClass, typename RefAccess>
     class RefObjectBase
