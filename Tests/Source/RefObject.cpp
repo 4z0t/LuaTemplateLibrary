@@ -470,6 +470,9 @@ TEST_F(StateTests, AllocTest)
     ASSERT_TRUE(GRefObject::Global(s, "result").Is<int>());
     ASSERT_EQ(GRefObject::Global(s, "result").To<int>(), 4);
 
+    ASSERT_TRUE(s.Global("result").Is<int>());
+    ASSERT_EQ(s.Global("result").To<int>(), 4);
+
 }
 
 

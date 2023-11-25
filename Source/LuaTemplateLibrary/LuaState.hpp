@@ -284,10 +284,19 @@ namespace Lua
             return Run(s.c_str());
         }
 
+
+        template<typename TReturn = GRefObject>
+        TReturn Global(const char* key)
+        {
+            StackPopper pop{ m_cstate->Unwrap(), 1 };
+            lua_getglobal(m_cstate->Unwrap(), key);
+            return To<TReturn>(-1);
+        }
+
         template<typename T>
         State& SetGlobal(const char* name, const T& value)
         {
-            PushValue(m_cstate->Unwrap(), value);
+            Push(value);
             lua_setglobal(m_cstate->Unwrap(), name);
 
             return *this;
