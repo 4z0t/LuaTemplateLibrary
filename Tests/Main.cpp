@@ -449,6 +449,8 @@ void ClassTest()
         cout << typeid(&Vector3f::ToString).name() << endl;
         cout << typeid(string(Vector3f::*)(CState*)const).name() << endl;
 
+        auto v = lua_state.MakeUserData<Vector3f>();
+        cout << v << endl;
 
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
         lua_state.Run(
@@ -566,10 +568,10 @@ void TypeMatching()
 
 int main()
 {
-    //ClassTest();
+    ClassTest();
     //Test();
     //PerfAllocTest();
 
     //StackObjectTest();
-    TypeMatching();
+    //TypeMatching();
 }
