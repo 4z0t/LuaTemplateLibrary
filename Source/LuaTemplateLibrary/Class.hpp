@@ -76,6 +76,11 @@ namespace Lua
                 //std::cout << "Assigning dtor for " << typeid(T).name() << std::endl;
                 AddMetaMethod("__gc", UData::DestructorFunction);
             }
+            UData::MetaTable::Push(m_state);
+            StackObjectView metatable{ m_state };
+            metatable.RawSet("__metatable", false);
+            lua_pop(m_state, 1);
+
         }
 
         template<typename TAlloc>

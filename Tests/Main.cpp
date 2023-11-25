@@ -474,7 +474,10 @@ void ClassTest()
             //"v1.w = 6 "
             "print(v1+v2) "
             "print(v1:Dot(v2)) "
-            "print({}<{}) "
+            "print(getmetatable(ud)) "
+            "print(getmetatable(ud).__gc) "
+            "getmetatable(ud).__gc = nil "
+            "print(getmetatable(ud).__gc) "
         );
 
 
