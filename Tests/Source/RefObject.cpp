@@ -448,10 +448,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace Lua;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-        {
-            int c = s->GetGlobal<int>("globalValue");
-            return a + b + c;
-        };
+    {
+        int c = s->GetGlobal<int>("globalValue");
+        return a + b + c;
+    };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -487,9 +487,9 @@ TEST_F(StackObjectTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
+    {
+        ASSERT_TRUE(lua_gettop(l) == 0);
+    };
 
     using namespace Lua;
     {
@@ -622,9 +622,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
+    {
+        ASSERT_TRUE(lua_gettop(l) == 0);
+    };
 
     using namespace Lua;
     using namespace std;
@@ -1055,5 +1055,36 @@ TEST_F(STDContainersTests, UnorderedMapTests)
 
     }
 
+
+}
+
+
+struct MultReturnTests :TestBase
+{
+
+};
+
+
+TEST_F(MultReturnTests, Tests)
+{
+    using namespace Lua;
+    using namespace std;
+    {
+
+        constexpr auto f = +[]() -> MultReturn<int, int>
+        {
+            return { 1,2 };
+        };
+
+        RegisterFunction(l, "f", CFunction<f>::Function);
+
+        Run("a,b = f()");
+
+        ASSERT_TRUE(GRefObject::Global(l, "a").Is<int>());
+        ASSERT_EQ(GRefObject::Global(l, "a").To<int>(), 1);
+        ASSERT_TRUE(GRefObject::Global(l, "b").Is<int>());
+        ASSERT_EQ(GRefObject::Global(l, "b").To<int>(), 2);
+
+    }
 
 }

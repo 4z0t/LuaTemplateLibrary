@@ -84,6 +84,11 @@ namespace Lua
             return StackType<T>::Get(l, index);
         }
     };
+
+    struct MultReturnBase {};
+
+    template<typename ...Ts>
+    struct MultReturn : std::tuple<Ts...>, MultReturnBase { using std::tuple<Ts...>::tuple; };
 }
 
 #define LuaOptionalArg(name_, type_, value_) \

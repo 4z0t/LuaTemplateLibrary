@@ -1,5 +1,6 @@
 #pragma once
 #include "LuaTypes.hpp"
+#include "FuncArguments.hpp"
 
 namespace Lua
 {
@@ -183,7 +184,7 @@ namespace Lua
     template<size_t Index, typename TResult, typename T, typename ...Ts>
     inline size_t _PushResult(lua_State* l, TResult& result)
     {
-        _PushValue<T>(l, std::get<Index>(result));
+        PushValue<T>(l, std::get<Index>(result));
         return _PushResult<Index + 1, TResult, Ts...>(l, result);
     }
 
@@ -203,9 +204,9 @@ namespace Lua
 
 
     template<typename ...Ts>
-    inline size_t PushResult(lua_State* l, std::tuple<Ts...>& result)
+    inline size_t PushResult(lua_State* l, MultReturn<Ts...>& result)
     {
-        return _PushResult<0, std::tuple<Ts...>, Ts...>(l, result);
+        return _PushResult<0, MultReturn<Ts...>, Ts...>(l, result);
     }
 
 
