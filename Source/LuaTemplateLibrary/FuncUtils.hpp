@@ -130,7 +130,7 @@ namespace Lua
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
-        template<typename ...TUpvalues>
+        template<typename ...>
         struct MatchUpvalues;
 
         template<typename TUpvalue, typename ...TUpvalues>

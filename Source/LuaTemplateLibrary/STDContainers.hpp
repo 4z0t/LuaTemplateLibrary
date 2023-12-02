@@ -2,6 +2,7 @@
 #include "LuaTypes.hpp"
 #include <map>
 #include <unordered_map>
+#include <optional>
 #include "StackObject.hpp"
 
 namespace Lua
@@ -75,5 +76,36 @@ namespace Lua
         }
     };
 
+    template<typename T>
+    struct StackType<std::optional<T>>
+    {
+        using Type = std::optional<T>;
+
+        static bool Check(lua_State* l, int index)
+        {
+            return lua_isnoneornil(l, index) || StackType<T>::Check(l, index);
+        }
+
+        static Type Get(lua_State* l, int index)
+        {
+            if (lua_isnoneornil(l, index))
+            {
+                return std::nullopt;
+            }
+            return { StackType<T>::Get(l, index) };
+        }
+
+        static void Push(lua_State* l, const Type& value)
+        {
+            if (value.has_value())
+            {
+                StackType<T>::Push(l, value.value());
+            }
+            else
+            {
+                lua_pushnil(l);
+            }
+        }
+    };
 
 }
