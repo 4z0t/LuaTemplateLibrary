@@ -1088,3 +1088,43 @@ TEST_F(MultReturnTests, Tests)
     }
 
 }
+
+
+struct OptionalTests :TestBase
+{
+
+};
+
+
+TEST_F(OptionalTests, Tests)
+{
+    using namespace Lua;
+    using namespace std;
+    {
+        constexpr auto f = +[](const optional<int>& value) -> bool
+        {
+            return value.has_value();
+        };
+
+
+        RegisterFunction(l, "f", CFunction<f, optional<int>>::Function);
+        {
+            Run("result = f()");
+            ASSERT_FALSE(Result().To<bool>());
+        }
+        {
+            Run("result = f(1)");
+            ASSERT_TRUE(Result().To<bool>());
+        }
+        {
+            Run("result = f(null)");
+            ASSERT_FALSE(Result().To<bool>());
+        }
+        {
+            ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
+            
+        }
+
+    }
+
+}
