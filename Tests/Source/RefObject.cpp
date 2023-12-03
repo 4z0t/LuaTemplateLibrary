@@ -1124,6 +1124,23 @@ TEST_F(OptionalTests, Tests)
             ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
             
         }
+        RegisterFunction(l, "f", CFunction<&optional<int>::has_value, optional<int>>::Function);
+        {
+            Run("result = f()");
+            ASSERT_FALSE(Result().To<bool>());
+        }
+        {
+            Run("result = f(1)");
+            ASSERT_TRUE(Result().To<bool>());
+        }
+        {
+            Run("result = f(null)");
+            ASSERT_FALSE(Result().To<bool>());
+        }
+        {
+            ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
+
+        }
 
     }
 

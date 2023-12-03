@@ -160,6 +160,48 @@ namespace Lua
             };
 
             template<typename R, class C, typename ...Ts>
+            struct CallHelper<R(C::*)(Ts...)const noexcept>
+            {
+                template<class Class, typename ...Args>
+                static TReturn Call(const Class& arg, Args&... args)
+                {
+                    if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                    {
+                        return ((*arg).*fn)(args...);
+                    }
+                    else if constexpr (std::is_pointer_v<Class>)
+                    {
+                        return (arg->*fn)(args...);
+                    }
+                    else
+                    {
+                        return (arg.*fn)(args...);
+                    }
+                }
+            };
+
+            template<typename R, class C, typename ...Ts>
+            struct CallHelper<R(C::*)(Ts...)noexcept>
+            {
+                template<class Class, typename ...Args>
+                static TReturn Call(Class& arg, Args&... args)
+                {
+                    if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
+                    {
+                        return ((*arg).*fn)(args...);
+                    }
+                    else if constexpr (std::is_pointer_v<Class>)
+                    {
+                        return (arg->*fn)(args...);
+                    }
+                    else
+                    {
+                        return (arg.*fn)(args...);
+                    }
+                }
+            };
+
+            template<typename R, class C, typename ...Ts>
             struct CallHelper<R(C::*)(Ts...)>
             {
                 template<class Class, typename ...Args>
