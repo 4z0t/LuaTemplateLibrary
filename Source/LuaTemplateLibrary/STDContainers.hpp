@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <optional>
 #include "StackObject.hpp"
+#include "FuncArguments.hpp"
 
 namespace Lua
 {
@@ -77,14 +78,9 @@ namespace Lua
     };
 
     template<typename T>
-    struct StackType<std::optional<T>>
+    struct StackType<std::optional<T>> : CheckOptional<T>
     {
         using Type = std::optional<T>;
-
-        static bool Check(lua_State* l, int index)
-        {
-            return lua_isnoneornil(l, index) || StackType<T>::Check(l, index);
-        }
 
         static Type Get(lua_State* l, int index)
         {

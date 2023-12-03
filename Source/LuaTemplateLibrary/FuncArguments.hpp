@@ -66,16 +66,19 @@ namespace Lua
     template<typename T>
     struct IsUpvalueType<Upvalue<T>> : std::true_type {};
 
-
-    template<typename TOpt>
-    struct StackType<TOpt, EnableIfOptionalArg<TOpt>>
+    template<typename T>
+    struct CheckOptional
     {
-        using T = Unwrap_t<TOpt>;
-
         static constexpr bool Check(lua_State* l, int index)
         {
             return lua_isnoneornil(l, index) || StackType<T>::Check(l, index);
         }
+    };
+
+    template<typename TOpt>
+    struct StackType<TOpt, EnableIfOptionalArg<TOpt>> : CheckOptional<Unwrap_t<TOpt>>
+    {
+        using T = Unwrap_t<TOpt>;
 
         static constexpr T Get(lua_State* l, int index)
         {
