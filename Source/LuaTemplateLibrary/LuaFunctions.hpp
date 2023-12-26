@@ -145,6 +145,7 @@ namespace Lua
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
             static_assert(std::is_invocable_v<FnType, Unwrap_t<TArgs>&...>, "Given function can't be called with such arguments!");
             using TReturn = std::invoke_result_t<FnType, Unwrap_t<TArgs>&...>;
+            using Indexes = std::index_sequence_for<TArgs...>;
 
             template<typename R, typename D = R>
             struct CallHelper;
@@ -244,7 +245,13 @@ namespace Lua
             };
 
             template <size_t ... Is>
-            inline static TReturn Call(ArgsTuple& args, const std::index_sequence<Is...>)
+            inline static TReturn Call(ArgsTuple& args)
+            {
+                return UnpackArgs(args, Indexes{});
+            }
+
+            template <size_t ... Is>
+            inline static TReturn UnpackArgs(ArgsTuple& args, const std::index_sequence<Is...>)
             {
                 return CallHelper<FnType>::Call(std::get<Is>(args)...);
             }
@@ -256,7 +263,6 @@ namespace Lua
     {
         using TReturn = typename FunctionCaller::TReturn;
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
-        using Indexes = std::index_sequence_for<TArgs...>;
 
     public:
         static int Function(lua_State* l)
@@ -265,13 +271,13 @@ namespace Lua
             FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TReturn>)
             {
-                FunctionCaller::Call(args, Indexes{});
+                FunctionCaller::Call(args);
                 FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
-                auto result = FunctionCaller::Call(args, Indexes{});
+                auto result = FunctionCaller::Call(args);
                 FunctionHelper::ReplaceUpvalues(l, args);
                 size_t n_results = PushResult(l, result);
                 return static_cast<int>(n_results);
@@ -286,7 +292,6 @@ namespace Lua
         static_assert(std::is_void_v<TUnwrappedReturn> == std::is_void_v<TRet>, "If function returns void you cannot return anything else but void!");
 
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
-        using Indexes = std::index_sequence_for<TArgs...>;
 
     public:
         static int Function(lua_State* l)
@@ -295,13 +300,13 @@ namespace Lua
             FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TUnwrappedReturn>)
             {
-                FunctionCaller::Call(args, Indexes{});
+                FunctionCaller::Call(arg);
                 FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
-                TUnwrappedReturn result = FunctionCaller::Call(args, Indexes{});
+                TUnwrappedReturn result = FunctionCaller::Call(args);
                 FunctionHelper::ReplaceUpvalues(l, args);
                 StackType<TRet>::Push(l, std::move(result));
                 return 1;
