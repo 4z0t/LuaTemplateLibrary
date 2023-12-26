@@ -366,6 +366,7 @@ float Dot(const Vector3f& v1, const Vector3f& v2)
     return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
+
 void ClassTest()
 {
     using namespace Lua;
@@ -422,6 +423,11 @@ void ClassTest()
         auto v = lua_state.MakeUserData<Vector3f>();
         cout << v << endl;
 
+
+        cout << typeid(decltype(FieldDeductor<&Vector3f::x>::Deduce(&Vector3f::x))).name() << endl;
+        cout << typeid(FieldDeductor<&Vector3f::x>::Type).name() << endl;
+        cout << typeid(FieldDeductor<&Vector3f::x>::Class).name() << endl;
+
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
         /*
         lua_state.Run(
@@ -450,7 +456,7 @@ void ClassTest()
             /*"print(getmetatable(ud)) "
             "print(getmetatable(ud).__gc) "
             "getmetatable(ud).__gc = nil "
-            "print(getmetatable(ud).__gc) "*/
+            "print(getmetatable(ud).__gc) "
         );
         */
 

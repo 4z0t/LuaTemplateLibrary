@@ -436,6 +436,136 @@ TEST_F(UserDataTests, PropertyTests)
 }
 
 
+TEST_F(UserDataTests, APropertyTests)
+{
+    using namespace Lua;
+    struct Vector3f
+    {
+        float x, y, z;
+
+        Vector3f(float x, float y, float z) :x(x), y(y), z(z)
+        {
+
+        }
+        Vector3f() :Vector3f(0, 0, 0) {}
+
+        float Length()const
+        {
+            return sqrtf(x * x + y * y + z * z);
+        }
+    };
+
+    Class<Vector3f>(l, "Vector")
+        .AddConstructor<Default<float>, Default<float>, Default<float>>()
+        .Add("x", AProperty<&Vector3f::x>{})
+        .Add("y", AProperty<&Vector3f::y>{})
+        .Add("z", AProperty<&Vector3f::z>{})
+        .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>::Function)
+        ;
+    {
+
+        Run("v = Vector(1,2,3)  "
+            "result = v.x   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 1.f);
+        Run(
+            "result = v.y   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
+        Run(
+            "result = v.z   "
+        );
+        ASSERT_TRUE(Result().Is<float>());
+        ASSERT_FLOAT_EQ(Result().To<float>(), 3.f);
+        {
+            Run("v.x = 2        "
+                "result = v.y   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 2.f);
+            Run("v.y = 4        "
+                "result = v.y   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 4.f);
+            Run("v.z = 8        "
+                "result = v.z   "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
+        }
+        {
+            ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
+            Run("result = v.w   "
+            );
+            ASSERT_TRUE(Result().Is<void>());
+        }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v:Length()  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v.length  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
+    }
+    {
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l);
+
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 0);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 0);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 0);
+    }
+
+    {
+        using UDVector3f = UserData<Vector3f>;
+        auto vec = UDVector3f::Make(l, 1, 2, 3);
+
+        ASSERT_TRUE(vec.IsUserData());
+        ASSERT_TRUE(vec.Is<UDVector3f>());
+        ASSERT_TRUE(vec["x"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["x"].To<float>(), 1);
+        ASSERT_TRUE(vec["y"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["y"].To<float>(), 2);
+        ASSERT_TRUE(vec["z"].Is<float>());
+        ASSERT_FLOAT_EQ(vec["z"].To<float>(), 3);
+        ASSERT_TRUE(vec["w"].Is<void>());
+        {
+            Vector3f* v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v->x, 1);
+            ASSERT_FLOAT_EQ(v->y, 2);
+            ASSERT_FLOAT_EQ(v->z, 3);
+        }
+        {
+            Vector3f v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v.x, 1);
+            ASSERT_FLOAT_EQ(v.y, 2);
+            ASSERT_FLOAT_EQ(v.z, 3);
+        }
+        {
+            auto v = vec.To<UDVector3f>();
+            ASSERT_FLOAT_EQ(v->x, 1);
+            ASSERT_FLOAT_EQ(v->y, 2);
+            ASSERT_FLOAT_EQ(v->z, 3);
+        }
+    }
+}
+
 
 struct StateTests : TestBase
 {
@@ -448,10 +578,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace Lua;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-    {
-        int c = s->GetGlobal<int>("globalValue");
-        return a + b + c;
-    };
+        {
+            int c = s->GetGlobal<int>("globalValue");
+            return a + b + c;
+        };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -487,9 +617,9 @@ TEST_F(StackObjectTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-    {
-        ASSERT_TRUE(lua_gettop(l) == 0);
-    };
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
 
     using namespace Lua;
     {
@@ -622,9 +752,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-    {
-        ASSERT_TRUE(lua_gettop(l) == 0);
-    };
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
 
     using namespace Lua;
     using namespace std;
@@ -1072,9 +1202,9 @@ TEST_F(MultReturnTests, Tests)
     {
 
         constexpr auto f = +[]() -> MultReturn<int, int>
-        {
-            return { 1,2 };
-        };
+            {
+                return { 1,2 };
+            };
 
         RegisterFunction(l, "f", CFunction<f>::Function);
 
@@ -1102,9 +1232,9 @@ TEST_F(OptionalTests, Tests)
     using namespace std;
     {
         constexpr auto f = +[](const optional<int>& value) -> bool
-        {
-            return value.has_value();
-        };
+            {
+                return value.has_value();
+            };
 
 
         RegisterFunction(l, "f", CFunction<f, optional<int>>::Function);
@@ -1122,7 +1252,7 @@ TEST_F(OptionalTests, Tests)
         }
         {
             ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
-            
+
         }
         RegisterFunction(l, "f", CFunction<&optional<int>::has_value, optional<int>>::Function);
         {

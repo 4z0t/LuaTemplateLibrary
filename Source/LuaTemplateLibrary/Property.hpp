@@ -56,44 +56,29 @@ namespace Lua
         }
     };
 
-    /*template<auto Field>
-    struct AProperty
+
+    template<auto Field>
+    struct FieldDeductor
     {
-        using TField = decltype(Field);
-
-        static int Get(lua_State* l)
+        template<typename C, typename T>
+        struct _Deduced
         {
-            return __Get<TField>::Call(l);
-        }
-
-        static int Set(lua_State* l)
-        {
-            return __Set<TField>::Call(l);
-        }
-    private:
-        template<class C, typename T>
-        struct __Get;
-
-        template<class C, typename T>
-        struct __Set;
-
-        template<class C, typename T>
-        struct __Get<T C::* >
-        {
-            static int Call(lua_State* l)
-            {
-                return Getter<C, T, Field>::Function(l);
-            }
+            using Class = C;
+            using Type = T;
         };
 
-        template<class C, typename T>
-        struct __Set<T C::*>
-        {
-            static int Call(lua_State* l)
-            {
-                return Getter<C, T, Field>::Function(l);
-            }
-        };
-    };*/
+        template<typename C, typename T>
+        static _Deduced<C, T> Deduce(T C::* member) {}
+
+        using Deduced = typename decltype(Deduce(Field));
+
+        using Class = typename Deduced::Class;
+        using Type = typename Deduced::Type;
+    };
+
+
+
+    template<auto Field>
+    struct AProperty : Property<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
 }
