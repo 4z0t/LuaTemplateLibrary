@@ -299,7 +299,7 @@ namespace Lua
             FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TUnwrappedReturn>)
             {
-                FunctionCaller::Call(arg);
+                FunctionCaller::Call(args);
                 FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
