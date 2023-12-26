@@ -79,6 +79,12 @@ namespace Lua
 
 
     template<auto Field>
+    struct AGetter : Getter<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
+
+    template<auto Field>
+    struct ASetter : Setter<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
+
+    template<auto Field>
     struct AProperty : Property<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
 }

@@ -402,8 +402,8 @@ void ClassTest()
             .Add("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
             .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
             .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{})
-            .Add("a", Getter<MyUData, int, &MyUData::a>{})
-            .Add("b", Setter<MyUData, int, &MyUData::b>{})
+            .Add("a", AGetter<&MyUData::a>{})
+            .Add("b", ASetter<&MyUData::b>{})
             .Add("Print", Method<MyUData, Print >{})
             ;
 
