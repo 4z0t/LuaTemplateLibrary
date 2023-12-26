@@ -91,10 +91,8 @@ struct Vector3f
 {
     float x, y, z;
 
-    Vector3f(float x, float y, float z) :x(x), y(y), z(z)
-    {
+    Vector3f(float x, float y, float z) :x(x), y(y), z(z) {}
 
-    }
     Vector3f() :Vector3f(0, 0, 0) {}
 
     static float Length(const Vector3f& v)
@@ -113,11 +111,6 @@ struct Vector3f
         state->Pop();
         return s;
     }
-
-    /* Vector3f operator+(const Vector3f& v)const
-     {
-         return Sum(*this, v);
-     }*/
 
     Vector3f operator+(const Vector3f& v)const
     {
@@ -162,29 +155,6 @@ struct Lua::StackType<Vector3f>
         lua_rawseti(l, -2, 2);
         lua_pushnumber(l, vec.z);
         lua_rawseti(l, -2, 3);
-    }
-};
-
-template<>
-struct Lua::StackType<Vector3f*>
-{
-    using TReturn = Vector3f*;
-
-    static bool Check(lua_State* l, int index)
-    {
-        return lua_isuserdata(l, index);
-    }
-
-    static Vector3f* Get(lua_State* l, int index)
-    {
-        void* ud = lua_touserdata(l, index);
-
-        return (Vector3f*)ud;
-    }
-
-    static void Push(lua_State* l, const Vector3f* vec)
-    {
-        new (lua_newuserdata(l, sizeof(Vector3f))) Vector3f(*vec);
     }
 };
 
@@ -453,6 +423,7 @@ void ClassTest()
         cout << v << endl;
 
         //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
+        /*
         lua_state.Run(
             "local v = Vector(1,2,3)       "
             "print(v.x)         "
@@ -460,7 +431,7 @@ void ClassTest()
             "print(v.z)         "
             "print(v.w)         "
             "v.x = 5            "
-            //"v.w = 1          "   
+            //"v.w = 1          "
             "print(v.x)         "
             "local ud = MyClass(2,3,4)  "
             "print(ud.a)        "
@@ -481,8 +452,19 @@ void ClassTest()
             "getmetatable(ud).__gc = nil "
             "print(getmetatable(ud).__gc) "*/
         );
+        */
 
+        constexpr auto myFunc = +[](const Vector3f& vec, float n)->float
+            {
+                return vec.x + vec.y + vec.z + n;
+            };
 
+        lua_state.AddFunction("MyFunction", CFunction<myFunc, UserData<Vector3f>, OptionalDouble1>::Function);
+
+        auto vector = UserData<Vector3f>::Make(lua_state, 1, 2, 3);
+        int r = lua_state.Call<int>("MyFunction", vector);
+
+        cout << r << endl;
 
 
     }
