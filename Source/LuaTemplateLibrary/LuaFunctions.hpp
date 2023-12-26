@@ -145,7 +145,6 @@ namespace Lua
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
             static_assert(std::is_invocable_v<FnType, Unwrap_t<TArgs>&...>, "Given function can't be called with such arguments!");
             using TReturn = std::invoke_result_t<FnType, Unwrap_t<TArgs>&...>;
-            using Indexes = std::index_sequence_for<TArgs...>;
 
             template<typename R, typename D = R>
             struct CallHelper;
@@ -247,7 +246,7 @@ namespace Lua
             template <size_t ... Is>
             inline static TReturn Call(ArgsTuple& args)
             {
-                return UnpackArgs(args, Indexes{});
+                return UnpackArgs(args, std::index_sequence_for<TArgs...>{});
             }
 
             template <size_t ... Is>
