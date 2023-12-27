@@ -417,18 +417,6 @@ void ClassTest()
             .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
             ;
 
-        cout << typeid(&Vector3f::ToString).name() << endl;
-        cout << typeid(string(Vector3f::*)(CState*)const).name() << endl;
-
-        auto v = lua_state.MakeUserData<Vector3f>();
-        cout << v << endl;
-
-
-        cout << typeid(decltype(FieldDeductor<&Vector3f::x>::Deduce(&Vector3f::x))).name() << endl;
-        cout << typeid(FieldDeductor<&Vector3f::x>::Type).name() << endl;
-        cout << typeid(FieldDeductor<&Vector3f::x>::Class).name() << endl;
-
-        //cout << typeid(UserDataValueClassWrapper<Vector3f>::AddUserDataValue<Vector3f>::type).name() << endl;
         /*
         lua_state.Run(
             "local v = Vector(1,2,3)       "
@@ -471,6 +459,9 @@ void ClassTest()
         int r = lua_state.Call<int>("MyFunction", vector);
 
         cout << r << endl;
+
+        lua_state.DoFile("example.lua");
+
 
 
     }
