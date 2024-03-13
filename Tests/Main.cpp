@@ -517,26 +517,6 @@ void PerfAllocTest()
 }
 
 
-
-void StackObjectTest()
-{
-    using namespace Lua;
-    using namespace std;
-
-    State s;
-
-    StackObject s1 = StackObject::FromValue(s.GetState()->Unwrap(), 1);
-    StackObject s2 = StackObject::FromValue(s.GetState()->Unwrap(), 2);
-    StackObjectView s3{ s.GetState()->Unwrap() };
-
-    cout << s1.RawEqual(s2) << endl;
-    cout << s1.RawEqual(s3) << endl;
-    cout << s3.RawEqual(s1) << endl;
-
-
-}
-
-
 void TypeMatching()
 {
     using namespace Lua;
