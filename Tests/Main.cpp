@@ -462,6 +462,10 @@ void ClassTest()
 
         lua_state.DoFile("example.lua");
 
+        GRefObject my_ref = GRefObject::Global(lua_state, "MyFunction");
+        cout << (my_ref == nullptr)<< endl;
+        
+
 
 
     }

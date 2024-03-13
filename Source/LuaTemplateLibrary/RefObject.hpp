@@ -144,6 +144,12 @@ namespace Lua
             return this->Compare<LUA_OPEQ>(other);
         }
 
+        template<>
+        bool operator==(const std::nullptr_t&)const
+        {
+            return this->IsNil();
+        }
+
         template<typename T>
         bool operator>(const T& other)const
         {

@@ -159,4 +159,18 @@ namespace Lua
             lua_pushcfunction(l, value);
         }
     };
+
+    template<>
+    struct StackType<std::nullptr_t>
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return lua_isnil(l, index);
+        }
+
+        static void Push(lua_State* l, std::nullptr_t)
+        {
+            lua_pushnil(l);
+        }
+    };
 }
