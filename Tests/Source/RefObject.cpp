@@ -941,40 +941,44 @@ TEST_F(TypeMatchingTests, UpvalueMatcingTests)
 {
     using namespace LTL;
     using namespace LTL::FuncUtility;
+#define ASSERT_TRUE_TYPE(...)  ASSERT_TRUE(__VA_ARGS__::value)
+#define ASSERT_FALSE_TYPE(...)  ASSERT_FALSE(__VA_ARGS__::value)
     {
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, float, bool, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, float, bool, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>, int, float, bool>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, Upvalue<float>, Upvalue<bool>, float, bool>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, int, float, bool, Upvalue<bool>>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<int, Upvalue<int>, float, Upvalue<float>, bool, Upvalue<bool>>::value));
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, float, bool, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, float, bool, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>, int, float, bool>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, Upvalue<float>, Upvalue<bool>, float, bool>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, int, float, bool, Upvalue<bool>>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, Upvalue<int>, float, Upvalue<float>, bool, Upvalue<bool>>);
 
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<int, float, bool>::Matches<int, float, Upvalue<bool>>::value));
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, float, bool>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<int, float, bool>::Matches<int, float, Upvalue<bool>>);
 
-        ASSERT_TRUE((MatchUpvalues<>::Matches<>::value));
-        ASSERT_TRUE((MatchUpvalues<>::Matches<int, float, bool>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<Upvalue<int>>::value));
-        ASSERT_FALSE((MatchUpvalues<>::Matches<int, float, Upvalue<bool>>::value));
+        ASSERT_TRUE_TYPE(MatchUpvalues<>::Matches<>);
+        ASSERT_TRUE_TYPE(MatchUpvalues<>::Matches<int, float, bool>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<int, float, bool, Upvalue<int>, Upvalue<float>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<Upvalue<float>, int, float, bool, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<Upvalue<float>, Upvalue<int>, Upvalue<float>, Upvalue<bool>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<Upvalue<int>>);
+        ASSERT_FALSE_TYPE(MatchUpvalues<>::Matches<int, float, Upvalue<bool>>);
     }
 
     {
 
     }
+#undef ASSERT_TRUE_TYPE
+#undef ASSERT_FALSE_TYPE
 }
 
 
