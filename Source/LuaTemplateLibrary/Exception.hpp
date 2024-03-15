@@ -1,7 +1,7 @@
 #pragma once
 #include "LuaAux.hpp"
 
-namespace Lua
+namespace LTL
 {
     class Exception : public std::runtime_error
     {

@@ -6,7 +6,7 @@
 #include "FuncUtils.hpp"
 
 
-namespace Lua
+namespace LTL
 {
     template<class C, typename ...TArgs>
     struct Constructor

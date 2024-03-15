@@ -8,7 +8,7 @@ struct RefObjectTests : TestBase
 
 TEST_F(RefObjectTests, ValueAccess)
 {
-    using namespace Lua;
+    using namespace LTL;
     Run("result = true");
     ASSERT_TRUE(Result().Is<bool>());
     ASSERT_TRUE(Result().To<bool>());
@@ -62,7 +62,7 @@ TEST_F(RefObjectTests, IteratorTest)
 
 TEST_F(RefObjectTests, CompareTest)
 {
-    using namespace Lua;
+    using namespace LTL;
     {
 
         Run("a, b = 2, 3");
@@ -168,7 +168,7 @@ bool MyAccess2::assigned = false;
 
 TEST_F(RefObjectTests, AccessClasses)
 {
-    using namespace Lua;
+    using namespace LTL;
 
     {
         RefObject<MyAccess> obj{ l };
@@ -202,7 +202,7 @@ TEST_F(RefObjectTests, AccessClasses)
 TEST_F(RefObjectTests, SelfCallTest)
 {
 
-    using namespace Lua;
+    using namespace LTL;
     Run("result = {                             "
         "   func = function(self, s, n)         "
         "      local s_ = self.custom_string    "
@@ -243,8 +243,8 @@ struct ExceptionTests : TestBase
 TEST_F(ExceptionTests, ThrowTests)
 {
     Run("result = true");
-    ASSERT_THROW(Result().Call(), Lua::Exception);
-    ASSERT_THROW(Result()["Key"].To<int>(), Lua::Exception);
+    ASSERT_THROW(Result().Call(), LTL::Exception);
+    ASSERT_THROW(Result()["Key"].To<int>(), LTL::Exception);
 
 }
 
@@ -259,7 +259,7 @@ struct UserDataTests : TestBase
 
 TEST_F(UserDataTests, MoveCtorTest)
 {
-    using namespace Lua;
+    using namespace LTL;
     struct CantCopy
     {
 
@@ -307,7 +307,7 @@ TEST_F(UserDataTests, MoveCtorTest)
 
 TEST_F(UserDataTests, PropertyTests)
 {
-    using namespace Lua;
+    using namespace LTL;
     struct Vector3f
     {
         float x, y, z;
@@ -438,7 +438,7 @@ TEST_F(UserDataTests, PropertyTests)
 
 TEST_F(UserDataTests, APropertyTests)
 {
-    using namespace Lua;
+    using namespace LTL;
     struct Vector3f
     {
         float x, y, z;
@@ -575,7 +575,7 @@ struct StateTests : TestBase
 
 TEST_F(StateTests, UpvalueTest)
 {
-    using namespace Lua;
+    using namespace LTL;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
         {
@@ -593,7 +593,7 @@ TEST_F(StateTests, UpvalueTest)
 
 TEST_F(StateTests, AllocTest)
 {
-    using namespace Lua;
+    using namespace LTL;
 
     State<OpNewAllocator> s;
     s.Run("result = 4");
@@ -619,7 +619,7 @@ TEST_F(StackObjectViewTest, Tests)
             ASSERT_TRUE(lua_gettop(l) == 0);
         };
 
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     {
         const StackRestorer rst{ l };
@@ -752,7 +752,7 @@ struct TypeMatchingTests : TestBase
 TEST_F(TypeMatchingTests, MatchArgumentTypesTests)
 
 {
-    using namespace Lua;
+    using namespace LTL;
 #define ASSERT_MATCHES(s, res)\
     Run("result = Match(" s ")"); \
     ASSERT_TRUE(Result().Is<bool>()); \
@@ -939,8 +939,8 @@ TEST_F(TypeMatchingTests, MatchArgumentTypesTests)
 
 TEST_F(TypeMatchingTests, UpvalueMatcingTests)
 {
-    using namespace Lua;
-    using namespace Lua::FuncUtility;
+    using namespace LTL;
+    using namespace LTL::FuncUtility;
     {
         ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, int, float, bool, Upvalue<float>, Upvalue<bool>>::value));
         ASSERT_TRUE((MatchUpvalues<int, float, bool>::Matches<Upvalue<int>, Upvalue<float>, Upvalue<bool>>::value));
@@ -985,7 +985,7 @@ struct STDContainersTests : TestBase
 
 TEST_F(STDContainersTests, VectorTests)
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
 
     {
@@ -1002,7 +1002,7 @@ TEST_F(STDContainersTests, VectorTests)
 
 TEST_F(STDContainersTests, UnorderedMapTests)
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
 
     {
@@ -1060,7 +1060,7 @@ struct MultReturnTests :TestBase
 
 TEST_F(MultReturnTests, Tests)
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     {
 
@@ -1091,7 +1091,7 @@ struct OptionalTests :TestBase
 
 TEST_F(OptionalTests, Tests)
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     {
         constexpr auto f = +[](const optional<int>& value) -> bool

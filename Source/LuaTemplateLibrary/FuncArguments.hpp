@@ -5,7 +5,7 @@
 #include <vector>
 #include "LuaTypes.hpp"
 
-namespace Lua
+namespace LTL
 {
 
     struct UnwrapTypeBase {};
@@ -95,7 +95,7 @@ namespace Lua
 }
 
 #define LuaOptionalArg(name_, type_, value_) \
-struct name_ : Lua::OptionalBase<type_>\
+struct name_ : LTL::OptionalBase<type_>\
 {\
   static const type_ value; \
 };\

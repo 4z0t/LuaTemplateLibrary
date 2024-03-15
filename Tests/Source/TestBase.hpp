@@ -13,7 +13,7 @@ struct TestBase : public testing::Test
         l = nullptr;
         l = luaL_newstate();
         luaL_openlibs(l);
-        lua_atpanic(l, Lua::Exception::PanicFunc);
+        lua_atpanic(l, LTL::Exception::PanicFunc);
     }
 
     void TearDown() override
@@ -37,8 +37,8 @@ struct TestBase : public testing::Test
         }
     }
 
-    Lua::GRefObject Result()
+    LTL::GRefObject Result()
     {
-        return Lua::GRefObject::Global(l, "result");
+        return LTL::GRefObject::Global(l, "result");
     }
 };

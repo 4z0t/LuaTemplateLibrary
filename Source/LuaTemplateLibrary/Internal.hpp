@@ -22,7 +22,7 @@ inline int lua_getregp(lua_State* l, const void* p)
     return lua_rawgetp(l, LUA_REGISTRYINDEX, p);
 }
 
-namespace Lua::Internal
+namespace LTL::Internal
 {
     template<typename T>
     struct IntParser

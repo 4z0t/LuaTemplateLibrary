@@ -9,7 +9,7 @@
 
 #define lua_regptr_isnt_set(l, p) assert(lua_getregp(l, p) == LUA_TNIL)
 
-namespace Lua
+namespace LTL
 {
     template<typename T>
     struct Class;

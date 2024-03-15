@@ -6,7 +6,7 @@
 #include "StackObject.hpp"
 #include "FuncArguments.hpp"
 
-namespace Lua
+namespace LTL
 {
 
     struct TableChecker

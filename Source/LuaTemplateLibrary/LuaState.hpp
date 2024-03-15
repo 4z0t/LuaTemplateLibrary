@@ -4,7 +4,7 @@
 #include "Exception.hpp"
 #include "RefObject.hpp"
 
-namespace Lua
+namespace LTL
 {
     template<typename T>
     class UserData;
@@ -81,13 +81,13 @@ namespace Lua
         template<typename ...Ts>
         void RegisterClosure(const char* name, lua_CFunction func, Ts&&... args)
         {
-            Lua::RegisterClosure(Unwrap(), name, func, std::forward<Ts>(args)...);
+            LTL::RegisterClosure(Unwrap(), name, func, std::forward<Ts>(args)...);
         }
 
         template<typename TReturn = void, typename ...Ts>
         TReturn Call(const char* name, Ts&&... args)
         {
-            return Lua::CallFunction<TReturn>(Unwrap(), name, std::forward<Ts>(args)...);
+            return LTL::CallFunction<TReturn>(Unwrap(), name, std::forward<Ts>(args)...);
         }
 
         template<typename T>

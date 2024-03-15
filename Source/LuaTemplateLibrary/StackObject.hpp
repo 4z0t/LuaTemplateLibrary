@@ -4,7 +4,7 @@
 #include "LuaTypes.hpp"
 #include "RefObject.hpp"
 
-namespace Lua
+namespace LTL
 {
     class StackObjectView
     {

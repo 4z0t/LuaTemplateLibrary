@@ -2,7 +2,7 @@
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
 
-namespace Lua
+namespace LTL
 {
 
     struct RefGlobalAccess
@@ -220,7 +220,7 @@ namespace Lua
         Type Type()const
         {
             AutoPop pop(*this);
-            return static_cast<Lua::Type>(lua_type(m_state, -1));
+            return static_cast<LTL::Type>(lua_type(m_state, -1));
         }
 
         const char* TypeName()const

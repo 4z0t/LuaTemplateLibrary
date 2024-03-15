@@ -4,7 +4,7 @@
 #include "FuncArguments.hpp"
 #include "LuaState.hpp"
 
-namespace Lua
+namespace LTL
 {
     namespace FuncUtility
     {

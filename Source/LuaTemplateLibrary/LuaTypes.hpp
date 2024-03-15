@@ -1,7 +1,7 @@
 #pragma once
 #include "Internal.hpp"
 
-namespace Lua
+namespace LTL
 {
     class CState;
 

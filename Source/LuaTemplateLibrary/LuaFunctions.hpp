@@ -3,7 +3,7 @@
 #include "FuncArguments.hpp"
 #include "FuncUtils.hpp"
 
-namespace Lua
+namespace LTL
 {
     /*
     template<auto fn, typename ...TUpvalues>

@@ -105,7 +105,7 @@ struct Vector3f
         return { v1.x + v2.x , v1.y + v2.y , v1.z + v2.z };
     }
 
-    std::string ToString(Lua::CState* state)const
+    std::string ToString(LTL::CState* state)const
     {
         std::string  s{ state->PushFormatString("Vector { %f, %f, %f }", x, y, z) };
         state->Pop();
@@ -119,7 +119,7 @@ struct Vector3f
 };
 
 template<>
-struct Lua::StackType<Vector3f>
+struct LTL::StackType<Vector3f>
 {
     using TReturn = Vector3f;
 
@@ -167,7 +167,7 @@ LuaOptionalArg(OptStringValue, std::string, "My string");
 LuaOptionalArg(OptionalDoubleHalf, double, 0.5);
 LuaOptionalArg(OptionalDouble1, double, 1);
 
-void CoolFunction(Lua::GRefObject& obj)
+void CoolFunction(LTL::GRefObject& obj)
 {
     using namespace std;
     cout << obj["Lua"].ToString() << endl;
@@ -178,50 +178,50 @@ void CoolFunction(Lua::GRefObject& obj)
 void Test()
 {
     using namespace std;
-    using namespace Lua;
-    Lua::State lua_state{};
+    using namespace LTL;
+    LTL::State lua_state{};
     lua_state.OpenLibs();
     {
 
         Vector3f v{ 1,2,3 };
         lua_state
             /*
-            .AddFunction("MakeArray", Lua::ClassFunction<MakeArray<int>>::Function<int>)
-            .AddFunction("DoubleArray", Lua::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
-            .AddFunction("DoubleInt", Lua::ClassFunction<Callable>::Function<int, int>)
-            .AddFunction("TripleInt", Lua::ClassFunction<Callable>::Function<int, int, int>)
-            .AddClosure("SayHello", Lua::CClosure<Say, std::string>::Function<>, "Hello!")
-            .AddFunction("VectorLen", Lua::CFunction <Vector3f::Length>::Function<Vector3f>)
-            .AddFunction("VectorSum", Lua::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>)
-            .AddClosure("SayFoo", Lua::CClosure<Say, const char*>::Function, "Foo")
-            .AddFunction("Say", Lua::CFunction<Say>::Function<const char*>)
-            .AddFunction("Gamma", Lua::CFunction<Gamma>::Function<double>)
-            .AddFunction("Hypot", Lua::CFunction<Hypot>::Function<float, float>)
-            .AddFunction("MyFunc", Lua::CFunction<myfunc, float, float>::Function)
-            .AddFunction("Def", Lua::CFunction<TestDefault, double, Default<double>>::Function)
-            .AddClosure("Upval", Lua::CFunction<TestDefault, double, Upvalue<double>>::Function, 1.f)
-            .AddClosure("Opt", Lua::CFunction<TestDefault, double, OptionalDoubleHalf>::Function)
-            .AddClosure("PrintInc", Lua::CFunction<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
-            .AddClosure("SayBye", Lua::CFunction<Say, OptStringValue>::Function)
-            .AddFunction("GetSystemTime", Lua::CFunction<GetSystemTime>::Function<>)
+            .AddFunction("MakeArray", LTL::ClassFunction<MakeArray<int>>::Function<int>)
+            .AddFunction("DoubleArray", LTL::CFunction<DoubleArray<float>>::Function<std::vector<float>>)
+            .AddFunction("DoubleInt", LTL::ClassFunction<Callable>::Function<int, int>)
+            .AddFunction("TripleInt", LTL::ClassFunction<Callable>::Function<int, int, int>)
+            .AddClosure("SayHello", LTL::CClosure<Say, std::string>::Function<>, "Hello!")
+            .AddFunction("VectorLen", LTL::CFunction <Vector3f::Length>::Function<Vector3f>)
+            .AddFunction("VectorSum", LTL::CFunction <Vector3f::Sum>::Function<Vector3f, Vector3f>)
+            .AddClosure("SayFoo", LTL::CClosure<Say, const char*>::Function, "Foo")
+            .AddFunction("Say", LTL::CFunction<Say>::Function<const char*>)
+            .AddFunction("Gamma", LTL::CFunction<Gamma>::Function<double>)
+            .AddFunction("Hypot", LTL::CFunction<Hypot>::Function<float, float>)
+            .AddFunction("MyFunc", LTL::CFunction<myfunc, float, float>::Function)
+            .AddFunction("Def", LTL::CFunction<TestDefault, double, Default<double>>::Function)
+            .AddClosure("Upval", LTL::CFunction<TestDefault, double, Upvalue<double>>::Function, 1.f)
+            .AddClosure("Opt", LTL::CFunction<TestDefault, double, OptionalDoubleHalf>::Function)
+            .AddClosure("PrintInc", LTL::CFunction<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
+            .AddClosure("SayBye", LTL::CFunction<Say, OptStringValue>::Function)
+            .AddFunction("GetSystemTime", LTL::CFunction<GetSystemTime>::Function<>)
             */
-            //.AddFunction("VecSum2", Lua::CFunction<&Vector3f::operator+, Vector3f, Vector3f>::Function)
-            //.AddClosure("VecPtr", Lua::CFunction<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
-            //.AddClosure("CoolFunction", Lua::CFunction<CoolFunction, GRefObject>::Function)
+            //.AddFunction("VecSum2", LTL::CFunction<&Vector3f::operator+, Vector3f, Vector3f>::Function)
+            //.AddClosure("VecPtr", LTL::CFunction<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
+            //.AddClosure("CoolFunction", LTL::CFunction<CoolFunction, GRefObject>::Function)
             ;
     }
 
 
     if (lua_state.DoFile("main.lua"))
     {
-        Lua::GRefObject obj = Lua::GRefObject::FromStack(lua_state, -1);
+        LTL::GRefObject obj = LTL::GRefObject::FromStack(lua_state, -1);
 
         cout << obj.Is<const char*>() << std::endl;
         cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
         return;
     }
 
-    Lua::GRefObject obj2(lua_state);
+    LTL::GRefObject obj2(lua_state);
     cout << obj2.IsNil() << endl;
 
     GRefObject obj3 = GRefObject::MakeTable(lua_state);
@@ -369,7 +369,7 @@ float Dot(const Vector3f& v1, const Vector3f& v2)
 
 void ClassTest()
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     try
     {
@@ -479,7 +479,7 @@ template<typename T>
 double Measure()
 {
     using namespace std;
-    Lua::State<T> s;
+    LTL::State<T> s;
     s.OpenLibs();
     double start = GetSystemTime();
 
@@ -503,7 +503,7 @@ double Measure()
 
 void PerfAllocTest()
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     auto t = 0.0;
     const auto n = 10;
@@ -523,7 +523,7 @@ void PerfAllocTest()
 
 void TypeMatching()
 {
-    using namespace Lua;
+    using namespace LTL;
     using namespace std;
     State s;
 

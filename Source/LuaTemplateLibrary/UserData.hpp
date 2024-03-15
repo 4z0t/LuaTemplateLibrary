@@ -5,7 +5,7 @@
 #include "Exception.hpp"
 #include "RefObject.hpp"
 
-namespace Lua
+namespace LTL
 {
     template<typename T>
     struct RegistryTableBase

@@ -5,7 +5,7 @@
 #include "UserData.hpp"
 
 
-namespace Lua
+namespace LTL
 {
 
     struct GetterBase {};
