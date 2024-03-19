@@ -85,12 +85,11 @@ TEST_F(RefObjectTests, CompareTest)
 
         ASSERT_TRUE(a == b);
         ASSERT_FALSE(a != b);
-        // throws for some reason and dont catch
-        //ASSERT_THROW(a > b, Exception);
-        //ASSERT_FALSE(a < b); 
-        //ASSERT_FALSE(a > b);
-        //ASSERT_TRUE(a >= b);
-        //ASSERT_TRUE(a <= b);
+        // throws exception after that StackPop tries to restore stack, but throws another exception during deconstruction (fixed?)
+        ASSERT_THROW(a > b, Exception);
+        ASSERT_THROW(a < b, Exception);
+        ASSERT_THROW(a >= b, Exception);
+        ASSERT_THROW(a <= b, Exception);
     }
 
 }
@@ -578,10 +577,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace LTL;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-        {
-            int c = s->GetGlobal<int>("globalValue");
-            return a + b + c;
-        };
+    {
+        int c = s->GetGlobal<int>("globalValue");
+        return a + b + c;
+    };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -615,9 +614,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
+    {
+        ASSERT_TRUE(lua_gettop(l) == 0);
+    };
 
     using namespace LTL;
     using namespace std;
@@ -1069,9 +1068,9 @@ TEST_F(MultReturnTests, Tests)
     {
 
         constexpr auto f = +[]() -> MultReturn<int, int>
-            {
-                return { 1,2 };
-            };
+        {
+            return { 1,2 };
+        };
 
         RegisterFunction(l, "f", CFunction<f>::Function);
 
@@ -1099,9 +1098,9 @@ TEST_F(OptionalTests, Tests)
     using namespace std;
     {
         constexpr auto f = +[](const optional<int>& value) -> bool
-            {
-                return value.has_value();
-            };
+        {
+            return value.has_value();
+        };
 
 
         RegisterFunction(l, "f", CFunction<f, optional<int>>::Function);
