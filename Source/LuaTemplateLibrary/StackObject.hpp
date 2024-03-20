@@ -10,6 +10,7 @@ namespace LTL
     {
     public:
         StackObjectView() = delete;
+
         StackObjectView(lua_State* l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
 
         template<typename T>

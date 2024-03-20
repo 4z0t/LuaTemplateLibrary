@@ -1,3 +1,13 @@
+/**
+ * @file Property.hpp
+ * @author 4z0t
+ * @brief Файл содержит определения для классов свойств, геттеров и сеттеров
+ * @version 0.1
+ * @date 2024-03-20
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #pragma once
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
@@ -12,6 +22,13 @@ namespace LTL
     struct SetterBase {};
     struct PropertyBase {};
 
+    /**
+     * @brief Класс для описания геттера пользовательского класса.
+     * @see AGetter
+     * @tparam C класс содержащий поле
+     * @tparam T тип поля класса
+     * @tparam Field ссылка на поле класса
+     */
     template<class C, typename T, T C::* Field>
     struct Getter :public GetterBase
     {
@@ -77,7 +94,12 @@ namespace LTL
     };
 
 
-
+    /**
+     * @brief Класс для описания геттера пользовательского класса.
+     * Автоматически определяет класс и тип поля по его ссылке.
+     * 
+     * @tparam Field ссылка на поле класса
+     */
     template<auto Field>
     struct AGetter : Getter<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
