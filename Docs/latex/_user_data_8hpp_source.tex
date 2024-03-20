@@ -4,7 +4,7 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LuaTypes.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_lua_types_8hpp}{LuaTypes.hpp}}"{}}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}FuncArguments.hpp"{}}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Exception.hpp"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}RefObject.hpp"{}}}
@@ -224,17 +224,17 @@
 \DoxyCodeLine{00220\ \ \ \ \ \{}
 \DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UD}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UserData<T>}};}
 \DoxyCodeLine{00222\ }
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
 \DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ UD::IsUserData(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
 \DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00227\ }
-\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UD}}\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UD}}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
 \DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ UD::ValidateUserData(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
 \DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00232\ }
-\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ T\&\&\ value)}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ T\&\&\ value)}
 \DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ UD::PushCopy(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ std::forward<T>(value));}
 \DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \}}

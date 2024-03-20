@@ -81,19 +81,157 @@ $(function() {
   <div class="headertitle"><div class="title">Шаблон структуры LTL::StackType&lt; T, Extension &gt;</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответствие.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_lua_types_8hpp_source.html">LuaTypes.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Открытые статические члены</h2></td></tr>
-<tr class="memitem:a1f94b9bd72e14272ccda9160c52f4963" id="r_a1f94b9bd72e14272ccda9160c52f4963"><td class="memItemLeft" align="right" valign="top"><a id="a1f94b9bd72e14272ccda9160c52f4963" name="a1f94b9bd72e14272ccda9160c52f4963"></a>
-<a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> T&#160;</td><td class="memItemRight" valign="bottom"><b>Get</b> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">int</a> index)</td></tr>
+<tr class="memitem:a1f94b9bd72e14272ccda9160c52f4963" id="r_a1f94b9bd72e14272ccda9160c52f4963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f94b9bd72e14272ccda9160c52f4963">Get</a> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">int</a> index)</td></tr>
+<tr class="memdesc:a1f94b9bd72e14272ccda9160c52f4963"><td class="mdescLeft">&#160;</td><td class="mdescRight">преобразует объект на стеке ВМ Lua по индексу <em>index</em> в тип <b>T</b>  <br /></td></tr>
 <tr class="separator:a1f94b9bd72e14272ccda9160c52f4963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac57f1a375f74a319211524fccc743f31" id="r_ac57f1a375f74a319211524fccc743f31"><td class="memItemLeft" align="right" valign="top"><a id="ac57f1a375f74a319211524fccc743f31" name="ac57f1a375f74a319211524fccc743f31"></a>
-<a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Check</b> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">int</a> index)</td></tr>
+<tr class="memitem:ac57f1a375f74a319211524fccc743f31" id="r_ac57f1a375f74a319211524fccc743f31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac57f1a375f74a319211524fccc743f31">Check</a> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">int</a> index)</td></tr>
+<tr class="memdesc:ac57f1a375f74a319211524fccc743f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">проверяет объект на стеке ВМ Lua по индексу <em>index</em> на соответствие типу <b>T</b>  <br /></td></tr>
 <tr class="separator:ac57f1a375f74a319211524fccc743f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6c0f153eef35819778dd2f0a864b403" id="r_ad6c0f153eef35819778dd2f0a864b403"><td class="memItemLeft" align="right" valign="top"><a id="ad6c0f153eef35819778dd2f0a864b403" name="ad6c0f153eef35819778dd2f0a864b403"></a>
-<a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Push</b> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">const</a> T &amp;value)</td></tr>
+<tr class="memitem:ad6c0f153eef35819778dd2f0a864b403" id="r_ad6c0f153eef35819778dd2f0a864b403"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6c0f153eef35819778dd2f0a864b403">Push</a> (<a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *<a class="el" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="el" href="struct_l_t_l_1_1_c_function.html">const</a> T &amp;value)</td></tr>
+<tr class="memdesc:ad6c0f153eef35819778dd2f0a864b403"><td class="mdescLeft">&#160;</td><td class="mdescRight">помещает объект типа <b>T</b> на вершину стека ВМ Lua  <br /></td></tr>
 <tr class="separator:ad6c0f153eef35819778dd2f0a864b403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> T, <a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a> = void&gt;<br />
+struct LTL::StackType&lt; T, Extension &gt;</div><p>Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответствие. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+    <tr><td class="paramname">Extension</td><td>используется для std::enable_if </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>См. также</dt><dd>std::enable_if </dd></dl>
+</div><h2 class="groupheader">Методы</h2>
+<a id="ac57f1a375f74a319211524fccc743f31" name="ac57f1a375f74a319211524fccc743f31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac57f1a375f74a319211524fccc743f31">&#9670;&#160;</a></span>Check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> T , <a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a>  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">bool</a> <a class="el" href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a>&lt; T, <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a> &gt;::Check </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *</td>          <td class="paramname"><span class="paramname"><em>l</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">int</a></td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>проверяет объект на стеке ВМ Lua по индексу <em>index</em> на соответствие типу <b>T</b> </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>состояние ВМ Lua </td></tr>
+    <tr><td class="paramname">index</td><td>индекс объекта на стеке </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1f94b9bd72e14272ccda9160c52f4963" name="a1f94b9bd72e14272ccda9160c52f4963"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f94b9bd72e14272ccda9160c52f4963">&#9670;&#160;</a></span>Get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> T , <a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a>  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> T <a class="el" href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a>&lt; T, <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a> &gt;::Get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *</td>          <td class="paramname"><span class="paramname"><em>l</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">int</a></td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>преобразует объект на стеке ВМ Lua по индексу <em>index</em> в тип <b>T</b> </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>состояние ВМ Lua </td></tr>
+    <tr><td class="paramname">index</td><td>индекс объекта на стеке </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>T </dd></dl>
+
+</div>
+</div>
+<a id="ad6c0f153eef35819778dd2f0a864b403" name="ad6c0f153eef35819778dd2f0a864b403"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6c0f153eef35819778dd2f0a864b403">&#9670;&#160;</a></span>Push()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> T , <a class="el" href="struct_l_t_l_1_1_c_function.html">typename</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a>  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_c_function.html">static</a> <a class="el" href="struct_l_t_l_1_1_c_function.html">void</a> <a class="el" href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a>&lt; T, <a class="el" href="struct_l_t_l_1_1_c_function.html">Extension</a> &gt;::Push </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">lua_State</a> *</td>          <td class="paramname"><span class="paramname"><em>l</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_l_t_l_1_1_c_function.html">const</a> T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>помещает объект типа <b>T</b> на вершину стека ВМ Lua </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>состояние ВМ Lua </td></tr>
+    <tr><td class="paramname">value</td><td>помещаемый на стек объект </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>Объявления и описания членов структуры находятся в файле:<ul>
 <li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_lua_types_8hpp_source.html">LuaTypes.hpp</a></li>
 </ul>

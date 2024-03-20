@@ -1,182 +1,183 @@
 \doxysection{Lua\+Types.\+hpp}
 \hypertarget{_lua_types_8hpp_source}{}\label{_lua_types_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/LuaTypes.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/LuaTypes.hpp}}
-
+\mbox{\hyperlink{_lua_types_8hpp}{См. документацию.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Internal.hpp"{}}}
-\DoxyCodeLine{00003\ }
-\DoxyCodeLine{00004\ \textcolor{keyword}{namespace\ }LTL}
-\DoxyCodeLine{00005\ \{}
-\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keyword}{class\ }CState;}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \ \ \ \ CState*\ WrapState(lua\_State*\ l);}
-\DoxyCodeLine{00009\ }
-\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Type}
-\DoxyCodeLine{00011\ \ \ \ \ \{}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ None\ =\ LUA\_TNONE,}
-\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ Nil\ =\ LUA\_TNIL,}
-\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ Boolean\ =\ LUA\_TBOOLEAN,}
-\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ Lightdata\ =\ LUA\_TLIGHTUSERDATA,}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ Number\ =\ LUA\_TNUMBER,}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ String\ =\ LUA\_TSTRING,}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ Table\ =\ LUA\_TTABLE,}
-\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ Function\ =\ LUA\_TFUNCTION,}
-\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ Userdata\ =\ LUA\_TUSERDATA,}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ Thread\ =\ LUA\_TTHREAD,}
-\DoxyCodeLine{00022\ \ \ \ \ \};}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
-\DoxyCodeLine{00025\ \ \ \ \ \{}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00030\ \ \ \ \ \};}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Extension\ =\ \textcolor{keywordtype}{void}>}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}}
-\DoxyCodeLine{00034\ \ \ \ \ \{}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Get\ function"{}});}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Internal.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }CState;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ CState*\ WrapState(lua\_State*\ l);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Type}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ None\ =\ LUA\_TNONE,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ Nil\ =\ LUA\_TNIL,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ Boolean\ =\ LUA\_TBOOLEAN,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ Lightdata\ =\ LUA\_TLIGHTUSERDATA,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ Number\ =\ LUA\_TNUMBER,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ String\ =\ LUA\_TSTRING,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ Table\ =\ LUA\_TTABLE,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ Function\ =\ LUA\_TFUNCTION,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ Userdata\ =\ LUA\_TUSERDATA,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ Thread\ =\ LUA\_TTHREAD,}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
+\DoxyCodeLine{00035\ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00040\ }
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Check\ function"{}});}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ T\&\ value)}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Push\ function"{}});}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00050\ \ \ \ \ \};}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
-\DoxyCodeLine{00054\ \ \ \ \ \{}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}};}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00059\ \ \ \ \ \};}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
-\DoxyCodeLine{00063\ \ \ \ \ \{}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}*\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ WrapState(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00068\ \ \ \ \ \};}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<char>\ \{\};}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ char>\ \{\};}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<int>\ \{\};}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ int>\ \{\};}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{short}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<short>\ \{\};}
+\DoxyCodeLine{00040\ \ \ \ \ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Extension\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Get\ function"{}});}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Check\ function"{}});}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ T\&\ value)}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ STATIC\_FAIL(\textcolor{stringliteral}{"{}Not\ provided\ implementation\ for\ Push\ function"{}});}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \};}
+\DoxyCodeLine{00079\ }
 \DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{short}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ short>\ \{\};}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<long\ long>\ \{\};}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ long\ long>\ \{\};}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{/*\ template<>}}
-\DoxyCodeLine{00089\ \textcolor{comment}{\ \ \ \ \ struct\ StackType<std::nullptr\_t>}}
-\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ \ \{}}
-\DoxyCodeLine{00091\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ static\ bool\ Check(lua\_State*\ l,\ int\ index)}}
-\DoxyCodeLine{00092\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \{}}
-\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ return\ lua\_isnil(l,\ index);}}
-\DoxyCodeLine{00094\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \}}}
-\DoxyCodeLine{00095\ \textcolor{comment}{}}
-\DoxyCodeLine{00096\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ static\ void\ Push(lua\_State*\ l,\ std::nullptr\_t)}}
-\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \{}}
-\DoxyCodeLine{00098\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pushnil(l);}}
-\DoxyCodeLine{00099\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \}}}
-\DoxyCodeLine{00100\ \textcolor{comment}{\ \ \ \ \ \};*/}}
-\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
+\DoxyCodeLine{00082\ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{AlwaysValid}}}
+\DoxyCodeLine{00091\ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}*\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ WrapState(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<char>\ \{\};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ char>\ \{\};}
 \DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}}>}
-\DoxyCodeLine{00104\ \ \ \ \ \{}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00109\ \ \ \ \ \};}
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{float}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<float>\ \{\};}
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{double}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<double>\ \{\};}
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{double}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<long\ double>\ \{\};}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{bool}}>}
-\DoxyCodeLine{00120\ \ \ \ \ \{}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_toboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{bool}\ value)}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ value);}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00135\ \ \ \ \ \};}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser<const\ char*>}}\ \{\};}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<int>\ \{\};}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ int>\ \{\};}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{short}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<short>\ \{\};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{short}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ short>\ \{\};}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<long\ long>\ \{\};}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{unsigned}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_int_parser}{Internal::IntParser}}<unsigned\ long\ long>\ \{\};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{/*\ template<>}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ \ struct\ StackType<std::nullptr\_t>}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ \ \{}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ static\ bool\ Check(lua\_State*\ l,\ int\ index)}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ return\ lua\_isnil(l,\ index);}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00123\ \textcolor{comment}{}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ static\ void\ Push(lua\_State*\ l,\ std::nullptr\_t)}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pushnil(l);}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ \ \};*/}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}}>}
+\DoxyCodeLine{00132\ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \};}
+\DoxyCodeLine{00138\ }
 \DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{string}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser}}<std::string>\ \{\};}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{float}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<float>\ \{\};}
 \DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{string\_view}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser}}<std::string\_view>\ \{\};}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}>}
-\DoxyCodeLine{00146\ \ \ \ \ \{}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_tocfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_iscfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ value)}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushcfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ value);}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00161\ \ \ \ \ \};}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{template}<>}
-\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nullptr\_t}}>}
-\DoxyCodeLine{00165\ \ \ \ \ \{}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ std::nullptr\_t)}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00175\ \ \ \ \ \};}
-\DoxyCodeLine{00176\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{double}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<double>\ \{\};}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{long}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{double}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_float_parser}{Internal::FloatParser}}<long\ double>\ \{\};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{bool}}>}
+\DoxyCodeLine{00148\ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_toboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{bool}\ value)}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ value);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}}*>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser<const\ char*>}}\ \{\};}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{string}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser}}<std::string>\ \{\};}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{string\_view}}>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_string_parser}{Internal::StringParser}}<std::string\_view>\ \{\};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}>}
+\DoxyCodeLine{00174\ \ \ \ \ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_tocfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_iscfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ value)}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushcfunction}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ value);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \ \ \};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<std::\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nullptr\_t}}>}
+\DoxyCodeLine{00193\ \ \ \ \ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ std::nullptr\_t)}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushnil}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \};}
+\DoxyCodeLine{00204\ \}}
 
 \end{DoxyCode}

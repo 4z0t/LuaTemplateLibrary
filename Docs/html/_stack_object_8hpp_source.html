@@ -86,7 +86,7 @@ $(function() { codefold.init(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;LuaAux.hpp&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;LuaState.hpp&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;LuaTypes.hpp&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_lua_types_8hpp.html">LuaTypes.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;RefObject.hpp&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>LTL</div>
@@ -102,7 +102,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        T To()<span class="keyword">const</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType&lt;T&gt;::Get</a>(m_state, m_index);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">StackType&lt;T&gt;::Get</a>(m_state, m_index);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">template</span>&lt;Type LType&gt;</div>
@@ -114,7 +114,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">bool</span> Is()<span class="keyword">const</span></div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType&lt;T&gt;::Check</a>(m_state, m_index);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31">StackType&lt;T&gt;::Check</a>(m_state, m_index);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        }</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> Push()<span class="keyword">const</span></div>
@@ -283,17 +283,17 @@ $(function() { codefold.init(0); });
 <div class="foldopen" id="foldopen00196" data-start="{" data-end="};">
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_stack_type_3_01_stack_object_view_01_4.html">  196</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType</a>&lt;<a class="code hl_class" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&gt;</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keyword">static</span> <a class="code hl_class" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> Get(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keyword">static</span> <a class="code hl_class" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">Get</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keywordtype">int</span> index)</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        {</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            <span class="keywordflow">return</span> { <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, index };</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        }</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">static</span> <span class="keywordtype">bool</span> Check(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31">Check</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keywordtype">int</span> index)</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        {</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            <span class="keywordflow">return</span> !<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_isnone</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, index);</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        }</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> Push(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keyword">const</span> <a class="code hl_class" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&amp; value)</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#ad6c0f153eef35819778dd2f0a864b403">Push</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <span class="keyword">const</span> <a class="code hl_class" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&amp; value)</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        {</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">assert</a>(value.GetState() == <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>);</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            value.Push();</div>
@@ -302,10 +302,14 @@ $(function() { codefold.init(0); });
 </div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
+<div class="ttc" id="a_lua_types_8hpp_html"><div class="ttname"><a href="_lua_types_8hpp.html">LuaTypes.hpp</a></div><div class="ttdoc">Файл с описанием типов ВМ Lua и преобразованием их в базовые типы языка C++.</div></div>
 <div class="ttc" id="aclass_l_t_l_1_1_stack_object_view_html"><div class="ttname"><a href="class_l_t_l_1_1_stack_object_view.html">LTL::StackObjectView</a></div><div class="ttdef"><b>Definition</b> StackObject.hpp:10</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_c_function_html"><div class="ttname"><a href="struct_l_t_l_1_1_c_function.html">LTL::CFunction</a></div><div class="ttdef"><b>Definition</b> LuaFunctions.hpp:262</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_stack_popper_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_popper.html">LTL::StackPopper</a></div><div class="ttdef"><b>Definition</b> LuaAux.hpp:11</div></div>
-<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a></div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:34</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a></div><div class="ttdoc">Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответстви...</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:52</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_a1f94b9bd72e14272ccda9160c52f4963"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">LTL::StackType::Get</a></div><div class="ttdeci">static T Get(lua_State *l, int index)</div><div class="ttdoc">преобразует объект на стеке ВМ Lua по индексу index в тип T</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:57</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_ac57f1a375f74a319211524fccc743f31"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31">LTL::StackType::Check</a></div><div class="ttdeci">static bool Check(lua_State *l, int index)</div><div class="ttdoc">проверяет объект на стеке ВМ Lua по индексу index на соответствие типу T</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:66</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_ad6c0f153eef35819778dd2f0a864b403"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#ad6c0f153eef35819778dd2f0a864b403">LTL::StackType::Push</a></div><div class="ttdeci">static void Push(lua_State *l, const T &amp;value)</div><div class="ttdoc">помещает объект типа T на вершину стека ВМ Lua</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:74</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

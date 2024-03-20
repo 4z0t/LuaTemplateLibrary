@@ -409,7 +409,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            {</div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                TUnwrappedReturn <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">result</a> = FunctionCaller::Call(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">args</a>);</div>
 <div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                FunctionHelper::ReplaceUpvalues(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">args</a>);</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                <a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType&lt;TRet&gt;::Push</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, std::move(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">result</a>));</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#ad6c0f153eef35819778dd2f0a864b403">StackType&lt;TRet&gt;::Push</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, std::move(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">result</a>));</div>
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            }</div>
 <div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        }</div>
@@ -422,7 +422,7 @@ $(function() { codefold.init(0); });
 <div class="ttc" id="astruct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_html"><div class="ttname"><a href="struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper.html">LTL::Internal::FunctionCaller::CallHelper</a></div><div class="ttdef"><b>Definition</b> LuaFunctions.hpp:150</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_internal_1_1_function_caller_html"><div class="ttname"><a href="struct_l_t_l_1_1_internal_1_1_function_caller.html">LTL::Internal::FunctionCaller</a></div><div class="ttdef"><b>Definition</b> LuaFunctions.hpp:143</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_internal_1_1_function_helper_html"><div class="ttname"><a href="struct_l_t_l_1_1_internal_1_1_function_helper.html">LTL::Internal::FunctionHelper</a></div><div class="ttdef"><b>Definition</b> LuaFunctions.hpp:128</div></div>
-<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a></div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:34</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_ad6c0f153eef35819778dd2f0a864b403"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#ad6c0f153eef35819778dd2f0a864b403">LTL::StackType::Push</a></div><div class="ttdeci">static void Push(lua_State *l, const T &amp;value)</div><div class="ttdoc">помещает объект типа T на вершину стека ВМ Lua</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:74</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

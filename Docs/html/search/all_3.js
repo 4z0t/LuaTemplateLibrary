@@ -9,10 +9,11 @@ var searchData=
   ['cfunction_6',['CFunction',['../struct_l_t_l_1_1_c_function.html',1,'LTL']]],
   ['cfunction_3c_20fn_2c_20tret_28targs_2e_2e_2e_29_3e_7',['CFunction&lt; fn, TRet(TArgs...)&gt;',['../struct_l_t_l_1_1_c_function_3_01fn_00_01_t_ret_07_t_args_8_8_8_08_4.html',1,'LTL']]],
   ['cfunctionbase_8',['CFunctionBase',['../struct_l_t_l_1_1_internal_1_1_c_function_base.html',1,'LTL::Internal']]],
-  ['checkoptional_9',['CheckOptional',['../struct_l_t_l_1_1_check_optional.html',1,'LTL']]],
-  ['checkoptional_3c_20unwrap_5ft_3c_20topt_20_3e_20_3e_10',['CheckOptional&lt; Unwrap_t&lt; TOpt &gt; &gt;',['../struct_l_t_l_1_1_check_optional.html',1,'LTL']]],
-  ['class_11',['Class',['../struct_l_t_l_1_1_class.html',1,'LTL']]],
-  ['classtable_12',['ClassTable',['../struct_l_t_l_1_1_user_data_1_1_class_table.html',1,'LTL::UserData']]],
-  ['constructor_13',['Constructor',['../struct_l_t_l_1_1_constructor.html',1,'LTL']]],
-  ['cstate_14',['CState',['../class_l_t_l_1_1_c_state.html',1,'LTL']]]
+  ['check_9',['Check',['../struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31',1,'LTL::StackType']]],
+  ['checkoptional_10',['CheckOptional',['../struct_l_t_l_1_1_check_optional.html',1,'LTL']]],
+  ['checkoptional_3c_20unwrap_5ft_3c_20topt_20_3e_20_3e_11',['CheckOptional&lt; Unwrap_t&lt; TOpt &gt; &gt;',['../struct_l_t_l_1_1_check_optional.html',1,'LTL']]],
+  ['class_12',['Class',['../struct_l_t_l_1_1_class.html',1,'LTL']]],
+  ['classtable_13',['ClassTable',['../struct_l_t_l_1_1_user_data_1_1_class_table.html',1,'LTL::UserData']]],
+  ['constructor_14',['Constructor',['../struct_l_t_l_1_1_constructor.html',1,'LTL']]],
+  ['cstate_15',['CState',['../class_l_t_l_1_1_c_state.html',1,'LTL']]]
 ];

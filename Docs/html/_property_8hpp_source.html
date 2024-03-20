@@ -86,7 +86,7 @@ $(function() { codefold.init(0); });
 <a href="_property_8hpp.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;LuaAux.hpp&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;LuaTypes.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_lua_types_8hpp.html">LuaTypes.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;FuncArguments.hpp&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;UserData.hpp&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
@@ -123,7 +123,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">static</span> <span class="keywordtype">int</span> Function(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">lua_State</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>)</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">C</a>* <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">ud</a> = <a class="code hl_struct" href="class_l_t_l_1_1_user_data.html">UserData&lt;C&gt;::ValidateUserData</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, 1);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            T value = <a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType&lt;T&gt;::Get</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, 2);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            T value = <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">StackType&lt;T&gt;::Get</a>(<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">l</a>, 2);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">ud</a>-&gt;*<a class="code hl_struct" href="struct_l_t_l_1_1_c_function.html">Field</a> = std::move(value);</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        }</div>
@@ -183,6 +183,7 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_a_property.html">  110</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_a_property.html">AProperty</a> : <a class="code hl_struct" href="struct_l_t_l_1_1_property.html">Property</a>&lt;typename FieldDeductor&lt;Field&gt;::Class, typename FieldDeductor&lt;Field&gt;::Type, Field&gt; {};</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
+<div class="ttc" id="a_lua_types_8hpp_html"><div class="ttname"><a href="_lua_types_8hpp.html">LuaTypes.hpp</a></div><div class="ttdoc">Файл с описанием типов ВМ Lua и преобразованием их в базовые типы языка C++.</div></div>
 <div class="ttc" id="aclass_l_t_l_1_1_user_data_html"><div class="ttname"><a href="class_l_t_l_1_1_user_data.html">LTL::UserData</a></div><div class="ttdef"><b>Definition</b> UserData.hpp:27</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_a_getter_html"><div class="ttname"><a href="struct_l_t_l_1_1_a_getter.html">LTL::AGetter</a></div><div class="ttdoc">Класс для описания геттера пользовательского класса. Автоматически определяет класс и тип поля по его...</div><div class="ttdef"><b>Definition</b> Property.hpp:104</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_a_property_html"><div class="ttname"><a href="struct_l_t_l_1_1_a_property.html">LTL::AProperty</a></div><div class="ttdef"><b>Definition</b> Property.hpp:110</div></div>
@@ -197,7 +198,7 @@ $(function() { codefold.init(0); });
 <div class="ttc" id="astruct_l_t_l_1_1_property_html"><div class="ttname"><a href="struct_l_t_l_1_1_property.html">LTL::Property</a></div><div class="ttdef"><b>Definition</b> Property.hpp:62</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_setter_base_html"><div class="ttname"><a href="struct_l_t_l_1_1_setter_base.html">LTL::SetterBase</a></div><div class="ttdef"><b>Definition</b> Property.hpp:22</div></div>
 <div class="ttc" id="astruct_l_t_l_1_1_setter_html"><div class="ttname"><a href="struct_l_t_l_1_1_setter.html">LTL::Setter</a></div><div class="ttdef"><b>Definition</b> Property.hpp:48</div></div>
-<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a></div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:34</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_a1f94b9bd72e14272ccda9160c52f4963"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">LTL::StackType::Get</a></div><div class="ttdeci">static T Get(lua_State *l, int index)</div><div class="ttdoc">преобразует объект на стеке ВМ Lua по индексу index в тип T</div><div class="ttdef"><b>Definition</b> LuaTypes.hpp:57</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

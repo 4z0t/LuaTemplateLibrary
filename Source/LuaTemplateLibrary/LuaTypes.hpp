@@ -1,3 +1,13 @@
+/**
+ * @file LuaTypes.hpp
+ * @author 4z0t
+ * @brief Файл с описанием типов ВМ Lua и преобразованием их в базовые типы языка C++
+ * @version 0.1
+ * @date 2024-03-20
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #pragma once
 #include "Internal.hpp"
 
@@ -29,20 +39,38 @@ namespace LTL
         }
     };
 
+    /**
+     * @brief Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также
+     * проверять на соответствие.
+     * 
+     * @tparam T
+     * @tparam Extension используется для std::enable_if
+     * @see std::enable_if
+     */
     template<typename T, typename Extension = void>
     struct StackType
     {
+        /// @brief преобразует объект на стеке ВМ Lua по индексу *index* в тип **T**
+        /// @param l состояние ВМ Lua
+        /// @param index индекс объекта на стеке
+        /// @return T
         static T Get(lua_State* l, int index)
         {
             STATIC_FAIL("Not provided implementation for Get function");
             return {};
         }
 
+        /// @brief проверяет объект на стеке ВМ Lua по индексу *index* на соответствие типу **T**
+        /// @param l состояние ВМ Lua
+        /// @param index индекс объекта на стеке
         static bool Check(lua_State* l, int index)
         {
             STATIC_FAIL("Not provided implementation for Check function");
         }
 
+        /// @brief помещает объект типа **T** на вершину стека ВМ Lua
+        /// @param l состояние ВМ Lua
+        /// @param value помещаемый на стек объект
         static void Push(lua_State* l, const T& value)
         {
             STATIC_FAIL("Not provided implementation for Push function");
