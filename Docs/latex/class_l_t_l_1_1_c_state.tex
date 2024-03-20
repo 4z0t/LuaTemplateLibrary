@@ -1,0 +1,85 @@
+\doxysection{Класс LTL\+::CState}
+\hypertarget{class_l_t_l_1_1_c_state}{}\label{class_l_t_l_1_1_c_state}\index{LTL::CState@{LTL::CState}}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7d03c15627d9ca50a8530bee09c457f5}\label{class_l_t_l_1_1_c_state_a7d03c15627d9ca50a8530bee09c457f5} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} () \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}}
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af5fe0edb02fb6258b16314af3151bca9}\label{class_l_t_l_1_1_c_state_af5fe0edb02fb6258b16314af3151bca9} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a40cfc8e7d11ca04d1333174393e703a1}\label{class_l_t_l_1_1_c_state_a40cfc8e7d11ca04d1333174393e703a1} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Open\+Libs} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a4f0a97791c2548c33ca5d79b48c506c5}\label{class_l_t_l_1_1_c_state_a4f0a97791c2548c33ca5d79b48c506c5} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{bool}} {\bfseries Do\+File} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a0b1dec4b4ef061abe5eae85f3f21a1d3}\label{class_l_t_l_1_1_c_state_a0b1dec4b4ef061abe5eae85f3f21a1d3} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} T $>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Push} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} T \&value)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a0a88770adebf50bc2cc81eaf2fa152d5}\label{class_l_t_l_1_1_c_state_a0a88770adebf50bc2cc81eaf2fa152d5} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Pop} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{size\+\_\+t}} n=1)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aba4d35696b837bf9ce6aabcef03e9526}\label{class_l_t_l_1_1_c_state_aba4d35696b837bf9ce6aabcef03e9526} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Close} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_afec8134c62945259c7aa957dc4da5671}\label{class_l_t_l_1_1_c_state_afec8134c62945259c7aa957dc4da5671} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} ... Ts$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Register\+Closure} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+CFunction}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Ts}} \&\&... \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aebd9e77bd918b034a08a52cfd8c8749b}\label{class_l_t_l_1_1_c_state_aebd9e77bd918b034a08a52cfd8c8749b} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} TReturn  = void, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} ... Ts$>$ }\\TReturn {\bfseries Call} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Ts}} \&\&... \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aeca6712a0fc4f02421adf706ad1fe72c}\label{class_l_t_l_1_1_c_state_aeca6712a0fc4f02421adf706ad1fe72c} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} T $>$ }\\T {\bfseries Get} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_ab82a899790e678d632df35cf83886e67}\label{class_l_t_l_1_1_c_state_ab82a899790e678d632df35cf83886e67} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Run} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{s}})  \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{throw}} (\mbox{\hyperlink{class_l_t_l_1_1_exception}{Exception}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a16479f7bdd87eb2b9c510ef55d0d1afb}\label{class_l_t_l_1_1_c_state_a16479f7bdd87eb2b9c510ef55d0d1afb} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+CFunction}} {\bfseries Set\+At\+Panic\+Funtion} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+CFunction}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af969056e4e57d0231be4490432d53cc4}\label{class_l_t_l_1_1_c_state_af969056e4e57d0231be4490432d53cc4} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Set\+Alloc\+Function} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+Alloc}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}=\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nullptr}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7020f01692835769df0a4c2dfb17a457}\label{class_l_t_l_1_1_c_state_a7020f01692835769df0a4c2dfb17a457} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Remove} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abf671a4a20e930b135cf479f3d4e752b}\label{class_l_t_l_1_1_c_state_abf671a4a20e930b135cf479f3d4e752b} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Rotate} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} n)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7d0b9b760bd549eba7f7d920d89dc07d}\label{class_l_t_l_1_1_c_state_a7d0b9b760bd549eba7f7d920d89dc07d} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Duplicate} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_adcfff3aabd5bc9096a05353ffcd49b40}\label{class_l_t_l_1_1_c_state_adcfff3aabd5bc9096a05353ffcd49b40} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} {\bfseries Set\+Table} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af909e2b8c3646cec8da237618c214c93}\label{class_l_t_l_1_1_c_state_af909e2b8c3646cec8da237618c214c93} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} {\bfseries Get\+Table} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{int}} index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_ade43ff71d5b5d8b8aec36ce6c7a53bc4}\label{class_l_t_l_1_1_c_state_ade43ff71d5b5d8b8aec36ce6c7a53bc4} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} ... Ts$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*} {\bfseries Push\+Format\+String} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fmt}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Ts}} \&...\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aa8d443816501ba02ea54c9e1111ee47f}\label{class_l_t_l_1_1_c_state_aa8d443816501ba02ea54c9e1111ee47f} 
+{\footnotesize template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} T $>$ }\\T {\bfseries Get\+Global} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{char}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a52e3ee529b53dd56d027aab0d09d90d8}\label{class_l_t_l_1_1_c_state_a52e3ee529b53dd56d027aab0d09d90d8} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{static}} \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Wrap} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_add9ac72a52dcebfbc71619292459fe65}\label{class_l_t_l_1_1_c_state_add9ac72a52dcebfbc71619292459fe65} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{static}} \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Create} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abb5a67f0710a594cbf4cc0cfd6f507fd}\label{class_l_t_l_1_1_c_state_abb5a67f0710a594cbf4cc0cfd6f507fd} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{static}} \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Create} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+Alloc}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{f}}, \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{void}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}=\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nullptr}})
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a4592632957dcc431c06d4f1db9c46b73}\label{class_l_t_l_1_1_c_state_a4592632957dcc431c06d4f1db9c46b73} 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{static}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\+\_\+\+State}} \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}} \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{s}})
+\end{DoxyCompactItemize}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Lua\+State.\+hpp\end{DoxyCompactItemize}

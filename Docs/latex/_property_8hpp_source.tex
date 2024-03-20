@@ -1,0 +1,96 @@
+\doxysection{Property.\+hpp}
+\hypertarget{_property_8hpp_source}{}\label{_property_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Property.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Property.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LuaTypes.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}FuncArguments.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}UserData.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_getter_base}{GetterBase}}\ \{\};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_setter_base}{SetterBase}}\ \{\};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_property_base}{PropertyBase}}\ \{\};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ C,\ \textcolor{keyword}{typename}\ T,\ T\ C::*\ Field>}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_getter}{Getter}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{struct_l_t_l_1_1_getter_base}{GetterBase}}}
+\DoxyCodeLine{00017\ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}\ =\ \mbox{\hyperlink{class_l_t_l_1_1_user_data}{UserData<C>::ValidateUserData}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ 1);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Field}});}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ C,\ \textcolor{keyword}{typename}\ T,\ T\ C::*\ Field>}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_setter}{Setter}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{struct_l_t_l_1_1_setter_base}{SetterBase}}}
+\DoxyCodeLine{00031\ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}\ =\ \mbox{\hyperlink{class_l_t_l_1_1_user_data}{UserData<C>::ValidateUserData}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ 1);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ T\ value\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType<T>::Get}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ 2);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ud}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Field}}\ =\ std::move(value);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ C,\ \textcolor{keyword}{typename}\ T,\ T\ C::*\ Field>}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_property}{Property}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{struct_l_t_l_1_1_property_base}{PropertyBase}}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_getter}{Getter<C,\ T,\ Field>::Function}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Set(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_setter}{Setter<C,\ T,\ Field>::Function}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{template}<auto\ Field>}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_field_deductor}{FieldDeductor}}}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ C,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_field_deductor_1_1___deduced}{\_Deduced}}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Class}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Type\ =\ T;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ C,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{\_Deduced<C,\ T>}}\ Deduce(T\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}::*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{member}})\ \{\}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Deduced\ =\ \textcolor{keyword}{typename}\ \textcolor{keyword}{decltype}(Deduce(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Field}}));}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\ =\ \textcolor{keyword}{typename}\ Deduced::Class;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Type\ =\ \textcolor{keyword}{typename}\ Deduced::Type;}
+\DoxyCodeLine{00077\ \ \ \ \ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{template}<auto\ Field>}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_a_getter}{AGetter}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_getter}{Getter}}<typename\ FieldDeductor<Field>::Class,\ typename\ FieldDeductor<Field>::Type,\ Field>\ \{\};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{template}<auto\ Field>}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_a_setter}{ASetter}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_setter}{Setter}}<typename\ FieldDeductor<Field>::Class,\ typename\ FieldDeductor<Field>::Type,\ Field>\ \{\};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{template}<auto\ Field>}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_a_property}{AProperty}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_property}{Property}}<typename\ FieldDeductor<Field>::Class,\ typename\ FieldDeductor<Field>::Type,\ Field>\ \{\};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \}}
+
+\end{DoxyCode}

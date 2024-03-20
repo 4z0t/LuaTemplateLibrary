@@ -1,0 +1,80 @@
+\doxysection{Class\+Constructor.\+hpp}
+\hypertarget{_class_constructor_8hpp_source}{}\label{_class_constructor_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/ClassConstructor.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/ClassConstructor.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LuaTypes.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}FuncArguments.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}UserData.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}FuncUtils.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }C,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_constructor}{Constructor}}}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ArgsTuple\ =\ std::tuple<Unwrap\_t<TArgs>...>;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ ArgsTuple\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}};}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ Constructor::GetArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ UnpackArgs(\mbox{\hyperlink{class_l_t_l_1_1_user_data}{UserData<C>::Allocate}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}),\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}},\ std::index\_sequence\_for<TArgs...>\{\});}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ GetArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FuncUtility::GetArgs<ArgsTuple,\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ ...\ Is>}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ UnpackArgs(\textcolor{keywordtype}{void}*\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{object},\ ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}},\ \textcolor{keyword}{const}\ std::index\_sequence<Is...>)}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Make(\textcolor{keywordtype}{object},\ std::get<Is>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})...);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ Make(\textcolor{keywordtype}{void}*\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{object},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Unwrap\_t<TArgs>}}\&\ ...\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_constructible\_v<C,\ Unwrap\_t<TArgs>...>,\ \textcolor{stringliteral}{"{}Object\ of\ class\ C\ can't\ be\ constructed\ with\ such\ arguments!"{}});}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{object}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_match_argument_types}{MatchArgumentTypes}}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ max\_arg\_count\ =\ FuncUtility::MaxArgumentCount<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>();}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ min\_arg\_count\ =\ FuncUtility::MinArgumentCount<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ Predicate(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FuncUtility::MatchesTypes<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ MatchArgumentCount(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (min\_arg\_count\ ==\ max\_arg\_count)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ max\_arg\_count\ ==\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_gettop}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_gettop}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ n\ >=\ min\_arg\_count\ \&\&\ n\ <=\ max\_arg\_count;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushboolean}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ MatchArgumentCount(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})\ \&\&\ Predicate(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}));}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \};}
+\DoxyCodeLine{00074\ \}}
+
+\end{DoxyCode}

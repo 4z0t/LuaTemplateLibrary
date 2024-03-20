@@ -1,0 +1,239 @@
+\doxysection{Class.\+hpp}
+\hypertarget{_class_8hpp_source}{}\label{_class_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Class.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Class.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}UserData.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}LuaFunctions.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}LuaState.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}ClassConstructor.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Property.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}StackObject.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ lua\_regptr\_isnt\_set(l,\ p)\ assert(lua\_getregp(l,\ p)\ ==\ LUA\_TNIL)}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{struct\ }Class;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_method_base}{MethodBase}}\ \{\};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ C>}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_user_data_value_class_wrapper}{UserDataValueClassWrapper}}}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_user_data_value_class_wrapper_1_1_add_user_data_value}{AddUserDataValue}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_type_base}{TypeBase}}<T>\ \{\};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_user_data_value_class_wrapper_1_1_add_user_data_value}{AddUserDataValue}}<C>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_type_base}{TypeBase}}<UserData<C>>\ \{\};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }AUDV\_t\ =\ \textcolor{keyword}{typename}\ AddUserDataValue<T>::type;}
+\DoxyCodeLine{00030\ \ \ \ \ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }C,\ \textcolor{keyword}{auto}\ fn,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_method}{Method}}\ :\ \textcolor{keyword}{private}\ \mbox{\hyperlink{struct_l_t_l_1_1_user_data_value_class_wrapper}{UserDataValueClassWrapper}}<C>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{struct_l_t_l_1_1_method_base}{MethodBase}}}
+\DoxyCodeLine{00034\ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{TClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class<C>}};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }UserDataValueClassWrapper::AUDV\_t;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_method}{Method}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ AddMethod(\mbox{\hyperlink{struct_l_t_l_1_1_class}{TClass}}\&\ c,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ method\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{CFunction<fn,\ UserData<C>}},\ AUDV\_t<TArgs>...>::Function;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ c.AddMetaMethod(name,\ method);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }C,\ \textcolor{keyword}{auto}\ fn,\ \textcolor{keyword}{typename}\ TReturn,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_method}{Method}}<C,\ fn,\ TReturn(TArgs...)>\ :\ \textcolor{keyword}{private}\ \mbox{\hyperlink{struct_l_t_l_1_1_user_data_value_class_wrapper}{UserDataValueClassWrapper}}<C>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{struct_l_t_l_1_1_method_base}{MethodBase}}}
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{TClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class<C>}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }UserDataValueClassWrapper::AUDV\_t;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_method}{Method}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ AddMethod(\mbox{\hyperlink{struct_l_t_l_1_1_class}{TClass}}\&\ c,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name)}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ method\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{CFunction<fn,\ AUDV\_t<TReturn>}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UserData<C>}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{AUDV\_t<TArgs>}}...)>::Function;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{c}}.AddMetaMethod(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{method}});}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UData}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{UserData<T>}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})\ :m\_state(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}),\ m\_name(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ MakeMetaTable();}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ MakeClassTable();}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (!std::is\_trivially\_destructible\_v<T>)}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Assigning\ dtor\ for\ "{}\ <<\ typeid(T).name()\ <<\ std::endl;}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ AddMetaMethod(\textcolor{stringliteral}{"{}\_\_gc"{}},\ UData::DestructorFunction);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ UData::MetaTable::Push(m\_state);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{metatable}}\{\ m\_state\ \};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{metatable}}.RawSet(\textcolor{stringliteral}{"{}\_\_metatable"{}},\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pop}}(m\_state,\ 1);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ TAlloc>}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<TAlloc>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap(),\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}})\ \{\}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddConstructor()}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ RegisterFunction(m\_state,\ m\_name,\ \mbox{\hyperlink{struct_l_t_l_1_1_constructor}{Constructor<T,\ TArgs...>::Function}});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ TMethod>}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddMethod(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TMethod}}\&)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ TMethod::AddMethod(*\textcolor{keyword}{this},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}});}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ TProperty>}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddProperty(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TProperty}}\&)}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ AddGetter(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ TProperty::Get)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .AddSetter(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ TProperty::Set);}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddGetter(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ MakeIndexTable();}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ UData::IndexTable::Push(m\_state);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ RawSetFunction(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddSetter(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ MakeNewIndexTable();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ UData::NewIndexTable::Push(m\_state);}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ RawSetFunction(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ AddMetaMethod(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ UData::MetaTable::Push(m\_state);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ RawSetFunction(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ SetIndexFunction(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>AddMetaMethod(\textcolor{stringliteral}{"{}\_\_index"{}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ SetNewIndexFunction(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>AddMetaMethod(\textcolor{stringliteral}{"{}\_\_newindex"{}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Base,\ \textcolor{keyword}{typename}\ Derived>}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }EnableIfBaseOf\ =\ std::enable\_if\_t<std::is\_base\_of\_v<Base,\ Derived>,\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&>;}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Element>}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{EnableIfBaseOf<MethodBase,\ Element>}}\ Add(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Element}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}})}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>AddMethod(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}});}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Element>}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{EnableIfBaseOf<PropertyBase,\ Element>}}\ Add(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Element}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}})}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>AddProperty(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}});}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Element>}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{EnableIfBaseOf<GetterBase,\ Element>}}\ Add(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Element}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}})}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<T,\ typename\ Element::TClass>);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ AddGetter(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ Element::Function);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ Element>}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{EnableIfBaseOf<SetterBase,\ Element>}}\ Add(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Element}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{element}})}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_same\_v<T,\ typename\ Element::TClass>);}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ AddSetter(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ Element::Function);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RawSetFunction(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_CFunction}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}})}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_stack_popper}{StackPopper}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{pop}}\{\ m\_state,1\ \};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{table}}\{\ m\_state\ \};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{table}}.RawSet(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{name}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{func}});}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MakeMetaTable()}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_regptr\_isnt\_set(m\_state,\ UData::MetaTable::GetKey());}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_newtable}}(m\_state);}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{metaTable}}\{\ m\_state\ \};}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{metaTable}}.RawSet(\textcolor{stringliteral}{"{}\_\_index"{}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{metaTable}});}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_setregp(m\_state,\ UData::MetaTable::GetKey());}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MakeClassTable()}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_regptr\_isnt\_set(m\_state,\ UData::ClassTable::GetKey());}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_newtable}}(m\_state);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{classTable}}\{\ m\_state\ \};}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{classTable}}.RawSet(\textcolor{stringliteral}{"{}className"{}},\ m\_name);}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_setregp(m\_state,\ UData::ClassTable::GetKey());}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MakeIndexTable()}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_has\_index\_table)}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_regptr\_isnt\_set(m\_state,\ UData::IndexTable::GetKey());}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ SetIndexFunction(UData::IndexMethod);}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_newtable}}(m\_state);}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_setregp(m\_state,\ UData::IndexTable::GetKey());}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ m\_has\_index\_table\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ MakeNewIndexTable()}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_has\_newindex\_table)}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_regptr\_isnt\_set(m\_state,\ UData::NewIndexTable::GetKey());}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ SetNewIndexFunction(UData::NewIndexMethod);}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_newtable}}(m\_state);}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_setregp(m\_state,\ UData::NewIndexTable::GetKey());}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ m\_has\_newindex\_table\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ m\_state;}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ std::string\ m\_name;}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_has\_index\_table\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_has\_newindex\_table\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00232\ \ \ \ \ \};}
+\DoxyCodeLine{00233\ \}}
+
+\end{DoxyCode}

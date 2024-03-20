@@ -1,0 +1,623 @@
+\doxysection{Ref\+Object.\+hpp}
+\hypertarget{_ref_object_8hpp_source}{}\label{_ref_object_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/RefObject.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/RefObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}LuaTypes.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_ref_global_access}{RefGlobalAccess}}}
+\DoxyCodeLine{00009\ \ \ \ \ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ GetRef(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{luaL\_ref}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_REGISTRYINDEX}});}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Unref(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ref}})}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{luaL\_unref}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_REGISTRYINDEX}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ref}});}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ PushRef(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ref}})}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_rawgeti}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_REGISTRYINDEX}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ref}});}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_state}{State}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ RefClass,\ \textcolor{keyword}{typename}\ ParentClass,\ \textcolor{keyword}{typename}\ RefAccess>}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}}
+\DoxyCodeLine{00031\ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}()\ \{\};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ m\_state(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})\ \{\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{assert}}(m\_state,\ \textcolor{stringliteral}{"{}Expected\ not\ null\ lua\_State"{}});\ \};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap())\ \{\};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_auto_pop}{AutoPop}}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_auto_pop}{AutoPop}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ :\ m\_obj(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_obj.Push();}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_auto_pop}{\string~AutoPop}}()}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_obj.Pop();}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}\&\ m\_obj;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_auto_pop}{AutoPop}};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{iterable}})\ :\ m\_table(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{iterable}}),\ m\_key(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{iterable}}.GetState())\ \{\}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}\&\ Next()}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}\ =\ m\_table.GetState();}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_table.Push();}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_key.Push();}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_next}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ -\/2)\ !=\ 0)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_value\ =\ ParentClass::FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_key\ =\ ParentClass::FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_key.Unref();}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_value.Unref();}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pop}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ 1);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{other}})\textcolor{keyword}{const}}
+\DoxyCodeLine{00079\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_table\ ==\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{other}}.m\_table\ \&\&\ m\_key\ ==\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{other}}.m\_key;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{other}})\textcolor{keyword}{const}}
+\DoxyCodeLine{00084\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{other}});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}\&\ operator++()}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>Next();}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::pair<ParentClass,\ ParentClass>\ operator*()\textcolor{keyword}{const}}
+\DoxyCodeLine{00094\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ m\_key,m\_value\ \};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ operator-\/>()\textcolor{keyword}{const}}
+\DoxyCodeLine{00099\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_value;}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ Key()\textcolor{keyword}{const\ }\{\ \textcolor{keywordflow}{return}\ m\_key;\ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ Value()\textcolor{keyword}{const\ }\{\ \textcolor{keywordflow}{return}\ m\_value;\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ m\_table\{\};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ m\_key\{\};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}\ m\_value\{\};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}\ begin()\textcolor{keyword}{const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}(\_This())).Next();\ \};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ Iterator\ end()\textcolor{keyword}{const\ }\{\ \textcolor{keywordflow}{return}\ Iterator(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{ParentClass}}(\_This()));\ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ T\ To()\textcolor{keyword}{const}}
+\DoxyCodeLine{00118\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ StackType<T>::Get(m\_state,\ -\/1);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ T()\textcolor{keyword}{const}}
+\DoxyCodeLine{00125\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>To<T>();}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>Compare<LUA\_OPLT>(other);}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<=(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00137\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>Compare<LUA\_OPLE>(other);}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00143\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>Compare<LUA\_OPEQ>(other);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ std::nullptr\_t\&)\textcolor{keyword}{const}}
+\DoxyCodeLine{00149\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>IsNil();}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00155\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ <=\ other);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00161\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ <\ other);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ T\&\ other)\textcolor{keyword}{const}}
+\DoxyCodeLine{00167\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ TReturn\ Call(TArgs\&\&\ ...args)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ Push();}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ PushArgs(m\_state,\ std::forward<TArgs>(args)...);}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ CallStack<TReturn>(m\_state,\ n);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ TReturn\ SelfCall(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key,\ TArgs\&\&\ ...args)}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ Push();}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_getfield(m\_state,\ -\/1,\ key);}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rotate(m\_state,\ -\/2,\ 1);}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ PushArgs(m\_state,\ std::forward<TArgs>(args)...)\ +\ 1;}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ CallStack<TReturn>(m\_state,\ n);}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ ParentClass\ operator()(TArgs\&\&\ ...args)}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>Call<ParentClass>(std::forward<TArgs>(args)...);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Is()\textcolor{keyword}{const}}
+\DoxyCodeLine{00197\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ StackType<T>::Check(m\_state,\ -\/1);}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsNil()\textcolor{keyword}{const}}
+\DoxyCodeLine{00203\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_isnil(m\_state,\ -\/1);}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsTable()\textcolor{keyword}{const}}
+\DoxyCodeLine{00209\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_istable(m\_state,\ -\/1);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsUserData()\textcolor{keyword}{const}}
+\DoxyCodeLine{00215\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_isuserdata(m\_state,\ -\/1);}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ Type\ Type()\textcolor{keyword}{const}}
+\DoxyCodeLine{00221\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}LTL::Type\textcolor{keyword}{>}(lua\_type(m\_state,\ -\/1));}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ TypeName()\textcolor{keyword}{const}}
+\DoxyCodeLine{00227\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_typename(m\_state,\ lua\_type(m\_state,\ -\/1));}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ToString()\textcolor{keyword}{const}}
+\DoxyCodeLine{00233\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_getglobal(m\_state,\ \textcolor{stringliteral}{"{}tostring"{}});}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ AutoPop\ pop(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_call(m\_state,\ 1,\ 1);}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_tostring(m\_state,\ -\/1);}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{static}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ RefObjectBase\&\ obj)}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ obj.ToString();}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ lua\_State*\ \textcolor{keyword}{const}\ GetState()\textcolor{keyword}{const}}
+\DoxyCodeLine{00246\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>m\_state;}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \string~RefObjectBase()}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ Unref();}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ Clear();}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{int}\ COMPARE\_OP,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Compare(\textcolor{keyword}{const}\ T\&\ value)\textcolor{keyword}{const}}
+\DoxyCodeLine{00259\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>Push();}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ r\ =\ lua\_compare(m\_state,\ -\/2,\ -\/1,\ COMPARE\_OP);}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 2);}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Unref()}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \_This().Unref();}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Clear()}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \_This().Clear();}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push()\textcolor{keyword}{const}}
+\DoxyCodeLine{00278\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \_This().Push();}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Pop()\textcolor{keyword}{const}}
+\DoxyCodeLine{00283\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \_This().Pop();}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ PushRef(\textcolor{keywordtype}{int}\ ref)\textcolor{keyword}{const}}
+\DoxyCodeLine{00288\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ RefAccess::PushRef(m\_state,\ ref);}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ GetRef()}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ RefAccess::GetRef(m\_state);}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UnrefRef(\textcolor{keywordtype}{int}\ ref)}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ RefAccess::Unref(m\_state,\ ref);}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ RefClass\&\ \_This()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }RefClass\&\textcolor{keyword}{>}(*this);\ \}}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ RefClass\&\ \_This()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}RefClass\&\textcolor{keyword}{>}(*this);\ \}}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ lua\_State*\ m\_state\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00307\ \ \ \ \ \};}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ RefAccess\ =\ RefGlobalAccess>}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keyword}{class\ }RefObject;}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ RefAccess>}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keyword}{class\ }RefTableObject;}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ RefAccess>}
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}<RefObject<RefAccess>,\ RefObject<RefAccess>,\ RefAccess>}
+\DoxyCodeLine{00317\ \ \ \ \ \{}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObjectBase<RefObject<RefAccess>}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObject<RefAccess>}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefAccess}}>;}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObjectT}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObject<RefAccess>}};}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}};}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Base::Base;}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state)}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Push();}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ T\&\ value)\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ value);}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}(\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state)}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_ref;}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Clear();}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObjectT}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state)}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Push();}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ operator=(\textcolor{keyword}{const}\ T\&\ value)}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ Unref();}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(this-\/>m\_state,\ value);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ Unref();}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Push();}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_state\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state;}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObjectT}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ Unref();}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Push();}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_state\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state;}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ Ref();}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\ operator=(\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\&\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ Unref();}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_ref;}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_state\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state;}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Clear();}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObjectT}}\ operator[](\textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}})}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObjectT}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}\{\ this-\/>m\_state\ \};}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(this-\/>m\_state,\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}});}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_key\_ref\ =\ this-\/>GetRef();}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ Push();}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_table\_ref\ =\ this-\/>GetRef();}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}};}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}\{\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}\ \};}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Ref();}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}};}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00402\ }
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ FromTop(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}})}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap());}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ Global(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}})}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_getglobal}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}});}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ Global(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}}\ =\ \textcolor{stringliteral}{"{}\_G"{}})}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Global(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap(),\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}});}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ MakeTable(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{narr}}\ =\ 0,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nhash}}\ =\ 0)}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_createtable}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{narr}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nhash}});}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ MakeTable(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}},\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{narr}}\ =\ 0,\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nhash}}\ =\ 0)}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ MakeTable(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap(),\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{narr}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{nhash}});}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ FromStack(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pushvalue}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FromTop(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}});}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}\ FromStack(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FromStack(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}}.GetState()-\/>Unwrap(),\ index);}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push()\textcolor{keyword}{const}}
+\DoxyCodeLine{00446\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>PushRef(m\_ref);}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Unref()}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>m\_state)}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>UnrefRef(m\_ref);}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Ref()}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ this-\/>GetRef();}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Clear()}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_state\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Pop()\textcolor{keyword}{const}}
+\DoxyCodeLine{00472\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pop}}(this-\/>m\_state,\ 1);}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00477\ \ \ \ \ \};}
+\DoxyCodeLine{00478\ }
+\DoxyCodeLine{00479\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ RefAccess>}
+\DoxyCodeLine{00480\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{RefObjectBase}}<RefTableObject<RefAccess>,\ RefObject<RefAccess>,\ RefAccess>}
+\DoxyCodeLine{00481\ \ \ \ \ \{}
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefClass}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObject<RefAccess>}};}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObjectBase<RefTableObject,\ RefObject<RefAccess>}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefAccess}}>;}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefClass}};}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}};}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\ operator[](\textcolor{keyword}{const}\ T\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}})}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefClass}}(*\textcolor{keyword}{this})[\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{key}}];}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\&\ operator=(\textcolor{keyword}{const}\ T\&\ value)}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \ \ \ \ PushTable();}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ PushKey();}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(this-\/>m\_state,\ value);}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_settable}}(this-\/>m\_state,\ -\/3);}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ Pop();}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefClass}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \ \ \ \ PushTable();}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \ \ \ \ PushKey();}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.Push();}
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_settable}}(this-\/>m\_state,\ -\/3);}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \ \ \ \ Pop();}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefClass}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}});}
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00520\ }
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push()\textcolor{keyword}{const}}
+\DoxyCodeLine{00522\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \ \ \ \ PushTable();}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ \ \ \ PushKey();}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_gettable}}(this-\/>m\_state,\ -\/2);}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_remove}}(this-\/>m\_state,\ -\/2);}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Unref()}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>m\_state)}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>UnrefRef(m\_table\_ref);}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>UnrefRef(m\_key\_ref);}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_table\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_key\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}()\ :\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}}()\ \{\};}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})\ \{\ \};}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{State<T>}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}})\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{state}})\ \{\};}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}})\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Base}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.m\_state)}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.PushKey();}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ \ \ \ m\_key\_ref\ =\ this-\/>GetRef();}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{obj}}.PushTable();}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \ \ \ \ m\_table\_ref\ =\ this-\/>GetRef();}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ PushKey()\textcolor{keyword}{const}}
+\DoxyCodeLine{00554\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>PushRef(m\_key\_ref);}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ PushTable()\textcolor{keyword}{const}}
+\DoxyCodeLine{00559\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>PushRef(m\_table\_ref);}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00562\ }
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Clear()}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>m\_state\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ m\_table\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ m\_key\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Pop()\textcolor{keyword}{const}}
+\DoxyCodeLine{00571\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_pop}}(this-\/>m\_state,\ 1);}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_table\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_key\_ref\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LUA\_NOREF}};}
+\DoxyCodeLine{00577\ \ \ \ \ \};}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00579\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{GRefObject}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObject<RefGlobalAccess>}};}
+\DoxyCodeLine{00580\ }
+\DoxyCodeLine{00581\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject}}<T>>}
+\DoxyCodeLine{00583\ \ \ \ \ \{}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObject<T>}}\ Get(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{RefObject<T>::FromStack}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00588\ }
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnone}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefObject<T>}}\&\ value)}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{assert}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}\ ==\ value.GetState());}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \ \ \ \ value.Push();}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00599\ \ \ \ \ \};}
+\DoxyCodeLine{00600\ }
+\DoxyCodeLine{00601\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00602\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{class_l_t_l_1_1_ref_table_object}{RefTableObject}}<T>>}
+\DoxyCodeLine{00603\ \ \ \ \ \{}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Type}}\ =\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{RefTableObject<T>}};}
+\DoxyCodeLine{00605\ }
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ Check(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_isnone}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ index);}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00610\ }
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Push(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Type}}\&\ value)}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{assert}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}}\ ==\ value.GetState());}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ value.Push();}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00616\ \ \ \ \ \};}
+\DoxyCodeLine{00617\ \}}
+
+\end{DoxyCode}

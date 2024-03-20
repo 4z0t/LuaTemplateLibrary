@@ -1,0 +1,321 @@
+\doxysection{Lua\+Functions.\+hpp}
+\hypertarget{_lua_functions_8hpp_source}{}\label{_lua_functions_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/LuaFunctions.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/LuaFunctions.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}FuncArguments.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}FuncUtils.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ template<auto\ fn,\ typename\ ...TUpvalues>}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ struct\ CClosure}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ FnType\ =\ decltype(fn);}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ TReturn\ =\ typename\ std::invoke\_result<FnType,\ TUpvalues\&...,\ TArgs...>::type;}}
+\DoxyCodeLine{00015\ \textcolor{comment}{}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ ArgsTuple\ =\ std::tuple<TArgs...>;}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ Upvalues\ =\ std::tuple<TUpvalues...>;}}
+\DoxyCodeLine{00019\ \textcolor{comment}{}}
+\DoxyCodeLine{00020\ \textcolor{comment}{}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ \ \ public:}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ \ \ \ \ static\ int\ Function(lua\_State*\ l)}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ namespace\ std;}}
+\DoxyCodeLine{00026\ \textcolor{comment}{}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ Indexes\ =\ index\_sequence\_for<TArgs...>;}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ static\_assert(is\_invocable<FnType,\ TUpvalues\&...,\ TArgs...>::value,\ "{}Given\ function\ can't\ be\ called\ with\ such\ arguments!"{});}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ ArgsTupleT\ =\ ArgsTuple<TArgs...>;}}
+\DoxyCodeLine{00030\ \textcolor{comment}{}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Upvalues\ upvalues;}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ GetUpvalues<0,\ Upvalues,\ TUpvalues...>(l,\ upvalues);}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ ArgsTupleT\ args;}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ GetArgs<0,\ ArgsTupleT,\ TArgs\ ...>(l,\ args);}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ constexpr\ (is\_void<TReturn<TArgs...>>::value)}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CClosure::CallHelper(upvalues,\ args,\ index\_sequence\_for<TUpvalues...>\{\},\ Indexes\{\});}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ReplaceUpvalues(l,\ upvalues);}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ 0;}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TReturn<TArgs...>\ result\ =\ CClosure::CallHelper(upvalues,\ args,\ index\_sequence\_for<TUpvalues...>\{\},\ Indexes\{\});}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ReplaceUpvalues(l,\ upvalues);}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ size\_t\ n\_results\ =\ PushResult(l,\ result);}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ static\_cast<int>(n\_results);}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ private:}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ template\ <size\_t\ ...\ UpIs,\ typename\ ...TArgs,\ size\_t\ ...\ Is>}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ \ \ \ \ \ \ \ inline\ static\ TReturn<TArgs...>\ CallHelper(Upvalues\&\ upvalues,\ ArgsTuple<TArgs...>\&\ args,\ std::index\_sequence<UpIs...>\ const,\ std::index\_sequence<Is...>\ const)}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ return\ fn(std::get<UpIs>(upvalues)...,\ std::get<Is>(args)...);}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ \ \};}}
+\DoxyCodeLine{00056\ \textcolor{comment}{}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ \ \ \ template<auto\ fn>}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ \ struct\ CFunction\ :\ public\ CClosure<fn>\ \{}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ \};}}
+\DoxyCodeLine{00060\ \textcolor{comment}{}}
+\DoxyCodeLine{00061\ \textcolor{comment}{}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ \ template<typename\ FnClass,\ typename\ ...TUpvalues>}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ \ struct\ ClassClosure}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ TReturn\ =\ typename\ std::invoke\_result<FnClass,\ TUpvalues\&...,\ TArgs...>::type;}}
+\DoxyCodeLine{00067\ \textcolor{comment}{}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ ArgsTuple\ =\ std::tuple<TArgs...>;}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ \ \ \ \ using\ Upvalues\ =\ std::tuple<TUpvalues...>;}}
+\DoxyCodeLine{00071\ \textcolor{comment}{}}
+\DoxyCodeLine{00072\ \textcolor{comment}{}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ \ \ \ public:}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ \ \ \ \ template<typename\ ...TArgs>}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ \ \ \ \ static\ int\ Function(lua\_State*\ l)}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ namespace\ std;}}
+\DoxyCodeLine{00078\ \textcolor{comment}{}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ Indexes\ =\ index\_sequence\_for<TArgs...>;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ static\_assert(std::is\_invocable<FnClass,\ TUpvalues\&...,\ TArgs...>::value,\ "{}Given\ class\ doesnt\ provide\ callable\ or\ can't\ be\ called\ with\ such\ arguments!"{});}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ using\ ArgsTupleT\ =\ ArgsTuple<TArgs...>;}}
+\DoxyCodeLine{00082\ \textcolor{comment}{}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ Upvalues\ upvalues;}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ GetUpvalues<0,\ Upvalues,\ TUpvalues...>(l,\ upvalues);}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ ArgsTupleT\ args;}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ GetArgs<0,\ ArgsTupleT,\ TArgs\ ...>(l,\ args);}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ constexpr\ (is\_void<TReturn<TArgs...>>::value)}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00089\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ClassClosure::CallHelper(l,\ upvalues,\ args,\ index\_sequence\_for<TUpvalues...>\{\},\ Indexes\{\});}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ReplaceUpvalues(l,\ upvalues);}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ 0;}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TReturn<TArgs...>\ result\ =\ ClassClosure::CallHelper(l,\ upvalues,\ args,\ index\_sequence\_for<TUpvalues...>\{\},\ Indexes\{\});}}
+\DoxyCodeLine{00096\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ReplaceUpvalues(l,\ upvalues);}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ size\_t\ n\_results\ =\ PushResult(l,\ result);}}
+\DoxyCodeLine{00098\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ static\_cast<int>(n\_results);}}
+\DoxyCodeLine{00099\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00100\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00101\ \textcolor{comment}{\ \ \ \ private:}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ \ \ \ \ \ \ \ template\ <size\_t\ ...\ UpIs,\ typename\ ...TArgs,\ size\_t\ ...\ Is>}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ \ \ \ \ \ \ \ inline\ static\ TReturn<TArgs...>\ CallHelper(lua\_State*\ l,\ Upvalues\&\ upvalues,\ ArgsTuple<TArgs...>\&\ args,\ std::index\_sequence<UpIs...>\ const,\ std::index\_sequence<Is...>\ const)}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00105\ \textcolor{comment}{}}
+\DoxyCodeLine{00106\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ constexpr\ (std::is\_constructible<FnClass,\ lua\_State*>::value)}}
+\DoxyCodeLine{00107\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00108\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ FnClass\{\ l\ \}(std::get<UpIs>(upvalues)...,\ std::get<Is>(args)...);}}
+\DoxyCodeLine{00109\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00110\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ FnClass\{\}(std::get<UpIs>(upvalues)...,\ std::get<Is>(args)...);}}
+\DoxyCodeLine{00113\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00114\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ \ \ \ \};}}
+\DoxyCodeLine{00116\ \textcolor{comment}{}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ template<typename\ FnClass>}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ struct\ ClassFunction\ :\ public\ ClassClosure<FnClass>\ \{}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ \ \ \ \};}}
+\DoxyCodeLine{00120\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{namespace\ }Internal}
+\DoxyCodeLine{00123\ \ \ \ \ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{CFunctionBase}}\ \{\};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{FunctionHelper}}\ :\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{CFunctionBase}}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ArgsTuple\ =\ std::tuple<Unwrap\_t<TArgs>...>;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ GetArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FuncUtility::GetArgs<ArgsTuple,\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ ReplaceUpvalues(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FuncUtility::ReplaceUpvalues<ArgsTuple,\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{auto}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}},\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller}{FunctionCaller}}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{FnType}}\ =\ \textcolor{keyword}{decltype}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}});}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ArgsTuple\ =\ std::tuple<Unwrap\_t<TArgs>...>;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_invocable\_v<FnType,\ Unwrap\_t<TArgs>\&...>,\ \textcolor{stringliteral}{"{}Given\ function\ can't\ be\ called\ with\ such\ arguments!"{}});}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }TReturn\ =\ std::invoke\_result\_t<FnType,\ Unwrap\_t<TArgs>\&...>;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ R,\ \textcolor{keyword}{typename}\ D\ =\ R>}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}};}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}},\ \textcolor{keyword}{typename}\ ...Ts>}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}}(*)(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Ts}}...)>}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TReturn\ Call(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Args}}\&...\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}},\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}},\ \textcolor{keyword}{typename}\ ...Ts>}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}::*)(Ts...)\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}>}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}},\ \textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TReturn\ Call(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Args}}\&...\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_base\_of\_v<UserDataValueBase,\ Class>)}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((*arg).*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<Class>)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}.*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}},\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}},\ \textcolor{keyword}{typename}\ ...Ts>}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}::*)(Ts...)\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{noexcept}}>}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}},\ \textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TReturn\ Call(\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Args}}\&...\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_base\_of\_v<UserDataValueBase,\ Class>)}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((*arg).*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<Class>)}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}.*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}},\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}},\ \textcolor{keyword}{typename}\ ...Ts>}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}::*)(Ts...)>}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}},\ \textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TReturn\ Call(\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Args}}\&...\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_base\_of\_v<UserDataValueBase,\ Class>)}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((*arg).*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<Class>)}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}.*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}},\ \textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}},\ \textcolor{keyword}{typename}\ ...Ts>}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{CallHelper}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{R}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{C}}::*)(Ts...)\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{const}}>}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class\ }\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}},\ \textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TReturn\ Call(\textcolor{keyword}{const}\ \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{Args}}\&...\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_base\_of\_v<UserDataValueBase,\ Class>)}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ((*arg).*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_pointer\_v<Class>)}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}-\/>*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{arg}}.*\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}})(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}}...);}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ ...\ Is>}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ TReturn\ Call(ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ UnpackArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}},\ std::index\_sequence\_for<TArgs...>\{\});}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ ...\ Is>}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ TReturn\ UnpackArgs(ArgsTuple\&\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}},\ \textcolor{keyword}{const}\ std::index\_sequence<Is...>)}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ CallHelper<FnType>::Call(std::get<Is>(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}})...);}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00258\ \ \ \ \ \}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{auto}\ fn,\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{CFunction}}\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{Internal::FunctionHelper}}<TArgs...>,\ \textcolor{keyword}{private}\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller}{Internal::FunctionCaller}}<fn,\ TArgs...>}
+\DoxyCodeLine{00262\ \ \ \ \ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }TReturn\ =\ \textcolor{keyword}{typename}\ FunctionCaller::TReturn;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ArgsTuple\ =\ \textcolor{keyword}{typename}\ FunctionHelper::ArgsTuple;}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ ArgsTuple\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}};}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::GetArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_void\_v<TReturn>)}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionCaller::Call(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::ReplaceUpvalues(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{result}}\ =\ FunctionCaller::Call(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::ReplaceUpvalues(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{n\_results}}\ =\ PushResult(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{result}});}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{n\_results}});}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00285\ \ \ \ \ \};}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{auto}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}},\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TRet}},\ \textcolor{keyword}{typename}\ ...TArgs>}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{CFunction}}<\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{fn}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TRet}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArgs}}...)>\ :\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{Internal::FunctionHelper}}<TArgs...>,\ \textcolor{keyword}{private}\ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller}{Internal::FunctionCaller}}<fn,\ TArgs...>}
+\DoxyCodeLine{00289\ \ \ \ \ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }TUnwrappedReturn\ =\ \textcolor{keyword}{typename}\ FunctionCaller::TReturn;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_void\_v<TUnwrappedReturn>\ ==\ std::is\_void\_v<TRet>,\ \textcolor{stringliteral}{"{}If\ function\ returns\ void\ you\ cannot\ return\ anything\ else\ but\ void!"{}});}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }ArgsTuple\ =\ \textcolor{keyword}{typename}\ FunctionHelper::ArgsTuple;}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ Function(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{lua\_State}}*\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}})}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ ArgsTuple\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}};}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::GetArgs(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_void\_v<TUnwrappedReturn>)}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionCaller::Call(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::ReplaceUpvalues(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TUnwrappedReturn\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{result}}\ =\ FunctionCaller::Call(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FunctionHelper::ReplaceUpvalues(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{args}});}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType<TRet>::Push}}(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{l}},\ std::move(\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{result}}));}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \};}
+\DoxyCodeLine{00315\ \}}
+
+\end{DoxyCode}

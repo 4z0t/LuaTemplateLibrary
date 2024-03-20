@@ -1,0 +1,31 @@
+\doxysection{Шаблон структуры LTL\+::Func\+Utility\+::Match\+Upvalues\texorpdfstring{$<$}{<} TUpvalue, TUpvalues... \texorpdfstring{$>$}{>}\+::Matches\texorpdfstring{$<$}{<} TArg, TArgs... \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_func_utility_1_1_match_upvalues_3_01_t_upvalue_00_01_t_upvalues_8_8_8_01_4_1_1_0c68b85f06692a99ade0cc0ef9ebc573}{}\label{struct_l_t_l_1_1_func_utility_1_1_match_upvalues_3_01_t_upvalue_00_01_t_upvalues_8_8_8_01_4_1_1_0c68b85f06692a99ade0cc0ef9ebc573}\index{LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$@{LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$}}
+\doxysubsubsection*{Статические открытые данные}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{static}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{constexpr}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{bool}} \mbox{\hyperlink{struct_l_t_l_1_1_func_utility_1_1_match_upvalues_3_01_t_upvalue_00_01_t_upvalues_8_8_8_01_4_1_1_0c68b85f06692a99ade0cc0ef9ebc573_af9c1b4c116a0304692ee53e6d11d73ad}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Данные класса}
+\Hypertarget{struct_l_t_l_1_1_func_utility_1_1_match_upvalues_3_01_t_upvalue_00_01_t_upvalues_8_8_8_01_4_1_1_0c68b85f06692a99ade0cc0ef9ebc573_af9c1b4c116a0304692ee53e6d11d73ad}\label{struct_l_t_l_1_1_func_utility_1_1_match_upvalues_3_01_t_upvalue_00_01_t_upvalues_8_8_8_01_4_1_1_0c68b85f06692a99ade0cc0ef9ebc573_af9c1b4c116a0304692ee53e6d11d73ad} 
+\index{LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$@{LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$}!value@{value}}
+\index{value@{value}!LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$@{LTL::FuncUtility::MatchUpvalues$<$ TUpvalue, TUpvalues... $>$::Matches$<$ TArg, TArgs... $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TUpvalue}} , \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} ... TUpvalues$>$ \\
+template$<$\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArg}} , \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{typename}} ... TArgs$>$ \\
+\mbox{\hyperlink{struct_l_t_l_1_1_c_function}{constexpr}} \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{bool}} \mbox{\hyperlink{struct_l_t_l_1_1_func_utility_1_1_match_upvalues}{LTL\+::\+Func\+Utility\+::\+Match\+Upvalues}}$<$ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TUpvalue}}, TUpvalues... $>$\+::\+Matches$<$ \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{TArg}}, TArgs... $>$\+::value\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Инициализатор}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ IsUpvalueType<TArg>::value\ ?}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::is\_same\_v<Unwrap\_t<TArg>,\ TUpvalue>\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MatchUpvalues<TUpvalues...>::Matches<TArgs...>::value)\ :}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MatchUpvalues<TUpvalue,\ TUpvalues...>::Matches<TArgs...>::value}
+
+\end{DoxyCode}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Func\+Utils.\+hpp\end{DoxyCompactItemize}
