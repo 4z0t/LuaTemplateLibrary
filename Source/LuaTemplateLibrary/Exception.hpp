@@ -8,12 +8,12 @@ namespace LTL
     public:
         Exception(lua_State* l, int index) :std::runtime_error(GetReason(l, index)), m_state(l) {}
 
-        lua_State* GetState()const
+        lua_State* GetState()const noexcept
         {
             return m_state;
         }
 
-        static int PanicFunc(lua_State* l)
+        static int PanicFunc(lua_State* l) throw(Exception)
         {
             throw Exception(l, -1);
         }
