@@ -121,8 +121,6 @@ struct Vector3f
 template<>
 struct LTL::StackType<Vector3f>
 {
-    using TReturn = Vector3f;
-
     static bool Check(lua_State* l, int index)
     {
         return lua_istable(l, index);
@@ -149,12 +147,10 @@ struct LTL::StackType<Vector3f>
     static void Push(lua_State* l, const Vector3f& vec)
     {
         lua_createtable(l, 3, 0);
-        lua_pushnumber(l, vec.x);
-        lua_rawseti(l, -2, 1);
-        lua_pushnumber(l, vec.y);
-        lua_rawseti(l, -2, 2);
-        lua_pushnumber(l, vec.z);
-        lua_rawseti(l, -2, 3);
+        LTL::StackObjectView tbl{ l };
+        tbl.RawSetI(1, vec.x);
+        tbl.RawSetI(2, vec.y);
+        tbl.RawSetI(3, vec.z);
     }
 };
 
@@ -463,8 +459,8 @@ void ClassTest()
         lua_state.DoFile("example.lua");
 
         GRefObject my_ref = GRefObject::Global(lua_state, "MyFunction");
-        cout << (my_ref == nullptr)<< endl;
-        
+        cout << (my_ref == nullptr) << endl;
+
 
 
 
@@ -533,13 +529,30 @@ void TypeMatching()
 
 }
 
+void MyVectorStackType()
+{
+    using namespace LTL;
+    using namespace std;
+    State s;
+    s.OpenLibs();
+    s.Run(
+        "function PrintVector(v) "
+        "   print(string.format('{ %.2f, %.2f, %.2f }',v[1],v[2],v[3])) "
+        "end "
+    );
+    Vector3f v{ 1,2,3 };
+    s.Call("PrintVector", v);
+
+}
+
 
 int main()
 {
-    ClassTest();
+    //ClassTest();
     //Test();
     //PerfAllocTest();
 
     //StackObjectTest();
     //TypeMatching();
+    MyVectorStackType();
 }
