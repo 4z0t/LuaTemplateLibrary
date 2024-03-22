@@ -9,8 +9,6 @@ namespace LTL
     template<typename T>
     class UserData;
 
-
-
     CState* WrapState(lua_State* l)
     {
         return (CState*)l;
@@ -153,6 +151,13 @@ namespace LTL
             return Get<T>(-1);
         }
 
+        template<typename T>
+        void SetGlobal(const char* name, const T& value)
+        {
+            Push(value);
+            lua_setglobal(Unwrap(), name);
+        }
+
     private:
         CState() = delete;
         ~CState() = delete;
@@ -284,21 +289,16 @@ namespace LTL
             return Run(s.c_str());
         }
 
-
         template<typename TReturn = GRefObject>
-        TReturn Global(const char* key)
+        TReturn GetGlobal(const char* key)
         {
-            StackPopper pop{ m_cstate->Unwrap(), 1 };
-            lua_getglobal(m_cstate->Unwrap(), key);
-            return To<TReturn>(-1);
+            return m_cstate->GetGlobal<TReturn>(key);
         }
 
         template<typename T>
         State& SetGlobal(const char* name, const T& value)
         {
-            Push(value);
-            lua_setglobal(m_cstate->Unwrap(), name);
-
+            m_cstate->SetGlobal(name, value);
             return *this;
         }
 
