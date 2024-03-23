@@ -434,25 +434,26 @@ TEST_F(UserDataTests, PropertyTests)
     }
 }
 
+struct Vector3f
+{
+    float x, y, z;
+
+    Vector3f(float x, float y, float z) :x(x), y(y), z(z)
+    {
+
+    }
+    Vector3f() :Vector3f(0, 0, 0) {}
+
+    float Length()const
+    {
+        return sqrtf(x * x + y * y + z * z);
+    }
+};
 
 TEST_F(UserDataTests, APropertyTests)
 {
     using namespace LTL;
-    struct Vector3f
-    {
-        float x, y, z;
 
-        Vector3f(float x, float y, float z) :x(x), y(y), z(z)
-        {
-
-        }
-        Vector3f() :Vector3f(0, 0, 0) {}
-
-        float Length()const
-        {
-            return sqrtf(x * x + y * y + z * z);
-        }
-    };
 
     Class<Vector3f>(l, "Vector")
         .AddConstructor<Default<float>, Default<float>, Default<float>>()
@@ -577,10 +578,10 @@ TEST_F(StateTests, UpvalueTest)
     using namespace LTL;
 
     constexpr auto func = +[](int a, CState* s, int b)->int
-    {
-        int c = s->GetGlobal<int>("globalValue");
-        return a + b + c;
-    };
+        {
+            int c = s->GetGlobal<int>("globalValue");
+            return a + b + c;
+        };
 
     Run("globalValue = 4 ");
     RegisterClosure(l, "Func", CFunction<func, Upvalue<int>, CState*, Upvalue<int>>::Function, 1, 2);
@@ -614,9 +615,9 @@ TEST_F(StackObjectViewTest, Tests)
 {
 
     const auto AssertEmptyStack = [&]()
-    {
-        ASSERT_TRUE(lua_gettop(l) == 0);
-    };
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
 
     using namespace LTL;
     using namespace std;
@@ -1068,9 +1069,9 @@ TEST_F(MultReturnTests, Tests)
     {
 
         constexpr auto f = +[]() -> MultReturn<int, int>
-        {
-            return { 1,2 };
-        };
+            {
+                return { 1,2 };
+            };
 
         RegisterFunction(l, "f", CFunction<f>::Function);
 
@@ -1098,9 +1099,9 @@ TEST_F(OptionalTests, Tests)
     using namespace std;
     {
         constexpr auto f = +[](const optional<int>& value) -> bool
-        {
-            return value.has_value();
-        };
+            {
+                return value.has_value();
+            };
 
 
         RegisterFunction(l, "f", CFunction<f, optional<int>>::Function);
@@ -1141,3 +1142,70 @@ TEST_F(OptionalTests, Tests)
     }
 
 }
+
+#ifdef _WIN32
+
+// Tets memory leaks ans safety
+// https://stackoverflow.com/questions/29174938/googletest-and-memory-leaks
+#include <crtdbg.h>
+
+class MemoryLeakDetector {
+public:
+    MemoryLeakDetector() {
+        _CrtMemCheckpoint(&memState_);
+    }
+
+    ~MemoryLeakDetector() {
+        _CrtMemState stateNow, stateDiff;
+        _CrtMemCheckpoint(&stateNow);
+        int diffResult = _CrtMemDifference(&stateDiff, &memState_, &stateNow);
+        if (diffResult)
+            reportFailure(stateDiff.lSizes[1]);
+    }
+private:
+    void reportFailure(unsigned int unfreedBytes) {
+        FAIL() << "Memory leak of " << unfreedBytes << " byte(s) detected.";
+    }
+    _CrtMemState memState_;
+};
+
+struct TestNotRegisteredUserDataClass :TestBase
+{
+
+};
+
+
+struct MyMemoryClass
+{
+public:
+    std::vector<int> v;
+
+
+    MyMemoryClass(int n)
+    {
+        v.reserve(n);
+    }
+    ~MyMemoryClass() = default;
+
+};
+
+TEST_F(TestNotRegisteredUserDataClass, Tests)
+{
+    using namespace LTL;
+    using namespace std;
+    {
+
+        MemoryLeakDetector leakDetector;
+        State s;
+        s.ThrowExceptions();
+        ASSERT_THROW(s.MakeUserData<Vector3f>(1, 2, 3), std::logic_error);
+    }
+    {
+
+        MemoryLeakDetector leakDetector;
+        State s;
+        s.ThrowExceptions();
+        ASSERT_THROW(s.MakeUserData<MyMemoryClass>(10), std::logic_error);
+    }
+}
+#endif // WINDOWS
