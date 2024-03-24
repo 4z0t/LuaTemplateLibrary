@@ -243,6 +243,7 @@ TEST_F(ExceptionTests, ThrowTests)
 {
     Run("result = true");
     ASSERT_THROW(Result().Call(), LTL::Exception);
+    ASSERT_THROW(int _ = Result().Call<int>(), LTL::Exception);
     ASSERT_THROW(Result()["Key"].To<int>(), LTL::Exception);
 
 }
