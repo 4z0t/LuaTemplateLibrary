@@ -88,6 +88,12 @@ namespace LTL
             return LTL::CallFunction<TReturn>(Unwrap(), name, std::forward<Ts>(args)...);
         }
 
+        template<typename TReturn = void, typename ...Ts>
+        PCallReturn<TReturn> PCall(const char* name, Ts&&... args)
+        {
+            return LTL::CallFunctionProtected<TReturn>(Unwrap(), name, std::forward<Ts>(args)...);
+        }
+
         template<typename T>
         T Get(int index)
         {
@@ -266,6 +272,12 @@ namespace LTL
         TReturn Call(const char* name, Ts&&... args)
         {
             return m_cstate->Call<TReturn>(name, std::forward<Ts>(args)...);
+        }
+
+        template<typename TReturn = void, typename ...Ts>
+        PCallReturn<TReturn> PCall(const char* name, Ts&&... args)
+        {
+            return m_cstate->PCall<TReturn>(name, std::forward<Ts>(args)...);
         }
 
         template<typename T>

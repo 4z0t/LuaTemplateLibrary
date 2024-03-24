@@ -1144,6 +1144,100 @@ TEST_F(OptionalTests, Tests)
 
 }
 
+
+
+
+// pcall tests
+
+struct TestPcall :TestBase
+{
+
+};
+
+
+TEST_F(TestPcall, Tests)
+{
+    using namespace LTL;
+    using namespace std;
+    {
+        State s;
+        s.OpenLibs();
+        s.Run(
+            "function f() end"
+        );
+        ASSERT_EQ(s.PCall("f"), PCallResult::Ok);
+        ASSERT_TRUE(s.PCall("f").IsOk());
+    }
+
+    {
+        State s;
+        s.OpenLibs();
+        s.Run(
+            "function f() error() end"
+        );
+        ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
+        ASSERT_FALSE(s.PCall("f").IsOk());
+    }
+
+    /*  {// later
+          State s;
+          s.OpenLibs();
+
+          constexpr auto f = +[](lua_State* l) ->int {
+              StackObjectView i{ l ,1 };
+              lua_createtable(l, 0, i.To<int>());
+              return 1;
+              };
+
+          s.AddFunction("maketbl", f);
+
+          s.Run(
+              "function f() "
+              " local t = {} "
+              " for i = 1, 10000000 do "
+              " local tinner = {} "
+              " table.insert(t, maketbl(2000000000)) "
+              " end"
+              " end"
+          );
+          ASSERT_EQ(s.PCall("f"), PCallResult::ERRMEM);
+          ASSERT_FALSE(s.PCall("f").IsOk());
+      }*/
+    {
+        State s;
+        s.OpenLibs();
+        constexpr auto f = +[](lua_State* l) ->int {
+            lua_error(l);
+            return 0;
+            };
+
+        s.AddFunction("myerror", f);
+        s.Run(
+            "function f() myerror() end"
+        );
+        ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
+        ASSERT_FALSE(s.PCall("f").IsOk());
+    }
+    {
+        State s;
+        s.OpenLibs();
+        constexpr auto f = +[](lua_State* l) ->int {
+            luaL_checkstring(l, -1);
+            return 0;
+            };
+
+        s.AddFunction("myerror", f);
+        s.Run(
+            "function f() myerror() end"
+        );
+        ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
+        ASSERT_FALSE(s.PCall("f").IsOk());
+    }
+
+}
+
+
+
 #ifdef _WIN32
 
 // Tets memory leaks ans safety

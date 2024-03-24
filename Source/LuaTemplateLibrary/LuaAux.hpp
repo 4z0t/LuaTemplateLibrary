@@ -1,6 +1,7 @@
 #pragma once
 #include "LuaTypes.hpp"
 #include "FuncArguments.hpp"
+#include <optional>
 
 namespace LTL
 {
@@ -131,11 +132,82 @@ namespace LTL
         return CallStack<TReturn>(l, n);
     }
 
-    template<typename ...Ts>
-    bool CallFunctionProtected(lua_State* l, const char* name, Ts&&... args)
+
+    enum class PCallResult
+    {
+        Ok = LUA_OK,
+        Yield = LUA_YIELD,
+        ERRRUN = LUA_ERRRUN,
+        ERRSYNTAX = LUA_ERRSYNTAX,
+        ERRMEM = LUA_ERRMEM,
+        ERRERR = LUA_ERRERR,
+    };
+
+    struct PCallReturnBase
+    {
+        PCallResult status = PCallResult::Ok;
+
+        PCallReturnBase(PCallResult status)
+        {
+            this->status = status;
+        }
+
+        bool IsOk()const
+        {
+            return status == PCallResult::Ok;
+        }
+
+        bool operator==(PCallResult status)const
+        {
+            return this->status == status;
+        }
+
+    };
+
+    template<typename T>
+    struct PCallReturn : PCallReturnBase
+    {
+        std::optional<T> result = std::nullopt;
+
+        PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result(result) {}
+
+        PCallReturn(PCallResult status) : PCallReturn(std::nullopt, status) {}
+
+    };
+
+    template<>
+    struct PCallReturn<void> : PCallReturnBase
+    {
+        using PCallReturnBase::PCallReturnBase;
+    };
+
+    template<typename TReturn = void>
+    PCallReturn<TReturn> PCallStack(lua_State* l, const size_t  n_args)
+    {
+        PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
+        if (status == PCallResult::Ok)
+        {
+            TReturn result = GetValue<TReturn>(l, -1);
+            lua_pop(l, 1);
+            return { result, status };
+        }
+        else
+        {
+            return { status };
+        }
+    }
+
+    template<>
+    PCallReturn<void> PCallStack(lua_State* l, const size_t  n_args)
+    {
+        return static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
+    }
+
+    template< typename TReturn = void, typename ...Ts>
+    PCallReturn<TReturn> CallFunctionProtected(lua_State* l, const char* name, Ts&&... args)
     {
         size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
-        return lua_pcall(l, n, 0, 0) == LUA_OK;
+        return PCallStack<TReturn>(l, n);
     }
 
 
