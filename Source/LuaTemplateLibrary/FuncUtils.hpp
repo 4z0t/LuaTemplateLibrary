@@ -8,6 +8,7 @@ namespace LTL
 {
     namespace FuncUtility
     {
+
         template<typename T>
         struct NoIncrement : std::false_type {};
 
@@ -66,21 +67,7 @@ namespace LTL
                 return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
             }
         };
-
-        template<typename T>
-        struct UpvalueReplacer
-        {
-            template<size_t UpvalueI>
-            static  constexpr void Replace(lua_State* l, const T& value)
-            {
-                if constexpr (!std::is_pointer_v<T>)
-                {
-                    PushValue(l, value);
-                    lua_replace(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
-                }
-            }
-        };
-
+    
         template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
@@ -115,7 +102,11 @@ namespace LTL
         {
             if constexpr (IsUpvalueType<T>::value)
             {
-                UpvalueReplacer<Unwrap_t<T>>::Replace<UpvalueIndex>(l, std::get<TupleIndex>(args));
+                if constexpr (!std::is_pointer_v<T>)
+                {
+                    PushValue(l, std::get<TupleIndex>(args));
+                    lua_replace(l, lua_upvalueindex(static_cast<int>(UpvalueIndex) + 1));
+                }
             }
             return ReplaceUpvalues<
                 TupleIndex + 1,
@@ -130,6 +121,7 @@ namespace LTL
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
 
+#pragma region ArgumentTypeMatching
         template<typename ...>
         struct MatchUpvalues;
 
@@ -263,6 +255,7 @@ namespace LTL
         {
             return MaxArgumentCount<0, Ts...>();
         }
+#pragma endregion
 
     }
 }
