@@ -176,7 +176,7 @@ namespace LTL
             return StackObjectView{ l };
         }
 
-        ~StackObjectView() {}
+        ~StackObjectView() = default;
 
         lua_State* const GetState()const
         {
