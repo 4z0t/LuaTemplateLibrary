@@ -27,6 +27,11 @@ namespace LTL
     {
         using UserDataValue::UserDataValue;
 
+        struct MetaTable : public RegistryTableBase<MetaTable> {};
+        struct ClassTable : public RegistryTableBase<ClassTable> {};
+        struct IndexTable : public RegistryTableBase<IndexTable> {};
+        struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
+
         static void* const  Allocate(lua_State* l)
         {
             void* const obj = lua_newuserdata(l, sizeof(T));
@@ -126,11 +131,6 @@ namespace LTL
             return static_cast<T*>(lua_touserdata(l, index));
         }
 
-        struct MetaTable : public RegistryTableBase<MetaTable> {};
-        struct ClassTable : public RegistryTableBase<ClassTable> {};
-        struct IndexTable : public RegistryTableBase<IndexTable> {};
-        struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
-
         static int IndexMethod(lua_State* l)
         {
             IndexTable::Push(l);
@@ -196,6 +196,7 @@ namespace LTL
         }
 
     private:
+#pragma region ThrowFunctions
         static void ThrowInvalidUserData(lua_State* l, int index)
         {
             luaL_argerror(l, index, "invalind UserData");
@@ -215,6 +216,7 @@ namespace LTL
         {
             luaL_argerror(l, index, "Expected userdata with metatable");
         }
+#pragma endregion
     };
 
     template<typename T>

@@ -545,6 +545,31 @@ void MyVectorStackType()
 
 }
 
+void RetOptional()
+{
+    using namespace LTL;
+    using namespace std;
+    State s;
+    s.OpenLibs();
+    s.Run(
+        "function RetOpt(v) "
+        "   if v < 10 and v>0 then  "
+        "       return v "
+        "   end "
+        "   return nil "
+        "end "
+    );
+    auto r = s.Call<optional<int>>("RetOpt", 1);
+    if (r.has_value())
+        cout << r.value() << endl;
+    else
+        cout << "null" << endl;
+    r = s.Call<optional<int>>("RetOpt", 10);
+    if (r.has_value())
+        cout << r.value() << endl;
+    else
+        cout << "null" << endl;
+}
 
 int main()
 {
@@ -554,5 +579,7 @@ int main()
 
     //StackObjectTest();
     //TypeMatching();
-    MyVectorStackType();
+    //MyVectorStackType();
+    RetOptional();
+
 }
