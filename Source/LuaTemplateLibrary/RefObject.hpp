@@ -177,6 +177,14 @@ namespace LTL
         }
 
         template<typename TReturn = void, typename ...TArgs>
+        PCallReturn<TReturn> PCall(TArgs&& ...args)
+        {
+            Push();
+            size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
+            return PCallStack<TReturn>(m_state, n);
+        }
+
+        template<typename TReturn = void, typename ...TArgs>
         TReturn SelfCall(const char* key, TArgs&& ...args)
         {
             Push();
@@ -184,6 +192,16 @@ namespace LTL
             lua_rotate(m_state, -2, 1);
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
             return CallStack<TReturn>(m_state, n);
+        }
+
+        template<typename TReturn = void, typename ...TArgs>
+        PCallReturn<TReturn> SelfPCall(const char* key, TArgs&& ...args)
+        {
+            Push();
+            lua_getfield(m_state, -1, key);
+            lua_rotate(m_state, -2, 1);
+            size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
+            return PCallStack<TReturn>(m_state, n);
         }
 
         template<typename ...TArgs>
