@@ -64,8 +64,10 @@ namespace LTL
 
         static int DestructorFunction(lua_State* l)
         {
+
             T* data = static_cast<T*>(lua_touserdata(l, 1));
-            data->~T();
+            if (data != nullptr)
+                data->~T();
 
             return 0;
         }
