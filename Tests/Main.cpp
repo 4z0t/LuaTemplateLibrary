@@ -613,10 +613,6 @@ void ClassTestStack()
         {
         }
 
-        MyClass(MyClass&& other) noexcept :m_name(std::move(other.m_name))
-        {
-        }
-
         string GetName()const
         {
             return m_name;
@@ -637,7 +633,7 @@ void ClassTestStack()
     Class<MyClass>(s, "MyClass")
         //.AddConstructor<string>()
         .AddGetter("Name", CFunction<&MyClass::GetName, UserData<MyClass>>::Function)
-        .Add("Duplicate", Method<MyClass, copyf, MyClass() >{})
+        .AddMetaMethod("Duplicate", Constructor<MyClass, UserData<MyClass>>::Function)
         ;
     MyClass instance("smart name");
 
