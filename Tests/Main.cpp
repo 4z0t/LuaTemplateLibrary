@@ -571,6 +571,96 @@ void RetOptional()
         cout << "null" << endl;
 }
 
+
+void OnlyMethods()
+{
+
+    using namespace LTL;
+    using namespace std;
+    State s;
+    s.OpenLibs();
+    Class<Vector3f>(s, "Vector")
+        .AddConstructor<Default<float>, Default<float>, Default<float>>()
+        .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
+        .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(CState*)>{})
+        .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
+        ;
+    s.Run(
+        "local v = Vector(1,2,3) "
+        "print(v) "
+        "local v2 = Vector(4,5,6) "
+        "print(v+v2) "
+    );
+
+
+}
+
+
+
+void ClassTestStack()
+{
+    using namespace LTL;
+    using namespace std;
+
+    struct MyClass
+    {
+        MyClass(const string& name) :m_name(name)
+        {
+
+        }
+
+        MyClass(const MyClass& other) :MyClass(other.m_name)
+        {
+        }
+
+        MyClass(MyClass&& other) noexcept :m_name(std::move(other.m_name))
+        {
+        }
+
+        string GetName()const
+        {
+            return m_name;
+        }
+
+
+    private:
+        string m_name;
+    };
+
+    constexpr auto copyf = +[](const MyClass& other)-> MyClass
+        {
+            return { other };
+        };
+
+    State s;
+    s.OpenLibs();
+    Class<MyClass>(s, "MyClass")
+        //.AddConstructor<string>()
+        .AddGetter("Name", CFunction<&MyClass::GetName, UserData<MyClass>>::Function)
+        .Add("Duplicate", Method<MyClass, copyf, MyClass() >{})
+        ;
+    MyClass instance("smart name");
+
+    StackType<UserData<MyClass>>::Push(s.GetState()->Unwrap(), instance); // ugly
+    GRefObject udata = GRefObject::FromTop(s);
+
+
+    s.Run(
+        "function MyClasPrintName(ud) "
+        " print(ud.Name) " 
+        "end "
+        "function MyClasPrintNameDup(ud) "
+        " print(ud.Name) "
+        " print(ud:Duplicate().Name) "
+        "end "
+        
+    );
+    s.Call("MyClasPrintName", udata);
+    s.Call("MyClasPrintNameDup", udata);
+
+
+}
+
 int main()
 {
     //ClassTest();
@@ -580,6 +670,10 @@ int main()
     //StackObjectTest();
     //TypeMatching();
     //MyVectorStackType();
-    RetOptional();
+    //RetOptional();
+    //OnlyMethods();
+
+    ClassTestStack();
+
 
 }

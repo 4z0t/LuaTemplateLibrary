@@ -45,6 +45,12 @@ namespace LTL
             new(Allocate(l)) T(std::forward<T>(other));
         }
 
+        static void PushCopy(lua_State* l, const T& other)
+        {
+            static_assert(std::is_copy_constructible_v<T>, "Can't copy-construct type T!");
+            new(Allocate(l)) T(other);
+        }
+
         template<typename Alloc, typename ...TArgs>
         static GRefObject Make(const State<Alloc>& s, TArgs&&... args)
         {
@@ -237,6 +243,11 @@ namespace LTL
         static void Push(lua_State* l, T&& value)
         {
             UD::PushCopy(l, std::forward<T>(value));
+        }
+
+        static void Push(lua_State* l, const T& value)
+        {
+            UD::PushCopy(l, value);
         }
     };
 
