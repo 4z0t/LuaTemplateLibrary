@@ -467,7 +467,7 @@ void ClassTest()
     }
     catch (Exception& ex)
     {
-        std::cerr << ex.what() << std::endl;
+        std::cerr << ex.GetReason() << std::endl;
     }
 }
 
@@ -675,20 +675,65 @@ int CountCharacters(const char* s, const char* c)
     return i;
 }
 
+
+int ICanThrow(int a)noexcept
+{
+    return a * a;
+}
+
 void TestUpvaluesMatching()
 {
     using namespace LTL;
     using namespace std;
     State s;
     s.OpenLibs();
+    s.ThrowExceptions();
+    cout << noexcept(CountCharacters) << endl;
+    s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";");
+    //s.Add("CountSemiCols", CFunction<CountCharacters, const char*, const char*>{}, ";l");
+    try
+    {
 
-    s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";l");
+        s.Run(R"(
+        local c = CountSemiCols(";hello world ;")
+        print(c)
+        )"
+        );
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
 
-    s.Run(R"(
-    local c = CountSemiCols(";hello world ;")
-    print(c)
-    )"
-    );
+    try
+    {
+
+        s.Run(R"(
+        local c = CountSemiCols({})
+        print(c)
+        )"
+        );
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
+
+    s.Add("CantThrowRegularExceptions", CFunction<ICanThrow, int>{});
+    try
+    {
+
+        s.Run(R"(
+        local c = CantThrowRegularExceptions({})
+        print(c)
+        )"
+        );
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
+
 }
 
 int main()

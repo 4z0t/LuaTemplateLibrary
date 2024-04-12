@@ -159,6 +159,16 @@ namespace LTL
                 }
             };
 
+            template<typename R, typename ...Ts>
+            struct CallHelper<R(*)(Ts...)noexcept>
+            {
+                template<typename ...Args>
+                static TReturn Call(Args&... args)
+                {
+                    return fn(args...);
+                }
+            };
+
             template<typename R, class C, typename ...Ts>
             struct CallHelper<R(C::*)(Ts...)const noexcept>
             {
@@ -274,6 +284,33 @@ namespace LTL
 
         static int Function(lua_State* l)
         {
+            if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
+            {
+                return _Caller(l);
+            }
+            else
+            {
+                try
+                {
+                    return _Caller(l);
+                }
+                catch (std::exception& ex)
+                {
+                    luaL_error(l, "%s", ex.what());
+                }
+                catch (LTL::Exception& ex)
+                {
+                    throw;
+                }
+                catch (...)
+                {
+                    luaL_error(l, "%s", "unknown error");
+                }
+            }
+        }
+
+        static int _Caller(lua_State* l)
+        {
             ArgsTuple args;
             FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TReturn>)
@@ -307,6 +344,33 @@ namespace LTL
         };
 
         static int Function(lua_State* l)
+        {
+            if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
+            {
+                return _Caller(l);
+            }
+            else
+            {
+                try
+                {
+                    return _Caller(l);
+                }
+                catch (std::exception& ex)
+                {
+                    luaL_error(l, "%s", ex.what());
+                }
+                catch (LTL::Exception& ex)
+                {
+                    throw;
+                }
+                catch (...)
+                {
+                    luaL_error(l, "%s", "unknown error");
+                }
+            }
+        }
+
+        static int _Caller(lua_State* l)
         {
             ArgsTuple args;
             FunctionHelper::GetArgs(l, args);

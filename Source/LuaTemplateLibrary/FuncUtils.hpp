@@ -67,7 +67,7 @@ namespace LTL
                 return StackType<T>::Get(l, lua_upvalueindex(static_cast<int>(UpvalueI) + 1));
             }
         };
-    
+
         template<size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
         constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
         {
@@ -120,6 +120,27 @@ namespace LTL
         {
             return ReplaceUpvalues<0, 0, 0, TArgsTuple, Ts...>(l, args);
         }
+
+        template<typename ...TArgs>
+        struct CanThrow;
+
+        template<typename R, typename ...Ts>
+        struct CanThrow<R(*)(Ts...)> : std::true_type {};
+
+        template<typename R, typename ...Ts>
+        struct CanThrow<R(*)(Ts...)noexcept> :std::false_type {};
+
+        template<typename R, class C, typename ...Ts>
+        struct CanThrow<R(C::*)(Ts...)const> : std::true_type {};
+
+        template<typename R, class C, typename ...Ts>
+        struct CanThrow<R(C::*)(Ts...)const noexcept> :std::false_type {};
+
+        template<typename R, class C, typename ...Ts>
+        struct CanThrow<R(C::*)(Ts...)> : std::true_type {};
+
+        template<typename R, class C, typename ...Ts>
+        struct CanThrow<R(C::*)(Ts...)noexcept> :std::false_type {};
 
 #pragma region ArgumentTypeMatching
         template<typename ...Ts>
