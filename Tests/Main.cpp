@@ -643,18 +643,52 @@ void ClassTestStack()
 
     s.Run(
         "function MyClasPrintName(ud) "
-        " print(ud.Name) " 
+        " print(ud.Name) "
         "end "
         "function MyClasPrintNameDup(ud) "
         " print(ud.Name) "
         " print(ud:Duplicate().Name) "
         "end "
-        
+
     );
     s.Call("MyClasPrintName", udata);
     s.Call("MyClasPrintNameDup", udata);
 
 
+}
+
+
+int CountCharacters(const char* s, const char* c)
+{
+    if (s == nullptr) return 0;
+    if (c == nullptr) return 0;
+    if (strlen(c) != 1)
+        throw std::exception("expected string with len 1");
+
+    size_t i = 0;
+    while (*s)
+    {
+        if (*s == *c)
+            i++;
+        s++;
+    }
+    return i;
+}
+
+void TestUpvaluesMatching()
+{
+    using namespace LTL;
+    using namespace std;
+    State s;
+    s.OpenLibs();
+
+    s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";l");
+
+    s.Run(R"(
+    local c = CountSemiCols(";hello world ;")
+    print(c)
+    )"
+    );
 }
 
 int main()
@@ -669,7 +703,7 @@ int main()
     //RetOptional();
     //OnlyMethods();
 
-    ClassTestStack();
-
+    //ClassTestStack();
+    TestUpvaluesMatching();
 
 }

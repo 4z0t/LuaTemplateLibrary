@@ -122,7 +122,7 @@ namespace LTL
         }
 
 #pragma region ArgumentTypeMatching
-        template<typename ...>
+        template<typename ...Ts>
         struct MatchUpvalues;
 
         template<typename TUpvalue, typename ...TUpvalues>

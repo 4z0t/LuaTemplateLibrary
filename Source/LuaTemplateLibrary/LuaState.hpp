@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "Exception.hpp"
 #include "RefObject.hpp"
+#include "LuaFunctions.hpp"
 
 namespace LTL
 {
@@ -318,6 +319,17 @@ namespace LTL
         GRefObject MakeUserData(TArgs&&... args)
         {
             return UserData<TClass>::Make(m_cstate->Unwrap(), std::forward<TArgs>(args)...);
+        }
+
+        template<typename Base, typename Derived>
+        using EnableIfBaseOf = std::enable_if_t<std::is_base_of_v<Base, Derived>, State&>;
+
+
+        template<typename T, typename ...TUpvalues>
+        EnableIfBaseOf<Internal::CFunctionBase, T> Add(const char* name, const T&, TUpvalues&&... args)
+        {
+            static_assert(T::ValidUpvalues<const_decay_t<TUpvalues>...>::value, "upvalues passed dont match with ones defined in closure");
+            return AddClosure(name, T::Function, std::forward<TUpvalues>(args)...);
         }
 
     private:

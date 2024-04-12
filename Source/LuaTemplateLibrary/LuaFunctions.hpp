@@ -264,6 +264,14 @@ namespace LTL
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
 
     public:
+
+        CFunction() = default;
+
+        template <typename ...TUpvalues>
+        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>
+        {
+        };
+
         static int Function(lua_State* l)
         {
             ArgsTuple args;
@@ -293,6 +301,11 @@ namespace LTL
         using ArgsTuple = typename FunctionHelper::ArgsTuple;
 
     public:
+        template <typename ...TUpvalues>
+        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>
+        {
+        };
+
         static int Function(lua_State* l)
         {
             ArgsTuple args;
