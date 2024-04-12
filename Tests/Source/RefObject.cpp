@@ -23,6 +23,14 @@ TEST_F(RefObjectTests, ValueAccess)
     ASSERT_DOUBLE_EQ(Result().To<double>(), 4.0);
     ASSERT_DOUBLE_EQ(Result().To<long double>(), 4.0);
 
+    {
+        float res = Result();
+        ASSERT_FLOAT_EQ(res, 4.f);
+    }
+    {
+        double res = Result();
+        ASSERT_DOUBLE_EQ(res, 4.0);
+    }
 
     Run("result = {a = 4}");
     ASSERT_TRUE(Result().IsTable());
