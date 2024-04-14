@@ -296,7 +296,7 @@ namespace LTL
                 {
                     luaL_error(l, "%s", ex.what());
                 }
-                catch (LTL::Exception& ex)
+                catch (LTL::Exception&)
                 {
                     throw;
                 }
@@ -305,6 +305,7 @@ namespace LTL
                     luaL_error(l, "%s", "unknown error");
                 }
             }
+            return 0;
         }
 
         static int _Caller(lua_State* l)
@@ -357,7 +358,7 @@ namespace LTL
                 {
                     luaL_error(l, "%s", ex.what());
                 }
-                catch (LTL::Exception& ex)
+                catch (LTL::Exception&)
                 {
                     throw;
                 }
@@ -366,6 +367,7 @@ namespace LTL
                     luaL_error(l, "%s", "unknown error");
                 }
             }
+            return 0;
         }
 
         static int _Caller(lua_State* l)

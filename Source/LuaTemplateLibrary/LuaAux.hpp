@@ -10,11 +10,11 @@ namespace LTL
 
     struct StackPopper final
     {
-        StackPopper(lua_State* l, int n) : m_state(l), n(n) {}
+        StackPopper(lua_State* l, int n) : m_state(l), m_n(n) {}
 
         ~StackPopper()
         {
-            lua_pop(m_state, n);
+            lua_pop(m_state, m_n);
         }
 
         StackPopper(const StackPopper&) = delete;
@@ -23,7 +23,7 @@ namespace LTL
         StackPopper& operator=(StackPopper&&) = delete;
     private:
         lua_State* const m_state;
-        const int n;
+        const int m_n;
     };
 
     struct StackRestorer final

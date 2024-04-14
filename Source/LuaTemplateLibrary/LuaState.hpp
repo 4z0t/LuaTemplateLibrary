@@ -8,7 +8,7 @@
 namespace LTL
 {
     template<typename T>
-    class UserData;
+    struct UserData;
 
     CState* WrapState(lua_State* l)
     {
