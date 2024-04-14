@@ -5,6 +5,25 @@
 
 namespace LTL
 {
+
+    struct RefGlobalAccess
+    {
+        static int GetRef(lua_State* l)
+        {
+            return luaL_ref(l, LUA_REGISTRYINDEX);
+        }
+
+        static void Unref(lua_State* l, int ref)
+        {
+            luaL_unref(l, LUA_REGISTRYINDEX, ref);
+        }
+
+        static void PushRef(lua_State* l, int ref)
+        {
+            lua_rawgeti(l, LUA_REGISTRYINDEX, ref);
+        }
+    };
+
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 

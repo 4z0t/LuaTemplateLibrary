@@ -12,5 +12,6 @@
 #include "FuncUtils.hpp"
 #include "LuaFunctions.hpp"
 #include "LuaState.hpp"
+#include "Ref.hpp"
 #include "RefObject.hpp"
 #include "StackObject.hpp"
