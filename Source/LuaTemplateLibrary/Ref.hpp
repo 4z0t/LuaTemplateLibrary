@@ -23,24 +23,10 @@ namespace LTL
 
         ContextRef(lua_State* l, const RefClass& ref) : m_state{ l }, m_ref{ ref } {}
 
-        ContextRef(const ContextRef& other) : m_state{ other.m_state }, m_ref{ other.m_ref } {}
-
-        ContextRef(ContextRef&& other) : m_state{ other.m_state }, m_ref{ std::move(other.m_ref) } {}
-
-        ContextRef& operator=(const ContextRef& other)
-        {
-            m_state = other.m_state;
-            m_ref = other.m_ref;
-            return *this;
-        }
-
-        ContextRef& operator=(ContextRef&& other)
-        {
-            m_state = other.m_state;
-            m_ref = std::move(other.m_ref);
-            return *this;
-        }
-
+        ContextRef(const ContextRef& other) = delete;
+        ContextRef(ContextRef&& other) = delete;
+        ContextRef& operator=(const ContextRef& other) = delete;
+        ContextRef& operator=(ContextRef&& other) = delete;
 
 
 
