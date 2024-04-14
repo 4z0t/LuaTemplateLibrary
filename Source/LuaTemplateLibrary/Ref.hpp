@@ -18,6 +18,7 @@ namespace LTL
     {
     public:
         using RefClass = Ref<RefAccess>;
+        friend class Ref<RefAccess>;
 
         ContextRef() = delete;
 
@@ -49,7 +50,6 @@ namespace LTL
         ~ContextRef() = default;
 
     private:
-        friend class RefClass;
         lua_State* m_state = nullptr;
         RefClass m_ref{};
     };
@@ -102,12 +102,12 @@ namespace LTL
 
         void Push(lua_State* l) const
         {
-            RefAccess::PushRef(l, ref);
+            RefAccess::PushRef(l, m_ref);
         }
 
         void Unref(lua_State* l)
         {
-            RefAccess::Unref(l, ref);
+            RefAccess::Unref(l, m_ref);
             NullRef();
         }
 
@@ -121,7 +121,7 @@ namespace LTL
     private:
         void _FromRef(lua_State* l, const Ref& other)
         {
-            other.Push();
+            other.Push(l);
             _FromTop(l);
         }
 
