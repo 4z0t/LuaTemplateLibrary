@@ -274,13 +274,22 @@ namespace LTL
         return 1;
     }
 
-
     template<typename ...Ts>
     inline size_t PushResult(lua_State* l, MultReturn<Ts...>& result)
     {
         return _PushResult<0, MultReturn<Ts...>, Ts...>(l, result);
     }
 
+    struct StackResult
+    {
+        size_t n_results = 1;
+    };
+
+    template<>
+    inline size_t PushResult(lua_State* l, StackResult result)
+    {
+        return result.n_results;
+    }
 
     template<size_t Index, typename TResult>
     constexpr size_t _ReplaceUpvalue(lua_State* l, TResult& upvalues)

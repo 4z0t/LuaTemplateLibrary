@@ -278,9 +278,7 @@ namespace LTL
         CFunction() = default;
 
         template <typename ...TUpvalues>
-        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>
-        {
-        };
+        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...> {};
 
         static int Function(lua_State* l)
         {

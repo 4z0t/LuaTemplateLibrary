@@ -688,7 +688,6 @@ void TestUpvaluesMatching()
     State s;
     s.OpenLibs();
     s.ThrowExceptions();
-    cout << noexcept(CountCharacters) << endl;
     s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";");
     //s.Add("CountSemiCols", CFunction<CountCharacters, const char*, const char*>{}, ";l");
     try
@@ -704,7 +703,20 @@ void TestUpvaluesMatching()
     {
         cout << ex.GetReason() << endl;
     }
+    s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";l");
+    try
+    {
 
+        s.Run(R"(
+        local c = CountSemiCols(";hello world ;")
+        print(c)
+        )"
+        );
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
     try
     {
 
