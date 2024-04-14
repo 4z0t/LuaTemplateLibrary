@@ -18,7 +18,6 @@ namespace LTL
     {
     public:
         using RefClass = Ref<RefAccess>;
-        friend class Ref<RefAccess>;
 
         ContextRef() = delete;
 
@@ -42,9 +41,23 @@ namespace LTL
             return *this;
         }
 
+
+
+
+
         void Release()
         {
             m_ref.Unref(m_state);
+        }
+
+        const RefClass& GetRef()const
+        {
+            return m_ref;
+        }
+
+        lua_State* GetState()const
+        {
+            return m_state;
         }
 
         ~ContextRef() = default;
@@ -72,7 +85,7 @@ namespace LTL
             _FromTop(l);
         }
 
-        Ref(const ContextRef<RefAccess>& sref) : Ref(sref.m_ref) {}
+        Ref(const ContextRef<RefAccess>& sref) : Ref(sref.GetRef()) {}
 
         Ref(const Ref& other) noexcept : m_ref{ other.m_ref } {}
 
@@ -83,7 +96,7 @@ namespace LTL
 
         Ref& operator=(const ContextRef<RefAccess>& sref)
         {
-            *this = sref.m_ref;
+            *this = sref.GetRef();
             return *this;
         }
 
