@@ -282,7 +282,7 @@ namespace LTL
 
     struct StackResult
     {
-        size_t n_results = 1;
+        const size_t n_results = 1;
     };
 
     template<>
@@ -291,6 +291,7 @@ namespace LTL
         return result.n_results;
     }
 
+#pragma region Upvalues Replace
     template<size_t Index, typename TResult>
     constexpr size_t _ReplaceUpvalue(lua_State* l, TResult& upvalues)
     {
@@ -313,4 +314,5 @@ namespace LTL
     {
         _ReplaceUpvalue<0, std::tuple<CArgs...>, CArgs...>(l, upvalues);
     }
+#pragma endregion
 }

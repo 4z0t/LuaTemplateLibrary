@@ -748,6 +748,41 @@ void TestUpvaluesMatching()
 
 }
 
+
+
+
+
+void TestStackResult()
+{
+    using namespace LTL;
+    using namespace std;
+    struct Test
+    {
+        static StackResult Time(CState* state)
+        {
+            std::time_t t = std::time(0);
+            std::tm* now = std::localtime(&t);
+            state->PushFormatString("%d.%d.%d", now->tm_mday, now->tm_mon + 1, now->tm_year + 1900);
+            return { 1 };
+        }
+    };
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+
+    s.Add("GetTime", CFunction<Test::Time, CState*>{});
+    try
+    {
+        s.Run("print(GetTime())");
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
+
+}
+
 int main()
 {
     //ClassTest();
@@ -761,6 +796,7 @@ int main()
     //OnlyMethods();
 
     //ClassTestStack();
-    TestUpvaluesMatching();
+    //TestUpvaluesMatching();
+    TestStackResult();
 
 }
