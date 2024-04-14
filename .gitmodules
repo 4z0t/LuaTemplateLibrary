@@ -5,3 +5,6 @@
 	path = Tests/Lua/master
 	url = https://github.com/lua/lua.git
 	branch = master
+[submodule "Tests\\LuaJIT\\master"]
+	path = Tests\\LuaJIT\\master
+	url = https://github.com/LuaJIT/LuaJIT
