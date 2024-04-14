@@ -66,29 +66,50 @@ namespace LTL::Internal
         }
     };
 
+    struct StackCheckString
+    {
+        static bool Check(lua_State* l, int index)
+        {
+            return lua_isstring(l, index);
+        }
+    };
+
     template<typename T>
-    struct StringParser
+    struct StackGetString
     {
         static T Get(lua_State* l, int index)
         {
             return { luaL_checkstring(l, index) };
         }
+    };
 
-        static bool Check(lua_State* l, int index)
+    template<typename T>
+    struct StringParser;
+
+    template<>
+    struct StringParser<const char*> : StackCheckString, StackGetString <const char*>
+    {
+        static void Push(lua_State* l, const char* value)
         {
-            return lua_isstring(l, index);
+            lua_pushstring(l, value);
         }
+    };
 
-        static void Push(lua_State* l, const T& value)
+    template<>
+    struct StringParser<std::string> : StackCheckString, StackGetString <std::string>
+    {
+        static void Push(lua_State* l, const std::string& value)
         {
-            if constexpr (std::is_pointer_v<T>)
-            {
-                lua_pushstring(l, value);
-            }
-            else
-            {
-                lua_pushstring(l, value.data());
-            }
+            lua_pushstring(l, value.data());
+        }
+    };
+
+    template<>
+    struct StringParser<std::string_view> : StackCheckString, StackGetString <std::string_view>
+    {
+        static void Push(lua_State* l, const std::string_view& value)
+        {
+            lua_pushstring(l, value.data());
         }
     };
 
