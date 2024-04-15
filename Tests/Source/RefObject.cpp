@@ -38,6 +38,10 @@ TEST_F(RefObjectTests, TestImplicitConvertion)
     using namespace std;
     Run("result = 4");
     {
+        bool res = Result();
+        ASSERT_TRUE(res);
+    }
+    {
         int res = Result();
         ASSERT_EQ(res, 4);
     }
@@ -92,9 +96,6 @@ TEST_F(RefObjectTests, IteratorTest)
         index++;
     }
 
-
-
-
     //    Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
 
 }
@@ -124,7 +125,6 @@ TEST_F(RefObjectTests, CompareTest)
 
         ASSERT_TRUE(a == b);
         ASSERT_FALSE(a != b);
-        // throws exception after that StackPop tries to restore stack, but throws another exception during deconstruction (fixed?)
         ASSERT_THROW(a > b, Exception);
         ASSERT_THROW(a < b, Exception);
         ASSERT_THROW(a >= b, Exception);
