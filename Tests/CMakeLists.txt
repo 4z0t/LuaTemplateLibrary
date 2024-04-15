@@ -2,6 +2,7 @@ set(LTL_TEST_SOURCE_FILES
     Source/RefObject.cpp
     Source/Exception.cpp
     Source/Main.cpp
+    Source/TestBase.hpp
 )
 
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
