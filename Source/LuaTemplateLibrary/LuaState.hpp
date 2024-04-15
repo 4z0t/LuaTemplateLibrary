@@ -326,10 +326,11 @@ namespace LTL
 
 
         template<typename T, typename ...TUpvalues>
-        EnableIfBaseOf<Internal::CFunctionBase, T> Add(const char* name, const T&, TUpvalues&&... args)
+        EnableIfBaseOf<Internal::CFunctionBase, T> Add(const char* name, const T&, TUpvalues&&... upvalues)
         {
-            static_assert(T::ValidUpvalues<const_decay_t<TUpvalues>...>::value, "upvalues passed dont match with ones defined in closure");
-            return AddClosure(name, T::Function, std::forward<TUpvalues>(args)...);
+            static_assert(T::ValidUpvalues<const_decay_t<TUpvalues>...>::value,
+                "Passed upvalues don't match with ones defined in closure");
+            return AddClosure(name, T::Function, std::forward<TUpvalues>(upvalues)...);
         }
 
     private:
