@@ -1,6 +1,6 @@
 #include "TestBase.hpp"
 
-
+#pragma region RefObjectTests
 struct RefObjectTests : TestBase
 {
 
@@ -236,12 +236,9 @@ TEST_F(RefObjectTests, SelfCallTest)
     }
 
 }
+#pragma endregion
 
-
-
-// exception tests are here for a moment with gtest bug?
-
-
+#pragma region ExceptionTests
 struct ExceptionTests : TestBase
 {
 
@@ -249,17 +246,16 @@ struct ExceptionTests : TestBase
 
 TEST_F(ExceptionTests, ThrowTests)
 {
+    using namespace LTL;
     Run("result = true");
-    ASSERT_THROW(Result().Call(), LTL::Exception);
-    ASSERT_THROW(int _ = Result().Call<int>(), LTL::Exception);
-    ASSERT_THROW(Result()["Key"].To<int>(), LTL::Exception);
+    ASSERT_THROW(Result().Call(), Exception);
+    ASSERT_THROW(int _ = Result().Call<int>(), Exception);
+    ASSERT_THROW(Result()["Key"].To<int>(), Exception);
 
 }
+#pragma endregion
 
-
-// UserData tests
-
-
+#pragma region UserDataTests
 struct UserDataTests : TestBase
 {
 
@@ -574,8 +570,9 @@ TEST_F(UserDataTests, APropertyTests)
         }
     }
 }
+#pragma endregion
 
-
+#pragma region  LuaStateTests
 struct StateTests : TestBase
 {
 
@@ -613,7 +610,9 @@ TEST_F(StateTests, AllocTest)
     ASSERT_EQ(s.GetGlobal("result").To<int>(), 4);
 
 }
+#pragma endregion
 
+#pragma region StackObjectViewTests
 struct StackObjectViewTest : TestBase
 {
 
@@ -751,8 +750,9 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
 }
+#pragma endregion
 
-
+#pragma region TypeMatchingTests
 struct TypeMatchingTests : TestBase
 {
 
@@ -989,8 +989,9 @@ TEST_F(TypeMatchingTests, UpvalueMatcingTests)
 #undef ASSERT_TRUE_TYPE
 #undef ASSERT_FALSE_TYPE
 }
+#pragma endregion
 
-
+#pragma region STL Containers Tests
 struct STDContainersTests : TestBase
 {
 
@@ -1094,8 +1095,6 @@ TEST_F(MultReturnTests, Tests)
     }
 
 }
-
-
 struct OptionalTests :TestBase
 {
 
@@ -1151,11 +1150,9 @@ TEST_F(OptionalTests, Tests)
     }
 
 }
+#pragma endregion
 
-
-
-
-// pcall tests
+#pragma region Pcall tests
 
 struct TestPcall :TestBase
 {
@@ -1243,9 +1240,9 @@ TEST_F(TestPcall, Tests)
     }
 
 }
+#pragma endregion
 
-
-
+#pragma region Memory tests
 #ifdef _WIN32
 
 // Tets memory leaks ans safety
@@ -1312,3 +1309,4 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
     }
 }
 #endif // WINDOWS
+#pragma endregion
