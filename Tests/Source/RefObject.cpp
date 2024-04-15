@@ -23,6 +23,24 @@ TEST_F(RefObjectTests, ValueAccess)
     ASSERT_DOUBLE_EQ(Result().To<double>(), 4.0);
     ASSERT_DOUBLE_EQ(Result().To<long double>(), 4.0);
 
+
+    Run("result = {a = 4}");
+    ASSERT_TRUE(Result().IsTable());
+    ASSERT_TRUE(Result()["a"].Is<int>());
+
+    GRefObject key{ l, "a" };
+    ASSERT_TRUE(Result()[key].Is<int>());
+}
+
+TEST_F(RefObjectTests, TestImplicitConvertion)
+{
+    using namespace LTL;
+    using namespace std;
+    Run("result = 4");
+    {
+        int res = Result();
+        ASSERT_EQ(res, 4);
+    }
     {
         float res = Result();
         ASSERT_FLOAT_EQ(res, 4.f);
@@ -32,16 +50,29 @@ TEST_F(RefObjectTests, ValueAccess)
         ASSERT_DOUBLE_EQ(res, 4.0);
     }
 
-    Run("result = {a = 4}");
-    ASSERT_TRUE(Result().IsTable());
-    ASSERT_TRUE(Result()["a"].Is<int>());
+    Run("result = {}");
+    {
+        bool res = Result();
+        ASSERT_TRUE(res) << "Table value is not true";
+    }
+    ASSERT_THROW(int res = Result(), Exception);
+    ASSERT_THROW(float res = Result(), Exception);
+    ASSERT_THROW(double res = Result(), Exception);
+    ASSERT_THROW(const char* res = Result(), Exception);
+    ASSERT_THROW(string res = Result(), Exception);
+    ASSERT_THROW(string_view res = Result(), Exception);
 
-    GRefObject key{ l, "a" };
-    ASSERT_TRUE(Result()[key].Is<int>());
-
-
-
-
+    Run("result = nil");
+    {
+        bool res = Result();
+        ASSERT_FALSE(res) << "nil value is not false";
+    }
+    ASSERT_THROW(int res = Result(), Exception);
+    ASSERT_THROW(float res = Result(), Exception);
+    ASSERT_THROW(double res = Result(), Exception);
+    ASSERT_THROW(const char* res = Result(), Exception);
+    ASSERT_THROW(string res = Result(), Exception);
+    ASSERT_THROW(string_view res = Result(), Exception);
 }
 
 TEST_F(RefObjectTests, IteratorTest)
