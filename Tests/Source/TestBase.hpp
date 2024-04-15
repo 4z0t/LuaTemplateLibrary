@@ -24,16 +24,11 @@ struct TestBase : public testing::Test
         }
     }
 
-    void Run(const std::string &s)
+    void Run(const std::string& s)
     {
-        if (luaL_loadstring(l, s.c_str()) != 0)
+        if (luaL_dostring(l, s.c_str()))
         {
-            throw std::runtime_error(lua_tostring(l, -1));
-        }
-
-        if (lua_pcall(l, 0, 0, 0) != 0)
-        {
-            throw std::runtime_error(lua_tostring(l, -1));
+            lua_error(l);
         }
     }
 

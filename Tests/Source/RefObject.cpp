@@ -375,7 +375,7 @@ TEST_F(UserDataTests, PropertyTests)
             ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
         }
         {
-            ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
+            ASSERT_THROW(Run("v.w = 2"), Exception);
             Run("result = v.w   "
             );
             ASSERT_TRUE(Result().Is<void>());
@@ -507,7 +507,7 @@ TEST_F(UserDataTests, APropertyTests)
             ASSERT_FLOAT_EQ(Result().To<float>(), 8.f);
         }
         {
-            ASSERT_THROW(Run("v.w = 2"), std::runtime_error);
+            ASSERT_THROW(Run("v.w = 2"), Exception);
             Run("result = v.w   "
             );
             ASSERT_TRUE(Result().Is<void>());
@@ -1127,7 +1127,7 @@ TEST_F(OptionalTests, Tests)
             ASSERT_FALSE(Result().To<bool>());
         }
         {
-            ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
+            ASSERT_THROW(Run("result = f('a')"), Exception);
 
         }
         RegisterFunction(l, "f", CFunction<&optional<int>::has_value, optional<int>>::Function);
@@ -1144,7 +1144,7 @@ TEST_F(OptionalTests, Tests)
             ASSERT_FALSE(Result().To<bool>());
         }
         {
-            ASSERT_THROW(Run("result = f('a')"), std::runtime_error);
+            ASSERT_THROW(Run("result = f('a')"), Exception);
 
         }
 
@@ -1312,5 +1312,3 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
     }
 }
 #endif // WINDOWS
-
-
