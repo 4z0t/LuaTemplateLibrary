@@ -783,6 +783,26 @@ void TestStackResult()
 
 }
 
+void AAAAAAAA()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+    try
+    {
+        s.Pop(2);
+
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason();
+    }
+}
+
 int main()
 {
     //ClassTest();
@@ -797,6 +817,8 @@ int main()
 
     //ClassTestStack();
     //TestUpvaluesMatching();
-    TestStackResult();
+    //TestStackResult();
+    AAAAAAAA();
+
 
 }
