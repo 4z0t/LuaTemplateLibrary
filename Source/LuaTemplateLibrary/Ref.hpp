@@ -28,6 +28,11 @@ namespace LTL
         ContextRef& operator=(const ContextRef& other) = delete;
         ContextRef& operator=(ContextRef&& other) = delete;
 
+        ContextRef& operator=(const RefClass& ref)
+        {
+            m_ref = ref;
+        }
+
 
 
 
@@ -49,7 +54,7 @@ namespace LTL
         ~ContextRef() = default;
 
     private:
-        lua_State* m_state = nullptr;
+        lua_State* const m_state = nullptr;
         RefClass m_ref{};
     };
 
