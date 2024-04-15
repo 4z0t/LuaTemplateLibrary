@@ -21,14 +21,14 @@ namespace LTL
 
         ContextRef() = delete;
 
-        ContextRef(lua_State* l, const RefClass& ref) : m_state{ l }, m_ref{ ref } {}
+        ContextRef(lua_State* l, const RefClass& ref)noexcept : m_state{ l }, m_ref{ ref } {}
 
         ContextRef(const ContextRef& other) = delete;
         ContextRef(ContextRef&& other) = delete;
         ContextRef& operator=(const ContextRef& other) = delete;
         ContextRef& operator=(ContextRef&& other) = delete;
 
-        ContextRef& operator=(const RefClass& ref)
+        ContextRef& operator=(const RefClass& ref)noexcept
         {
             m_ref = ref;
         }
@@ -41,12 +41,12 @@ namespace LTL
             m_ref.Unref(m_state);
         }
 
-        const RefClass& GetRef()const
+        const RefClass& GetRef()const noexcept
         {
             return m_ref;
         }
 
-        lua_State* GetState()const
+        lua_State* GetState()const noexcept
         {
             return m_state;
         }
@@ -76,7 +76,7 @@ namespace LTL
             _FromTop(l);
         }
 
-        Ref(const ContextRef<RefAccess>& sref) : Ref(sref.GetRef()) {}
+        Ref(const ContextRef<RefAccess>& sref)noexcept : Ref(sref.GetRef()) {}
 
         Ref(const Ref& other) noexcept : m_ref{ other.m_ref } {}
 
@@ -85,13 +85,13 @@ namespace LTL
             other.NullRef();
         }
 
-        Ref& operator=(const ContextRef<RefAccess>& sref)
+        Ref& operator=(const ContextRef<RefAccess>& sref)noexcept
         {
             *this = sref.GetRef();
             return *this;
         }
 
-        Ref& operator=(const Ref& other)
+        Ref& operator=(const Ref& other)noexcept
         {
             m_ref = other.m_ref;
             return *this;
@@ -134,7 +134,7 @@ namespace LTL
             m_ref = RefAccess::GetRef(l);
         }
 
-        void NullRef()
+        void NullRef()noexcept
         {
             m_ref = LUA_NOREF;
         }
