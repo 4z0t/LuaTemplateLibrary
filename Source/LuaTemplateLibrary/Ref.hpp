@@ -68,7 +68,7 @@ namespace LTL
     class Ref
     {
     public:
-        Ref() {}
+        Ref() = default;
 
         Ref(lua_State* l, int index)
         {
