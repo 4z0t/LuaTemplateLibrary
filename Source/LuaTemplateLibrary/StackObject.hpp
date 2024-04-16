@@ -253,7 +253,7 @@ namespace LTL
          * 
          * @return lua_State* const 
          */
-        lua_State *const GetState() const
+        lua_State *const GetState() const noexcept
         {
             return m_state;
         }
@@ -263,7 +263,7 @@ namespace LTL
          * 
          * @return int
          */
-        const int GetIndex() const
+        const int GetIndex() const noexcept
         {
             return m_index;
         }
