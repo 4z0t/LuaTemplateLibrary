@@ -784,9 +784,61 @@ TEST_F(StackObjectViewTest, Tests)
 
 
 
-
-
 TEST_F(StackObjectViewTest, TestStack)
+{
+    using namespace LTL;
+    using namespace std;
+#define CheckStackChange(i, block)          \
+    {                                       \
+        int top = lua_gettop(l);            \
+        block;                              \
+        int new_top = lua_gettop(l);        \
+        ASSERT_EQ(new_top, top + (i))  << "Stack has changed by " << (new_top - top) << " but expected " << i; \
+        lua_settop(l, top);                 \
+    }
+
+    {
+        const StackRestorer rst{ l };
+        PushValue(l, 1);
+        CheckStackChange(1, {
+                StackObjectView s{ l };
+                s.Push();
+                ASSERT_TRUE(lua_isinteger(l, -1));
+                ASSERT_EQ(lua_tonumber(l, -1), 1);
+            });
+        CheckStackChange(0, {
+                StackObjectView s{ l };
+                ASSERT_TRUE(s.Is<int>());
+                ASSERT_TRUE(s.Is<Type::Number>());
+                ASSERT_EQ(s.To<int>(), 1);
+            });
+        CheckStackChange(0, {
+                StackObjectView s{ l };
+                ASSERT_EQ(s, 1);
+                ASSERT_NE(s, 2);
+                ASSERT_NE(s, "a");
+                ASSERT_NE(s, 1.5);
+                ASSERT_NE(s, false);
+                ASSERT_NE(s, true);
+                ASSERT_NE(s, nullptr);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                s1.Push();
+                StackObjectView s2{ l };
+                ASSERT_EQ(s1, s2);
+                ASSERT_EQ(s2, 1);
+            });
+
+    }
+
+
+
+#undef CheckStackChange
+}
+
+
+TEST_F(StackObjectViewTest, TestAsArg)
 {
     const auto AssertEmptyStack = [&]()
         {
@@ -1187,7 +1239,6 @@ TEST_F(OptionalTests, Tests)
         }
         {
             ASSERT_THROW(Run("result = f('a')"), Exception);
-
         }
         RegisterFunction(l, "f", CFunction<&optional<int>::has_value, optional<int>>::Function);
         {
