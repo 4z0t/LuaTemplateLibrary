@@ -781,6 +781,23 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
 }
+
+TEST_F(StackObjectViewTest, TestStack)
+{
+    const auto AssertEmptyStack = [&]()
+        {
+            ASSERT_TRUE(lua_gettop(l) == 0);
+        };
+
+    using namespace LTL;
+    using namespace std;
+
+    {
+        PushValue(l, 1);
+        StackObjectView s1{ l };
+    }
+}
+
 #pragma endregion
 
 #pragma region TypeMatchingTests

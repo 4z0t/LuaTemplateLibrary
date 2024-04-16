@@ -689,7 +689,6 @@ void TestUpvaluesMatching()
     s.OpenLibs();
     s.ThrowExceptions();
     s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";");
-    //s.Add("CountSemiCols", CFunction<CountCharacters, const char*, const char*>{}, ";l");
     try
     {
 

@@ -13,6 +13,11 @@ namespace LTL
 
         StackObjectView(lua_State* l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
 
+        StackObjectView(const StackObjectView& other) = delete;
+        StackObjectView(StackObjectView&& other) = delete;
+        StackObjectView& operator=(const StackObjectView& other) = delete;
+        StackObjectView& operator=(StackObjectView&& other) = delete;
+
         template<typename T>
         T To()const
         {
