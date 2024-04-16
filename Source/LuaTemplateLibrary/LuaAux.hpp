@@ -186,9 +186,9 @@ namespace LTL
     {
         std::optional<T> result = std::nullopt;
 
-        PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result(result) {}
+        PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result{result} {}
 
-        PCallReturn(PCallResult status) : PCallReturn(std::nullopt, status) {}
+        PCallReturn(PCallResult status) : PCallReturnBase(status), result{std::nullopt} {}
     };
 
     template<>
