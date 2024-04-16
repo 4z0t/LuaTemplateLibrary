@@ -170,6 +170,14 @@ namespace LTL
             return AddSetter(name, Element::Function);
         }
 
+        template<typename Element>
+        EnableIfBaseOf<Internal::CFunctionBase, Element> Add(const char* name, const Element& element)
+        {
+            static_assert(T::ValidUpvalues<>::value, "Methods dont support upvalues");
+            return AddMetaMethod(name, Element::Function);
+        }
+
+
     private:
 
         void RawSetFunction(const char* name, lua_CFunction func)
