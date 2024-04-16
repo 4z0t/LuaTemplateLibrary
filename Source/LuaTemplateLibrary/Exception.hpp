@@ -3,6 +3,10 @@
 
 namespace LTL
 {
+    /**
+     * @brief Класс для исключений, возникающих внутри Lua.
+     * 
+     */
     class Exception
     {
     public:
