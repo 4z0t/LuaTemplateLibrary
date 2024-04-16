@@ -782,19 +782,31 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 }
 
+
+
+
+
 TEST_F(StackObjectViewTest, TestStack)
 {
     const auto AssertEmptyStack = [&]()
         {
             ASSERT_TRUE(lua_gettop(l) == 0);
         };
-
     using namespace LTL;
     using namespace std;
 
+    constexpr auto stack_f = +[](StackObjectView v) {
+        v.Set("hello", "world");
+        return v;
+        };
+
+
     {
-        PushValue(l, 1);
-        StackObjectView s1{ l };
+        RegisterFunction(l, "Test", CFunction<stack_f, StackObjectView>::Function);
+        Run("result = Test({})");
+        ASSERT_TRUE(Result().IsTable());
+        ASSERT_TRUE(Result()["hello"].Is<string>());
+        ASSERT_EQ(Result()["hello"].To<string>(), "world");
     }
 }
 

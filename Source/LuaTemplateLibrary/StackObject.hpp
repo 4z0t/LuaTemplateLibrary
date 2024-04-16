@@ -9,14 +9,14 @@ namespace LTL
     class StackObjectView
     {
     public:
-        StackObjectView() = delete;
+        StackObjectView() = default;
 
         StackObjectView(lua_State* l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
 
-        StackObjectView(const StackObjectView& other) = delete;
-        StackObjectView(StackObjectView&& other) = delete;
-        StackObjectView& operator=(const StackObjectView& other) = delete;
-        StackObjectView& operator=(StackObjectView&& other) = delete;
+        StackObjectView(const StackObjectView& other) = default;
+        StackObjectView(StackObjectView&& other) = default;
+        StackObjectView& operator=(const StackObjectView& other) = default;
+        StackObjectView& operator=(StackObjectView&& other) = default;
 
         template<typename T>
         T To()const
@@ -193,8 +193,8 @@ namespace LTL
             return m_index;
         }
     protected:
-        lua_State* const m_state;
-        const int m_index;
+        lua_State* m_state = nullptr;
+        int m_index = 0;
     };
 
     template<>
