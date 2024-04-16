@@ -38,7 +38,7 @@ namespace LTL
 
             Iterator& Next()
             {
-                lua_State* l = m_table.GetState();
+                lua_State* const l = m_table.GetState();
                 m_table.Push();
                 m_key.Push();
                 if (lua_next(l, -2) != 0)
