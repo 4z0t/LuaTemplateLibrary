@@ -100,8 +100,9 @@ namespace LTL
                 lua_pop(l, 1);
                 return false;
             }
-            StackPopper pop{ l, 2 };
-            return lua_rawequal(l, -2, -1);
+            bool r = lua_rawequal(l, -2, -1);
+            lua_pop(l, 2);
+            return r;
         }
 
         static T* ValidateUserData(lua_State* l, int index)
@@ -194,11 +195,12 @@ namespace LTL
 
         static const char* GetClassName(lua_State* l)
         {
-            StackPopper pop{ l, 2 };
             ClassTable::Push(l);
             lua_pushstring(l, "className");
             lua_rawget(l, -2);
-            return lua_tostring(l, -1);
+            const char* s = lua_tostring(l, -1);
+            lua_pop(l, 2);
+            return s;
         }
 
     private:

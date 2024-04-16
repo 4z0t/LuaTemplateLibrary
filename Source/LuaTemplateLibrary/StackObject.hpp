@@ -44,9 +44,10 @@ namespace LTL
         template<typename T>
         bool operator==(const T& value)const
         {
-            StackPopper pop{ m_state,1 };
             PushValue(m_state, value);
-            return lua_compare(m_state, m_index, -1, LUA_OPEQ);
+            bool r = lua_compare(m_state, m_index, -1, LUA_OPEQ);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         template<>
@@ -58,9 +59,10 @@ namespace LTL
         template<typename T>
         bool RawEqual(const T& value)
         {
-            StackPopper pop{ m_state,1 };
             PushValue(m_state, value);
-            return lua_rawequal(m_state, m_index, -1);
+            bool r = lua_rawequal(m_state, m_index, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         template<>
@@ -78,10 +80,11 @@ namespace LTL
         template<typename R, typename T>
         R Get(const T& key)const
         {
-            StackPopper pop{ m_state, 1 };
             PushValue(m_state, key);
             lua_gettable(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         template<typename T>
@@ -103,10 +106,11 @@ namespace LTL
         template<typename R, typename T>
         R RawGet(const T& key)const
         {
-            StackPopper pop{ m_state, 1 };
             PushValue(m_state, key);
             lua_rawget(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         template<typename T>
@@ -120,9 +124,10 @@ namespace LTL
         template<typename R>
         R RawGetI(int i)const
         {
-            StackPopper pop{ m_state, 1 };
             lua_rawgeti(m_state, m_index, i);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         template<typename V>
@@ -143,9 +148,10 @@ namespace LTL
         template<typename R>
         R Len()const
         {
-            StackPopper pop{ m_state, 1 };
             lua_len(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
         StackObjectView Len()const

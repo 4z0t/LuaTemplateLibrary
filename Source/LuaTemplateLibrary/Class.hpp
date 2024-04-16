@@ -174,9 +174,9 @@ namespace LTL
 
         void RawSetFunction(const char* name, lua_CFunction func)
         {
-            StackPopper pop{ m_state,1 };
             StackObjectView table{ m_state };
             table.RawSet(name, func);
+            lua_pop(m_state, 1);
         }
 
         void MakeMetaTable()

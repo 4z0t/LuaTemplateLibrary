@@ -27,7 +27,8 @@ namespace LTL
     template<typename T>
     using const_decay_t = std::decay_t<const T>;
 
-    struct StackPopper final
+    // Considered harmful due to destructor throw issue
+   /* struct StackPopper final
     {
         StackPopper(lua_State* l, int n) : m_state(l), m_n(n) {}
 
@@ -43,7 +44,7 @@ namespace LTL
     private:
         lua_State* const m_state;
         const int m_n;
-    };
+    };*/
 
     struct StackRestorer final
     {
@@ -138,9 +139,10 @@ namespace LTL
         }
         else
         {
-            StackPopper pop{ l, 1 };
             lua_call(l, static_cast<int>(n_args), 1);
-            return GetValue<TReturn>(l, -1);
+            TReturn r = GetValue<TReturn>(l, -1);
+            lua_pop(l, 1);
+            return r;
         }
     }
 

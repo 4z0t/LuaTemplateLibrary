@@ -153,9 +153,10 @@ namespace LTL
         template<typename T>
         T GetGlobal(const char* name)
         {
-            StackPopper pop{ Unwrap(),1 };
             lua_getglobal(Unwrap(), name);
-            return Get<T>(-1);
+            T v = Get<T>(-1);
+            Pop(1);
+            return v;
         }
 
         template<typename T>
