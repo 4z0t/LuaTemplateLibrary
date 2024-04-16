@@ -11,7 +11,7 @@ namespace LTL
     class RefObjectBase
     {
     public:
-        RefObjectBase() {};
+        RefObjectBase() = default;
         RefObjectBase(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
         template<typename T>
         RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
@@ -150,7 +150,7 @@ namespace LTL
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        TReturn Call(TArgs&& ...args)
+        TReturn Call(TArgs&& ...args)const
         {
             Push();
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
@@ -158,7 +158,7 @@ namespace LTL
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        PCallReturn<TReturn> PCall(TArgs&& ...args)
+        PCallReturn<TReturn> PCall(TArgs&& ...args)const
         {
             Push();
             size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
@@ -166,7 +166,7 @@ namespace LTL
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        TReturn SelfCall(const char* key, TArgs&& ...args)
+        TReturn SelfCall(const char* key, TArgs&& ...args)const
         {
             Push();
             lua_getfield(m_state, -1, key);
@@ -176,7 +176,7 @@ namespace LTL
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        PCallReturn<TReturn> SelfPCall(const char* key, TArgs&& ...args)
+        PCallReturn<TReturn> SelfPCall(const char* key, TArgs&& ...args)const
         {
             Push();
             lua_getfield(m_state, -1, key);
@@ -186,7 +186,7 @@ namespace LTL
         }
 
         template<typename ...TArgs>
-        ParentClass operator()(TArgs&& ...args)
+        ParentClass operator()(TArgs&& ...args)const
         {
             return this->Call<ParentClass>(std::forward<TArgs>(args)...);
         }
@@ -288,7 +288,7 @@ namespace LTL
             RefAccess::PushRef(m_state, ref);
         }
 
-        int GetRef()
+        int GetRef()const
         {
             return RefAccess::GetRef(m_state);
         }
