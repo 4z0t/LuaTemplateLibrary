@@ -57,7 +57,7 @@ namespace LTL
         }
 
         template<typename T>
-        bool RawEqual(const T& value)
+        bool RawEqual(const T& value)const
         {
             PushValue(m_state, value);
             bool r = lua_rawequal(m_state, m_index, -1);
@@ -66,7 +66,7 @@ namespace LTL
         }
 
         template<>
-        bool RawEqual(const StackObjectView& value)
+        bool RawEqual(const StackObjectView& value)const
         {
             return lua_rawequal(m_state, m_index, value.m_index);
         }
@@ -96,7 +96,7 @@ namespace LTL
         }
 
         template<typename K, typename V>
-        void Set(const K& key, const V& value)
+        void Set(const K& key, const V& value)const
         {
             PushValue(m_state, key);
             PushValue(m_state, value);
@@ -131,14 +131,14 @@ namespace LTL
         }
 
         template<typename V>
-        void RawSetI(int i, const V& value)
+        void RawSetI(int i, const V& value)const
         {
             PushValue(m_state, value);
             lua_rawseti(m_state, m_index, i);
         }
 
         template<typename K, typename V>
-        void RawSet(const K& key, const V& value)
+        void RawSet(const K& key, const V& value)const
         {
             PushValue(m_state, key);
             PushValue(m_state, value);
@@ -175,7 +175,7 @@ namespace LTL
         }
 
         template<typename T>
-        void SetMetaTable(const T& value)
+        void SetMetaTable(const T& value)const
         {
             PushValue(m_state, value);
             lua_setmetatable(m_state, m_index);
