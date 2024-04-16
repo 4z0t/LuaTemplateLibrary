@@ -168,21 +168,17 @@ namespace LTL
     {
         PCallResult status = PCallResult::Ok;
 
-        PCallReturnBase(PCallResult status)
-        {
-            this->status = status;
-        }
+        PCallReturnBase(PCallResult status) : status{ status } {}
 
-        bool IsOk()const
+        bool IsOk()const noexcept
         {
             return status == PCallResult::Ok;
         }
 
-        bool operator==(PCallResult status)const
+        bool operator==(PCallResult status)const noexcept
         {
             return this->status == status;
         }
-
     };
 
     template<typename T>
@@ -193,7 +189,6 @@ namespace LTL
         PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result(result) {}
 
         PCallReturn(PCallResult status) : PCallReturn(std::nullopt, status) {}
-
     };
 
     template<>
