@@ -76,13 +76,13 @@ namespace LTL
                 return { m_key,m_value };
             }
 
-            ParentClass operator->()const
+            const ParentClass& operator->()const
             {
                 return m_value;
             }
 
-            ParentClass Key()const { return m_key; }
-            ParentClass Value()const { return m_value; }
+            const ParentClass& Key()const { return m_key; }
+            const ParentClass& Value()const { return m_value; }
 
         private:
             ParentClass m_table{};
