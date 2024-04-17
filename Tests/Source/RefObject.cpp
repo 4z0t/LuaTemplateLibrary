@@ -81,21 +81,46 @@ TEST_F(RefObjectTests, TestImplicitConvertion)
 
 TEST_F(RefObjectTests, IteratorTest)
 {
-    Run("result = {1,3,4,6,7,10}");
-    auto result = Result();
-
-    int arr[]{ 1,3,4,6,7,10 };
-    int index = 0;
-
-    for (const auto& [key, value] : result)
     {
-        ASSERT_TRUE(key.Is<int>());
-        ASSERT_TRUE(key == index + 1);
-        ASSERT_TRUE(value.Is<int>());
-        ASSERT_TRUE(value == arr[index]);
-        index++;
-    }
+        Run("result = {1,3,4,6,7,10}");
+        auto result = Result();
 
+        int arr[]{ 1,3,4,6,7,10 };
+        int index = 0;
+
+        for (const auto& [key, value] : result)
+        {
+
+            ASSERT_TRUE(key.Is<int>());
+            ASSERT_TRUE(key == index + 1);
+            ASSERT_TRUE(value.Is<int>());
+            ASSERT_TRUE(value == arr[index]);
+            index++;
+        }
+    }
+    {
+        Run("result = {1,3,4,6,7,10}");
+        auto result = Result();
+
+        int arr[]{ 1,3,4,6,7,10 };
+        int index = 0;
+
+        for (auto [key, value] : result)
+        {
+
+            ASSERT_TRUE(key.Is<int>());
+            ASSERT_TRUE(key == index + 1);
+            ASSERT_TRUE(value.Is<int>());
+            ASSERT_TRUE(value == arr[index]);
+            index++;
+            key = 0;
+            ASSERT_TRUE(key.Is<int>());
+            ASSERT_TRUE(key == 0);
+            value = nullptr;
+            ASSERT_TRUE(value.Is<void>());
+            ASSERT_TRUE(value == nullptr);
+        }
+    }
     //    Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
 
 }
