@@ -290,7 +290,7 @@ namespace LTL
          * @param value значение
          */
         template <typename V>
-        void RawSetI(int i, const V& value) const
+        void RawSetI(lua_Integer i, const V& value) const
         {
             PushValue(m_state, value);
             lua_rawseti(m_state, m_index, i);
