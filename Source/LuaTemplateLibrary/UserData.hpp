@@ -68,7 +68,7 @@ namespace LTL
         {
             if (MetaTable::Push(l) != LUA_TTABLE)
             {
-                throw std::logic_error("The class was't registered");
+                luaL_error(l, "%s", "The class was't registered");
             }
             lua_setmetatable(l, -2);
         }

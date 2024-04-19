@@ -1434,14 +1434,14 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
         MemoryLeakDetector leakDetector;
         State s;
         s.ThrowExceptions();
-        ASSERT_THROW(s.MakeUserData<Vector3f>(1, 2, 3), std::logic_error);
+        ASSERT_THROW(s.MakeUserData<Vector3f>(1, 2, 3), Exception);
     }
     {
 
         MemoryLeakDetector leakDetector;
         State s;
         s.ThrowExceptions();
-        ASSERT_THROW(s.MakeUserData<MyMemoryClass>(10), std::logic_error);
+        ASSERT_THROW(s.MakeUserData<MyMemoryClass>(10), Exception);
     }
 }
 #endif // WINDOWS
