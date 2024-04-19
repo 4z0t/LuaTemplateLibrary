@@ -821,8 +821,14 @@ void TestGetterAndSetter()
         }
     };
 
+    struct MyA
+    {
+        int a;
+    };
+
     Class<MyS>(s, "MyS")
         //.AddGetter("A", CFunction<&MyS::Get, UserData<MyS>, int>{})
+        //.Add("A", AGetter<&MyA::a>{})
         ;
 
 
