@@ -132,7 +132,7 @@ namespace LTL
 
 
         template<typename Element>
-        EnableIfBaseOf<PropertyBase, Element> Add(const char* name, const Element& element)
+        EnableIfBaseOf<PropertyBase, Element> Add(const char* name, const Element&)
         {
             return AddGetter(name, Element::Getter{}).AddSetter(name, Element::Setter{});
         }
@@ -150,7 +150,7 @@ namespace LTL
         }
 
         template<typename Element>
-        EnableIfBaseOf<Internal::CFunctionBase, Element> Add(const char* name, const Element& element)
+        EnableIfBaseOf<Internal::CFunctionBase, Element> Add(const char* name, const Element&)
         {
             static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
             return AddMetaMethod(name, Element::Function);
