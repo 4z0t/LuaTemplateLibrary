@@ -159,7 +159,7 @@ namespace LTL
         template<typename Element>
         EnableIfBaseOf<GetterBase, Element> AddGetter(const char* key, const Element&)
         {
-            static_assert(std::is_same_v<T, typename Element::TClass>);
+            static_assert(std::is_same_v<T, typename Element::TClass>, "Getter must be of the same class");
             AddGetter(key, Element::Function);
             return *this;
         }
@@ -167,7 +167,7 @@ namespace LTL
         template<typename Element>
         EnableIfBaseOf<SetterBase, Element> AddSetter(const char* key, const Element&)
         {
-            static_assert(std::is_same_v<T, typename Element::TClass>);
+            static_assert(std::is_same_v<T, typename Element::TClass>, "Setter must be of the same class");
             AddSetter(key, Element::Function);
             return *this;
         }
