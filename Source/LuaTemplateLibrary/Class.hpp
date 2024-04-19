@@ -34,7 +34,7 @@ namespace LTL
         using UDVW = typename UserDataValueClassWrapper<C>;
 
         template<class C, typename T>
-        using AUDVW = typename UserDataValueClassWrapper<C>::AddUserDataValue<T>;
+        using AUDVW = typename UDVW<C>::AddUserDataValue<T>;
 
         template<class C, typename T>
         using AUDVW_t = typename AUDVW<C, T>::type;
