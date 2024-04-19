@@ -13,53 +13,54 @@ namespace LTL
 {
     template<typename T>
     struct Class;
-
-    struct MethodBase {};
-
-    template<class C>
-    struct UserDataValueClassWrapper
+    namespace Internal
     {
-        template<typename T>
-        struct AddUserDataValue : TypeBase<T> {};
+        struct MethodBase {};
 
-        template<>
-        struct AddUserDataValue<C> : TypeBase<UserData<C>> {};
+        template<class C>
+        struct UserDataValueClassWrapper
+        {
+            template<typename T>
+            struct AddUserDataValue : TypeBase<T> {};
 
-        template<typename T>
-        using AUDV_t = typename AddUserDataValue<T>::type;
-    };
+            template<>
+            struct AddUserDataValue<C> : TypeBase<UserData<C>> {};
+
+            template<typename T>
+            using AUDV_t = typename AddUserDataValue<T>::type;
+        };
+
+        template<class C>
+        using UDVW = typename UserDataValueClassWrapper<C>;
+
+        template<class C, typename T>
+        using AUDVW = typename UserDataValueClassWrapper<C>::AddUserDataValue<T>;
+
+        template<class C, typename T>
+        using AUDVW_t = typename AUDVW<C, T>::type;
+    }
 
     template<class C, auto fn, typename ...TArgs>
-    class Method : private UserDataValueClassWrapper<C>, public MethodBase
+    class Method :
+        public CFunction<fn, UserData<C>, Internal::AUDVW_t<C, TArgs>...>,
+        public Internal::MethodBase
     {
     public:
         using TClass = Class<C>;
-        using UserDataValueClassWrapper::AUDV_t;
 
         Method() = default;
-
-        static void AddMethod(TClass& c, const char* name)
-        {
-            auto method = CFunction<fn, UserData<C>, AUDV_t<TArgs>...>::Function;
-            c.AddMetaMethod(name, method);
-        }
     };
 
 
     template<class C, auto fn, typename TReturn, typename ...TArgs>
-    class Method<C, fn, TReturn(TArgs...)> : private UserDataValueClassWrapper<C>, public MethodBase
+    class Method<C, fn, TReturn(TArgs...)> :
+        public CFunction<fn, Internal::AUDVW_t<C, TReturn>(UserData<C>, Internal::AUDVW_t<C, TArgs>...)>,
+        public Internal::MethodBase
     {
     public:
         using TClass = Class<C>;
-        using UserDataValueClassWrapper::AUDV_t;
 
         Method() = default;
-
-        static void AddMethod(TClass& c, const char* name)
-        {
-            auto method = CFunction<fn, AUDV_t<TReturn>(UserData<C>, AUDV_t<TArgs>...)>::Function;
-            c.AddMetaMethod(name, method);
-        }
     };
 
     template<typename T>
@@ -91,21 +92,6 @@ namespace LTL
         {
             RegisterFunction(m_state, m_name, Constructor<T, TArgs...>::Function);
             return *this;
-        }
-
-        template<typename TMethod>
-        Class& AddMethod(const char* name, const TMethod&)
-        {
-            TMethod::AddMethod(*this, name);
-
-            return *this;
-        }
-
-        template<typename TProperty>
-        Class& AddProperty(const char* name, const TProperty&)
-        {
-            return AddGetter(name, TProperty::Get)
-                .AddSetter(name, TProperty::Set);
         }
 
         Class& AddGetter(const char* name, lua_CFunction func)
@@ -144,16 +130,11 @@ namespace LTL
         template<typename Base, typename Derived>
         using EnableIfBaseOf = std::enable_if_t<std::is_base_of_v<Base, Derived>, Class&>;
 
-        template<typename Element>
-        EnableIfBaseOf<MethodBase, Element> Add(const char* name, const Element& element)
-        {
-            return this->AddMethod(name, element);
-        }
 
         template<typename Element>
         EnableIfBaseOf<PropertyBase, Element> Add(const char* name, const Element& element)
         {
-            return this->AddProperty(name, element);
+            return AddGetter(name, Element::Getter{}).AddSetter(name, Element::Setter{});
         }
 
         template<typename Element>
@@ -173,8 +154,22 @@ namespace LTL
         template<typename Element>
         EnableIfBaseOf<Internal::CFunctionBase, Element> Add(const char* name, const Element& element)
         {
-            static_assert(T::ValidUpvalues<>::value, "Methods dont support upvalues");
+            static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
             return AddMetaMethod(name, Element::Function);
+        }
+
+        template<typename Element>
+        EnableIfBaseOf<GetterBase, Element> AddGetter(const char* name, const Element&)
+        {
+            AddGetter(name, Element::Function);
+            return *this;
+        }
+
+        template<typename Element>
+        EnableIfBaseOf<SetterBase, Element> AddSetter(const char* name, const Element&)
+        {
+            AddSetter(name, Element::Function);
+            return *this;
         }
 
 

@@ -4,9 +4,9 @@
  * @brief Файл содержит определения для классов свойств, геттеров и сеттеров
  * @version 0.1
  * @date 2024-03-20
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 #pragma once
 #include "LuaAux.hpp"
@@ -61,16 +61,8 @@ namespace LTL
     struct Property : public PropertyBase
     {
         using TClass = C;
-
-        static int Get(lua_State* l)
-        {
-            return Getter<C, T, Field>::Function(l);
-        }
-
-        static int Set(lua_State* l)
-        {
-            return Setter<C, T, Field>::Function(l);
-        }
+        using Getter = typename Getter<C, T, Field>;
+        using Setter = typename Setter<C, T, Field>;
     };
 
 
@@ -97,7 +89,7 @@ namespace LTL
     /**
      * @brief Класс для описания геттера пользовательского класса.
      * Автоматически определяет класс и тип поля по его ссылке.
-     * 
+     *
      * @tparam Field ссылка на поле класса
      */
     template<auto Field>
