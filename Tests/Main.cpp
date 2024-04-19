@@ -802,6 +802,32 @@ void AAAAAAAA()
     }
 }
 
+void TestGetterAndSetter()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+
+
+    struct MyS
+    {
+        int Get(int)
+        {
+            return 0;
+        }
+    };
+
+    Class<MyS>(s, "MyS")
+        //.AddGetter("A", CFunction<&MyS::Get, UserData<MyS>, int>{})
+        ;
+
+
+}
+
 int main()
 {
     //ClassTest();
@@ -817,7 +843,7 @@ int main()
     //ClassTestStack();
     //TestUpvaluesMatching();
     //TestStackResult();
-    AAAAAAAA();
-
+    //AAAAAAAA();
+    TestGetterAndSetter();
 
 }

@@ -129,12 +129,12 @@ namespace LTL
         struct FunctionHelper : CFunctionBase
         {
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
-            static constexpr size_t GetArgs(lua_State *l, ArgsTuple &args)
+            static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
             {
                 return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
             }
 
-            static constexpr size_t ReplaceUpvalues(lua_State *l, ArgsTuple &args)
+            static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
             {
                 return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
             }
@@ -152,7 +152,7 @@ namespace LTL
             struct CallHelper;
 
             template <typename R, typename... Ts>
-            struct CallHelper<R (*)(Ts...)>
+            struct CallHelper<R(*)(Ts...)>
             {
                 template <typename... Args>
                 static TReturn Call(Args &...args)
@@ -162,7 +162,7 @@ namespace LTL
             };
 
             template <typename R, typename... Ts>
-            struct CallHelper<R (*)(Ts...) noexcept>
+            struct CallHelper<R(*)(Ts...) noexcept>
             {
                 template <typename... Args>
                 static TReturn Call(Args &...args)
@@ -172,10 +172,10 @@ namespace LTL
             };
 
             template <typename R, class C, typename... Ts>
-            struct CallHelper<R (C::*)(Ts...) const noexcept>
+            struct CallHelper<R(C::*)(Ts...) const noexcept>
             {
                 template <class Class, typename... Args>
-                static TReturn Call(const Class &arg, Args &...args)
+                static TReturn Call(const Class& arg, Args &...args)
                 {
                     if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
                     {
@@ -193,10 +193,10 @@ namespace LTL
             };
 
             template <typename R, class C, typename... Ts>
-            struct CallHelper<R (C::*)(Ts...) noexcept>
+            struct CallHelper<R(C::*)(Ts...) noexcept>
             {
                 template <class Class, typename... Args>
-                static TReturn Call(Class &arg, Args &...args)
+                static TReturn Call(Class& arg, Args &...args)
                 {
                     if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
                     {
@@ -214,10 +214,10 @@ namespace LTL
             };
 
             template <typename R, class C, typename... Ts>
-            struct CallHelper<R (C::*)(Ts...)>
+            struct CallHelper<R(C::*)(Ts...)>
             {
                 template <class Class, typename... Args>
-                static TReturn Call(Class &arg, Args &...args)
+                static TReturn Call(Class& arg, Args &...args)
                 {
                     if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
                     {
@@ -235,10 +235,10 @@ namespace LTL
             };
 
             template <typename R, class C, typename... Ts>
-            struct CallHelper<R (C::*)(Ts...) const>
+            struct CallHelper<R(C::*)(Ts...) const>
             {
                 template <class Class, typename... Args>
-                static TReturn Call(const Class &arg, Args &...args)
+                static TReturn Call(const Class& arg, Args &...args)
                 {
                     if constexpr (std::is_base_of_v<UserDataValueBase, Class>)
                     {
@@ -256,13 +256,13 @@ namespace LTL
             };
 
             template <size_t... Is>
-            inline static TReturn Call(ArgsTuple &args)
+            inline static TReturn Call(ArgsTuple& args)
             {
                 return UnpackArgs(args, std::index_sequence_for<TArgs...>{});
             }
 
             template <size_t... Is>
-            inline static TReturn UnpackArgs(ArgsTuple &args, const std::index_sequence<Is...>)
+            inline static TReturn UnpackArgs(ArgsTuple& args, const std::index_sequence<Is...>)
             {
                 return CallHelper<FnType>::Call(std::get<Is>(args)...);
             }
@@ -297,7 +297,10 @@ namespace LTL
         {
         };
 
-        static int Function(lua_State *l)
+        constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+        constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
+
+        static int Function(lua_State* l)
         {
             if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
             {
@@ -309,11 +312,11 @@ namespace LTL
                 {
                     return _Caller(l);
                 }
-                catch (std::exception &ex)
+                catch (std::exception& ex)
                 {
                     luaL_error(l, "%s", ex.what());
                 }
-                catch (LTL::Exception &)
+                catch (LTL::Exception&)
                 {
                     throw;
                 }
@@ -325,7 +328,7 @@ namespace LTL
             return 0;
         }
 
-        static int _Caller(lua_State *l)
+        static int _Caller(lua_State* l)
         {
             ArgsTuple args;
             FunctionHelper::GetArgs(l, args);
@@ -355,11 +358,12 @@ namespace LTL
 
     public:
         template <typename... TUpvalues>
-        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>
-        {
-        };
+        struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>{};
 
-        static int Function(lua_State *l)
+        constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+        constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
+
+        static int Function(lua_State* l)
         {
             if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
             {
@@ -371,11 +375,11 @@ namespace LTL
                 {
                     return _Caller(l);
                 }
-                catch (std::exception &ex)
+                catch (std::exception& ex)
                 {
                     luaL_error(l, "%s", ex.what());
                 }
-                catch (LTL::Exception &)
+                catch (LTL::Exception&)
                 {
                     throw;
                 }
@@ -387,7 +391,7 @@ namespace LTL
             return 0;
         }
 
-        static int _Caller(lua_State *l)
+        static int _Caller(lua_State* l)
         {
             ArgsTuple args;
             FunctionHelper::GetArgs(l, args);

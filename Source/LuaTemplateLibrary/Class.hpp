@@ -94,19 +94,19 @@ namespace LTL
             return *this;
         }
 
-        Class& AddGetter(const char* name, lua_CFunction func)
+        Class& AddGetter(const char* key, lua_CFunction func)
         {
             MakeIndexTable();
             UData::IndexTable::Push(m_state);
-            RawSetFunction(name, func);
+            RawSetFunction(key, func);
             return *this;
         }
 
-        Class& AddSetter(const char* name, lua_CFunction func)
+        Class& AddSetter(const char* key, lua_CFunction func)
         {
             MakeNewIndexTable();
             UData::NewIndexTable::Push(m_state);
-            RawSetFunction(name, func);
+            RawSetFunction(key, func);
             return *this;
         }
 
@@ -159,18 +159,35 @@ namespace LTL
         }
 
         template<typename Element>
-        EnableIfBaseOf<GetterBase, Element> AddGetter(const char* name, const Element&)
+        EnableIfBaseOf<GetterBase, Element> AddGetter(const char* key, const Element&)
         {
-            AddGetter(name, Element::Function);
+            AddGetter(key, Element::Function);
             return *this;
         }
 
         template<typename Element>
-        EnableIfBaseOf<SetterBase, Element> AddSetter(const char* name, const Element&)
+        EnableIfBaseOf<SetterBase, Element> AddSetter(const char* key, const Element&)
         {
-            AddSetter(name, Element::Function);
+            AddSetter(key, Element::Function);
             return *this;
         }
+
+        template<typename Element>
+        EnableIfBaseOf<Internal::CFunctionBase, Element> AddGetter(const char* key, const Element&)
+        {
+            static_assert(Element::min_arg_count <= 1, "Getter can't receive more than 1 argument");
+            AddGetter(key, Element::Function);
+            return *this;
+        }
+
+        template<typename Element>
+        EnableIfBaseOf<Internal::CFunctionBase, Element> AddSetter(const char* key, const Element&)
+        {
+            static_assert(Element::min_arg_count <= 2, "Setter can't receive more than 2 argument");
+            AddSetter(key, Element::Function);
+            return *this;
+        }
+
 
 
     private:

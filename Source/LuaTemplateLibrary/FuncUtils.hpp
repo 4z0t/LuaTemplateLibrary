@@ -290,11 +290,6 @@ namespace LTL
             }
         }
 
-        template <typename... Ts>
-        constexpr size_t MinArgumentCount()
-        {
-            return MinArgumentCount<0, Ts...>().n;
-        }
 
         template <size_t ArgIndex>
         constexpr size_t MaxArgumentCount()
@@ -308,6 +303,11 @@ namespace LTL
             return MaxArgumentCount<IncrementArgIndex<T, ArgIndex>::value, Ts...>();
         }
 
+        template <typename... Ts>
+        constexpr size_t MinArgumentCount()
+        {
+            return MinArgumentCount<0, Ts...>().n;
+        }
         template <typename... Ts>
         constexpr size_t MaxArgumentCount()
         {

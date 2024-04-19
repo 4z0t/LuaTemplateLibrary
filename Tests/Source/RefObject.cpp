@@ -390,7 +390,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
-        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>::Function)
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
     {
 
@@ -522,7 +522,7 @@ TEST_F(UserDataTests, APropertyTests)
         .Add("y", AProperty<&Vector3f::y>{})
         .Add("z", AProperty<&Vector3f::z>{})
         .Add("Length", Method<Vector3f, &Vector3f::Length>{})
-        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>::Function)
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
     {
 
