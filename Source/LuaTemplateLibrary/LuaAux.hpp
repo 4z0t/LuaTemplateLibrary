@@ -5,7 +5,10 @@
 
 namespace LTL
 {
-
+    /**
+     * @brief Класс для доступа к объектам по ссылке
+     * внутри ВМ Lua.
+     */
     struct RefGlobalAccess
     {
         static int GetRef(lua_State* l)
@@ -45,7 +48,11 @@ namespace LTL
         lua_State* const m_state;
         const int m_n;
     };*/
-
+    
+    /**
+     * @brief Класс для восстановления стека после выхода из области видимости
+     * 
+     */
     struct StackRestorer final
     {
         StackRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
