@@ -79,8 +79,8 @@ namespace LTL
         }
 
         /**
-         * @brief Сравнивает объект и данное значение.
-         * 
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
          * @tparam T Тип сравниваемого значения.
          * @param value сравниваемое значение.
          * @return true Объекты равны с точки зрения Lua
@@ -96,8 +96,8 @@ namespace LTL
         }
 
         /**
-         * @brief Сравнивает объекты.
-         * 
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
          * @param value сравниваемый объект.
          * @return true Объекты равны с точки зрения Lua
          * @return false Объекты неравны с точки зрения Lua
@@ -108,6 +108,28 @@ namespace LTL
             return m_state == value.m_state && lua_compare(m_state, m_index, value.m_index, LUA_OPEQ);
         }
 
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         * 
+         * @tparam T 
+         * @param value 
+         * @return true 
+         * @return false 
+         */
+        template <typename T>
+        bool operator!=(const T &value) const
+        {
+            return !(*this == value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов без вызова метаметода
+         * 
+         * @tparam T 
+         * @param value 
+         * @return true 
+         * @return false 
+         */
         template <typename T>
         bool RawEqual(const T &value) const
         {
@@ -117,18 +139,28 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief Результат сравнения объектов без вызова метаметода
+         * 
+         * @tparam  
+         * @param value 
+         * @return true 
+         * @return false 
+         */
         template <>
         bool RawEqual(const StackObjectView &value) const
         {
             return lua_rawequal(m_state, m_index, value.m_index);
         }
 
-        template <typename T>
-        bool operator!=(const T &value) const
-        {
-            return !(*this == value);
-        }
-
+        /**
+         * @brief Возвращает значение по заданному ключу с вызовом метаметода
+         * 
+         * @tparam R 
+         * @tparam T 
+         * @param key 
+         * @return R 
+         */
         template <typename R, typename T>
         R Get(const T &key) const
         {
@@ -139,6 +171,13 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief Возвращает значение по ключу с вызовом метаметода
+         * 
+         * @tparam T 
+         * @param key 
+         * @return StackObjectView 
+         */
         template <typename T>
         StackObjectView Get(const T &key) const
         {
@@ -147,6 +186,14 @@ namespace LTL
             return {m_state};
         }
 
+        /**
+         * @brief Устанавливает по ключу значение на объект с вызовом метаметода
+         * 
+         * @tparam K 
+         * @tparam V 
+         * @param key 
+         * @param value 
+         */
         template <typename K, typename V>
         void Set(const K &key, const V &value) const
         {
@@ -155,6 +202,14 @@ namespace LTL
             lua_settable(m_state, m_index);
         }
 
+        /**
+         * @brief Возвращает значение по ключу без вызова метаметода
+         * 
+         * @tparam R 
+         * @tparam T 
+         * @param key 
+         * @return R 
+         */
         template <typename R, typename T>
         R RawGet(const T &key) const
         {
@@ -165,6 +220,13 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief Возвращает значение по ключу без вызова метаметода
+         * 
+         * @tparam T 
+         * @param key 
+         * @return StackObjectView 
+         */
         template <typename T>
         StackObjectView RawGet(const T &key) const
         {
@@ -173,6 +235,13 @@ namespace LTL
             return {m_state};
         }
 
+        /**
+         * @brief Возвращает значение по индексу без вызова метаметода
+         * 
+         * @tparam R 
+         * @param i 
+         * @return R 
+         */
         template <typename R>
         R RawGetI(int i) const
         {
@@ -182,6 +251,14 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief Устанавливает значение с заданным индексом на объект
+         * без вызова метаметодов.
+         * 
+         * @tparam V 
+         * @param i индекс
+         * @param value значение
+         */
         template <typename V>
         void RawSetI(int i, const V &value) const
         {
@@ -189,6 +266,15 @@ namespace LTL
             lua_rawseti(m_state, m_index, i);
         }
 
+        /**
+         * @brief Устанавливает значение с заданным ключом на объект
+         * без вызова метаметодов.
+         * 
+         * @tparam K 
+         * @tparam V 
+         * @param key ключ
+         * @param value значение
+         */
         template <typename K, typename V>
         void RawSet(const K &key, const V &value) const
         {
@@ -197,6 +283,13 @@ namespace LTL
             lua_rawset(m_state, m_index);
         }
 
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return R
+         */
         template <typename R>
         R Len() const
         {
@@ -206,17 +299,34 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return StackObjectView
+         */
         StackObjectView Len() const
         {
             lua_len(m_state, m_index);
             return {m_state};
         }
 
+        /**
+         * @brief Возвращает необработанную
+         * длину объекта.
+         * @return size_t длина объекта
+         */
         size_t RawLen() const
         {
             return lua_rawlen(m_state, m_index);
         }
 
+        /**
+         * @brief Возвращает StackObjectView с метатаблицей объекта.
+         * Если ее нет возвращает nil.
+         * @return StackObjectView
+         */
         StackObjectView GetMetaTable() const
         {
             if (!lua_getmetatable(m_state, m_index))
@@ -226,6 +336,12 @@ namespace LTL
             return {m_state};
         }
 
+        /**
+         * @brief Устанавливает на объект данную метатаблицу
+         *
+         * @tparam T тип мететаблицы
+         * @param value метатаблица
+         */
         template <typename T>
         void SetMetaTable(const T &value) const
         {
@@ -235,10 +351,10 @@ namespace LTL
 
         /**
          * @brief Помещает на стек глобальное значение.
-         * 
+         *
          * @param l Состояние ВМ Lua.
          * @param name Имя глобального значения.
-         * @return StackObjectView 
+         * @return StackObjectView
          */
         static StackObjectView Global(lua_State *l, const char *name)
         {
@@ -250,8 +366,8 @@ namespace LTL
 
         /**
          * @brief Возвращает состояние ВМ Lua.
-         * 
-         * @return lua_State* const 
+         *
+         * @return lua_State* const
          */
         lua_State *const GetState() const noexcept
         {
@@ -260,7 +376,7 @@ namespace LTL
 
         /**
          * @brief Возвращает индекс объекта на стеке.
-         * 
+         *
          * @return int
          */
         const int GetIndex() const noexcept
@@ -275,7 +391,7 @@ namespace LTL
 
     /**
      * @brief Реализация преобразования типа на стеке для StackObjectView.
-     * 
+     *
      * @see StackObjectView
      * @tparam StackObjectView
      */
