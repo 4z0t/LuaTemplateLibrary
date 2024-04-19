@@ -43,6 +43,13 @@ namespace LTL
 
     };
 
+    /**
+     * @brief Класс для описания сеттера пользовательского класса.
+     * 
+     * @tparam C класс содержащий поле
+     * @tparam T тип поля класса
+     * @tparam Field ссылка на поле класса
+     */
     template<class C, typename T, T C::* Field>
     struct Setter :public SetterBase
     {
@@ -57,6 +64,13 @@ namespace LTL
         }
     };
 
+    /**
+     * @brief Класс для описания свойства пользовательского класса.
+     * Совмещает в себе геттер и сеттер для поля.
+     * @tparam C 
+     * @tparam T 
+     * @tparam Field 
+     */
     template<class C, typename T, T C::* Field>
     struct Property : public PropertyBase
     {
@@ -95,9 +109,21 @@ namespace LTL
     template<auto Field>
     struct AGetter : Getter<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
+    /**
+     * @brief Класс для описания сеттера пользовательского класса.
+     * Автоматически определяет класс и тип поля по его ссылке.
+     *
+     * @tparam Field ссылка на поле класса
+     */
     template<auto Field>
     struct ASetter : Setter<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
+    /**
+     * @brief Класс для описания свойства пользовательского класса.
+     * Автоматически определяет класс и тип поля по его ссылке.
+     *
+     * @tparam Field ссылка на поле класса
+     */
     template<auto Field>
     struct AProperty : Property<typename FieldDeductor<Field>::Class, typename FieldDeductor<Field>::Type, Field> {};
 
