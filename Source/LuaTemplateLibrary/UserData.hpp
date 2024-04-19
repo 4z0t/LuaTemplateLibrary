@@ -22,6 +22,11 @@ namespace LTL
         }
     };
 
+    /**
+     * @brief Класс представляющий пользовательский тип в Lua
+     * 
+     * @tparam T пользовательский тип
+     */
     template<typename T>
     struct UserData : Internal::UserDataValue<T>
     {
@@ -32,6 +37,13 @@ namespace LTL
         struct IndexTable : public RegistryTableBase<IndexTable> {};
         struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
 
+        /**
+         * @brief Помещает на стек UserData<T> и возвращает указатель на его место
+         * в памяти для дальнейшего использования с оператором new
+         * 
+         * @param l 
+         * @return void* const 
+         */
         static void* const  Allocate(lua_State* l)
         {
             void* const obj = lua_newuserdata(l, sizeof(T));
@@ -39,24 +51,53 @@ namespace LTL
             return obj;
         }
 
+        /**
+         * @brief Помещает на стек UserData<T> через move copy данного объекта
+         * 
+         * @param l 
+         * @param other 
+         */
         static void PushCopy(lua_State* l, T&& other)
         {
             static_assert(std::is_move_constructible_v<T>, "Can't move-construct type T!");
             new(Allocate(l)) T(std::forward<T>(other));
         }
 
+        /**
+         * @brief Помещает на стек UserData<T> - копию данного объекта
+         * 
+         * @param l 
+         * @param other 
+         */
         static void PushCopy(lua_State* l, const T& other)
         {
             static_assert(std::is_copy_constructible_v<T>, "Can't copy-construct type T!");
             new(Allocate(l)) T(other);
         }
 
+        /**
+         * @brief Создает UserData<T> и возвращает объект-ссылку с ним
+         * 
+         * @tparam Alloc 
+         * @tparam TArgs 
+         * @param s 
+         * @param args 
+         * @return GRefObject 
+         */
         template<typename Alloc, typename ...TArgs>
         static GRefObject Make(const State<Alloc>& s, TArgs&&... args)
         {
             return Make(s.GetState()->Unwrap(), std::forward<TArgs>(args)...);
         }
 
+        /**
+         * @brief Создает UserData<T> и возвращает объект-ссылку с ним
+         * 
+         * @tparam TArgs 
+         * @param l 
+         * @param args 
+         * @return GRefObject 
+         */
         template<typename ...TArgs>
         static GRefObject Make(lua_State* l, TArgs&&... args)
         {
@@ -64,6 +105,11 @@ namespace LTL
             return GRefObject::FromTop(l);
         }
 
+        /**
+         * @brief Устанавливает метатаблицу класса на объект на стеке
+         * 
+         * @param l 
+         */
         static void SetClassMetaTable(lua_State* l)
         {
             if (MetaTable::Push(l) != LUA_TTABLE)
@@ -73,6 +119,12 @@ namespace LTL
             lua_setmetatable(l, -2);
         }
 
+        /**
+         * @brief Функция для уничтожения UserData<T>
+         * 
+         * @param l 
+         * @return int 
+         */
         static int DestructorFunction(lua_State* l)
         {
 
@@ -83,6 +135,14 @@ namespace LTL
             return 0;
         }
 
+        /**
+         * @brief Проверяет является ли объект по индексу на стеке UserData<T>
+         * 
+         * @param l 
+         * @param index 
+         * @return true 
+         * @return false 
+         */
         static bool IsUserData(lua_State* l, int index)
         {
             if (!lua_isuserdata(l, index))
