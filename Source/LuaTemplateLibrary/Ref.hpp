@@ -21,6 +21,8 @@ namespace LTL
 
         ContextRef() = delete;
 
+        ContextRef(lua_State* l, int index)noexcept : m_state{ l }, m_ref{ l, index } {}
+
         ContextRef(lua_State* l, const RefClass& ref)noexcept : m_state{ l }, m_ref{ ref } {}
 
         ContextRef(const ContextRef& other) = delete;
@@ -37,7 +39,6 @@ namespace LTL
         {
             m_ref.Push(m_state);
         }
-
 
         void Release()
         {

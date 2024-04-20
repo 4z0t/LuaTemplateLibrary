@@ -57,6 +57,7 @@ namespace LTL
         {
             return lua_type(m_state, m_index) == static_cast<int>(LType);
         }
+
         /**
          * @brief Проверяет является ли объект заданного типа.
          *
