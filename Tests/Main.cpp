@@ -834,6 +834,41 @@ void TestGetterAndSetter()
 
 }
 
+void TestGCAccess()
+{
+    using namespace LTL;
+    using namespace std;
+
+    struct A
+    {
+        string s;
+        A(string s) :s(s) {
+            cout << "ctor called" << endl;
+        }
+        ~A() {
+            cout << "dtor called" << endl;
+        }
+    };
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+
+    Class<A>(s, "A")
+        .AddConstructor<string>()
+        .Add("s", AProperty<&A::s>{})
+        ;
+
+    s.Run(R"===(
+        local a = A("g")
+        print(getmetatable(a))
+        print(a.s)
+        a:__gc()
+        print(a.s)
+    )===");
+
+}
+
 int main()
 {
     //ClassTest();
@@ -850,6 +885,6 @@ int main()
     //TestUpvaluesMatching();
     //TestStackResult();
     //AAAAAAAA();
-    TestGetterAndSetter();
-
+    //TestGetterAndSetter();
+    TestGCAccess();
 }

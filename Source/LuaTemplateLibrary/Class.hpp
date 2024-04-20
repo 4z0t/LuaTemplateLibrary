@@ -79,7 +79,7 @@ namespace LTL
             }
             UData::MetaTable::Push(m_state);
             StackObjectView metatable{ m_state };
-            metatable.RawSet("__metatable", false);
+            metatable.RawSet("__metatable", true);
             lua_pop(m_state, 1);
 
         }
