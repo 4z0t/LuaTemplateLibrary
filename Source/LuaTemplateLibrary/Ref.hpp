@@ -55,6 +55,11 @@ namespace LTL
             return m_ref;
         }
 
+        lua_State*const GetState()const noexcept
+        {
+            return m_state;
+        }
+
         lua_State* GetState()noexcept
         {
             return m_state;
