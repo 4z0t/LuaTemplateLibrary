@@ -536,17 +536,17 @@ namespace LTL
             }
         }
     private:
-        RefTableEntryObject() :Base() {};
+        RefTableEntryObject() = delete;
         RefTableEntryObject(lua_State* l) noexcept :Base(l) { };
         template<typename T>
         RefTableEntryObject(const State<T>& state) noexcept : Base(state) {};
-        RefTableEntryObject(const RefTableEntryObject& obj) : Base(obj.m_state)
-        {
-            obj.PushKey();
-            m_key_ref = this->GetRef();
+        RefTableEntryObject(const RefTableEntryObject& obj) = delete;
 
-            obj.PushTable();
-            m_table_ref = this->GetRef();
+        RefTableEntryObject(RefTableEntryObject&& obj) : Base(obj.m_state)
+        {
+            m_table_ref = obj.m_table_ref;
+            m_key_ref = obj.m_key_ref;
+            obj.Clear();
         }
 
         void PushKey()const
