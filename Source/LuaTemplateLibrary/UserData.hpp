@@ -52,10 +52,10 @@ namespace LTL
          */
         static void* const  Allocate(lua_State* l)
         {
-            Data* const object = (Data*)lua_newuserdata(l, sizeof(Data));
-            object->isDestroyed = false;
+            Data* const data = (Data*)lua_newuserdata(l, sizeof(Data));
+            data->isDestroyed = false;
             SetClassMetaTable(l);
-            return &object->object;
+            return &data->object;
         }
 
         /**
