@@ -92,6 +92,11 @@ namespace LTL
 
     template<typename ...Ts>
     struct MultReturn : std::tuple<Ts...>, MultReturnBase { using std::tuple<Ts...>::tuple; };
+
+    struct StackResult
+    {
+        const size_t n_results = 1;
+    };
 }
 
 #define LuaOptionalArg(name_, type_, value_) \

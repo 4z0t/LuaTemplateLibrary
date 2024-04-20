@@ -48,10 +48,10 @@ namespace LTL
         lua_State* const m_state;
         const int m_n;
     };*/
-    
+
     /**
      * @brief Класс для восстановления стека после выхода из области видимости
-     * 
+     *
      */
     struct StackRestorer final
     {
@@ -87,7 +87,7 @@ namespace LTL
             lua_pushvalue(l, Index);
         }
     };
-
+#pragma region Function and Closure register
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
         lua_pushcfunction(l, func);
@@ -98,6 +98,15 @@ namespace LTL
     {
         return RegisterFunction(l, name.c_str(), func);
     }
+
+    template<typename ...Ts>
+    void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
+    {
+        size_t n = PushArgs(l, std::forward<Ts>(args)...);
+        lua_pushcclosure(l, func, static_cast<int>(n));
+        lua_setglobal(l, name);
+    }
+#pragma endregion
 
     template<typename T>
     T GetValue(lua_State* l, int index)
@@ -110,6 +119,8 @@ namespace LTL
     {
         StackType<const_decay_t<T>>::Push(l, arg);
     }
+
+#pragma region Push Args
 
     template<size_t N>
     size_t _PushArgs(lua_State* l)
@@ -129,6 +140,10 @@ namespace LTL
     {
         return _PushArgs<0>(l, std::forward<Ts>(args)...);
     }
+
+#pragma endregion
+
+#pragma region Call
 
     template<typename ...Ts>
     inline size_t _PrepareCall(lua_State* l, const char* name, Ts&&... args)
@@ -160,6 +175,9 @@ namespace LTL
         return CallStack<TReturn>(l, n);
     }
 
+#pragma endregion
+
+#pragma region PCall
 
     enum class PCallResult
     {
@@ -193,9 +211,9 @@ namespace LTL
     {
         std::optional<T> result = std::nullopt;
 
-        PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result{result} {}
+        PCallReturn(const T& result, PCallResult status) : PCallReturnBase(status), result{ result } {}
 
-        PCallReturn(PCallResult status) : PCallReturnBase(status), result{std::nullopt} {}
+        PCallReturn(PCallResult status) : PCallReturnBase(status), result{ std::nullopt } {}
     };
 
     template<>
@@ -233,14 +251,9 @@ namespace LTL
         return PCallStack<TReturn>(l, n);
     }
 
+#pragma endregion
 
-    template<typename ...Ts>
-    void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
-    {
-        size_t n = PushArgs(l, std::forward<Ts>(args)...);
-        lua_pushcclosure(l, func, static_cast<int>(n));
-        lua_setglobal(l, name);
-    }
+#pragma region Get Args
 
     template<size_t N, typename TArgsTuple>
     constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
@@ -268,6 +281,9 @@ namespace LTL
         return GetUpvalues<N + 1, TArgsTuple, TArgs...>(l, args);
     }
 
+#pragma endregion
+
+#pragma region Push Result
 
     template<size_t Index, typename TResult>
     inline size_t _PushResult(lua_State* l, TResult& result)
@@ -275,14 +291,12 @@ namespace LTL
         return Index;
     }
 
-
     template<size_t Index, typename TResult, typename T, typename ...Ts>
     inline size_t _PushResult(lua_State* l, TResult& result)
     {
         PushValue<T>(l, std::get<Index>(result));
         return _PushResult<Index + 1, TResult, Ts...>(l, result);
     }
-
 
     template<typename T>
     inline void _PushResult(lua_State* l, const T& result)
@@ -303,18 +317,16 @@ namespace LTL
         return _PushResult<0, MultReturn<Ts...>, Ts...>(l, result);
     }
 
-    struct StackResult
-    {
-        const size_t n_results = 1;
-    };
-
     template<>
     inline size_t PushResult(lua_State* l, StackResult result)
     {
         return result.n_results;
     }
 
+#pragma endregion
+
 #pragma region Upvalues Replace
+
     template<size_t Index, typename TResult>
     constexpr size_t _ReplaceUpvalue(lua_State* l, TResult& upvalues)
     {
@@ -337,5 +349,6 @@ namespace LTL
     {
         _ReplaceUpvalue<0, std::tuple<CArgs...>, CArgs...>(l, upvalues);
     }
+
 #pragma endregion
 }
