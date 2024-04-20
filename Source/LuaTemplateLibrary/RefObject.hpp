@@ -461,7 +461,7 @@ namespace LTL
         }
 
 
-        void Clear()
+        void Clear()noexcept
         {
             this->m_state = nullptr;
             m_ref = LUA_NOREF;
