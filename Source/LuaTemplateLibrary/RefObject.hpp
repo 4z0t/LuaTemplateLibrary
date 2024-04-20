@@ -309,14 +309,14 @@ namespace LTL
     class RefObject;
 
     template<typename RefAccess>
-    class RefTableObject;
+    class RefTableEntryObject;
 
     template<typename RefAccess>
     class RefObject : public RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
         using Base = RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>;
-        using RefTableObjectT = RefTableObject<RefAccess>;
+        using RefTableObjectT = RefTableEntryObject<RefAccess>;
         friend class Base;
         using Base::Base;
 
@@ -476,22 +476,22 @@ namespace LTL
     };
 
     template<typename RefAccess>
-    class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefObject<RefAccess>, RefAccess>
+    class RefTableEntryObject : public RefObjectBase<RefTableEntryObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
         using RefClass = RefObject<RefAccess>;
-        using Base = RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>;
+        using Base = RefObjectBase<RefTableEntryObject, RefObject<RefAccess>, RefAccess>;
         friend class RefClass;
         friend class Base;
 
         template<typename T>
-        RefTableObject operator[](const T& key)
+        RefTableEntryObject operator[](const T& key)
         {
             return RefClass(*this)[key];
         }
 
         template<typename T>
-        RefTableObject& operator=(const T& value)
+        RefTableEntryObject& operator=(const T& value)
         {
             PushTable();
             PushKey();
@@ -502,7 +502,7 @@ namespace LTL
         }
 
         template<>
-        RefTableObject& operator=(const RefClass& obj)
+        RefTableEntryObject& operator=(const RefClass& obj)
         {
             PushTable();
             PushKey();
@@ -512,7 +512,7 @@ namespace LTL
             return *this;
         }
 
-        RefTableObject& operator=(const RefTableObject& obj)
+        RefTableEntryObject& operator=(const RefTableEntryObject& obj)
         {
             return *this = RefClass(obj);
         }
@@ -536,11 +536,11 @@ namespace LTL
             }
         }
     private:
-        RefTableObject() :Base() {};
-        RefTableObject(lua_State* l) noexcept :Base(l) { };
+        RefTableEntryObject() :Base() {};
+        RefTableEntryObject(lua_State* l) noexcept :Base(l) { };
         template<typename T>
-        RefTableObject(const State<T>& state) noexcept : Base(state) {};
-        RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
+        RefTableEntryObject(const State<T>& state) noexcept : Base(state) {};
+        RefTableEntryObject(const RefTableEntryObject& obj) : Base(obj.m_state)
         {
             obj.PushKey();
             m_key_ref = this->GetRef();
@@ -598,9 +598,9 @@ namespace LTL
     };
 
     template<typename T>
-    struct StackType<RefTableObject<T>>
+    struct StackType<RefTableEntryObject<T>>
     {
-        using Type = RefTableObject<T>;
+        using Type = RefTableEntryObject<T>;
 
         static bool Check(lua_State* l, int index)
         {
