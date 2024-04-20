@@ -33,7 +33,10 @@ namespace LTL
             m_ref = ref;
         }
 
-
+        void Push()const
+        {
+            m_ref.Push(m_state);
+        }
 
 
         void Release()
