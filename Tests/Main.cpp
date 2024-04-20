@@ -200,7 +200,7 @@ void Test()
             .AddClosure("PrintInc", LTL::CFunction<PrintClosureNumber2, Upvalue<int>, Upvalue<float>>::Function, 7, 3.2f)
             .AddClosure("SayBye", LTL::CFunction<Say, OptStringValue>::Function)
             .AddFunction("GetSystemTime", LTL::CFunction<GetSystemTime>::Function<>)
-            */
+            //*/
             //.AddFunction("VecSum2", LTL::CFunction<&Vector3f::operator+, Vector3f, Vector3f>::Function)
             //.AddClosure("VecPtr", LTL::CFunction<&Vector3f::operator+, Upvalue<Vector3f*>, Vector3f>::Function, &v)
             //.AddClosure("CoolFunction", LTL::CFunction<CoolFunction, GRefObject>::Function)

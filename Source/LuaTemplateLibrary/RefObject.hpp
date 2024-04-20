@@ -542,7 +542,7 @@ namespace LTL
         RefTableEntryObject(const State<T>& state) noexcept : Base(state) {};
         RefTableEntryObject(const RefTableEntryObject& obj) = delete;
 
-        RefTableEntryObject(RefTableEntryObject&& obj) : Base(obj.m_state)
+        RefTableEntryObject(RefTableEntryObject&& obj)noexcept : Base(obj.m_state)
         {
             m_table_ref = obj.m_table_ref;
             m_key_ref = obj.m_key_ref;
@@ -559,7 +559,7 @@ namespace LTL
             this->PushRef(m_table_ref);
         }
 
-        void Clear()
+        void Clear()noexcept
         {
             this->m_state = nullptr;
             m_table_ref = LUA_NOREF;
