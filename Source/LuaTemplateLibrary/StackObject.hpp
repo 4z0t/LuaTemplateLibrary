@@ -89,23 +89,7 @@ namespace LTL
         template <typename T>
         bool operator==(const T& value) const
         {
-            PushValue(m_state, value);
-            bool r = lua_compare(m_state, m_index, -1, LUA_OPEQ);
-            lua_pop(m_state, 1);
-            return r;
-        }
-
-        /**
-         * @brief Результат сравнения объектов с использованием метаметода
-         *
-         * @param value сравниваемый объект.
-         * @return true Объекты равны с точки зрения Lua
-         * @return false Объекты неравны с точки зрения Lua
-         */
-        template <>
-        bool operator==(const StackObjectView& value) const
-        {
-            return m_state == value.m_state && lua_compare(m_state, m_index, value.m_index, LUA_OPEQ);
+            return Compare<LUA_OPEQ>(value);
         }
 
         /**
@@ -120,6 +104,62 @@ namespace LTL
         bool operator!=(const T& value) const
         {
             return !(*this == value);
+        }
+
+        /**
+        * @brief Результат сравнения объектов с использованием метаметода
+        *
+        * @tparam T Тип сравниваемого значения.
+        * @param value сравниваемое значение.
+        * @return true Объекты равны с точки зрения Lua
+        * @return false Объекты неравны с точки зрения Lua
+        */
+        template <typename T>
+        bool operator<=(const T& value) const
+        {
+            return Compare<LUA_OPLE>(value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool operator>(const T& value) const
+        {
+            return !(*this <= value);
+        }
+
+        /**
+        * @brief Результат сравнения объектов с использованием метаметода
+        *
+        * @tparam T Тип сравниваемого значения.
+        * @param value сравниваемое значение.
+        * @return true Объекты равны с точки зрения Lua
+        * @return false Объекты неравны с точки зрения Lua
+        */
+        template <typename T>
+        bool operator<(const T& value) const
+        {
+            return Compare<LUA_OPLT>(value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool operator>=(const T& value) const
+        {
+            return !(*this < value);
         }
 
         /**
@@ -412,6 +452,21 @@ namespace LTL
         const int GetIndex() const noexcept
         {
             return m_index;
+        }
+    private:
+        template <int COMPARE_OP, typename T>
+        bool Compare(const T& value)const
+        {
+            PushValue(m_state, value);
+            bool r = lua_compare(m_state, m_index, -1, COMPARE_OP);
+            lua_pop(m_state, 1);
+            return r;
+        }
+
+        template <int COMPARE_OP>
+        bool Compare(const StackObjectView& other)const
+        {
+            return lua_compare(m_state, m_index, other.m_index, COMPARE_OP);
         }
 
     protected:
