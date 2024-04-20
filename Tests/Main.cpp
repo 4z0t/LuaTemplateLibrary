@@ -843,10 +843,21 @@ void TestGCAccess()
     {
         string s;
         A(string s) :s(s) {
-            cout << "ctor called" << endl;
+            cout << "A ctor called" << endl;
         }
         ~A() {
-            cout << "dtor called" << endl;
+            cout << "A dtor called" << endl;
+        }
+    };
+
+    struct B
+    {
+        int s;
+        B(int s) :s(s) {
+            cout << "B ctor called" << endl;
+        }
+        ~B() {
+            cout << "B dtor called" << endl;
         }
     };
 
@@ -858,14 +869,33 @@ void TestGCAccess()
         .AddConstructor<string>()
         .Add("s", AProperty<&A::s>{})
         ;
-
-    s.Run(R"===(
+    Class<B>(s, "B")
+        .AddConstructor<int>()
+        .Add("s", AProperty<&B::s>{})
+        ;
+    try
+    {
+        s.Run(R"===(
         local a = A("g")
+        local b = B(1)
         print(getmetatable(a))
+        print(getmetatable(b))
         print(a.s)
+        print(b.s)
+        
+        print(a.s)
+        print(b.s)
+        b:__gc()
         a:__gc()
-        print(a.s)
-    )===");
+        a.__gc(b)
+        a:__gc()
+        
+        )===");
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
 
 }
 

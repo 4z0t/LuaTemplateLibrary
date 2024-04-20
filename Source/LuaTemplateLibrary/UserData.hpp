@@ -24,7 +24,7 @@ namespace LTL
 
     /**
      * @brief Класс представляющий пользовательский тип в Lua
-     * 
+     *
      * @tparam T пользовательский тип
      */
     template<typename T>
@@ -37,25 +37,32 @@ namespace LTL
         struct IndexTable : public RegistryTableBase<IndexTable> {};
         struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
 
+        struct Data
+        {
+            T object;
+            bool isDestroyed = false;
+        };
+
         /**
          * @brief Помещает на стек UserData<T> и возвращает указатель на его место
          * в памяти для дальнейшего использования с оператором new
-         * 
-         * @param l 
-         * @return void* const 
+         *
+         * @param l
+         * @return void* const
          */
         static void* const  Allocate(lua_State* l)
         {
-            void* const obj = lua_newuserdata(l, sizeof(T));
+            Data* const object = (Data*)lua_newuserdata(l, sizeof(Data));
+            object->isDestroyed = false;
             SetClassMetaTable(l);
-            return obj;
+            return &object->object;
         }
 
         /**
          * @brief Помещает на стек UserData<T> через move copy данного объекта
-         * 
-         * @param l 
-         * @param other 
+         *
+         * @param l
+         * @param other
          */
         static void PushCopy(lua_State* l, T&& other)
         {
@@ -65,9 +72,9 @@ namespace LTL
 
         /**
          * @brief Помещает на стек UserData<T> - копию данного объекта
-         * 
-         * @param l 
-         * @param other 
+         *
+         * @param l
+         * @param other
          */
         static void PushCopy(lua_State* l, const T& other)
         {
@@ -77,12 +84,12 @@ namespace LTL
 
         /**
          * @brief Создает UserData<T> и возвращает объект-ссылку с ним
-         * 
-         * @tparam Alloc 
-         * @tparam TArgs 
-         * @param s 
-         * @param args 
-         * @return GRefObject 
+         *
+         * @tparam Alloc
+         * @tparam TArgs
+         * @param s
+         * @param args
+         * @return GRefObject
          */
         template<typename Alloc, typename ...TArgs>
         static GRefObject Make(const State<Alloc>& s, TArgs&&... args)
@@ -92,11 +99,11 @@ namespace LTL
 
         /**
          * @brief Создает UserData<T> и возвращает объект-ссылку с ним
-         * 
-         * @tparam TArgs 
-         * @param l 
-         * @param args 
-         * @return GRefObject 
+         *
+         * @tparam TArgs
+         * @param l
+         * @param args
+         * @return GRefObject
          */
         template<typename ...TArgs>
         static GRefObject Make(lua_State* l, TArgs&&... args)
@@ -107,8 +114,8 @@ namespace LTL
 
         /**
          * @brief Устанавливает метатаблицу класса на объект на стеке
-         * 
-         * @param l 
+         *
+         * @param l
          */
         static void SetClassMetaTable(lua_State* l)
         {
@@ -121,27 +128,34 @@ namespace LTL
 
         /**
          * @brief Функция для уничтожения UserData<T>
-         * 
-         * @param l 
-         * @return int 
+         *
+         * @param l
+         * @return int
          */
         static int DestructorFunction(lua_State* l)
         {
 
-            T* data = static_cast<T*>(lua_touserdata(l, 1));
+            Data* data = ToUserData(l, 1);
+
             if (data != nullptr)
-                data->~T();
+            {
+                if (!data->isDestroyed)
+                {
+                    data->object.~T();
+                    data->isDestroyed = true;
+                }
+            }
 
             return 0;
         }
 
         /**
          * @brief Проверяет является ли объект по индексу на стеке UserData<T>
-         * 
-         * @param l 
-         * @param index 
-         * @return true 
-         * @return false 
+         *
+         * @param l
+         * @param index
+         * @return true
+         * @return false
          */
         static bool IsUserData(lua_State* l, int index)
         {
@@ -165,7 +179,7 @@ namespace LTL
             return r;
         }
 
-        static T* ValidateUserData(lua_State* l, int index)
+        static Data* ToUserData(lua_State* l, int index)
         {
             if (!lua_isuserdata(l, index))
             {
@@ -194,8 +208,19 @@ namespace LTL
                 ThrowWrongUserDataType(l, index);
                 return nullptr;
             }
+            return static_cast<Data*>(lua_touserdata(l, index));
+        }
 
-            return static_cast<T*>(lua_touserdata(l, index));
+        static T* ValidateUserData(lua_State* l, int index)
+        {
+            Data* data = ToUserData(l, index);
+            if (data == nullptr || data->isDestroyed)
+            {
+                ThrowUDDestroyed(l, index);
+                return nullptr;
+            }
+
+            return &data->object;
         }
 
         static int IndexMethod(lua_State* l)
@@ -272,7 +297,7 @@ namespace LTL
 
         static void ThrowWrongUserDataType(lua_State* l, int index)
         {
-            luaL_error(l, "Expected %s but got userdata", GetClassName(l));
+            luaL_error(l, "Expected %s but got other userdata", GetClassName(l));
         }
 
         static void ThrowWrongType(lua_State* l, int index)
@@ -283,6 +308,11 @@ namespace LTL
         static void ThrowNoMetaTableForUD(lua_State* l, int index)
         {
             luaL_argerror(l, index, "Expected userdata with metatable");
+        }
+
+        static void ThrowUDDestroyed(lua_State* l, int index)
+        {
+            luaL_argerror(l, index, "Userdata was destroyed");
         }
 #pragma endregion
     };
