@@ -316,7 +316,7 @@ namespace LTL
     {
     public:
         using Base = RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>;
-        using RefTableObjectT = RefTableEntryObject<RefAccess>;
+        using RefTableEntryObjectT = RefTableEntryObject<RefAccess>;
         friend class Base;
         using Base::Base;
 
@@ -339,7 +339,7 @@ namespace LTL
             obj.Clear();
         }
 
-        RefObject(const RefTableObjectT& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefTableEntryObjectT& obj) noexcept : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -363,7 +363,7 @@ namespace LTL
             return *this;
         }
 
-        RefObject& operator=(const RefTableObjectT& obj)
+        RefObject& operator=(const RefTableEntryObjectT& obj)
         {
             Unref();
             obj.Push();
@@ -382,9 +382,9 @@ namespace LTL
         }
 
         template<typename T>
-        RefTableObjectT operator[](const T& key)
+        RefTableEntryObjectT operator[](const T& key)
         {
-            RefTableObjectT obj{ this->m_state };
+            RefTableEntryObjectT obj{ this->m_state };
             PushValue(this->m_state, key);
             obj.m_key_ref = this->GetRef();
             Push();
