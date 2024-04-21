@@ -274,6 +274,20 @@ namespace LTL
         }
 
         /**
+         * @brief Устанавливает по индексу значение на объект с вызовом метаметода
+         *
+         * @tparam V
+         * @param i
+         * @param value
+         */
+        template <typename V>
+        void SetI(lua_Integer i, const V& value) const
+        {
+            PushValue(m_state, value);
+            lua_seti(m_state, m_index, i);
+        }
+
+        /**
          * @brief Возвращает значение по ключу без вызова метаметода
          *
          * @tparam R
