@@ -63,6 +63,11 @@ namespace LTL
             return Type() == LType;
         }
 
+        /**
+         * @brief Возвращает тип объекта на стеке
+         *
+         * @return Type
+         */
         Type Type() const
         {
             return static_cast<LTL::Type>(lua_type(m_state, m_index));
