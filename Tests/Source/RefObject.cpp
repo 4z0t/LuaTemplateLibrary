@@ -825,6 +825,13 @@ TEST_F(StackObjectViewTest, TestStack)
     { // Basic stack ops
         const StackRestorer rst{ l };
         PushValue(l, 1);
+
+        CheckStackChange(0, {
+                StackObjectView s{ l };
+
+                ASSERT_EQ(s.GetState(), l);
+                ASSERT_EQ(s.GetIndex(), lua_gettop(l));
+            });
         CheckStackChange(1, {
                 StackObjectView s{ l };
                 s.Push();
@@ -1012,6 +1019,7 @@ TEST_F(StackObjectViewTest, TestStack)
                 ASSERT_TRUE(s2.Is<int>());
                 ASSERT_EQ(s2, 40);
             });
+
     }
 
 #undef CheckStackChange
