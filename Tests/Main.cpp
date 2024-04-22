@@ -899,6 +899,55 @@ void TestGCAccess()
 
 }
 
+void PcallTest()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+
+    s.Run(R"===(
+            function a()
+                error("Error")
+            end
+            function b()
+                return 1
+            end
+            )===");
+    try
+    {
+        {
+            auto r = s.PCall<int>("a");
+            if (r)
+            {
+                cout << "OK: " << r.result.value() << endl;
+            }
+            else
+            {
+                cout << "Error: " << s.To<const char*>(-1) << endl;
+            }
+        }
+        {
+            auto r = s.PCall<int>("b");
+            if (r)
+            {
+                cout << "OK: " << r.result.value() << endl;
+            }
+            else
+            {
+                cout << "Error: " << s.To<const char*>(-1) << endl;
+            }
+        }
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason();
+    }
+}
+
 int main()
 {
     //ClassTest();
@@ -916,5 +965,7 @@ int main()
     //TestStackResult();
     //AAAAAAAA();
     //TestGetterAndSetter();
-    TestGCAccess();
+    //TestGCAccess();
+    PcallTest();
+
 }
