@@ -60,7 +60,7 @@ namespace LTL
         template <Type LType>
         bool Is() const
         {
-            return lua_type(m_state, m_index) == static_cast<int>(LType);
+            return Type() == LType;
         }
 
         Type Type() const
