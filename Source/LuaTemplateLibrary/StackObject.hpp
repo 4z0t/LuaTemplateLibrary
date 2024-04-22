@@ -16,6 +16,8 @@ namespace LTL
     class StackObjectView
     {
     public:
+#pragma region Ctors
+
         /**
          * @brief Для внутреннего использования.
          * Не использовать самому.
@@ -37,6 +39,8 @@ namespace LTL
         StackObjectView(StackObjectView&& other) = default;
         StackObjectView& operator=(const StackObjectView& other) = default;
         StackObjectView& operator=(StackObjectView&& other) = default;
+
+#pragma endregion
 
         /**
          * @brief Преобразует объект к данному типу.
@@ -94,14 +98,16 @@ namespace LTL
             lua_pushvalue(m_state, m_index);
         }
 
+#pragma region Comparison operators
+
         /**
-         * @brief Результат сравнения объектов с использованием метаметода
-         *
-         * @tparam T Тип сравниваемого значения.
-         * @param value сравниваемое значение.
-         * @return true Объекты равны с точки зрения Lua
-         * @return false Объекты неравны с точки зрения Lua
-         */
+ * @brief Результат сравнения объектов с использованием метаметода
+ *
+ * @tparam T Тип сравниваемого значения.
+ * @param value сравниваемое значение.
+ * @return true Объекты равны с точки зрения Lua
+ * @return false Объекты неравны с точки зрения Lua
+ */
         template <typename T>
         bool operator==(const T& value) const
         {
@@ -178,6 +184,7 @@ namespace LTL
             return !(*this < value);
         }
 
+
         /**
          * @brief Результат сравнения объектов без вызова метаметода
          *
@@ -209,14 +216,18 @@ namespace LTL
             return lua_rawequal(m_state, m_index, value.m_index);
         }
 
+#pragma endregion
+
+#pragma region Get/Set methods
+
         /**
-         * @brief Возвращает значение по заданному ключу с вызовом метаметода
-         *
-         * @tparam R
-         * @tparam T
-         * @param key
-         * @return R
-         */
+ * @brief Возвращает значение по заданному ключу с вызовом метаметода
+ *
+ * @tparam R
+ * @tparam T
+ * @param key
+ * @return R
+ */
         template <typename R, typename T>
         R Get(const T& key) const
         {
@@ -299,6 +310,10 @@ namespace LTL
             PushValue(m_state, value);
             lua_seti(m_state, m_index, i);
         }
+
+#pragma endregion
+
+#pragma region Raw Get/Set methods
 
         /**
          * @brief Возвращает значение по ключу без вызова метаметода
@@ -393,6 +408,10 @@ namespace LTL
             lua_rawset(m_state, m_index);
         }
 
+#pragma endregion
+
+#pragma region Len methods
+
         /**
          * @brief возвращает результат работы метаметода
          * __len, если таковой присутствует, в противном
@@ -410,12 +429,12 @@ namespace LTL
         }
 
         /**
-         * @brief возвращает результат работы метаметода
-         * __len, если таковой присутствует, в противном
-         * случае возвращает результат RawLen.
-         *
-         * @return StackObjectView
-         */
+ * @brief возвращает результат работы метаметода
+ * __len, если таковой присутствует, в противном
+ * случае возвращает результат RawLen.
+ *
+ * @return StackObjectView
+ */
         StackObjectView Len() const
         {
             lua_len(m_state, m_index);
@@ -431,6 +450,10 @@ namespace LTL
         {
             return lua_rawlen(m_state, m_index);
         }
+
+#pragma endregion
+
+#pragma region get/set metatable methods
 
         /**
          * @brief Возвращает StackObjectView с метатаблицей объекта.
@@ -458,6 +481,11 @@ namespace LTL
             PushValue(m_state, value);
             lua_setmetatable(m_state, m_index);
         }
+
+#pragma endregion
+
+
+#pragma region Call methods
 
         template<typename TReturn = void, typename ...TArgs>
         TReturn Call(TArgs&& ...args)const
@@ -494,6 +522,8 @@ namespace LTL
             const size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
             return PCallStack<TReturn>(m_state, n);
         }
+
+#pragma endregion
 
         /**
          * @brief Помещает на стек глобальное значение.
