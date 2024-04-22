@@ -974,13 +974,43 @@ TEST_F(StackObjectViewTest, TestStack)
         lua_createtable(l, 0, 0);
         CheckStackChange(0, {
                 StackObjectView s1{ l };
-                s1.SetI(1, 10);
+                s1.RawSetI(1, 10);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                auto s2 = s1.RawGetI(1);
+                ASSERT_TRUE(s2.Is<int>());
+                ASSERT_EQ(s2, 10);
             });
         CheckStackChange(0, {
                 StackObjectView s1{ l };
-                 auto s2 = s1.GetI(1);
-
-
+                s1.SetI(1, 20);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                auto s2 = s1.GetI(1);
+                ASSERT_TRUE(s2.Is<int>());
+                ASSERT_EQ(s2, 20);
+            });
+        CheckStackChange(0, {
+                StackObjectView s1{ l };
+                s1.RawSet("a", 30);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                auto s2 = s1.RawGet("a");
+                ASSERT_TRUE(s2.Is<int>());
+                ASSERT_EQ(s2, 30);
+            });
+        CheckStackChange(0, {
+                StackObjectView s1{ l };
+                s1.Set("b", 40);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                auto s2 = s1.Get("b");
+                ASSERT_TRUE(s2.Is<int>());
+                ASSERT_EQ(s2, 40);
             });
     }
 
