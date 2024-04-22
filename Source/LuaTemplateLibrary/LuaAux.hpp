@@ -204,6 +204,11 @@ namespace LTL
         {
             return this->status == status;
         }
+
+        operator bool()const
+        {
+            return IsOk();
+        }
     };
 
     template<typename T>
@@ -225,7 +230,7 @@ namespace LTL
     template<typename TReturn = void>
     PCallReturn<TReturn> PCallStack(lua_State* l, const size_t  n_args)
     {
-        PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
+        PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 1, 0));
         if (status == PCallResult::Ok)
         {
             TReturn result = GetValue<TReturn>(l, -1);
