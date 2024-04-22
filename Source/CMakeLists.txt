@@ -5,7 +5,6 @@ set(LTL_HEADERS
     ${LTL_DIR}/FuncArguments.hpp
     ${LTL_DIR}/LuaTypes.hpp
     ${LTL_DIR}/CState.hpp
-    ${LTL_DIR}/STDContainers.hpp
     ${LTL_DIR}/FuncUtils.hpp
     ${LTL_DIR}/LuaAux.hpp
     ${LTL_DIR}/UserData.hpp
@@ -17,6 +16,7 @@ set(LTL_HEADERS
     ${LTL_DIR}/RefObject.hpp
     ${LTL_DIR}/StackObject.hpp
     ${LTL_DIR}/Exception.hpp
+    ${LTL_DIR}/STDContainers.hpp
     ${LTL_DIR}/LTL.hpp
 )
 

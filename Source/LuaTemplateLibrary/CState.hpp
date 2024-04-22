@@ -4,11 +4,6 @@
 
 namespace LTL
 {
-    CState* WrapState(lua_State* l)
-    {
-        return (CState*)l;
-    }
-
     class CState final
     {
     public:
@@ -166,4 +161,9 @@ namespace LTL
         CState() = delete;
         ~CState() = delete;
     };
+
+    CState* WrapState(lua_State* l)
+    {
+        return (CState*)l;
+    }
 }
