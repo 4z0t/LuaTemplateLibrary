@@ -249,13 +249,11 @@ namespace LTL
         }
 
         /**
-          * @brief Возвращает значение по заданному индексу с вызовом метаметода
+          * @brief Помещает на стек значение по заданному индексу с вызовом метаметода
           *
-          * @tparam R
           * @param key
-          * @return R
+          * @return StackObjectView
           */
-        template <>
         StackObjectView GetI(lua_Integer index) const
         {
             lua_geti(m_state, m_index, index);
@@ -339,6 +337,18 @@ namespace LTL
             R r = GetValue<R>(m_state, -1);
             lua_pop(m_state, 1);
             return r;
+        }
+
+        /**
+        * @brief Помещает на стек значение по индексу без вызова метаметода
+        *
+        * @param i
+        * @return StackObjectView
+        */
+        StackObjectView RawGetI(lua_Integer i) const
+        {
+            lua_rawgeti(m_state, m_index, i);
+            return { m_state };
         }
 
         /**

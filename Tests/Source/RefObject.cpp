@@ -970,7 +970,18 @@ TEST_F(StackObjectViewTest, TestStack)
             });
     }
     {
+        const StackRestorer rst{ l };
+        lua_createtable(l, 0, 0);
+        CheckStackChange(0, {
+                StackObjectView s1{ l };
+                s1.SetI(1, 10);
+            });
+        CheckStackChange(0, {
+                StackObjectView s1{ l };
+                 auto s2 = s1.GetI(1);
 
+
+            });
     }
 
 #undef CheckStackChange
