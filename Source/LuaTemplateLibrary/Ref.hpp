@@ -4,7 +4,7 @@
 
 namespace LTL
 {
-    template <typename RefAccess = RefGlobalAccess>
+    template <typename RefAccess>
     class Ref;
 
     /**

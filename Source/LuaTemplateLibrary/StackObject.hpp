@@ -63,6 +63,11 @@ namespace LTL
             return lua_type(m_state, m_index) == static_cast<int>(LType);
         }
 
+        Type Type() const
+        {
+            return static_cast<LTL::Type>(lua_type(m_state, m_index));
+        }
+
         /**
          * @brief Проверяет является ли объект заданного типа.
          *
