@@ -905,7 +905,7 @@ TEST_F(StackObjectViewTest, TestStack)
                 ASSERT_TRUE(s2.Is<void>());
             });
     }
-    {
+    {// table ops
         const StackRestorer rst{ l };
         Run(R"===(
                 local t = {
@@ -976,7 +976,7 @@ TEST_F(StackObjectViewTest, TestStack)
                 ASSERT_TRUE(s4 == s3);
             });
     }
-    {
+    { // get and set
         const StackRestorer rst{ l };
         lua_createtable(l, 0, 0);
         CheckStackChange(0, {
