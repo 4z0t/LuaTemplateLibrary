@@ -4,6 +4,7 @@ set(LTL_HEADERS
     ${LTL_DIR}/Internal.hpp
     ${LTL_DIR}/FuncArguments.hpp
     ${LTL_DIR}/LuaTypes.hpp
+    ${LTL_DIR}/CState.hpp
     ${LTL_DIR}/STDContainers.hpp
     ${LTL_DIR}/FuncUtils.hpp
     ${LTL_DIR}/LuaAux.hpp

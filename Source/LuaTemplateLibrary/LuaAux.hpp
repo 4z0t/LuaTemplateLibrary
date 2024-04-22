@@ -145,13 +145,6 @@ namespace LTL
 
 #pragma region Call
 
-    template<typename ...Ts>
-    inline size_t _PrepareCall(lua_State* l, const char* name, Ts&&... args)
-    {
-        lua_getglobal(l, name);
-        return PushArgs(l, std::forward<Ts>(args)...);
-    }
-
     template<typename TReturn = void>
     TReturn CallStack(lua_State* l, const size_t  n_args)
     {
@@ -166,13 +159,6 @@ namespace LTL
             lua_pop(l, 1);
             return r;
         }
-    }
-
-    template<typename TReturn = void, typename ...Ts>
-    TReturn CallFunction(lua_State* l, const char* name, Ts&&... args)
-    {
-        size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
-        return CallStack<TReturn>(l, n);
     }
 
 #pragma endregion
@@ -247,13 +233,6 @@ namespace LTL
     PCallReturn<void> PCallStack(lua_State* l, const size_t  n_args)
     {
         return static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
-    }
-
-    template< typename TReturn = void, typename ...Ts>
-    PCallReturn<TReturn> CallFunctionProtected(lua_State* l, const char* name, Ts&&... args)
-    {
-        size_t n = _PrepareCall(l, name, std::forward<Ts>(args)...);
-        return PCallStack<TReturn>(l, n);
     }
 
 #pragma endregion
