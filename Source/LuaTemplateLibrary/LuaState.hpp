@@ -2,8 +2,9 @@
 #include "LuaAux.hpp"
 #include "LuaTypes.hpp"
 #include "Exception.hpp"
-#include "RefObject.hpp"
 #include "LuaFunctions.hpp"
+#include "RefObject.hpp"
+#include "StackObject.hpp"
 
 namespace LTL
 {
@@ -169,7 +170,6 @@ namespace LTL
     private:
         CState() = delete;
         ~CState() = delete;
-
     };
 
     struct OpNewAllocator
