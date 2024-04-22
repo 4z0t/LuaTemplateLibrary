@@ -5,6 +5,17 @@ struct RefObjectTests : TestBase
 {
 
 };
+TEST_F(RefObjectTests, Basic)
+{
+    using namespace LTL;
+    GRefObject obj{ l };
+
+    ASSERT_EQ(obj.GetState(), l);
+    ASSERT_TRUE(obj.IsNil());
+
+
+}
+
 
 TEST_F(RefObjectTests, ValueAccess)
 {
