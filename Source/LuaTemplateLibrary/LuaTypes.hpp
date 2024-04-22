@@ -4,9 +4,9 @@
  * @brief Файл с описанием типов ВМ Lua и преобразованием их в базовые типы языка C++
  * @version 0.1
  * @date 2024-03-20
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 #pragma once
 #include "Internal.hpp"
@@ -17,7 +17,7 @@ namespace LTL
 
     CState* WrapState(lua_State* l);
 
-    enum class Type
+    enum class Type :int
     {
         None = LUA_TNONE,
         Nil = LUA_TNIL,
@@ -42,7 +42,7 @@ namespace LTL
     /**
      * @brief Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также
      * проверять на соответствие.
-     * 
+     *
      * @tparam T
      * @tparam Extension используется для std::enable_if
      * @see std::enable_if
