@@ -1471,6 +1471,7 @@ TEST_F(TestPcall, Tests)
         );
         ASSERT_EQ(s.PCall("f"), PCallResult::Ok);
         ASSERT_TRUE(s.PCall("f").IsOk());
+        ASSERT_TRUE(s.PCall("f"));
     }
 
     {
@@ -1481,6 +1482,7 @@ TEST_F(TestPcall, Tests)
         );
         ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
         ASSERT_FALSE(s.PCall("f").IsOk());
+        ASSERT_FALSE(s.PCall("f"));
     }
 
     /*  {// later
@@ -1521,6 +1523,7 @@ TEST_F(TestPcall, Tests)
         );
         ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
         ASSERT_FALSE(s.PCall("f").IsOk());
+        ASSERT_FALSE(s.PCall("f"));
     }
     {
         State s;
