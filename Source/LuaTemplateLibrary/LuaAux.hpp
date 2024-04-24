@@ -146,7 +146,6 @@ namespace LTL
 
 #pragma endregion
 
-
 #pragma region Push Args
 
     template<size_t N>
@@ -171,7 +170,6 @@ namespace LTL
 #pragma endregion
 
 #pragma region Get Result
-
 
     template<typename T>
     struct ResulltNum : std::integral_constant<int, 1> {};
@@ -276,11 +274,11 @@ namespace LTL
     template<typename TReturn = void>
     PCallReturn<TReturn> PCallStack(lua_State* l, const size_t  n_args)
     {
-        PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 1, 0));
+        PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), ResulltNum<TReturn>::value, 0));
         if (status == PCallResult::Ok)
         {
-            TReturn result = GetValue<TReturn>(l, -1);
-            lua_pop(l, 1);
+            TReturn result = StackResultGetter<TReturn>::Get(l);
+            lua_pop(l, ResulltNum<TReturn>::value);
             return { result, status };
         }
         else
@@ -294,6 +292,12 @@ namespace LTL
     {
         return static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
     }
+
+#pragma endregion
+
+#pragma region Generic call functions
+
+
 
 #pragma endregion
 

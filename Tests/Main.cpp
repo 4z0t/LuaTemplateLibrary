@@ -989,6 +989,20 @@ void MutlReturnTest()
             cout << get<2>(r) << endl;
 
         }
+
+        {
+
+            auto r = s.PCall <MultReturn<int, int, string> >("b");
+            if (r)
+            {
+                auto& res = r.result.value();
+                res.Get<0>() = 4;
+                cout << res.Get<0>() << endl;
+                cout << get<1>(res) << endl;
+                cout << get<2>(res) << endl;
+            }
+
+        }
     }
     catch (Exception& ex)
     {
