@@ -382,7 +382,7 @@ namespace LTL
         }
 
         template<typename T>
-        RefTableEntryObjectT operator[](const T& key)
+        RefTableEntryObjectT operator[](const T& key)const
         {
             RefTableEntryObjectT obj{ this->m_state };
             PushValue(this->m_state, key);
