@@ -392,15 +392,15 @@ void ClassTest()
         lua_state.ThrowExceptions();
         Class<MyUData>(lua_state, "MyClass")
             .AddConstructor<Default<int>, Default<int>, Default<int>>()
-            .Add("GetA", Method<MyUData, &MyUData::GetA>{})
-            .Add("SetA", Method<MyUData, &MyUData::SetA, int>{})
-            .Add("Hello", Method<MyUData, &MyUData::Hello, const char*>{})
-            .Add("Hello2", Method<MyUData, &MyUData::Hello2, const char*, MyUData>{})
-            .Add("Hello3", Method<MyUData, &MyUData::Hello2, void(const char*, MyUData)>{})
-            .Add("Double", Method<MyUData, &MyUData::Double, MyUData()>{})
+            .Add("GetA", Method<&MyUData::GetA>{})
+            .Add("SetA", Method<&MyUData::SetA, int>{})
+            .Add("Hello", Method<&MyUData::Hello, const char*>{})
+            .Add("Hello2", Method<&MyUData::Hello2, const char*, MyUData>{})
+            .Add("Hello3", Method<&MyUData::Hello2, void(const char*, MyUData)>{})
+            .Add("Double", Method<&MyUData::Double, MyUData()>{})
             .Add("a", AGetter<&MyUData::a>{})
             .Add("b", ASetter<&MyUData::b>{})
-            .Add("Print", Method<MyUData, Print >{})
+            .Add("Print", Method<Print >{})
             ;
 
         Class<Vector3f>(lua_state, "Vector")
@@ -408,9 +408,9 @@ void ClassTest()
             .Add("x", AProperty<&Vector3f::x>{})
             .Add("y", AProperty<&Vector3f::y>{})
             .Add("z", AProperty<&Vector3f::z>{})
-            .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
-            .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(CState*)>{})
-            .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
+            .Add("__add", Method<&Vector3f::operator+, Vector3f(Vector3f)>{})
+            .Add("__tostring", Method<&Vector3f::ToString, string(CState*)>{})
+            .Add("Dot", Method<Dot, Vector3f>{})
             ;
 
         /*
@@ -581,15 +581,16 @@ void OnlyMethods()
     s.OpenLibs();
     Class<Vector3f>(s, "Vector")
         .AddConstructor<Default<float>, Default<float>, Default<float>>()
-        .Add("__add", Method<Vector3f, &Vector3f::operator+, Vector3f(Vector3f)>{})
-        .Add("__tostring", Method<Vector3f, &Vector3f::ToString, string(CState*)>{})
-        .Add("Dot", Method<Vector3f, Dot, Vector3f>{})
+        .Add("__add", Method<&Vector3f::operator+, Vector3f(Vector3f)>{})
+        .Add("__tostring", Method<&Vector3f::ToString, string(CState*)>{})
+        .Add("Dot", Method<Dot, Vector3f>{})
         ;
     s.Run(
         "local v = Vector(1,2,3) "
         "print(v) "
         "local v2 = Vector(4,5,6) "
         "print(v+v2) "
+        "print(v:Dot(v2)) "
     );
 
 
@@ -966,6 +967,7 @@ int main()
     //AAAAAAAA();
     //TestGetterAndSetter();
     //TestGCAccess();
-    PcallTest();
+    //PcallTest();
+    OnlyMethods();
 
 }

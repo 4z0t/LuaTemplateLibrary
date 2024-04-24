@@ -356,8 +356,8 @@ TEST_F(UserDataTests, MoveCtorTest)
 
     Class<CantCopy>(l, "CantCopy")
         .AddConstructor<Default<int>>()
-        .Add("Duplicate", Method<CantCopy, &CantCopy::Dup, CantCopy()>{})
-        .Add("Print", Method<CantCopy, &CantCopy::Print>{})
+        .Add("Duplicate", Method<&CantCopy::Dup, CantCopy()>{})
+        .Add("Print", Method<&CantCopy::Print>{})
         ;
     Run("local a = CantCopy() "
         "result = a:Print()"
@@ -400,7 +400,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("x", Property<Vector3f, float, &Vector3f::x>{})
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
-        .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        .Add("Length", Method<&Vector3f::Length>{})
         .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
     {
@@ -532,7 +532,7 @@ TEST_F(UserDataTests, APropertyTests)
         .Add("x", AProperty<&Vector3f::x>{})
         .Add("y", AProperty<&Vector3f::y>{})
         .Add("z", AProperty<&Vector3f::z>{})
-        .Add("Length", Method<Vector3f, &Vector3f::Length>{})
+        .Add("Length", Method<&Vector3f::Length>{})
         .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
     {
