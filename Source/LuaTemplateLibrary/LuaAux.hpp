@@ -120,6 +120,33 @@ namespace LTL
         StackType<const_decay_t<T>>::Push(l, arg);
     }
 
+#pragma region Tuple From Stack
+
+    template<int Index, size_t N, typename Tuple>
+    constexpr void _GetTupleFromStack(lua_State* l, Tuple& tpl)
+    {
+    }
+
+    template<int Index, size_t N, typename Tuple, typename TArg, typename ...TArgs>
+    constexpr void _GetTupleFromStack(lua_State* l, Tuple& tpl)
+    {
+        std::get<N>(tpl) = GetValue<TArg>(l, Index);
+        return _GetTupleFromStack<Index + 1, N + 1, Tuple, TArgs...>(l, tpl);
+    }
+
+    template<int Index, typename ...TArgs>
+    constexpr decltype(auto) GetTupleFromStack(lua_State* l)
+    {
+        using Tuple = std::tuple<TArgs...>;
+        Tuple tpl{};
+        _GetTupleFromStack<Index, 0, Tuple, TArgs... >(l, tpl);
+        return tpl;
+    }
+
+
+#pragma endregion
+
+
 #pragma region Push Args
 
     template<size_t N>
@@ -143,6 +170,39 @@ namespace LTL
 
 #pragma endregion
 
+#pragma region Get Result
+
+
+    template<typename T>
+    struct ResulltNum : std::integral_constant<int, 1> {};
+
+    template<typename ...Ts>
+    struct ResulltNum< MultReturn<Ts...>> : std::integral_constant<int, sizeof...(Ts)> {};
+
+    template<typename T>
+    struct StackResultGetter
+    {
+        static constexpr T Get(lua_State* l)
+        {
+            return GetValue<T>(l, -1);
+        }
+    };
+
+    template<typename ...Ts>
+    struct StackResultGetter<MultReturn<Ts...>>
+    {
+        using T = MultReturn<Ts...>;
+
+        static constexpr T Get(lua_State* l)
+        {
+            return GetTupleFromStack<-ResulltNum<T>::value, Ts...>(l);
+        }
+    };
+
+
+#pragma endregion
+
+
 #pragma region Call
 
     template<typename TReturn = void>
@@ -154,9 +214,9 @@ namespace LTL
         }
         else
         {
-            lua_call(l, static_cast<int>(n_args), 1);
-            TReturn r = GetValue<TReturn>(l, -1);
-            lua_pop(l, 1);
+            lua_call(l, static_cast<int>(n_args), ResulltNum<TReturn>::value);
+            TReturn r = StackResultGetter<TReturn>::Get(l);
+            lua_pop(l, ResulltNum<TReturn>::value);
             return r;
         }
     }
@@ -233,36 +293,6 @@ namespace LTL
     PCallReturn<void> PCallStack(lua_State* l, const size_t  n_args)
     {
         return static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
-    }
-
-#pragma endregion
-
-#pragma region Get Args
-
-    template<size_t N, typename TArgsTuple>
-    constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
-    {
-        return N;
-    }
-
-    template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
-    constexpr size_t GetArgs(lua_State* l, TArgsTuple& args)
-    {
-        std::get<N>(args) = GetValue<TArg>(l, N + 1);
-        return GetArgs<N + 1, TArgsTuple, TArgs...>(l, args);
-    }
-
-    template<size_t N, typename TArgsTuple>
-    constexpr size_t GetUpvalues(lua_State* l, TArgsTuple& args)
-    {
-        return N;
-    }
-
-    template<size_t N, typename TArgsTuple, typename TArg, typename ...TArgs>
-    constexpr size_t GetUpvalues(lua_State* l, TArgsTuple& args)
-    {
-        std::get<N>(args) = GetValue<TArg>(l, lua_upvalueindex((int)N + 1));
-        return GetUpvalues<N + 1, TArgsTuple, TArgs...>(l, args);
     }
 
 #pragma endregion

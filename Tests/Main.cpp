@@ -949,6 +949,38 @@ void PcallTest()
     }
 }
 
+
+void MutlReturnTest()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+    s.ThrowExceptions();
+
+    s.Run(R"====(
+            function a()
+                return 1,2,3
+            end     
+            )====");
+    try
+    {
+
+        auto r = s.Call < MultReturn<int, int, int> >("a");
+
+        cout << get<0>(r) << endl;
+        cout << get<1>(r) << endl;
+        cout << get<2>(r) << endl;
+
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason() << endl;
+    }
+}
+
 int main()
 {
     //ClassTest();
@@ -968,6 +1000,7 @@ int main()
     //TestGetterAndSetter();
     //TestGCAccess();
     //PcallTest();
-    OnlyMethods();
+    //OnlyMethods();
+    MutlReturnTest();
 
 }
