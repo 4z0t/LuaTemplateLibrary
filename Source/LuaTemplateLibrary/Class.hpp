@@ -38,27 +38,30 @@ namespace LTL
 
         template<class C, typename T>
         using AUDVW_t = typename AUDVW<C, T>::type;
+
+        template <auto fn>
+        using DeduceClass_t = typename FuncUtility::DeduceClass<decltype(fn)>::type;
     }
 
-    template<class C, auto fn, typename ...TArgs>
+    template<auto fn, typename ...TArgs>
     class Method :
-        public CFunction<fn, UserData<C>, Internal::AUDVW_t<C, TArgs>...>,
+        public CFunction<fn, UserData<Internal::DeduceClass_t<fn>>, Internal::AUDVW_t<Internal::DeduceClass_t<fn>, TArgs>...>,
         public Internal::MethodBase
     {
     public:
-        using TClass = Class<C>;
+        using TClass = Class<Internal::DeduceClass_t<fn>>;
 
         Method() = default;
     };
 
 
-    template<class C, auto fn, typename TReturn, typename ...TArgs>
-    class Method<C, fn, TReturn(TArgs...)> :
-        public CFunction<fn, Internal::AUDVW_t<C, TReturn>(UserData<C>, Internal::AUDVW_t<C, TArgs>...)>,
+    template<auto fn, typename TReturn, typename ...TArgs>
+    class Method<fn, TReturn(TArgs...)> :
+        public CFunction<fn, Internal::AUDVW_t<Internal::DeduceClass_t<fn>, TReturn>(UserData<Internal::DeduceClass_t<fn>>, Internal::AUDVW_t<Internal::DeduceClass_t<fn>, TArgs>...)>,
         public Internal::MethodBase
     {
     public:
-        using TClass = Class<C>;
+        using TClass = Class<Internal::DeduceClass_t<fn>>;
 
         Method() = default;
     };
@@ -127,37 +130,47 @@ namespace LTL
             return this->AddMetaMethod("__newindex", func);
         }
 
-        template<typename Base, typename Derived>
-        using EnableIfBaseOf = std::enable_if_t<std::is_base_of_v<Base, Derived>, Class&>;
+        template<bool condition>
+        using EnableIf = std::enable_if_t<condition, Class&>;
 
+        template<typename Base, typename Derived>
+        static constexpr bool BaseOf = std::is_base_of_v<Base, Derived>;
 
         template<typename Element>
-        EnableIfBaseOf<PropertyBase, Element> Add(const char* name, const Element&)
+        EnableIf<BaseOf<PropertyBase, Element>> Add(const char* name, const Element&)
         {
             return AddGetter(name, Element::Getter{}).AddSetter(name, Element::Setter{});
         }
 
         template<typename Element>
-        EnableIfBaseOf<GetterBase, Element> Add(const char* name, const Element& element)
+        EnableIf<BaseOf<GetterBase, Element >> Add(const char* name, const Element& element)
         {
             return AddGetter(name, element);
         }
 
         template<typename Element>
-        EnableIfBaseOf<SetterBase, Element> Add(const char* name, const Element& element)
+        EnableIf<BaseOf<SetterBase, Element >> Add(const char* name, const Element& element)
         {
             return AddSetter(name, element);
         }
 
         template<typename Element>
-        EnableIfBaseOf<Internal::CFunctionBase, Element> Add(const char* name, const Element&)
+        EnableIf<BaseOf<Internal::CFunctionBase, Element> && !BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
             static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
             return AddMetaMethod(name, Element::Function);
         }
 
         template<typename Element>
-        EnableIfBaseOf<GetterBase, Element> AddGetter(const char* key, const Element&)
+        EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
+        {
+            static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
+            static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
+            return AddMetaMethod(name, Element::Function);
+        }
+
+        template<typename Element>
+        EnableIf<BaseOf<GetterBase, Element>> AddGetter(const char* key, const Element&)
         {
             static_assert(std::is_same_v<T, typename Element::TClass>, "Getter must be of the same class");
             AddGetter(key, Element::Function);
@@ -165,7 +178,7 @@ namespace LTL
         }
 
         template<typename Element>
-        EnableIfBaseOf<SetterBase, Element> AddSetter(const char* key, const Element&)
+        EnableIf<BaseOf< SetterBase, Element>> AddSetter(const char* key, const Element&)
         {
             static_assert(std::is_same_v<T, typename Element::TClass>, "Setter must be of the same class");
             AddSetter(key, Element::Function);
@@ -173,7 +186,7 @@ namespace LTL
         }
 
         template<typename Element>
-        EnableIfBaseOf<Internal::CFunctionBase, Element> AddGetter(const char* key, const Element&)
+        EnableIf<BaseOf< Internal::CFunctionBase, Element>> AddGetter(const char* key, const Element&)
         {
             static_assert(Element::min_arg_count <= 1, "Getter can't receive more than 1 argument");
             AddGetter(key, Element::Function);
@@ -181,7 +194,7 @@ namespace LTL
         }
 
         template<typename Element>
-        EnableIfBaseOf<Internal::CFunctionBase, Element> AddSetter(const char* key, const Element&)
+        EnableIf<BaseOf< Internal::CFunctionBase, Element>> AddSetter(const char* key, const Element&)
         {
             static_assert(Element::min_arg_count <= 2, "Setter can't receive more than 2 argument");
             AddSetter(key, Element::Function);
