@@ -206,17 +206,16 @@ namespace LTL
     template<typename TReturn = void>
     TReturn CallStack(lua_State* l, const size_t  n_args)
     {
-        if constexpr (std::is_void_v<TReturn>)
-        {
-            lua_call(l, static_cast<int>(n_args), 0);
-        }
-        else
-        {
-            lua_call(l, static_cast<int>(n_args), ResulltNum<TReturn>::value);
-            TReturn r = StackResultGetter<TReturn>::Get(l);
-            lua_pop(l, ResulltNum<TReturn>::value);
-            return r;
-        }
+        lua_call(l, static_cast<int>(n_args), ResulltNum<TReturn>::value);
+        TReturn r = StackResultGetter<TReturn>::Get(l);
+        lua_pop(l, ResulltNum<TReturn>::value);
+        return r;
+    }
+
+    template<>
+    void CallStack(lua_State* l, const size_t  n_args)
+    {
+        lua_call(l, static_cast<int>(n_args), 0);
     }
 
 #pragma endregion
