@@ -964,16 +964,31 @@ void MutlReturnTest()
             function a()
                 return 1,2,3
             end     
+            function b()
+                return 1,2,"aa"
+            end     
             )====");
     try
     {
+        {
 
-        auto r = s.Call < MultReturn<int, int, int> >("a");
+            auto r = s.Call <MultReturn<int, int, int> >("a");
 
-        cout << get<0>(r) << endl;
-        cout << get<1>(r) << endl;
-        cout << get<2>(r) << endl;
+            cout << get<0>(r) << endl;
+            cout << get<1>(r) << endl;
+            cout << get<2>(r) << endl;
 
+        }
+
+        {
+
+            auto r = s.Call <MultReturn<int, int, string> >("b");
+            r.Get<0>() = 4;
+            cout << r.Get<0>() << endl;
+            cout << get<1>(r) << endl;
+            cout << get<2>(r) << endl;
+
+        }
     }
     catch (Exception& ex)
     {

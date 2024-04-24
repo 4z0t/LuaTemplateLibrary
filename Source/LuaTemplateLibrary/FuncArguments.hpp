@@ -91,7 +91,22 @@ namespace LTL
     struct MultReturnBase {};
 
     template<typename ...Ts>
-    struct MultReturn : std::tuple<Ts...>, MultReturnBase { using std::tuple<Ts...>::tuple; };
+    struct MultReturn : std::tuple<Ts...>, MultReturnBase 
+    {
+        using std::tuple<Ts...>::tuple; 
+        
+        template <size_t N>
+        decltype(auto) Get()
+        {
+            return std::get<N>(*this);
+        }
+
+        template <size_t N>
+        decltype(auto) Get()const
+        {
+            return std::get<N>(*this);
+        }
+    };
 
     struct StackResult
     {
