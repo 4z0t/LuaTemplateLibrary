@@ -15,7 +15,7 @@ namespace LTL
 {
     class CState;
 
-    CState* WrapState(lua_State* l);
+    inline CState* WrapState(lua_State* l);
 
     enum class Type :int
     {

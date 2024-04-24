@@ -124,19 +124,19 @@ namespace LTL
 #pragma endregion
 
 #pragma region Function and Closure register
-    void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
+    inline void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
         lua_pushcfunction(l, func);
         lua_setglobal(l, name);
     }
 
-    void RegisterFunction(lua_State* l, const std::string& name, lua_CFunction func)
+    inline  void RegisterFunction(lua_State* l, const std::string& name, lua_CFunction func)
     {
         return RegisterFunction(l, name.c_str(), func);
     }
 
     template<typename ...Ts>
-    void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
+    inline void RegisterClosure(lua_State* l, const char* name, lua_CFunction func, Ts&&... args)
     {
         size_t n = PushArgs(l, std::forward<Ts>(args)...);
         lua_pushcclosure(l, func, static_cast<int>(n));
@@ -205,7 +205,7 @@ namespace LTL
 #pragma region Call
 
     template<typename TReturn = void>
-    TReturn CallStack(lua_State* l, const size_t  n_args)
+    inline  TReturn CallStack(lua_State* l, const size_t  n_args)
     {
         lua_call(l, static_cast<int>(n_args), ResulltNum<TReturn>::value);
         TReturn r = StackResultGetter<TReturn>::Get(l);
@@ -214,7 +214,7 @@ namespace LTL
     }
 
     template<>
-    void CallStack(lua_State* l, const size_t  n_args)
+    inline void CallStack(lua_State* l, const size_t  n_args)
     {
         lua_call(l, static_cast<int>(n_args), 0);
     }
@@ -272,7 +272,7 @@ namespace LTL
     };
 
     template<typename TReturn = void>
-    PCallReturn<TReturn> PCallStack(lua_State* l, const size_t  n_args)
+    inline PCallReturn<TReturn> PCallStack(lua_State* l, const size_t  n_args)
     {
         PCallResult status = static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), ResulltNum<TReturn>::value, 0));
         if (status == PCallResult::Ok)
@@ -288,7 +288,7 @@ namespace LTL
     }
 
     template<>
-    PCallReturn<void> PCallStack(lua_State* l, const size_t  n_args)
+    inline PCallReturn<void> PCallStack(lua_State* l, const size_t  n_args)
     {
         return static_cast<PCallResult>(lua_pcall(l, static_cast<int>(n_args), 0, 0));
     }

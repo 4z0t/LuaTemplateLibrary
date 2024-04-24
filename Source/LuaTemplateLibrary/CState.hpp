@@ -162,7 +162,7 @@ namespace LTL
         ~CState() = delete;
     };
 
-    CState* WrapState(lua_State* l)
+    inline CState* WrapState(lua_State* l)
     {
         return (CState*)l;
     }
