@@ -1010,6 +1010,30 @@ void MutlReturnTest()
     }
 }
 
+
+void AltException()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+    s.GetState()->SetAtPanicFuntion(+[](lua_State* l)->int {
+        string r = GetValue<string>(l, -1);
+        throw runtime_error(r);
+        });
+
+    try
+    {
+        s.Run("error('Hi!')");
+    }
+    catch (exception& e)
+    {
+        cout << e.what() << endl;
+    }
+}
+
 int main()
 {
     //ClassTest();
@@ -1030,6 +1054,7 @@ int main()
     //TestGCAccess();
     //PcallTest();
     //OnlyMethods();
-    MutlReturnTest();
+    //MutlReturnTest();
+    AltException();
 
 }
