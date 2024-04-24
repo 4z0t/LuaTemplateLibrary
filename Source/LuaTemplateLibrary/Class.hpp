@@ -31,10 +31,10 @@ namespace LTL
         };
 
         template<class C>
-        using UDVW = typename UserDataValueClassWrapper<C>;
+        using UDVW = UserDataValueClassWrapper<C>;
 
         template<class C, typename T>
-        using AUDVW = typename UDVW<C>::AddUserDataValue<T>;
+        using AUDVW = typename UDVW<C>::template AddUserDataValue<T>;
 
         template<class C, typename T>
         using AUDVW_t = typename AUDVW<C, T>::type;
@@ -139,7 +139,12 @@ namespace LTL
         template<typename Element>
         EnableIf<BaseOf<PropertyBase, Element>> Add(const char* name, const Element&)
         {
-            return AddGetter(name, Element::Getter{}).AddSetter(name, Element::Setter{});
+            using GetterClass = typename Element::GetterClass;
+            using SetterClass = typename Element::SetterClass;
+
+            AddGetter(name, GetterClass{});
+            AddSetter(name, SetterClass{});
+            return *this;
         }
 
         template<typename Element>
@@ -157,14 +162,14 @@ namespace LTL
         template<typename Element>
         EnableIf<BaseOf<Internal::CFunctionBase, Element> && !BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
-            static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
+            static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
             return AddMetaMethod(name, Element::Function);
         }
 
         template<typename Element>
         EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
-            static_assert(Element::ValidUpvalues<>::value, "Methods dont support upvalues");
+            static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
             static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
             return AddMetaMethod(name, Element::Function);
         }

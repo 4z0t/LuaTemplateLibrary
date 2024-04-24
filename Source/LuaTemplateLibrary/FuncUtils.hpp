@@ -233,8 +233,8 @@ namespace LTL
             struct Matches<TArg, TArgs...>
             {
                 constexpr static bool value = IsUpvalueType<TArg>::value ? (std::is_same_v<Unwrap_t<TArg>, TUpvalue> &&
-                    MatchUpvalues<TUpvalues...>::Matches<TArgs...>::value)
-                    : MatchUpvalues<TUpvalue, TUpvalues...>::Matches<TArgs...>::value;
+                    MatchUpvalues<TUpvalues...>::template Matches<TArgs...>::value)
+                    : MatchUpvalues<TUpvalue, TUpvalues...>::template Matches<TArgs...>::value;
             };
 
             template <>

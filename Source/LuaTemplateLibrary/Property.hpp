@@ -75,8 +75,8 @@ namespace LTL
     struct Property : public PropertyBase
     {
         using TClass = C;
-        using Getter = typename Getter<C, T, Field>;
-        using Setter = typename Setter<C, T, Field>;
+        using GetterClass = typename Getter<C, T, Field>;
+        using SetterClass = typename Setter<C, T, Field>;
     };
 
 

@@ -30,7 +30,8 @@ namespace LTL
     template<typename T>
     struct UserData : Internal::UserDataValue<T>
     {
-        using UserDataValue::UserDataValue;
+        using _UserDataValue = Internal::UserDataValue<T>;
+        using _UserDataValue::_UserDataValue;
 
         struct MetaTable : public RegistryTableBase<MetaTable> {};
         struct ClassTable : public RegistryTableBase<ClassTable> {};

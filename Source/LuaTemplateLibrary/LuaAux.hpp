@@ -87,6 +87,42 @@ namespace LTL
             lua_pushvalue(l, Index);
         }
     };
+
+    template<typename T>
+    T GetValue(lua_State* l, int index)
+    {
+        return StackType<T>::Get(l, index);
+    }
+
+    template<typename T>
+    inline void PushValue(lua_State* l, const T& arg)
+    {
+        StackType<const_decay_t<T>>::Push(l, arg);
+    }
+
+#pragma region Push Args
+
+    template<size_t N>
+    size_t _PushArgs(lua_State* l)
+    {
+        return N;
+    }
+
+    template<size_t N, typename T, typename ...Ts>
+    size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
+    {
+        PushValue(l, std::forward<T>(arg));
+        return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
+    }
+
+    template< typename ...Ts>
+    inline size_t PushArgs(lua_State* l, Ts&& ...args)
+    {
+        return _PushArgs<0>(l, std::forward<Ts>(args)...);
+    }
+
+#pragma endregion
+
 #pragma region Function and Closure register
     void RegisterFunction(lua_State* l, const char* name, lua_CFunction func)
     {
@@ -107,18 +143,6 @@ namespace LTL
         lua_setglobal(l, name);
     }
 #pragma endregion
-
-    template<typename T>
-    T GetValue(lua_State* l, int index)
-    {
-        return StackType<T>::Get(l, index);
-    }
-
-    template<typename T>
-    inline void PushValue(lua_State* l, const T& arg)
-    {
-        StackType<const_decay_t<T>>::Push(l, arg);
-    }
 
 #pragma region Tuple From Stack
 
@@ -143,29 +167,6 @@ namespace LTL
         return tpl;
     }
 
-
-#pragma endregion
-
-#pragma region Push Args
-
-    template<size_t N>
-    size_t _PushArgs(lua_State* l)
-    {
-        return N;
-    }
-
-    template<size_t N, typename T, typename ...Ts>
-    size_t _PushArgs(lua_State* l, T&& arg, Ts&&... args)
-    {
-        PushValue(l, std::forward<T>(arg));
-        return _PushArgs<N + 1>(l, std::forward<Ts>(args)...);
-    }
-
-    template< typename ...Ts>
-    inline size_t PushArgs(lua_State* l, Ts&& ...args)
-    {
-        return _PushArgs<0>(l, std::forward<Ts>(args)...);
-    }
 
 #pragma endregion
 

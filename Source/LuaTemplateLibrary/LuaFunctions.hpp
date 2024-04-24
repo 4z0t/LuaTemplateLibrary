@@ -281,8 +281,10 @@ namespace LTL
     template <auto fn, typename... TArgs>
     struct CFunction : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
     {
-        using TReturn = typename FunctionCaller::TReturn;
-        using ArgsTuple = typename FunctionHelper::ArgsTuple;
+        using _FunctionHelper = Internal::FunctionHelper<TArgs...>;
+        using _FunctionCaller = Internal::FunctionCaller<fn, TArgs...>;
+        using TReturn = typename _FunctionCaller::TReturn;
+        using ArgsTuple = typename _FunctionHelper::ArgsTuple;
 
     public:
         CFunction() = default;
@@ -331,17 +333,17 @@ namespace LTL
         static int _Caller(lua_State* l)
         {
             ArgsTuple args;
-            FunctionHelper::GetArgs(l, args);
+            _FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TReturn>)
             {
-                FunctionCaller::Call(args);
-                FunctionHelper::ReplaceUpvalues(l, args);
+                _FunctionCaller::Call(args);
+                _FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
-                auto result = FunctionCaller::Call(args);
-                FunctionHelper::ReplaceUpvalues(l, args);
+                auto result = _FunctionCaller::Call(args);
+                _FunctionHelper::ReplaceUpvalues(l, args);
                 size_t n_results = PushResult(l, result);
                 return static_cast<int>(n_results);
             }
@@ -351,10 +353,12 @@ namespace LTL
     template <auto fn, typename TRet, typename... TArgs>
     struct CFunction<fn, TRet(TArgs...)> : Internal::FunctionHelper<TArgs...>, private Internal::FunctionCaller<fn, TArgs...>
     {
-        using TUnwrappedReturn = typename FunctionCaller::TReturn;
+        using _FunctionHelper = Internal::FunctionHelper<TArgs...>;
+        using _FunctionCaller = Internal::FunctionCaller<fn, TArgs...>;
+        using TUnwrappedReturn = typename _FunctionCaller::TReturn;
         static_assert(std::is_void_v<TUnwrappedReturn> == std::is_void_v<TRet>, "If function returns void you cannot return anything else but void!");
 
-        using ArgsTuple = typename FunctionHelper::ArgsTuple;
+        using ArgsTuple = typename _FunctionHelper::ArgsTuple;
 
     public:
         template <typename... TUpvalues>
@@ -394,17 +398,17 @@ namespace LTL
         static int _Caller(lua_State* l)
         {
             ArgsTuple args;
-            FunctionHelper::GetArgs(l, args);
+            _FunctionHelper::GetArgs(l, args);
             if constexpr (std::is_void_v<TUnwrappedReturn>)
             {
-                FunctionCaller::Call(args);
-                FunctionHelper::ReplaceUpvalues(l, args);
+                _FunctionCaller::Call(args);
+                _FunctionHelper::ReplaceUpvalues(l, args);
                 return 0;
             }
             else
             {
-                TUnwrappedReturn result = FunctionCaller::Call(args);
-                FunctionHelper::ReplaceUpvalues(l, args);
+                TUnwrappedReturn result = _FunctionCaller::Call(args);
+                _FunctionHelper::ReplaceUpvalues(l, args);
                 StackType<TRet>::Push(l, std::move(result));
                 return 1;
             }

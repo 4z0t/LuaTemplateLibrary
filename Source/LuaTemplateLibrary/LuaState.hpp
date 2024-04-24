@@ -169,7 +169,7 @@ namespace LTL
         template<typename T, typename ...TUpvalues>
         EnableIfBaseOf<Internal::CFunctionBase, T> Add(const char* name, const T&, TUpvalues&&... upvalues)
         {
-            static_assert(T::ValidUpvalues<const_decay_t<TUpvalues>...>::value,
+            static_assert(T::template ValidUpvalues<const_decay_t<TUpvalues>...>::value,
                 "Passed upvalues don't match with ones defined in closure");
             return AddClosure(name, T::Function, std::forward<TUpvalues>(upvalues)...);
         }

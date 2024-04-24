@@ -54,27 +54,27 @@ namespace LTL
         /// @param l состояние ВМ Lua
         /// @param index индекс объекта на стеке
         /// @return T
-        static T Get(lua_State* l, int index)
-        {
+        static T Get(lua_State* l, int index);
+        /*{
             STATIC_FAIL("Not provided implementation for Get function");
             return {};
-        }
+        }*/
 
         /// @brief проверяет объект на стеке ВМ Lua по индексу *index* на соответствие типу **T**
         /// @param l состояние ВМ Lua
         /// @param index индекс объекта на стеке
-        static bool Check(lua_State* l, int index)
-        {
+        static bool Check(lua_State* l, int index);
+      /*  {
             STATIC_FAIL("Not provided implementation for Check function");
-        }
+        }*/
 
         /// @brief помещает объект типа **T** на вершину стека ВМ Lua
         /// @param l состояние ВМ Lua
         /// @param value помещаемый на стек объект
-        static void Push(lua_State* l, const T& value)
-        {
+        static void Push(lua_State* l, const T& value);
+      /*  {
             STATIC_FAIL("Not provided implementation for Push function");
-        }
+        }*/
     };
 
     template<>
