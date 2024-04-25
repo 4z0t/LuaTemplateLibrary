@@ -8,10 +8,19 @@ struct RefObjectTests : TestBase
 TEST_F(RefObjectTests, Basic)
 {
     using namespace LTL;
-    GRefObject obj{ l };
 
-    ASSERT_EQ(obj.GetState(), l);
-    ASSERT_TRUE(obj.IsNil());
+    {
+        GRefObject obj{ l };
+
+        ASSERT_EQ(obj.GetState(), l);
+        ASSERT_EQ(obj.Type(), Type::Nil);
+        ASSERT_TRUE(obj.Is<Type::Nil>());
+        ASSERT_TRUE(obj.IsNil());
+    }
+
+    {
+
+    }
 
 
 }
