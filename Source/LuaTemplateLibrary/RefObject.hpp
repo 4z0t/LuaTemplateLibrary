@@ -191,6 +191,12 @@ namespace LTL
             return this->Call<ParentClass>(std::forward<TArgs>(args)...);
         }
 
+        template <Type LType>
+        bool Is() const
+        {
+            return Type() == LType;
+        }
+
         template<typename T>
         bool Is()const
         {
