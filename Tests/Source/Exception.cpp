@@ -19,8 +19,9 @@ TEST_F(ExceptionTests, UserExceptions)
 {
     using namespace LTL;
     using namespace std;
+    auto cstate = CState::Wrap(l);
 
-    CState::Wrap(l)->SetAtPanicFuntion(+[](lua_State* l)->int {
+    cstate->SetAtPanicFuntion(+[](lua_State* l)->int {
         string r = GetValue<string>(l, -1);
         lua_pop(l, 1);
         throw runtime_error(r);
@@ -42,8 +43,17 @@ TEST_F(ExceptionTests, UserExceptions)
         ASSERT_THROW(Run("VectorLen(2, 'invalid value!')"), runtime_error);
         ASSERT_THROW(Run("VectorLen('invalid value!')"), runtime_error);
         ASSERT_THROW(Run("VectorLen('invalid value!', 2)"), runtime_error);
+
+        ASSERT_THROW(cstate->Call<float>("VectorLen"), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 2.f, "invalid value!"), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!"), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!", 1.f), runtime_error);
+
+
         Run("a = VectorLen(3, 4)");
-        ASSERT_FLOAT_EQ(CState::Wrap(l)->GetGlobal<float>("a"), 5.f);
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
+        ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
     }
 
     {
@@ -62,7 +72,14 @@ TEST_F(ExceptionTests, UserExceptions)
         ASSERT_THROW(Run("InvFloat(-1)"), runtime_error);
         ASSERT_THROW(Run("InvFloat(0)"), runtime_error);
         Run("a = InvFloat(1)");
-        ASSERT_FLOAT_EQ(CState::Wrap(l)->GetGlobal<float>("a"), 1.f);
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 1.f);
+
+
+        ASSERT_THROW(cstate->Call<float>("InvFloat"), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", "a"), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", -1), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", 0), runtime_error);
+        ASSERT_FLOAT_EQ(cstate->Call<float>("InvFloat", 1), 1.f);
 
     }
 
