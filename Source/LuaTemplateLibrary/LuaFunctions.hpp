@@ -414,4 +414,36 @@ namespace LTL
             }
         }
     };
+
+    /*template<typename T>
+    struct Simplify
+    {
+        using type = T
+    };
+
+    template<typename R, typename ...P>
+    struct Simplify<R(P...) noexcept>
+    {
+        using type = const_decay_t<R>(P...);
+    };
+
+    template<typename R, typename C, typename ...P>
+    struct Simplify<R(C::*)(P...) const>
+    {
+        using type = const_decay_t<R>(C, P...);
+    };
+    template<typename R, typename C, typename ...P>
+    struct Simplify<R(C::*)(P...) const noexcept>
+    {
+        using type = const_decay_t<R>(C, P...);
+    };
+
+    template <typename T>
+    using Simplify_t = typename Simplify<T>::type;
+
+    template<auto fn>
+    struct CFunction<fn> : CFunction<fn, Simplify_t<decltype(fn)>>
+    {
+
+    };*/
 }
