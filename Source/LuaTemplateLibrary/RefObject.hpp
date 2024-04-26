@@ -16,21 +16,6 @@ namespace LTL
         template<typename T>
         RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
 
-        class AutoPop
-        {
-        public:
-            AutoPop(const RefObjectBase& obj) : m_obj(obj)
-            {
-                m_obj.Push();
-            }
-            ~AutoPop()
-            {
-                m_obj.Pop();
-            }
-            const RefObjectBase& m_obj;
-        };
-        friend class AutoPop;
-
         class Iterator
         {
         public:
@@ -97,8 +82,10 @@ namespace LTL
         template<typename T>
         T To()const
         {
-            AutoPop pop(*this);
-            return StackType<T>::Get(m_state, -1);
+            Push();
+            auto r = StackType<T>::Get(m_state, -1);
+            Pop();
+            return r;
         }
 
         template<typename T>
@@ -200,46 +187,46 @@ namespace LTL
         template<typename T>
         bool Is()const
         {
-            AutoPop pop(*this);
-            return StackType<T>::Check(m_state, -1);
+            Push();
+            bool r = StackType<T>::Check(m_state, -1);
+            Pop();
+            return r;
         }
 
         bool IsNil()const
         {
-            AutoPop pop(*this);
-            return lua_isnil(m_state, -1);
+            return Type() == Type::Nil;
         }
 
         bool IsTable()const
         {
-            AutoPop pop(*this);
-            return lua_istable(m_state, -1);
+            return Type() == Type::Table;
         }
 
         bool IsUserData()const
         {
-            AutoPop pop(*this);
-            return lua_isuserdata(m_state, -1);
+            return Type() == Type::Userdata;
         }
 
         Type Type()const
         {
-            AutoPop pop(*this);
-            return static_cast<LTL::Type>(lua_type(m_state, -1));
+            Push();
+            LTL::Type t = static_cast<LTL::Type>(lua_type(m_state, -1));
+            Pop();
+            return t;
         }
 
         const char* TypeName()const
         {
-            AutoPop pop(*this);
-            return lua_typename(m_state, lua_type(m_state, -1));
+            Push();
+            auto t = lua_typename(m_state, lua_type(m_state, -1));
+            Pop();
+            return t;
         }
 
         const char* ToString()const
         {
-            lua_getglobal(m_state, "tostring");
-            AutoPop pop(*this);
-            lua_call(m_state, 1, 1);
-            return lua_tostring(m_state, -1);
+            return CState::Wrap(m_state)->Call<const char*>("tostring", _This());
         }
 
         friend static std::ostream& operator<<(std::ostream& os, const RefObjectBase& obj)
