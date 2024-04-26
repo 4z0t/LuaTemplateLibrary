@@ -99,6 +99,51 @@ TEST_F(UserDataTests, CantMoveTest)
     ASSERT_EQ(Result().To<int>(), 8);
 }
 
+TEST_F(UserDataTests, CantCopyAndMove)
+{
+    using namespace LTL;
+    struct CantMove
+    {
+
+        CantMove(int a) :a(a) {}
+        CantMove(CantMove&&) = delete;
+        CantMove(const CantMove& other) = delete;
+
+        int GetA()
+        {
+            return a;
+        }
+
+        StackResult Duplicate(CState* cstate)
+        {
+            UserData<CantMove>::New(cstate, a * 2);
+            return 1;
+        }
+
+        int a = 4;
+    };
+
+    Class<CantMove>(l, "CantCopy")
+        .AddConstructor<Default<int>>()
+        .Add("Duplicate", Method<&CantMove::Duplicate, CState*>{})
+        .Add("Print", Method<&CantMove::GetA>{})
+        ;
+
+    Run("local a = CantCopy() "
+        "result = a:Print()"
+    );
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 0);
+
+    Run("local a = CantCopy(4) "
+        "result = a:Duplicate()"
+        ":Print()"
+    );
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 8);
+}
+
 
 TEST_F(UserDataTests, PropertyTests)
 {

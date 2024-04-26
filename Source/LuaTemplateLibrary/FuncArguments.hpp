@@ -91,10 +91,10 @@ namespace LTL
     struct MultReturnBase {};
 
     template<typename ...Ts>
-    struct MultReturn : std::tuple<Ts...>, MultReturnBase 
+    struct MultReturn : std::tuple<Ts...>, MultReturnBase
     {
-        using std::tuple<Ts...>::tuple; 
-        
+        using std::tuple<Ts...>::tuple;
+
         template <size_t N>
         decltype(auto) Get()
         {
@@ -111,6 +111,8 @@ namespace LTL
     struct StackResult
     {
         const size_t n_results = 1;
+
+        StackResult(size_t n) : n_results(n) { }
     };
 }
 
