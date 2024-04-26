@@ -51,7 +51,7 @@ namespace LTL
          * @param l
          * @return void* const
          */
-        static void* const  Allocate(lua_State* l)
+        static T* const  Allocate(lua_State* l)
         {
             Data* const data = (Data*)lua_newuserdata(l, sizeof(Data));
             data->isDestroyed = false;
@@ -83,6 +83,18 @@ namespace LTL
             new(Allocate(l)) T(other);
         }
 
+        template<typename ...TArgs>
+        static T* New(lua_State* l, TArgs&&... args)
+        {
+            return new(Allocate(l)) T(std::forward<TArgs>(args)...);
+        }
+
+        template<typename ...TArgs>
+        static T* New(CState* cstate, TArgs&&... args)
+        {
+            return New(cstate->Unwrap(), std::forward<TArgs>(args)...);
+        }
+
         /**
          * @brief Создает UserData<T> и возвращает объект-ссылку с ним
          *
@@ -109,7 +121,7 @@ namespace LTL
         template<typename ...TArgs>
         static GRefObject Make(lua_State* l, TArgs&&... args)
         {
-            new(Allocate(l)) T(std::forward<TArgs>(args)...);
+            New(l, std::forward<TArgs>(args)...);
             return GRefObject::FromTop(l);
         }
 
@@ -339,14 +351,20 @@ namespace LTL
             return UD::ValidateUserData(l, index);
         }
 
-        static void Push(lua_State* l, T&& value)
+        static void Push(lua_State* l, T& value)
         {
-            UD::PushCopy(l, std::forward<T>(value));
-        }
-
-        static void Push(lua_State* l, const T& value)
-        {
-            UD::PushCopy(l, value);
+            if constexpr (std::is_copy_constructible_v<T>)
+            {
+                UD::PushCopy(l, value);
+            }
+            else if constexpr (std::is_move_constructible_v <T>)
+            {
+                UD::PushCopy(l, std::move(value));
+            }
+            else
+            {
+                static_assert(!std::is_move_constructible_v <T> && !std::is_copy_constructible_v<T>, "Can't create copy of userdata! Use direct creation of userdata on stack with UserData<T>::New.");
+            }
         }
     };
 

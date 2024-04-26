@@ -409,8 +409,7 @@ namespace LTL
             {
                 TUnwrappedReturn result = _FunctionCaller::Call(args);
                 _FunctionHelper::ReplaceUpvalues(l, args);
-                StackType<TRet>::Push(l, std::move(result));
-                return 1;
+                return PushResult<TUnwrappedReturn, TRet>(l, result);
             }
         }
     };

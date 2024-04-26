@@ -6,7 +6,7 @@ struct UserDataTests : TestBase
 
 };
 
-TEST_F(UserDataTests, MoveCtorTest)
+TEST_F(UserDataTests, CantCopyTest)
 {
     using namespace LTL;
     struct CantCopy
@@ -41,6 +41,52 @@ TEST_F(UserDataTests, MoveCtorTest)
         "result = a:Print()"
     );
 
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 0);
+
+    Run("local a = CantCopy(4) "
+        "result = a:Duplicate():Print()"
+    );
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 8);
+}
+
+TEST_F(UserDataTests, CantMoveTest)
+{
+    using namespace LTL;
+    struct CantMove
+    {
+
+        CantMove(int a) :a(a) {}
+        CantMove(CantMove&&) = delete;
+        CantMove(const CantMove& other)noexcept
+        {
+            a = other.a;
+        }
+
+        int GetA()
+        {
+            return a;
+        }
+
+        CantMove Dup()
+        {
+            return CantMove(a * 2);
+        }
+
+        int a = 4;
+    };
+
+    Class<CantMove>(l, "CantCopy")
+        .AddConstructor<Default<int>>()
+        .Add("Duplicate", Method<&CantMove::Dup, CantMove()>{})
+        .Add("Print", Method<&CantMove::GetA>{})
+        ;
+    Run("local a = CantCopy() "
+        "result = a:Print()"
+    );
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 0);

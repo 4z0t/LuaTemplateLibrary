@@ -322,10 +322,10 @@ namespace LTL
         PushValue<T>(l, result);
     }
 
-    template<typename T>
-    inline size_t PushResult(lua_State* l, T result)
+    template<typename UnwrappedT, typename T = UnwrappedT>
+    inline size_t PushResult(lua_State* l, UnwrappedT& result)
     {
-        _PushResult(l, result);
+        StackType<T>::Push(l, result);
         return 1;
     }
 
@@ -336,7 +336,7 @@ namespace LTL
     }
 
     template<>
-    inline size_t PushResult(lua_State* l, StackResult result)
+    inline size_t PushResult(lua_State* l, StackResult& result)
     {
         return result.n_results;
     }
