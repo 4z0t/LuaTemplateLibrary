@@ -114,6 +114,12 @@ namespace LTL
             return Compare<LUA_OPEQ>(value);
         }
 
+        template<>
+        bool operator==(const std::nullptr_t&)const
+        {
+            return Type() == Type::Nil;
+        }
+
         /**
          * @brief Результат сравнения объектов с использованием метаметода
          *
