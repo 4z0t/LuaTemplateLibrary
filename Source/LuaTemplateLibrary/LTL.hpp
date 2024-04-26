@@ -3,6 +3,7 @@
 #include "LuaTypes.hpp"
 #include "LuaAux.hpp"
 #include "CState.hpp"
+#include "Libs.hpp"
 #include "Property.hpp"
 #include "ClassConstructor.hpp"
 #include "Class.hpp"

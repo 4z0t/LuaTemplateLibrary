@@ -1046,6 +1046,24 @@ void AltException()
     }
 }
 
+void LibsTest()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs(Libs::global, Libs::math, Libs::string, Libs::table);
+
+    s.Run(R"===(
+        print(string)
+        print(table)
+        print(math)
+        print(os)
+        print(io)
+)===");
+}
+
 int main()
 {
     //ClassTest();
@@ -1065,8 +1083,9 @@ int main()
     //TestGetterAndSetter();
     //TestGCAccess();
     //PcallTest();
-    OnlyMethods();
+    //OnlyMethods();
     //MutlReturnTest();
     //AltException();
+    LibsTest();
 
 }

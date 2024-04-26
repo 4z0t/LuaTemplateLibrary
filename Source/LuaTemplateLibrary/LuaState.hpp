@@ -6,11 +6,12 @@
 #include "CState.hpp"
 #include "RefObject.hpp"
 #include "StackObject.hpp"
+#include "Libs.hpp"
 
 namespace LTL
 {
     template<typename T>
-    struct UserData;    
+    struct UserData;
 
     struct OpNewAllocator
     {
@@ -60,6 +61,8 @@ namespace LTL
             }
         }
 
+
+
         State(const State&) = delete;
         State(State&&) = delete;
         State& operator=(const State&) = delete;
@@ -80,6 +83,23 @@ namespace LTL
         void OpenLibs()
         {
             return m_cstate->OpenLibs();
+        }
+
+        void OpenLib(const Lib& lib)
+        {
+            lib.Register(m_cstate->Unwrap());
+        }
+
+        void OpenLibs(const Lib& lib)
+        {
+            OpenLib(lib);
+        }
+
+        template<typename ...Ts>
+        void OpenLibs(const Lib& lib, const Ts&...libs)
+        {
+            OpenLib(lib);
+            return OpenLibs(libs...);
         }
 
         template<typename T>
