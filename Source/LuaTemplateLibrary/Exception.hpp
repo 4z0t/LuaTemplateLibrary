@@ -22,7 +22,7 @@ namespace LTL
             return m_reason;
         }
 
-        static int PanicFunc(lua_State* l) throw(Exception)
+        static int PanicFunc(lua_State* l) noexcept(false)
         {
             throw Exception(l);
         }
