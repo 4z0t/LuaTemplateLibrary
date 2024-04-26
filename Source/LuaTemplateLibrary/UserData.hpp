@@ -281,9 +281,15 @@ namespace LTL
 
         static const char* GetClassName(lua_State* l)
         {
-            ClassTable::Push(l);
-            lua_pushstring(l, "className");
-            lua_rawget(l, -2);
+            if (ClassTable::Push(l) == LUA_TNIL)
+            {
+                lua_pushstring(l, typeid(T).name());
+            }
+            else
+            {
+                lua_pushstring(l, "className");
+                lua_rawget(l, -2);
+            }
             const char* s = lua_tostring(l, -1);
             lua_pop(l, 2);
             return s;
