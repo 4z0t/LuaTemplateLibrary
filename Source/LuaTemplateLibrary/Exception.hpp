@@ -5,12 +5,12 @@ namespace LTL
 {
     /**
      * @brief Класс для исключений, возникающих внутри Lua.
-     * 
+     *
      */
     class Exception
     {
     public:
-        Exception(lua_State* l, int index) :m_reason{ GetReason(l, index) }, m_state(l) {}
+        Exception(lua_State* l) :m_reason{ GetReason(l) }, m_state(l) {}
 
         lua_State* GetState()const noexcept
         {
@@ -24,13 +24,22 @@ namespace LTL
 
         static int PanicFunc(lua_State* l) throw(Exception)
         {
-            throw Exception(l, -1);
+            throw Exception(l);
         }
     private:
-        static const char* GetReason(lua_State* l, int index)
+        static const char* GetReason(lua_State* l)
         {
-            const char* reason = lua_tostring(l, index);
-            return reason ? reason : "Unknown reason";
+            const char* reason;
+            if (lua_gettop(l) > 0)
+            {
+                reason = lua_tostring(l, -1);
+                lua_pop(l, 1);
+            }
+            else
+            {
+                reason = "Unknown reason";
+            }
+            return reason;
         }
         lua_State* m_state;
         std::string m_reason;
