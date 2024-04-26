@@ -107,6 +107,7 @@ struct Vector3f
 
     std::string ToString(LTL::CState* state)const
     {
+        lua_error(state->Unwrap());
         std::string  s{ state->PushFormatString("Vector { %f, %f, %f }", x, y, z) };
         state->Pop();
         return s;
@@ -579,19 +580,29 @@ void OnlyMethods()
     using namespace std;
     State s;
     s.OpenLibs();
+    s.ThrowExceptions();
     Class<Vector3f>(s, "Vector")
         .AddConstructor<Default<float>, Default<float>, Default<float>>()
         .Add("__add", Method<&Vector3f::operator+, Vector3f(Vector3f)>{})
         .Add("__tostring", Method<&Vector3f::ToString, string(CState*)>{})
         .Add("Dot", Method<Dot, Vector3f>{})
         ;
-    s.Run(
-        "local v = Vector(1,2,3) "
-        "print(v) "
-        "local v2 = Vector(4,5,6) "
-        "print(v+v2) "
-        "print(v:Dot(v2)) "
-    );
+    try
+    {
+        auto v = s.MakeUserData<Vector3f>(1, 2, 3);
+        auto vs = v.ToString();
+        s.Run(
+            "local v = Vector(1,2,3) "
+            "print(v) "
+            "local v2 = Vector(4,5,6) "
+            "print(v+v2) "
+            "print(v:Dot(v2)) "
+        );
+    }
+    catch (Exception& ex)
+    {
+        cout << ex.GetReason();
+    }
 
 
 }
@@ -1021,6 +1032,7 @@ void AltException()
     s.OpenLibs();
     s.GetState()->SetAtPanicFuntion(+[](lua_State* l)->int {
         string r = GetValue<string>(l, -1);
+        lua_pop(l, 1);
         throw runtime_error(r);
         });
 
@@ -1053,8 +1065,8 @@ int main()
     //TestGetterAndSetter();
     //TestGCAccess();
     //PcallTest();
-    //OnlyMethods();
+    OnlyMethods();
     //MutlReturnTest();
-    AltException();
+    //AltException();
 
 }

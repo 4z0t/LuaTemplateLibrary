@@ -29,17 +29,13 @@ namespace LTL
     private:
         static const char* GetReason(lua_State* l)
         {
-            const char* reason;
+            const char* reason = nullptr;
             if (lua_gettop(l) > 0)
             {
                 reason = lua_tostring(l, -1);
                 lua_pop(l, 1);
-            }
-            else
-            {
-                reason = "Unknown reason";
-            }
-            return reason;
+            }            
+            return reason ? reason : "Unknown error";
         }
         lua_State* m_state;
         std::string m_reason;
