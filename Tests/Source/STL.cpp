@@ -146,14 +146,23 @@ TEST_F(OptionalTests, Tests)
             ASSERT_TRUE(Result().To<bool>());
         }
         {
-            Run("result = f(null)");
+            Run("result = f(nil)");
             ASSERT_FALSE(Result().To<bool>());
         }
         {
             ASSERT_THROW(Run("result = f('a')"), Exception);
 
         }
-
+        RegisterFunction(l, "f", Method<&optional<int>::has_value>::Function);
+        {
+            ASSERT_THROW(Run("result = f()"), Exception);
+        }
+        {
+            ASSERT_THROW(Run("result = f(1)"), Exception);
+        }
+        {
+            ASSERT_THROW(Run("result = f(nil)"), Exception);
+        }
     }
 
 }
