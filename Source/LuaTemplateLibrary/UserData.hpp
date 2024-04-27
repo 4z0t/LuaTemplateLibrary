@@ -86,6 +86,7 @@ namespace LTL
         template<typename ...TArgs>
         static T* New(lua_State* l, TArgs&&... args)
         {
+            static_assert(std::is_constructible_v<T, TArgs...>, "Object of class C can't be constructed with such arguments!");
             return new(Allocate(l)) T(std::forward<TArgs>(args)...);
         }
 
