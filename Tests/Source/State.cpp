@@ -30,7 +30,7 @@ TEST_F(StateTests, AllocTest)
 
     State<OpNewAllocator> s;
     s.Run("result = 4");
-    ASSERT_TRUE(GRefObject::Global(s, "result").Is<int>());
+    ASSERT_TRUE(GRefObject::Global(s, "result").Is<int>()) << "The actiual type is " << GRefObject::Global(s, "result").TypeName();
     ASSERT_EQ(GRefObject::Global(s, "result").To<int>(), 4);
 
     ASSERT_TRUE(s.GetGlobal("result").Is<int>());

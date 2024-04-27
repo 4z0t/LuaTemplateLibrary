@@ -38,14 +38,55 @@ namespace LTL
             return CState::Unwrap(this);
         }
 
-        void OpenLibs()
+        inline void OpenLibs()
         {
             return luaL_openlibs(Unwrap());
         }
 
-        bool DoFile(const char* name)
+        inline void Require(const char* modname, lua_CFunction openf, bool global = true)
         {
-            return luaL_dofile(Unwrap(), name);
+            return luaL_requiref(Unwrap(), modname, openf, global);
+        }
+
+        inline PCallResult LoadFile(const char* name, const char* mode = nullptr)
+        {
+            return static_cast<PCallResult>(luaL_loadfilex(Unwrap(), name, mode));
+        }
+
+        inline void Call(int n_args, int n_results, lua_KContext ctx = 0, lua_KFunction k = nullptr)
+        {
+            lua_callk(Unwrap(), n_args, n_results, ctx, k);
+        }
+
+        inline PCallResult PCall(int n_args, int n_results, int i_errfunc = 0, lua_KContext ctx = 0, lua_KFunction k = nullptr)
+        {
+            return static_cast<PCallResult>(lua_pcallk(Unwrap(), n_args, n_results, i_errfunc, ctx, k));
+        }
+
+        inline PCallResult DoFile(const char* name)
+        {
+            auto res = LoadFile(name);
+            if (res != PCallResult::Ok)
+                return res;
+            return PCall(0, LUA_MULTRET);
+        }
+
+        inline PCallResult LoadString(const char* s)
+        {
+            return static_cast<PCallResult>(luaL_loadstring(Unwrap(), s));
+        }
+
+        inline PCallResult DoString(const char* s)
+        {
+            auto res = LoadString(s);
+            if (res != PCallResult::Ok)
+                return res;
+            return PCall(0, LUA_MULTRET);
+        }
+
+        inline void Error()
+        {
+            lua_error(Unwrap());
         }
 
         template<typename T>
@@ -92,11 +133,11 @@ namespace LTL
             return GetValue<T>(Unwrap(), index);
         }
 
-        void Run(const char* const s) throw(Exception)
+        void Run(const char* const s) noexcept(false)
         {
-            if (luaL_dostring(Unwrap(), s))
+            if (DoString(s) != PCallResult::Ok)
             {
-                lua_error(Unwrap());
+                Error();
             }
         }
 
@@ -130,9 +171,9 @@ namespace LTL
             return lua_settable(Unwrap(), index);
         }
 
-        int GetTable(int index)
+        Type GetTable(int index)
         {
-            return lua_gettable(Unwrap(), index);
+            return static_cast<Type>(lua_gettable(Unwrap(), index));
         }
 
         template<typename ...Ts>

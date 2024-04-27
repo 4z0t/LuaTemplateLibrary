@@ -223,7 +223,7 @@ namespace LTL
 
 #pragma region PCall
 
-    enum class PCallResult
+    enum class PCallResult : int
     {
         Ok = LUA_OK,
         Yield = LUA_YIELD,
