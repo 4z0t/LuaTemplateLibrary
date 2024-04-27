@@ -5,9 +5,11 @@ set(LTL_TEST_SOURCE_FILES
     Source/Main.cpp
     Source/TestBase.hpp
     Source/STL.cpp
-     Source/State.cpp
-     Source/UserData.cpp
- "Source/Misc.cpp" "Source/Types.cpp")
+    Source/State.cpp
+    Source/UserData.cpp
+    Source/Misc.cpp
+    Source/Types.cpp
+)
 
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
 

@@ -68,11 +68,27 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
         ASSERT_THROW(s.MakeUserData<Vector3f>(1, 2, 3), Exception);
     }
     {
-
         MemoryLeakDetector leakDetector;
         State s;
         s.ThrowExceptions();
         ASSERT_THROW(s.MakeUserData<MyMemoryClass>(10), Exception);
+    }
+    {
+        MemoryLeakDetector leakDetector;
+        State s;
+        s.ThrowExceptions();
+        Class<MyMemoryClass>(s, "Mem")
+            .AddConstructor<int>();
+        s.MakeUserData<MyMemoryClass>(10);
+    }
+    {
+        MemoryLeakDetector leakDetector;
+        State s;
+        s.ThrowExceptions();
+        Class<MyMemoryClass>(s, "Mem")
+            .AddConstructor<int>();
+        s.MakeUserData<MyMemoryClass>(10);
+        ASSERT_ANY_THROW(s.GetState()->Error());
     }
 }
 #endif // WINDOWS

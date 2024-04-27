@@ -15,6 +15,69 @@ TEST_F(ExceptionTests, ThrowTests)
 
 }
 
+TEST_F(ExceptionTests, BaseExceptions)
+{
+    using namespace LTL;
+    using namespace std;
+    auto cstate = CState::Wrap(l);
+    cstate->SetAtPanicFuntion(Exception::PanicFunc);
+
+    ASSERT_THROW(Run("error('something is wrong!')"), Exception);
+
+    {
+        constexpr auto f = +[](float x, float y)noexcept -> float
+            {
+                return sqrtf(x * x + y * y);
+            };
+
+        RegisterFunction(l, "VectorLen", CFunction<f, float, float>::Function);
+
+        ASSERT_THROW(Run("VectorLen()"), Exception);
+        ASSERT_THROW(Run("VectorLen(1)"), Exception);
+        ASSERT_THROW(Run("VectorLen(2, 'invalid value!')"), Exception);
+        ASSERT_THROW(Run("VectorLen('invalid value!')"), Exception);
+        ASSERT_THROW(Run("VectorLen('invalid value!', 2)"), Exception);
+
+        Run("a = VectorLen(3, 4)");
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
+
+        ASSERT_THROW(cstate->Call<float>("VectorLen"), Exception);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f), Exception);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 2.f, "invalid value!"), Exception);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!"), Exception);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!", 1.f), Exception);
+
+        ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
+    }
+
+    {
+        constexpr auto f = +[](float x) -> float
+            {
+                if (x > 0)
+                {
+                    return 1 / sqrtf(x);
+                }
+                throw invalid_argument("value must be greater than zero!");
+                return 0;
+            };
+        RegisterFunction(l, "InvFloat", CFunction<f, float>::Function);
+        ASSERT_THROW(Run("InvFloat()"), Exception);
+        ASSERT_THROW(Run("InvFloat('a')"), Exception);
+        ASSERT_THROW(Run("InvFloat(-1)"), Exception);
+        ASSERT_THROW(Run("InvFloat(0)"), Exception);
+        Run("a = InvFloat(1)");
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 1.f);
+
+
+        ASSERT_THROW(cstate->Call<float>("InvFloat"), Exception);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", "a"), Exception);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", -1), Exception);
+        ASSERT_THROW(cstate->Call<float>("InvFloat", 0), Exception);
+        ASSERT_FLOAT_EQ(cstate->Call<float>("InvFloat", 1), 1.f);
+
+    }
+}
+
 TEST_F(ExceptionTests, UserExceptions)
 {
     using namespace LTL;
@@ -44,15 +107,15 @@ TEST_F(ExceptionTests, UserExceptions)
         ASSERT_THROW(Run("VectorLen('invalid value!')"), runtime_error);
         ASSERT_THROW(Run("VectorLen('invalid value!', 2)"), runtime_error);
 
+        Run("a = VectorLen(3, 4)");
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
+
         ASSERT_THROW(cstate->Call<float>("VectorLen"), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", 2.f, "invalid value!"), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!"), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!", 1.f), runtime_error);
 
-
-        Run("a = VectorLen(3, 4)");
-        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
         ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
     }
 
