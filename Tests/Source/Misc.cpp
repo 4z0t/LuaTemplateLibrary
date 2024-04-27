@@ -5,7 +5,7 @@
 #pragma region Memory tests
 #ifdef _WIN32
 
-// Tets memory leaks ans safety
+// Tests memory leaks ans safety
 // https://stackoverflow.com/questions/29174938/googletest-and-memory-leaks
 #include <crtdbg.h>
 
