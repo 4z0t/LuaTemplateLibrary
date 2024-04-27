@@ -153,7 +153,7 @@ namespace LTL
             return m_cstate;
         }
 
-        void Run(const char* const s) throw(Exception)
+        void Run(const char* const s) noexcept(false)
         {
             return m_cstate->Run(s);
         }

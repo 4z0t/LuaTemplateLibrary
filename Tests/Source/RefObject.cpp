@@ -404,6 +404,20 @@ TEST_F(TestPcall, Tests)
         ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
         ASSERT_FALSE(s.PCall("f").IsOk());
     }
+    {
+        State s;
+        s.OpenLibs();
+        constexpr auto f = +[](lua_State* l) ->void {
+            throw exception("something wrong!");
+            };
+
+        s.Add("myerror", CFunction<f, lua_State*>{});
+        s.Run(
+            "function f() myerror() end"
+        );
+        ASSERT_EQ(s.PCall("f"), PCallResult::ERRRUN);
+        ASSERT_FALSE(s.PCall("f").IsOk());
+    }
 
 }
 #pragma endregion
