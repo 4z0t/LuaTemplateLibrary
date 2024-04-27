@@ -89,6 +89,16 @@ namespace LTL
             lua_error(Unwrap());
         }
 
+        inline int GetTop()
+        {
+            return lua_gettop(Unwrap());
+        }
+
+        inline void SetTop(int top)
+        {
+            return lua_settop(Unwrap(), top);
+        }
+
         template<typename T>
         void Push(const T& value)
         {

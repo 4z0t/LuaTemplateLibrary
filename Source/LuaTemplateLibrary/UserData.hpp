@@ -43,7 +43,7 @@ namespace LTL
             T object;
             bool isDestroyed = false;
         };
-
+    private:
         /**
          * @brief Помещает на стек UserData<T> и возвращает указатель на его место
          * в памяти для дальнейшего использования с оператором new
@@ -58,7 +58,7 @@ namespace LTL
             SetClassMetaTable(l);
             return &data->object;
         }
-
+    public:
         /**
          * @brief Помещает на стек UserData<T> через move copy данного объекта
          *
