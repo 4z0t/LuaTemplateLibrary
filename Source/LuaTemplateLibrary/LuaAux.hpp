@@ -201,7 +201,6 @@ namespace LTL
 
 #pragma endregion
 
-
 #pragma region Call
 
     template<typename TReturn = void>
@@ -297,7 +296,21 @@ namespace LTL
 
 #pragma region Generic call functions
 
+    template<typename TReturn = void, typename F, typename ...TArgs>
+    inline TReturn CallFunction(lua_State* l, const F& func, TArgs&& ...args)
+    {
+        PushValue(l, func);
+        const size_t n = PushArgs(l, std::forward<TArgs>(args)...);
+        return CallStack<TReturn>(l, n);
+    }
 
+    template<typename TReturn = void, typename F, typename ...TArgs>
+    inline PCallReturn<TReturn> PCallFunction(lua_State* l, const F& func, TArgs&& ...args)
+    {
+        PushValue(l, func);
+        const size_t n = PushArgs(l, std::forward<TArgs>(args)...);
+        return PCallStack<TReturn>(l, n);
+    }
 
 #pragma endregion
 

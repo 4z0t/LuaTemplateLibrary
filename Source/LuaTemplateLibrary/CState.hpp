@@ -121,26 +121,22 @@ namespace LTL
             lua_close(Unwrap());
         }
 
-        template<typename ...Ts>
-        void RegisterClosure(const char* name, lua_CFunction func, Ts&&... args)
+        template<typename ...TArgs>
+        void RegisterClosure(const char* name, lua_CFunction func, TArgs&&... args)
         {
-            LTL::RegisterClosure(Unwrap(), name, func, std::forward<Ts>(args)...);
+            LTL::RegisterClosure(Unwrap(), name, func, std::forward<TArgs>(args)...);
         }
 
-        template<typename TReturn = void, typename ...Ts>
-        TReturn Call(const char* name, Ts&&... args)
+        template<typename TReturn = void, typename ...TArgs>
+        TReturn Call(const char* name, TArgs&&... args)
         {
-            lua_getglobal(Unwrap(), name);
-            const size_t n = PushArgs(Unwrap(), std::forward<Ts>(args)...);
-            return CallStack<TReturn>(Unwrap(), n);
+            return CallFunction<TReturn>(Unwrap(), GlobalValue{ name }, std::forward<TArgs>(args)...);
         }
 
-        template<typename TReturn = void, typename ...Ts>
-        PCallReturn<TReturn> PCall(const char* name, Ts&&... args)
+        template<typename TReturn = void, typename ...TArgs>
+        PCallReturn<TReturn> PCall(const char* name, TArgs&&... args)
         {
-            Push(GlobalValue{ name });
-            const size_t n = PushArgs(Unwrap(), std::forward<Ts>(args)...);
-            return PCallStack<TReturn>(Unwrap(), n);
+            return PCallFunction<TReturn>(Unwrap(), GlobalValue{ name }, std::forward<TArgs>(args)...);
         }
 
         void Run(const char* const s) noexcept(false)
