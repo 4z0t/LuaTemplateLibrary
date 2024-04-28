@@ -57,6 +57,7 @@ TEST_F(UserDataTests, Class_Basic)
         ASSERT_THROW(Run("a:SetA(nil)"), Exception);
         ASSERT_THROW(Run("a:SetA()"), Exception);
         ASSERT_THROW(Run("a:SetA(false)"), Exception);
+        ASSERT_THROW(Run("a:SetA(a)"), Exception);
     }
     {
         // wrong u data call
@@ -66,6 +67,7 @@ TEST_F(UserDataTests, Class_Basic)
         ASSERT_THROW(Run("a.SetA(nil)"), Exception);
         ASSERT_THROW(Run("a.SetA()"), Exception);
         ASSERT_THROW(Run("a.SetA(false)"), Exception);
+        ASSERT_THROW(Run("a.SetA(a)"), Exception);
     }
 
 }
@@ -122,6 +124,7 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
         ASSERT_THROW(Run("a.A = {}"), Exception);
         ASSERT_THROW(Run("a.A = nil"), Exception);
         ASSERT_THROW(Run("a.A = false"), Exception);
+        ASSERT_THROW(Run("a.A = a"), Exception);
     }
 }
 
