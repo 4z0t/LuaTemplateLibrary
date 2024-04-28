@@ -11,6 +11,18 @@
 
 namespace LTL
 {
+    namespace MetaMethods
+    {
+        constexpr MetaMethodName index{ "__index" };
+        constexpr MetaMethodName newindex{ "__newindex" };
+        constexpr MetaMethodName metatable{ "__metatable" };
+        constexpr MetaMethodName gc{ "__gc" };
+
+        constexpr MetaMethodName add{ "__add" };
+        constexpr MetaMethodName tostring{ "__tostring" };
+    }
+
+
     template<typename T>
     struct Class;
     namespace Internal

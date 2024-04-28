@@ -207,12 +207,26 @@ namespace LTL
         const char* const name;
     };
 
+    struct MetaMethodName
+    {
+        const char* const method;
+    };
+
     template<>
     struct StackType<GlobalValue>
     {
         static void Push(lua_State* l, const GlobalValue& value)
         {
             lua_getglobal(l, value.name);
+        }
+    };
+
+    template<>
+    struct StackType<MetaMethodName>
+    {
+        static void Push(lua_State* l, const MetaMethodName& value)
+        {
+            lua_pushstring(l, value.method);
         }
     };
 }
