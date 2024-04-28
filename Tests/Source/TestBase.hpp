@@ -37,3 +37,16 @@ struct TestBase : public testing::Test
         return LTL::GRefObject::Global(l, "result");
     }
 };
+
+//struct TestBase : public testing::Test
+//{
+//    void SetUp() override
+//    {
+//        //arranging the state and env
+//    }
+//
+//    void TearDown() override
+//    {
+//        //destroying state and env
+//    }
+//};

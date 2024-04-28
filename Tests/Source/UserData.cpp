@@ -6,6 +6,126 @@ struct UserDataTests : TestBase
 
 };
 
+TEST_F(UserDataTests, Class_Basic)
+{
+    struct MyClass
+    {
+        int a = 0;
+        MyClass() = default;
+        MyClass(int a) :a(a) {}
+        MyClass(const MyClass&) = default;
+        MyClass(MyClass&&) = default;
+        ~MyClass() = default;
+
+        int GetA()const { return a; }
+
+        void SetA(int a) { this->a = a; }
+    };
+    using namespace LTL;
+
+    Class<MyClass>(l, "Class")
+        .AddConstructor<int>()
+        .Add("GetA", Method<&MyClass::GetA>{})
+        .Add("SetA", Method<&MyClass::SetA, int>{})
+        ;
+    Run(R"===(
+    result = Class(4)
+    )===");
+
+    ASSERT_TRUE(Result().Is<Type::Userdata>());
+    ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+
+    Run(R"===(
+    a = result
+    result = a:GetA()
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 4);
+
+    Run(R"===(
+    a:SetA(3)
+    result = a:GetA()
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 3);
+    {
+        // wrong value call
+        ASSERT_THROW(Run("a:SetA('df')"), Exception);
+        ASSERT_THROW(Run("a:SetA({})"), Exception);
+        ASSERT_THROW(Run("a:SetA(nil)"), Exception);
+        ASSERT_THROW(Run("a:SetA()"), Exception);
+        ASSERT_THROW(Run("a:SetA(false)"), Exception);
+    }
+    {
+        // wrong u data call
+        ASSERT_THROW(Run("a.SetA(4)"), Exception);
+        ASSERT_THROW(Run("a.SetA('df')"), Exception);
+        ASSERT_THROW(Run("a.SetA({})"), Exception);
+        ASSERT_THROW(Run("a.SetA(nil)"), Exception);
+        ASSERT_THROW(Run("a.SetA()"), Exception);
+        ASSERT_THROW(Run("a.SetA(false)"), Exception);
+    }
+
+}
+
+TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
+{
+    struct MyClass
+    {
+        int a = 0;
+        MyClass() = default;
+        MyClass(int a) :a(a) {}
+        MyClass(const MyClass&) = default;
+        MyClass(MyClass&&) = default;
+        ~MyClass() = default;
+
+        int GetA()const { return a; }
+
+        void SetA(int a) { this->a = a; }
+    };
+    using namespace LTL;
+
+    Class<MyClass>(l, "Class")
+        .AddConstructor<int>()
+        .AddGetter("A", Method<&MyClass::GetA>{})
+        .AddSetter("A", Method<&MyClass::SetA, int>{})
+        ;
+
+    Run(R"===(
+    result = Class(4)
+    )===");
+
+    ASSERT_TRUE(Result().Is<Type::Userdata>());
+    ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+
+    Run(R"===(
+    a = result
+    result = a.A
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 4);
+
+    Run(R"===(
+    a.A = 3
+    result = a.A
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 3);
+
+    {
+        // wrong value call
+        ASSERT_THROW(Run("a.A = 'df'"), Exception);
+        ASSERT_THROW(Run("a.A = {}"), Exception);
+        ASSERT_THROW(Run("a.A = nil"), Exception);
+        ASSERT_THROW(Run("a.A = false"), Exception);
+    }
+}
+
+
 TEST_F(UserDataTests, CantCopyTest)
 {
     using namespace LTL;
@@ -19,7 +139,7 @@ TEST_F(UserDataTests, CantCopyTest)
             a = std::move(other.a);
         }
 
-        int Print()
+        int GetA()
         {
             return a;
         }
@@ -35,10 +155,10 @@ TEST_F(UserDataTests, CantCopyTest)
     Class<CantCopy>(l, "CantCopy")
         .AddConstructor<Default<int>>()
         .Add("Duplicate", Method<&CantCopy::Dup, CantCopy()>{})
-        .Add("Print", Method<&CantCopy::Print>{})
+        .Add("GetA", Method<&CantCopy::GetA>{})
         ;
     Run("local a = CantCopy() "
-        "result = a:Print()"
+        "result = a:GetA()"
     );
 
 
@@ -46,7 +166,7 @@ TEST_F(UserDataTests, CantCopyTest)
     ASSERT_EQ(Result().To<int>(), 0);
 
     Run("local a = CantCopy(4) "
-        "result = a:Duplicate():Print()"
+        "result = a:Duplicate():GetA()"
     );
 
     ASSERT_TRUE(Result().Is<int>());
@@ -82,17 +202,17 @@ TEST_F(UserDataTests, CantMoveTest)
     Class<CantMove>(l, "CantCopy")
         .AddConstructor<Default<int>>()
         .Add("Duplicate", Method<&CantMove::Dup, CantMove()>{})
-        .Add("Print", Method<&CantMove::GetA>{})
+        .Add("GetA", Method<&CantMove::GetA>{})
         ;
     Run("local a = CantCopy() "
-        "result = a:Print()"
+        "result = a:GetA()"
     );
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 0);
 
     Run("local a = CantCopy(4) "
-        "result = a:Duplicate():Print()"
+        "result = a:Duplicate():GetA()"
     );
 
     ASSERT_TRUE(Result().Is<int>());
@@ -126,11 +246,11 @@ TEST_F(UserDataTests, CantCopyAndMove)
     Class<CantMove>(l, "CantCopy")
         .AddConstructor<Default<int>>()
         .Add("Duplicate", Method<&CantMove::Duplicate, CState*>{})
-        .Add("Print", Method<&CantMove::GetA>{})
+        .Add("GetA", Method<&CantMove::GetA>{})
         ;
 
     Run("local a = CantCopy() "
-        "result = a:Print()"
+        "result = a:GetA()"
     );
 
     ASSERT_TRUE(Result().Is<int>());
@@ -138,7 +258,7 @@ TEST_F(UserDataTests, CantCopyAndMove)
 
     Run("local a = CantCopy(4) "
         "result = a:Duplicate()"
-        ":Print()"
+        ":GetA()"
     );
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 8);
