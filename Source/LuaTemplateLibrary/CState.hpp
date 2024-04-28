@@ -105,6 +105,12 @@ namespace LTL
             return PushValue(Unwrap(), value);
         }
 
+        template<typename T>
+        T Get(int index)
+        {
+            return GetValue<T>(Unwrap(), index);
+        }
+
         void Pop(size_t n = 1)
         {
             return lua_pop(Unwrap(), static_cast<int>(n));
@@ -132,15 +138,9 @@ namespace LTL
         template<typename TReturn = void, typename ...Ts>
         PCallReturn<TReturn> PCall(const char* name, Ts&&... args)
         {
-            lua_getglobal(Unwrap(), name);
+            Push(GlobalValue{ name });
             const size_t n = PushArgs(Unwrap(), std::forward<Ts>(args)...);
             return PCallStack<TReturn>(Unwrap(), n);
-        }
-
-        template<typename T>
-        T Get(int index)
-        {
-            return GetValue<T>(Unwrap(), index);
         }
 
         void Run(const char* const s) noexcept(false)

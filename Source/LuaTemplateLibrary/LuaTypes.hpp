@@ -64,17 +64,17 @@ namespace LTL
         /// @param l состояние ВМ Lua
         /// @param index индекс объекта на стеке
         static bool Check(lua_State* l, int index);
-      /*  {
-            STATIC_FAIL("Not provided implementation for Check function");
-        }*/
+        /*  {
+              STATIC_FAIL("Not provided implementation for Check function");
+          }*/
 
-        /// @brief помещает объект типа **T** на вершину стека ВМ Lua
-        /// @param l состояние ВМ Lua
-        /// @param value помещаемый на стек объект
+          /// @brief помещает объект типа **T** на вершину стека ВМ Lua
+          /// @param l состояние ВМ Lua
+          /// @param value помещаемый на стек объект
         static void Push(lua_State* l, const T& value);
-      /*  {
-            STATIC_FAIL("Not provided implementation for Push function");
-        }*/
+        /*  {
+              STATIC_FAIL("Not provided implementation for Push function");
+          }*/
     };
 
     template<>
@@ -199,6 +199,20 @@ namespace LTL
         static void Push(lua_State* l, std::nullptr_t)
         {
             lua_pushnil(l);
+        }
+    };
+
+    struct GlobalValue
+    {
+        const char* const name;
+    };
+
+    template<>
+    struct StackType<GlobalValue>
+    {
+        static void Push(lua_State* l, const GlobalValue& value)
+        {
+            lua_getglobal(l, value.name);
         }
     };
 }
