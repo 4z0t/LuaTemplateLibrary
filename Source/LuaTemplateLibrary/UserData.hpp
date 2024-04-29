@@ -1,6 +1,6 @@
 #pragma once
 #include "LuaAux.hpp"
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 #include "FuncArguments.hpp"
 #include "Exception.hpp"
 #include "RefObject.hpp"

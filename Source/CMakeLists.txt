@@ -3,7 +3,7 @@ set(LTL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LuaTemplateLibrary)
 set(LTL_HEADERS
     ${LTL_DIR}/Internal.hpp
     ${LTL_DIR}/FuncArguments.hpp
-    ${LTL_DIR}/LuaTypes.hpp
+    ${LTL_DIR}/Types.hpp
     ${LTL_DIR}/CState.hpp
     ${LTL_DIR}/Libs.hpp
     ${LTL_DIR}/FuncUtils.hpp
@@ -12,8 +12,8 @@ set(LTL_HEADERS
     ${LTL_DIR}/Property.hpp
     ${LTL_DIR}/ClassConstructor.hpp
     ${LTL_DIR}/Class.hpp
-    ${LTL_DIR}/LuaFunctions.hpp
-    ${LTL_DIR}/LuaState.hpp
+    ${LTL_DIR}/Function.hpp
+    ${LTL_DIR}/State.hpp
     ${LTL_DIR}/RefObject.hpp
     ${LTL_DIR}/StackObject.hpp
     ${LTL_DIR}/Exception.hpp

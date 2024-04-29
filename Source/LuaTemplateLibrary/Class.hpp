@@ -1,8 +1,8 @@
 #pragma once
 #include "LuaAux.hpp"
 #include "UserData.hpp"
-#include "LuaFunctions.hpp"
-#include "LuaState.hpp"
+#include "Function.hpp"
+#include "State.hpp"
 #include "ClassConstructor.hpp"
 #include "Property.hpp"
 #include "StackObject.hpp"

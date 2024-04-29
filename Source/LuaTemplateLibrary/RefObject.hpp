@@ -1,6 +1,6 @@
 #pragma once
 #include "LuaAux.hpp"
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 
 namespace LTL
 {

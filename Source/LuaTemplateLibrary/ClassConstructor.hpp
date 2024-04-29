@@ -2,7 +2,7 @@
 #include "FuncArguments.hpp"
 #include "FuncUtils.hpp"
 #include "LuaAux.hpp"
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 #include "UserData.hpp"
 
 namespace LTL

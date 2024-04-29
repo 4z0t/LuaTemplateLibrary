@@ -1,5 +1,5 @@
 #pragma once
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 #include "FuncArguments.hpp"
 #include <optional>
 

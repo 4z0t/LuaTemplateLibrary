@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <iostream>
 #include <vector>
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 
 namespace LTL
 {

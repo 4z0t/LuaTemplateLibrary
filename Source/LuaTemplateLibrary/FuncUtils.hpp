@@ -1,7 +1,7 @@
 #pragma once
 #include "FuncArguments.hpp"
 #include "LuaAux.hpp"
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 
 namespace LTL
 {
