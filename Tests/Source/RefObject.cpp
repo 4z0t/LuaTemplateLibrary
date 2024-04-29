@@ -210,6 +210,21 @@ TEST_F(RefObjectTests, CompareTest)
         ASSERT_FALSE(a >= b);
         ASSERT_TRUE(a <= b);
     }
+
+    {
+
+        Run("a, b = 2, 3");
+        GRefObject a{ l, GlobalValue{ "a" } };
+        GRefObject b{ l, GlobalValue{ "b" } };
+
+        ASSERT_FALSE(a == b);
+        ASSERT_TRUE(a != b);
+        ASSERT_TRUE(a < b);
+        ASSERT_FALSE(a > b);
+        ASSERT_FALSE(a >= b);
+        ASSERT_TRUE(a <= b);
+    }
+
     {
         Run("a = {}"
             " b = a "
