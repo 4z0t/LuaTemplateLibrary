@@ -9,6 +9,7 @@ set(LTL_TEST_SOURCE_FILES
     Source/UserData.cpp
     Source/Misc.cpp
     Source/Types.cpp
+    Source/Libs.cpp
 )
 
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
