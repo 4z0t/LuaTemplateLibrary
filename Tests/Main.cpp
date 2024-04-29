@@ -209,7 +209,7 @@ void Test()
     }
 
 
-    if (lua_state.DoFile("main.lua"))
+    if (lua_state.DoFile("main.lua") != PCallResult::Ok)
     {
         LTL::GRefObject obj = LTL::GRefObject::FromStack(lua_state, -1);
 

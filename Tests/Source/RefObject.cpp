@@ -5,7 +5,7 @@ struct RefObjectTests : TestBase
 {
 
 };
-TEST_F(RefObjectTests, Basic)
+TEST_F(RefObjectTests, Identity)
 {
     using namespace LTL;
 
@@ -16,12 +16,59 @@ TEST_F(RefObjectTests, Basic)
         ASSERT_EQ(obj.Type(), Type::Nil);
         ASSERT_TRUE(obj.Is<Type::Nil>());
         ASSERT_TRUE(obj.IsNil());
+        ASSERT_TRUE(obj == nullptr);
+    }
+
+    {
+        GRefObject obj{ l , 3 };
+
+        ASSERT_EQ(obj.Type(), Type::Number);
+        ASSERT_TRUE(obj.Is<Type::Number>());
+        ASSERT_TRUE(obj.Is<int>());
+        ASSERT_EQ(obj.To<int>(), 3);
+        ASSERT_TRUE(obj == 3);
+    }
+
+    {
+        using namespace std;
+        GRefObject obj{ l , "string" };
+
+        ASSERT_EQ(obj.Type(), Type::String);
+        ASSERT_TRUE(obj.Is<Type::String>());
+        ASSERT_TRUE(obj.Is<const char*>());
+        ASSERT_TRUE(obj.Is<string>());
+        ASSERT_TRUE(obj.Is<string_view>());
+
+        ASSERT_FALSE(obj.Is<Type::Number>());
+        ASSERT_FALSE(obj.Is<Type::Nil>());
+        ASSERT_FALSE(obj.Is<int>());
+        ASSERT_FALSE(obj.Is<float>());
+        ASSERT_FALSE(obj.Is<bool>());
+
+        ASSERT_STREQ(obj.To<const char*>(), "string");
+        ASSERT_EQ(obj.To<string>(), "string");
+        ASSERT_EQ(obj.To<string_view>(), "string");
+
+        ASSERT_TRUE(obj == "string");
+    }
+
+    {
+        using namespace std;
+        GRefObject obj{ l , true };
+
+        ASSERT_EQ(obj.Type(), Type::Boolean);
+        ASSERT_TRUE(obj.Is<Type::Boolean>());
+        ASSERT_TRUE(obj.Is<bool>());
+        ASSERT_TRUE(obj.To<bool>());
+        ASSERT_TRUE(obj == true);
+        ASSERT_FALSE(obj == false);
+        ASSERT_FALSE(obj != true);
+        ASSERT_TRUE(obj != false);
     }
 
     {
 
     }
-
 
 }
 

@@ -125,7 +125,7 @@ namespace LTL
             return *this;
         }
 
-        bool DoFile(const char* const path)
+        PCallResult DoFile(const char* const path)
         {
             return m_cstate->DoFile(path);
         }
