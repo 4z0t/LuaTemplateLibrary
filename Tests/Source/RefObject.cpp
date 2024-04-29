@@ -94,9 +94,11 @@ TEST_F(RefObjectTests, ValueAccess)
     Run("result = {a = 4}");
     ASSERT_TRUE(Result().IsTable());
     ASSERT_TRUE(Result()["a"].Is<int>());
+    ASSERT_EQ(Result()["a"].To<int>(), 4);
 
     GRefObject key{ l, "a" };
     ASSERT_TRUE(Result()[key].Is<int>());
+    ASSERT_EQ(Result()[key].To<int>(), 4);
 }
 
 TEST_F(RefObjectTests, TestImplicitConvertion)
