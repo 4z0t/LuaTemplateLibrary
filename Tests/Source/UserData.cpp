@@ -37,6 +37,13 @@ TEST_F(UserDataTests, Class_Basic)
 
     Run(R"===(
     a = result
+    result = type(a) == "userdata"
+    )===");
+
+    ASSERT_TRUE(Result().Is<bool>());
+    ASSERT_TRUE(Result().To<bool>());
+
+    Run(R"===(
     result = a:GetA()
     )===");
 
