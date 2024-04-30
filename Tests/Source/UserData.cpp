@@ -49,7 +49,7 @@ TEST_F(UserDataTests, Class_Basic)
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 4);
-    
+
     ud->a = 100;
     Run(R"===(
     result = a:GetA()
@@ -196,6 +196,7 @@ TEST_F(UserDataTests, Class_GetterSetterProperty)
 
     ASSERT_TRUE(Result().Is<Type::Userdata>());
     ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+    auto ud = Result().To<UserData<MyClass>>();
 
     Run(R"===(
     u = result
@@ -204,6 +205,14 @@ TEST_F(UserDataTests, Class_GetterSetterProperty)
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 4);
+
+    ud->a = 100;
+    Run(R"===(
+    result = u.a
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 100);
 
     Run(R"===(
     u.a = 3
@@ -227,6 +236,11 @@ TEST_F(UserDataTests, Class_GetterSetterProperty)
         ASSERT_TRUE(Result().Is<int>());
         ASSERT_EQ(Result().To<int>(), 5);
 
+        ud->b = 200;
+        Run("result = u.b");
+        ASSERT_TRUE(Result().Is<int>());
+        ASSERT_EQ(Result().To<int>(), 200);
+
         ASSERT_THROW(Run("u.b = 1"), Exception);
         ASSERT_THROW(Run("u.b = 'df'"), Exception);
         ASSERT_THROW(Run("u.b = {}"), Exception);
@@ -236,13 +250,10 @@ TEST_F(UserDataTests, Class_GetterSetterProperty)
     }
 
     {
-        Run("result = u");
-        auto ud =  Result().To<UserData<MyClass>>();
         ASSERT_EQ(ud->c, 6);
 
-
         Run("result = u.c");
-        ASSERT_TRUE(Result() == nullptr);        
+        ASSERT_TRUE(Result() == nullptr);
 
         Run("u.c = 1");
         ASSERT_THROW(Run("u.c = 'df'"), Exception);
