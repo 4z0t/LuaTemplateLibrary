@@ -31,9 +31,9 @@ TEST_F(UserDataTests, Class_Basic)
     Run(R"===(
     result = Class(4)
     )===");
-
     ASSERT_TRUE(Result().Is<Type::Userdata>());
     ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+    auto ud = Result().To<UserData<MyClass>>();
 
     Run(R"===(
     a = result
@@ -52,11 +52,18 @@ TEST_F(UserDataTests, Class_Basic)
 
     Run(R"===(
     a:SetA(3)
+    )===");
+
+    ASSERT_EQ(ud->a, 3);
+
+    Run(R"===(
+    a:SetA(2)
     result = a:GetA()
     )===");
 
+    ASSERT_EQ(ud->a, 2);
     ASSERT_TRUE(Result().Is<int>());
-    ASSERT_EQ(Result().To<int>(), 3);
+    ASSERT_EQ(Result().To<int>(), 2);
     {
         // wrong value call
         ASSERT_THROW(Run("a:SetA('df')"), Exception);
@@ -108,6 +115,7 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
 
     ASSERT_TRUE(Result().Is<Type::Userdata>());
     ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+    auto ud = Result().To<UserData<MyClass>>();
 
     Run(R"===(
     a = result
@@ -119,11 +127,18 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
 
     Run(R"===(
     a.A = 3
+    )===");
+
+    ASSERT_EQ(ud->a, 3);
+
+    Run(R"===(
+    a.A = 2
     result = a.A
     )===");
 
+
     ASSERT_TRUE(Result().Is<int>());
-    ASSERT_EQ(Result().To<int>(), 3);
+    ASSERT_EQ(Result().To<int>(), 2);
 
     {
         // wrong value call
