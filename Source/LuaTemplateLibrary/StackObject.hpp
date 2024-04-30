@@ -495,17 +495,13 @@ namespace LTL
         template<typename TReturn = void, typename ...TArgs>
         TReturn Call(TArgs&& ...args)const
         {
-            Push();
-            const size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
-            return CallStack<TReturn>(m_state, n);
+            return CallFunction<TReturn>(m_state, *this, std::forward<TArgs>(args)...);
         }
 
         template<typename TReturn = void, typename ...TArgs>
         PCallReturn<TReturn> PCall(TArgs&& ...args)const
         {
-            Push();
-            const size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
-            return PCallStack<TReturn>(m_state, n);
+            return PCallFunction<TReturn>(m_state, *this, std::forward<TArgs>(args)...);
         }
 
         template<typename TReturn = void, typename ...TArgs>
