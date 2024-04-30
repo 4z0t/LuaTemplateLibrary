@@ -107,7 +107,6 @@ struct Vector3f
 
     std::string ToString(LTL::CState* state)const
     {
-        lua_error(state->Unwrap());
         std::string  s{ state->PushFormatString("Vector { %f, %f, %f }", x, y, z) };
         state->Pop();
         return s;
@@ -581,6 +580,7 @@ void OnlyMethods()
     State s;
     s.OpenLibs();
     s.ThrowExceptions();
+
     Class<Vector3f>(s, "Vector")
         .AddConstructor<Default<float>, Default<float>, Default<float>>()
         .Add("__add", Method<&Vector3f::operator+, Vector3f(Vector3f)>{})
@@ -591,6 +591,11 @@ void OnlyMethods()
     {
         auto v = s.MakeUserData<Vector3f>(1, 2, 3);
         auto vs = v.ToString();
+        v.Push();
+        StackObjectView sv{ s };
+        cout << v << endl;
+        cout << sv << endl;
+
         s.Run(
             "local v = Vector(1,2,3) "
             "print(v) "
@@ -1086,6 +1091,6 @@ int main()
     //OnlyMethods();
     //MutlReturnTest();
     //AltException();
-    LibsTest();
-
+    //LibsTest();
+    OnlyMethods();
 }

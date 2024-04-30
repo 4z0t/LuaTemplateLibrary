@@ -98,6 +98,18 @@ namespace LTL
             lua_pushvalue(m_state, m_index);
         }
 
+        const char* ToString()const
+        {
+            const char* s = luaL_tolstring(m_state, m_index, nullptr);
+            lua_pop(m_state, 1);
+            return s;
+        }
+
+        friend static std::ostream& operator<<(std::ostream& os, const StackObjectView& obj)
+        {
+            return os << obj.ToString();
+        }
+
 #pragma region Comparison operators
 
         /**
