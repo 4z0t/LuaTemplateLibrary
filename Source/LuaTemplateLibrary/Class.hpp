@@ -114,6 +114,7 @@ namespace LTL
             MakeIndexTable();
             UData::IndexTable::Push(m_state);
             RawSetFunction(key, func);
+            Pop();
             return *this;
         }
 
@@ -122,6 +123,7 @@ namespace LTL
             MakeNewIndexTable();
             UData::NewIndexTable::Push(m_state);
             RawSetFunction(key, func);
+            Pop();
             return *this;
         }
 
@@ -129,6 +131,7 @@ namespace LTL
         {
             UData::MetaTable::Push(m_state);
             RawSetFunction(name, func);
+            Pop();
             return *this;
         }
 
@@ -221,32 +224,43 @@ namespace LTL
 
 
     private:
+        inline void Pop(int n = 1)const
+        {
+            lua_pop(m_state, n);
+        }
 
         void RawSetFunction(const char* name, lua_CFunction func)
         {
             StackObjectView table{ m_state };
             table.RawSet(name, func);
-            lua_pop(m_state, 1);
         }
 
         void MakeMetaTable()
         {
-            lua_regptr_isnt_set(m_state, UData::MetaTable::GetKey());
-
+            if (UData::MetaTable::Push(m_state) != LUA_TNIL)
+            {
+                Pop();
+                return;
+            }
             lua_newtable(m_state);
             StackObjectView metaTable{ m_state };
             metaTable.RawSet("__index", metaTable);
             lua_setregp(m_state, UData::MetaTable::GetKey());
+            Pop();
         }
 
         void MakeClassTable()
         {
-            lua_regptr_isnt_set(m_state, UData::ClassTable::GetKey());
-
+            if (UData::ClassTable::Push(m_state) != LUA_TNIL)
+            {
+                Pop();
+                return;
+            }
             lua_newtable(m_state);
             StackObjectView classTable{ m_state };
             classTable.RawSet("className", m_name);
             lua_setregp(m_state, UData::ClassTable::GetKey());
+            Pop();
         }
 
         void MakeIndexTable()
