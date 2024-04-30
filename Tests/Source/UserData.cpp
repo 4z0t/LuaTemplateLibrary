@@ -128,6 +128,94 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
     }
 }
 
+TEST_F(UserDataTests, Class_GetterSetterProperty)
+{
+    struct MyClass
+    {
+        MyClass() = default;
+        MyClass(int a, int b, int c) :a(a), b(b), c(c) {}
+        MyClass(const MyClass&) = default;
+        MyClass(MyClass&&) = default;
+        ~MyClass() = default;
+
+        int a = 0;
+        int b = 0;
+        int c = 0;
+    };
+    using namespace LTL;
+
+    Class<MyClass>(l, "Class")
+        .AddConstructor<int, int, int>()
+        .Add("a", AProperty<&MyClass::a>{})
+        .Add("b", AGetter<&MyClass::b>{})
+        .Add("c", ASetter<&MyClass::c>{})
+        ;
+
+    Run(R"===(
+    result = Class(4, 5, 6)
+    )===");
+
+    ASSERT_TRUE(Result().Is<Type::Userdata>());
+    ASSERT_TRUE(Result().Is<UserData<MyClass>>());
+
+    Run(R"===(
+    u = result
+    result = u.a
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 4);
+
+    Run(R"===(
+    u.a = 3
+    result = u.a
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 3);
+
+    {
+        // wrong value call
+        ASSERT_THROW(Run("u.a = 'df'"), Exception);
+        ASSERT_THROW(Run("u.a = {}"), Exception);
+        ASSERT_THROW(Run("u.a = nil"), Exception);
+        ASSERT_THROW(Run("u.a = false"), Exception);
+        ASSERT_THROW(Run("u.a = u"), Exception);
+    }
+
+    {
+        Run("result = u.b");
+        ASSERT_TRUE(Result().Is<int>());
+        ASSERT_EQ(Result().To<int>(), 5);
+
+        ASSERT_THROW(Run("u.b = 1"), Exception);
+        ASSERT_THROW(Run("u.b = 'df'"), Exception);
+        ASSERT_THROW(Run("u.b = {}"), Exception);
+        ASSERT_THROW(Run("u.b = nil"), Exception);
+        ASSERT_THROW(Run("u.b = false"), Exception);
+        ASSERT_THROW(Run("u.b = u"), Exception);
+    }
+
+    {
+        Run("result = u");
+        auto ud =  Result().To<UserData<MyClass>>();
+        ASSERT_EQ(ud->c, 6);
+
+
+        Run("result = u.c");
+        ASSERT_TRUE(Result() == nullptr);        
+
+        Run("u.c = 1");
+        ASSERT_THROW(Run("u.c = 'df'"), Exception);
+        ASSERT_THROW(Run("u.c = {}"), Exception);
+        ASSERT_THROW(Run("u.c = nil"), Exception);
+        ASSERT_THROW(Run("u.c = false"), Exception);
+        ASSERT_THROW(Run("u.c = u"), Exception);
+
+        ASSERT_EQ(ud->c, 1);
+    }
+}
+
 
 TEST_F(UserDataTests, CantCopyTest)
 {
