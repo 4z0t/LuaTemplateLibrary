@@ -18,7 +18,7 @@ TEST_F(StackObjectViewTest, Tests)
     using namespace LTL;
     using namespace std;
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         lua_pushnumber(l, 1);
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<float>());
@@ -26,7 +26,7 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, 1);
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<int>());
@@ -35,7 +35,7 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, "Hello");
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<const char*>());
@@ -45,7 +45,7 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, string_view{ "Hello" });
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<const char*>());
@@ -58,7 +58,7 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, false);
         StackObjectView so{ l };
         ASSERT_TRUE(so.Is<bool>());
@@ -68,7 +68,7 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, 1);
         StackObjectView s1{ l };
         PushValue(l, 2);
@@ -82,7 +82,7 @@ TEST_F(StackObjectViewTest, Tests)
     }
     AssertEmptyStack();
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         Run("a = {b = 3}");
         lua_getglobal(l, "a");
         StackObjectView a{ l };
@@ -94,7 +94,7 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         Run("a = {b = 3}");
         lua_getglobal(l, "a");
         StackObjectView a{ l };
@@ -107,7 +107,7 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         Run("a = {}");
         lua_getglobal(l, "a");
         StackObjectView a{ l };
@@ -124,7 +124,7 @@ TEST_F(StackObjectViewTest, Tests)
     AssertEmptyStack();
 
     {
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         Run("a = {}");
         lua_getglobal(l, "a");
         StackObjectView a{ l };
@@ -155,7 +155,7 @@ TEST_F(StackObjectViewTest, TestStack)
     }
 
     { // Basic stack ops
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         PushValue(l, 1);
 
         CheckStackChange(0, {
@@ -238,7 +238,7 @@ TEST_F(StackObjectViewTest, TestStack)
             });
     }
     {// table ops
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         Run(R"===(
                 local t = {
                     __eq = function(self, other)
@@ -309,7 +309,7 @@ TEST_F(StackObjectViewTest, TestStack)
             });
     }
     { // get and set
-        const StackRestorer rst{ l };
+        const StackTopRestorer rst{ l };
         lua_createtable(l, 0, 0);
         CheckStackChange(0, {
                 StackObjectView s1{ l };

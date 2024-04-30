@@ -53,19 +53,19 @@ namespace LTL
      * @brief Класс для восстановления стека после выхода из области видимости
      *
      */
-    struct StackRestorer final
+    struct StackTopRestorer final
     {
-        StackRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
+        StackTopRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
 
-        ~StackRestorer()
+        ~StackTopRestorer()
         {
             lua_settop(m_state, m_top);
         }
 
-        StackRestorer(const StackRestorer&) = delete;
-        StackRestorer(StackRestorer&&) = delete;
-        StackRestorer& operator=(const StackRestorer&) = delete;
-        StackRestorer& operator=(StackRestorer&&) = delete;
+        StackTopRestorer(const StackTopRestorer&) = delete;
+        StackTopRestorer(StackTopRestorer&&) = delete;
+        StackTopRestorer& operator=(const StackTopRestorer&) = delete;
+        StackTopRestorer& operator=(StackTopRestorer&&) = delete;
     private:
         lua_State* const m_state;
         const int m_top;

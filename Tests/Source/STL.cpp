@@ -11,7 +11,7 @@ TEST_F(STDContainersTests, VectorTests)
     using namespace std;
 
     {
-        StackRestorer rst{ l };
+        StackTopRestorer rst{ l };
         using TestType = vector<int>;
         TestType v1 = { 1,2,3,4,54 };
         PushValue(l, v1);
@@ -28,7 +28,7 @@ TEST_F(STDContainersTests, UnorderedMapTests)
     using namespace std;
 
     {
-        StackRestorer rst{ l };
+        StackTopRestorer rst{ l };
         using TestType = unordered_map<int, int>;
         TestType v1 = {
             {1,2},
@@ -42,7 +42,7 @@ TEST_F(STDContainersTests, UnorderedMapTests)
     }
 
     {
-        StackRestorer rst{ l };
+        StackTopRestorer rst{ l };
         using TestType = unordered_map<string, int>;
         TestType v1 = {
             {"a",2},
@@ -56,7 +56,7 @@ TEST_F(STDContainersTests, UnorderedMapTests)
     }
 
     {
-        StackRestorer rst{ l };
+        StackTopRestorer rst{ l };
         using TestType = unordered_map<string, GRefObject>;
         TestType v1 = {
             {"a",{l,2}},
