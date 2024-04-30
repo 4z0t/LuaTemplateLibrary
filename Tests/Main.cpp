@@ -1072,6 +1072,38 @@ void LibsTest()
 )===");
 }
 
+
+void MetatableTest()
+{
+    using namespace LTL;
+    using namespace std;
+
+
+    State s;
+    s.OpenLibs();
+
+    lua_State* l = s.GetState()->Unwrap();
+    luaL_newmetatable(l, "mymeta");
+    StackObjectView sv{ l };
+    sv.RawSet("method", 1);
+    sv.RawSet("__index", sv);
+    lua_pop(l, 1);
+
+    lua_newtable(l);
+    luaL_setmetatable(l, "mymeta");
+    lua_setglobal(l, "a");
+
+    s.Run(R"(
+        print(a)
+        print(a.method)
+        print(mymeta)
+        )");
+
+
+
+
+}
+
 int main()
 {
     //ClassTest();
@@ -1095,5 +1127,6 @@ int main()
     //MutlReturnTest();
     //AltException();
     //LibsTest();
-    OnlyMethods();
+   // OnlyMethods();
+    MetatableTest();
 }
