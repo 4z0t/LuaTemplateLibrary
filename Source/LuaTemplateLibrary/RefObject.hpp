@@ -222,7 +222,10 @@ namespace LTL
 
         const char* ToString()const
         {
-            return CState::Wrap(m_state)->Call<const char*>("tostring", _This());
+            Push();
+            const char* s = luaL_tolstring(m_state, -1, nullptr);
+            lua_pop(m_state, 2);
+            return s;
         }
 
         friend static std::ostream& operator<<(std::ostream& os, const RefObjectBase& obj)
