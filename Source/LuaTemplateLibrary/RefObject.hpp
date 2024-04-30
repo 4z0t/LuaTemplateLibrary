@@ -452,7 +452,6 @@ namespace LTL
             m_ref = this->GetRef();
         }
 
-
         void Clear()noexcept
         {
             this->m_state = nullptr;

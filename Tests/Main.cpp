@@ -586,6 +586,9 @@ void OnlyMethods()
         .Add("__add", Method<&Vector3f::operator+, Vector3f(Vector3f)>{})
         .Add("__tostring", Method<&Vector3f::ToString, string(CState*)>{})
         .Add("Dot", Method<Dot, Vector3f>{})
+        .Add("X", AProperty<&Vector3f::x>{})
+        .Add("y", AProperty<&Vector3f::y>{})
+        .Add("z", AProperty<&Vector3f::z>{})
         ;
     try
     {

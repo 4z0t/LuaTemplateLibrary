@@ -7,8 +7,6 @@
 #include "Property.hpp"
 #include "StackObject.hpp"
 
-#define lua_regptr_isnt_set(l, p) assert(lua_getregp(l, p) == LUA_TNIL)
-
 namespace LTL
 {
     namespace MetaMethods
@@ -265,33 +263,35 @@ namespace LTL
 
         void MakeIndexTable()
         {
-            if (m_has_index_table)
+            if (UData::IndexTable::Push(m_state) != LUA_TNIL)
+            {
+                Pop();
                 return;
-            lua_regptr_isnt_set(m_state, UData::IndexTable::GetKey());
+            }
 
             SetIndexFunction(UData::IndexMethod);
 
             lua_newtable(m_state);
             lua_setregp(m_state, UData::IndexTable::GetKey());
-            m_has_index_table = true;
+            Pop();
         }
 
         void MakeNewIndexTable()
         {
-            if (m_has_newindex_table)
+            if (UData::NewIndexTable::Push(m_state) != LUA_TNIL)
+            {
+                Pop();
                 return;
-            lua_regptr_isnt_set(m_state, UData::NewIndexTable::GetKey());
+            }
 
             SetNewIndexFunction(UData::NewIndexMethod);
 
             lua_newtable(m_state);
             lua_setregp(m_state, UData::NewIndexTable::GetKey());
-            m_has_newindex_table = true;
+            Pop();
         }
 
         lua_State* m_state;
         std::string m_name;
-        bool m_has_index_table = false;
-        bool m_has_newindex_table = false;
     };
 }
