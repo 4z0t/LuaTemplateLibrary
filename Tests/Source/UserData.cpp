@@ -49,6 +49,14 @@ TEST_F(UserDataTests, Class_Basic)
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 4);
+    
+    ud->a = 100;
+    Run(R"===(
+    result = a:GetA()
+    )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 100);
 
     Run(R"===(
     a:SetA(3)
@@ -124,6 +132,15 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
 
     ASSERT_TRUE(Result().Is<int>());
     ASSERT_EQ(Result().To<int>(), 4);
+
+    ud->a = 100;
+
+    Run(R"===(
+    result = a.A
+        )===");
+
+    ASSERT_TRUE(Result().Is<int>());
+    ASSERT_EQ(Result().To<int>(), 100);
 
     Run(R"===(
     a.A = 3
