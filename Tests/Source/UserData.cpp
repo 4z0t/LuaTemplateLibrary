@@ -28,6 +28,8 @@ TEST_F(UserDataTests, Class_Basic)
         .Add("GetA", Method<&MyClass::GetA>{})
         .Add("SetA", Method<&MyClass::SetA, int>{})
         ;
+    ASSERT_EQ(0, lua_gettop(l));
+
     Run(R"===(
     result = Class(4)
     )===");
@@ -116,7 +118,7 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
         .AddGetter("A", Method<&MyClass::GetA>{})
         .AddSetter("A", Method<&MyClass::SetA, int>{})
         ;
-
+    ASSERT_EQ(0, lua_gettop(l));
     Run(R"===(
     result = Class(4)
     )===");
@@ -189,7 +191,7 @@ TEST_F(UserDataTests, Class_GetterSetterProperty)
         .Add("b", AGetter<&MyClass::b>{})
         .Add("c", ASetter<&MyClass::c>{})
         ;
-
+    ASSERT_EQ(0, lua_gettop(l));
     Run(R"===(
     result = Class(4, 5, 6)
     )===");
@@ -298,6 +300,7 @@ TEST_F(UserDataTests, CantCopyTest)
         .Add("Duplicate", Method<&CantCopy::Dup, CantCopy()>{})
         .Add("GetA", Method<&CantCopy::GetA>{})
         ;
+    ASSERT_EQ(0, lua_gettop(l));
     Run("local a = CantCopy() "
         "result = a:GetA()"
     );
@@ -345,6 +348,7 @@ TEST_F(UserDataTests, CantMoveTest)
         .Add("Duplicate", Method<&CantMove::Dup, CantMove()>{})
         .Add("GetA", Method<&CantMove::GetA>{})
         ;
+    ASSERT_EQ(0, lua_gettop(l));
     Run("local a = CantCopy() "
         "result = a:GetA()"
     );
@@ -389,7 +393,7 @@ TEST_F(UserDataTests, CantCopyAndMove)
         .Add("Duplicate", Method<&CantMove::Duplicate, CState*>{})
         .Add("GetA", Method<&CantMove::GetA>{})
         ;
-
+    ASSERT_EQ(0, lua_gettop(l));
     Run("local a = CantCopy() "
         "result = a:GetA()"
     );
@@ -433,6 +437,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("Length", Method<&Vector3f::Length>{})
         .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
+    ASSERT_EQ(0, lua_gettop(l));
     {
 
         Run("v = Vector(1,2,3)  "
@@ -565,6 +570,7 @@ TEST_F(UserDataTests, APropertyTests)
         .Add("Length", Method<&Vector3f::Length>{})
         .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
+    ASSERT_EQ(0, lua_gettop(l));
     {
 
         Run("v = Vector(1,2,3)  "
