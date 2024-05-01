@@ -673,3 +673,81 @@ TEST_F(UserDataTests, APropertyTests)
         }
     }
 }
+
+
+TEST_F(UserDataTests, TestMetaTablesAccess)
+{
+    using namespace LTL;
+
+    Class<Vector3f>(l, "Vector")
+        .AddConstructor<Default<float>, Default<float>, Default<float>>()
+        .Add("x", AProperty<&Vector3f::x>{})
+        .Add("y", AProperty<&Vector3f::y>{})
+        .Add("z", AProperty<&Vector3f::z>{})
+        .Add("Length", Method<&Vector3f::Length>{})
+        .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
+        ;
+    ASSERT_EQ(0, lua_gettop(l));
+    {
+
+        Run("v = Vector(1,2,3)");
+
+
+        Run("result = v.Length");
+        ASSERT_TRUE(Result().Is<Type::Function>());
+        Run("result = v.__index");
+        ASSERT_TRUE(Result().Is<Type::Nil>());
+        Run("result = v.__newindex");
+        ASSERT_TRUE(Result().Is<Type::Nil>());
+
+    }
+
+}
+
+struct ClassWithDtor
+{
+    ClassWithDtor(bool& flag, bool& dflag) : flag(flag), dflag(dflag) {}
+
+    void Method()
+    {
+        flag = true;
+    }
+
+    ~ClassWithDtor()
+    {
+        dflag = true;
+    }
+    bool& flag;
+    bool& dflag;
+};
+
+
+TEST_F(UserDataTests, TestDtorCall)
+{
+    using namespace LTL;
+
+    bool dflag = false;
+
+    {
+        State s;
+        Class< ClassWithDtor>(s, "Class")
+            .Add("F", Method<&ClassWithDtor::Method>{});
+
+        bool flag = false;
+        auto ud = s.MakeUserData<ClassWithDtor>(flag, dflag);
+
+        ud.SelfCall("F");
+
+        ASSERT_TRUE(ud["F"].Is<Type::Function>());
+
+        ASSERT_TRUE(ud["__gc"].Is<Type::Nil>());
+        ASSERT_TRUE(ud["__index"].Is<Type::Nil>());
+        ASSERT_TRUE(ud["__newindex"].Is<Type::Nil>());
+        ASSERT_TRUE(flag);
+    }
+
+    ASSERT_TRUE(dflag);
+
+
+}
+
