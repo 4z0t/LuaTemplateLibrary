@@ -88,11 +88,11 @@ namespace LTL
             if constexpr (!std::is_trivially_destructible_v<T>)
             {
                 //std::cout << "Assigning dtor for " << typeid(T).name() << std::endl;
-                AddMetaMethod("__gc", UData::DestructorFunction);
+                Add(MetaMethods::gc, UData::DestructorFunction);
             }
             UData::MetaTable::Push(m_state);
             StackObjectView metatable{ m_state };
-            metatable.RawSet("__metatable", true);
+            metatable.RawSet(MetaMethods::metatable, true);
             lua_pop(m_state, 1);
 
         }
@@ -143,13 +143,24 @@ namespace LTL
 
         Class& SetIndexFunction(lua_CFunction func)
         {
-            return this->AddMetaMethod("__index", func);
+            return Add(MetaMethods::index, func);
         }
 
         Class& SetNewIndexFunction(lua_CFunction func)
         {
-            return this->AddMetaMethod("__newindex", func);
+            return Add(MetaMethods::newindex, func);
         }
+
+        Class& Add(const MetaMethodName& key, lua_CFunction func)
+        {
+            return AddMetaMethod(key.method, func);
+        }
+
+        Class& Add(const char* key, lua_CFunction func)
+        {
+            return AddMethod(key, func);
+        }
+
 
         template<bool condition>
         using EnableIf = std::enable_if_t<condition, Class&>;
@@ -185,6 +196,13 @@ namespace LTL
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
             return AddMethod(name, Element::Function);
+        }
+
+        template<typename Element>
+        EnableIf<BaseOf<Internal::CFunctionBase, Element> && !BaseOf<Internal::MethodBase, Element>> Add(const MetaMethodName& name, const Element&)
+        {
+            static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
+            return Add(name, Element::Function);
         }
 
         template<typename Element>
@@ -252,7 +270,7 @@ namespace LTL
             StackObjectView metaTable{ m_state };
             lua_newtable(m_state);
             StackObjectView methodsTable{ m_state };
-            metaTable.RawSet("__index", methodsTable);
+            metaTable.RawSet(MetaMethods::index, methodsTable);
             lua_setregp(m_state, UData::MethodsTable::GetKey());
             lua_setregp(m_state, UData::MetaTable::GetKey());
             Pop();
