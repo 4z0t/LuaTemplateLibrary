@@ -133,6 +133,14 @@ namespace LTL
             return *this;
         }
 
+        Class& AddMethod(const char* name, lua_CFunction func)
+        {
+            UData::MethodsTable::Push(m_state);
+            RawSetFunction(name, func);
+            Pop();
+            return *this;
+        }
+
         Class& SetIndexFunction(lua_CFunction func)
         {
             return this->AddMetaMethod("__index", func);
@@ -176,7 +184,7 @@ namespace LTL
         EnableIf<BaseOf<Internal::CFunctionBase, Element> && !BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
-            return AddMetaMethod(name, Element::Function);
+            return AddMethod(name, Element::Function);
         }
 
         template<typename Element>
@@ -184,7 +192,7 @@ namespace LTL
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
             static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
-            return AddMetaMethod(name, Element::Function);
+            return AddMethod(name, Element::Function);
         }
 
         template<typename Element>
@@ -242,7 +250,10 @@ namespace LTL
             }
             lua_newtable(m_state);
             StackObjectView metaTable{ m_state };
-            metaTable.RawSet("__index", metaTable);
+            lua_newtable(m_state);
+            StackObjectView methodsTable{ m_state };
+            metaTable.RawSet("__index", methodsTable);
+            lua_setregp(m_state, UData::MethodsTable::GetKey());
             lua_setregp(m_state, UData::MetaTable::GetKey());
             Pop();
         }

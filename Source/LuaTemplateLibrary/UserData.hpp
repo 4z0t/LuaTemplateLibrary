@@ -34,6 +34,7 @@ namespace LTL
         using _UserDataValue::_UserDataValue;
 
         struct MetaTable : public RegistryTableBase<MetaTable> {};
+        struct MethodsTable : public RegistryTableBase<MethodsTable> {};
         struct ClassTable : public RegistryTableBase<ClassTable> {};
         struct IndexTable : public RegistryTableBase<IndexTable> {};
         struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
@@ -246,7 +247,7 @@ namespace LTL
             {
                 lua_pop(l, 2); // pop nil and index table
 
-                MetaTable::Push(l);
+                MethodsTable::Push(l);
                 lua_pushvalue(l, 2);
                 lua_rawget(l, -2); // get value in metatable
 
