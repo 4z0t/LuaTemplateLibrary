@@ -747,7 +747,31 @@ TEST_F(UserDataTests, TestDtorCall)
     }
 
     ASSERT_TRUE(dflag);
-
-
 }
+
+TEST_F(UserDataTests, TestMetaMethodsSet)
+{
+    using namespace LTL;
+
+
+    constexpr auto f = +[](const Vector3f& v, CState* cstate)->StackResult
+        {
+            cstate->PushFormatString("Vector { %d, %d, %d }", (int)v.x, (int)v.y, (int)v.z);
+            return 1;
+        };
+
+    Class<Vector3f>(l, "Vector")
+        .AddConstructor<Default<float>, Default<float>, Default<float>>()
+        .Add("x", AProperty<&Vector3f::x>{})
+        .Add("y", AProperty<&Vector3f::y>{})
+        .Add("z", AProperty<&Vector3f::z>{})
+        .Add(MetaMethods::tostring, Method<f, CState*>{})
+        ;
+    auto ud = UserData<Vector3f>::Make(l, 1, 2, 3);
+
+
+    ASSERT_STREQ(ud.ToString(), "Vector { 1, 2, 3 }");
+}
+
+
 

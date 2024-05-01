@@ -206,6 +206,14 @@ namespace LTL
         }
 
         template<typename Element>
+        EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const MetaMethodName& name, const Element&)
+        {
+            static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
+            static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
+            return Add(name, Element::Function);
+        }
+
+        template<typename Element>
         EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
