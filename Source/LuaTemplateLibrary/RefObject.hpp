@@ -1,6 +1,7 @@
 #pragma once
 #include "LuaAux.hpp"
 #include "Types.hpp"
+#include "StackObject.hpp"
 
 namespace LTL
 {
@@ -82,8 +83,7 @@ namespace LTL
         template<typename T>
         T To()const
         {
-            Push();
-            auto r = StackType<T>::Get(m_state, -1);
+            auto r = PushView().To<T>();
             Pop();
             return r;
         }
@@ -183,8 +183,7 @@ namespace LTL
         template<typename T>
         bool Is()const
         {
-            Push();
-            bool r = StackType<T>::Check(m_state, -1);
+            bool r = PushView().Is<T>();
             Pop();
             return r;
         }
@@ -206,8 +205,7 @@ namespace LTL
 
         Type Type()const
         {
-            Push();
-            LTL::Type t = static_cast<LTL::Type>(lua_type(m_state, -1));
+            auto t = PushView().Type();
             Pop();
             return t;
         }
@@ -238,6 +236,12 @@ namespace LTL
             return this->m_state;
         }
 
+        StackObjectView PushView()const
+        {
+            Push();
+            return { m_state };
+        }
+
         ~RefObjectBase()
         {
             Unref();
@@ -248,7 +252,7 @@ namespace LTL
         template <int COMPARE_OP, typename T>
         bool Compare(const T& value)const
         {
-            this->Push();
+            Push();
             PushValue(m_state, value);
             bool r = lua_compare(m_state, -2, -1, COMPARE_OP);
             lua_pop(m_state, 2);
@@ -274,6 +278,7 @@ namespace LTL
         {
             _This().Pop();
         }
+
     protected:
         void PushRef(int ref)const
         {
