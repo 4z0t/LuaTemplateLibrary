@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 #include <stdint.h>
-#include "Lua/LuaLibrary.h"
+#include <Lua/LuaLibrary.h>
 
 #define STATIC_FAIL(message) static_assert(false, message)
 
@@ -116,11 +116,11 @@ namespace LTL::Internal
     struct UserDataValueBase {};
 
     template<typename T>
-    struct UserDataValue :UserDataValueBase
+    struct UserDataPtr :UserDataValueBase
     {
-        UserDataValue() :UserDataValue(nullptr) {}
+        UserDataPtr() :UserDataPtr(nullptr) {}
 
-        UserDataValue(T* value) :m_value(value) {}
+        UserDataPtr(T* value) :m_value(value) {}
 
         operator T& ()
         {

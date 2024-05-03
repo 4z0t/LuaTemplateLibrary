@@ -28,9 +28,9 @@ namespace LTL
      * @tparam T пользовательский тип
      */
     template<typename T>
-    struct UserData : Internal::UserDataValue<T>
+    struct UserData : Internal::UserDataPtr<T>
     {
-        using _UserDataValue = Internal::UserDataValue<T>;
+        using _UserDataValue = Internal::UserDataPtr<T>;
         using _UserDataValue::_UserDataValue;
 
         struct MetaTable : public RegistryTableBase<MetaTable> {};
@@ -274,12 +274,8 @@ namespace LTL
             int type = lua_rawget(l, -2);
             if (type == LUA_TNIL)
             {
-                lua_pop(l, 2); // pop nil and index table
-
-                const char* s = lua_tostring(l, 2);
-                luaL_error(l, "Attempt to set field '%s' on %s", s ? s : "NONSTRINGVALUE", GetClassName(l));
-
-                return 1;
+                const char* s = luaL_tolstring(l, 2, nullptr);
+                luaL_error(l, "Attempt to set field '%s' on %s", s ? s : "UNCONVRTIBLE_KEY", GetClassName(l));
             }
             lua_remove(l, -2); // remove newindex table
             lua_pushvalue(l, 1); // push userdata
