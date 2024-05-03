@@ -83,8 +83,8 @@ namespace LTL
 
         Class(lua_State* l, const char* name) :m_state(l), m_name(name)
         {
-            MakeMetaTable();
             MakeClassTable();
+            MakeMetaTable();
             if constexpr (!std::is_trivially_destructible_v<T>)
             {
                 //std::cout << "Assigning dtor for " << typeid(T).name() << std::endl;
@@ -274,6 +274,7 @@ namespace LTL
                 Pop();
                 return;
             }
+            Pop();
             lua_newtable(m_state);
             StackObjectView metaTable{ m_state };
             lua_newtable(m_state);
@@ -281,7 +282,6 @@ namespace LTL
             metaTable.RawSet(MetaMethods::index, methodsTable);
             lua_setregp(m_state, UData::MethodsTable::GetKey());
             lua_setregp(m_state, UData::MetaTable::GetKey());
-            Pop();
         }
 
         void MakeClassTable()
