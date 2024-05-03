@@ -113,13 +113,13 @@ namespace LTL
 #pragma region Comparison operators
 
         /**
- * @brief Результат сравнения объектов с использованием метаметода
- *
- * @tparam T Тип сравниваемого значения.
- * @param value сравниваемое значение.
- * @return true Объекты равны с точки зрения Lua
- * @return false Объекты неравны с точки зрения Lua
- */
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T Тип сравниваемого значения.
+         * @param value сравниваемое значение.
+         * @return true Объекты равны с точки зрения Lua
+         * @return false Объекты неравны с точки зрения Lua
+         */
         template <typename T>
         bool operator==(const T& value) const
         {
@@ -238,13 +238,13 @@ namespace LTL
 #pragma region Get/Set methods
 
         /**
- * @brief Возвращает значение по заданному ключу с вызовом метаметода
- *
- * @tparam R
- * @tparam T
- * @param key
- * @return R
- */
+         * @brief Возвращает значение по заданному ключу с вызовом метаметода
+         *
+         * @tparam R
+         * @tparam T
+         * @param key
+         * @return R
+         */
         template <typename R, typename T>
         R Get(const T& key) const
         {
@@ -256,12 +256,12 @@ namespace LTL
         }
 
         /**
-   * @brief Возвращает значение по ключу с вызовом метаметода
-   *
-   * @tparam T
-   * @param key
-   * @return StackObjectView
-   */
+        * @brief Возвращает значение по ключу с вызовом метаметода
+        *
+        * @tparam T
+        * @param key
+        * @return StackObjectView
+        */
         template <typename T>
         StackObjectView Get(const T& key) const
         {
@@ -446,12 +446,12 @@ namespace LTL
         }
 
         /**
- * @brief возвращает результат работы метаметода
- * __len, если таковой присутствует, в противном
- * случае возвращает результат RawLen.
- *
- * @return StackObjectView
- */
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return StackObjectView
+         */
         StackObjectView Len() const
         {
             lua_len(m_state, m_index);
