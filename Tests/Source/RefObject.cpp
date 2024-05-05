@@ -242,6 +242,39 @@ TEST_F(RefObjectTests, CompareTest)
 
 }
 
+TEST_F(RefObjectTests, LenTests)
+{
+    {
+
+        Run("result = {1,2,3,4,5}");
+        ASSERT_EQ(Result().RawLen(), 5);
+        ASSERT_EQ(Top(), 0);
+
+        ASSERT_EQ(Result().Len(), 5);
+        ASSERT_EQ(Top(), 0);
+
+        ASSERT_EQ(Result().Len<int>(), 5);
+        ASSERT_EQ(Top(), 0);
+    }
+    {
+        Run(R"===(
+            local t = {
+                __len = function(self) return self.n end,
+            }
+            result = setmetatable({n = 4, 1,2,3}, t)
+        )===");
+
+        ASSERT_EQ(Result().RawLen(), 3);
+        ASSERT_EQ(Top(), 0);
+
+        ASSERT_EQ(Result().Len(), 4);
+        ASSERT_EQ(Top(), 0);
+
+        ASSERT_EQ(Result().Len<int>(), 4);
+        ASSERT_EQ(Top(), 0);
+    }
+}
+
 
 // Access classes tests
 

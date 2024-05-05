@@ -32,6 +32,11 @@ struct TestBase : public testing::Test
         }
     }
 
+    int Top()const
+    {
+        return lua_gettop(l);
+    }
+
     LTL::GRefObject Result()
     {
         return LTL::GRefObject::Global(l, "result");
