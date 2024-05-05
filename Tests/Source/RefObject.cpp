@@ -242,6 +242,28 @@ TEST_F(RefObjectTests, CompareTest)
 
 }
 
+TEST_F(RefObjectTests, MetatableTests)
+{
+    using namespace LTL;
+    {
+        Run("result = {1,2,3,4,5}");
+        ASSERT_TRUE(Result().GetMetaTable().Is<Type::Nil>());
+        ASSERT_EQ(Top(), 0);
+    }
+    {
+        Run(R"===(
+            t = {
+                __len = function(self) return self.n end,
+            }
+            result = {n = 4, 1,2,3}
+        )===");
+        Result().SetMetaTable(GRefObject::Global(l, "t"));
+        ASSERT_EQ(Top(), 0);
+        ASSERT_EQ(Result().GetMetaTable(), GRefObject::Global(l, "t"));
+        ASSERT_EQ(Top(), 0);
+    }
+}
+
 TEST_F(RefObjectTests, LenTests)
 {
     {
