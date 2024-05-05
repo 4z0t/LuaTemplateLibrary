@@ -501,7 +501,6 @@ namespace LTL
 
 #pragma endregion
 
-
 #pragma region Call methods
 
         template<typename TReturn = void, typename ...TArgs>

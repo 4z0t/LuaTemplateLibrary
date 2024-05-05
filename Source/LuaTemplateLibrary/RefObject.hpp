@@ -174,6 +174,34 @@ namespace LTL
             return this->Call<ParentClass>(std::forward<TArgs>(args)...);
         }
 
+        /**
+         * @brief Возвращает RefObject с метатаблицей объекта.
+         * Если ее нет возвращает nil.
+         * @return RefObject
+         */
+        ParentClass GetMetaTable() const
+        {
+            PushView().GetMetaTable();
+            ParentClass res = ParentClass::FromTop(m_state);
+            Pop();
+            return res;
+        }
+
+        /**
+         * @brief Устанавливает на объект данную метатаблицу
+         *
+         * @tparam T тип мететаблицы
+         * @param value метатаблица
+         */
+        template <typename T>
+        void SetMetaTable(const T& value) const
+        {
+            PushView().SetMetaTable(value);
+            Pop();
+        }
+
+
+
         template <Type LType>
         bool Is() const
         {
