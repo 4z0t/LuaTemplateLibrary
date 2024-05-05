@@ -177,7 +177,7 @@ namespace LTL
         /**
          * @brief Возвращает RefObject с метатаблицей объекта.
          * Если ее нет возвращает nil.
-         * @return RefObject
+         * @return ParentClass
          */
         ParentClass GetMetaTable() const
         {
@@ -200,7 +200,47 @@ namespace LTL
             Pop();
         }
 
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return R
+         */
+        template <typename R>
+        R Len() const
+        {
+            R l = PushView().Len<R>();
+            Pop();
+            return l;
+        }
 
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return ParentClass
+         */
+        ParentClass Len() const
+        {
+            PushView().Len();
+            ParentClass res = ParentClass::FromTop(m_state);
+            Pop();
+            return res;
+        }
+
+        /**
+         * @brief Возвращает необработанную
+         * длину объекта.
+         * @return size_t длина объекта
+         */
+        lua_Unsigned RawLen() const
+        {
+            auto r = PushView().RawLen();
+            Pop();
+            return r;
+        }
 
         template <Type LType>
         bool Is() const
