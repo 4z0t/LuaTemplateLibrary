@@ -25,20 +25,24 @@ namespace LTL
             return NewMem(ptr, osize, nsize);
         }
     protected:
-        static void Delete(void* ptr)
+        inline static void Delete(void* ptr)
         {
             delete[] static_cast<char*>(ptr);
+        }
+
+        inline static void* New(size_t size)
+        {
+            return static_cast<void*>(new char[size]);
         }
 
         static void* NewMem(void* ptr, size_t osize, size_t nsize)
         {
             if (ptr == nullptr)
             {
-                ptr = static_cast<void*>(new char[nsize]);
-                return ptr;
+                return New(nsize);
             }
             size_t min_size = std::min(osize, nsize);
-            void* new_ptr = static_cast<void*>(new char[nsize]);
+            void* new_ptr = New(nsize);
             std::memcpy(new_ptr, ptr, min_size);
             Delete(ptr);
             return new_ptr;
