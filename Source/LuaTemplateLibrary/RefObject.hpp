@@ -29,7 +29,6 @@ namespace LTL
                 m_key.Push();
                 if (lua_next(l, -2) != 0)
                 {
-
                     m_value = ParentClass::FromTop(l);
                     m_key = ParentClass::FromTop(l);
                 }
