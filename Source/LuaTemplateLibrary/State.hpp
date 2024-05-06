@@ -61,8 +61,6 @@ namespace LTL
             }
         }
 
-
-
         State(const State&) = delete;
         State(State&&) = delete;
         State& operator=(const State&) = delete;

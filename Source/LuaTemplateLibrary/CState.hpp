@@ -188,10 +188,20 @@ namespace LTL
             return lua_pushfstring(Unwrap(), fmt, args...);
         }
 
+        inline Type GetGlobal(const char* name)
+        {
+            return static_cast<LTL::Type>(lua_getglobal(Unwrap(), name));
+        }
+
+        inline void SetGlobal(const char* name)
+        {
+            return lua_setglobal(Unwrap(), name);
+        }
+
         template<typename T>
         T GetGlobal(const char* name)
         {
-            lua_getglobal(Unwrap(), name);
+            GetGlobal(name);
             T v = Get<T>(-1);
             Pop(1);
             return v;
@@ -201,7 +211,7 @@ namespace LTL
         void SetGlobal(const char* name, const T& value)
         {
             Push(value);
-            lua_setglobal(Unwrap(), name);
+            SetGlobal(name);
         }
 
     private:
