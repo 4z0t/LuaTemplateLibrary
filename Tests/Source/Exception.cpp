@@ -85,7 +85,7 @@ TEST_F(ExceptionTests, UserExceptions)
     auto cstate = CState::Wrap(l);
 
     cstate->SetAtPanicFuntion(+[](lua_State* l)->int {
-        string r = GetValue<string>(l, -1);
+        const char* r = GetValue<const char*>(l, -1);
         lua_pop(l, 1);
         throw runtime_error(r);
         });

@@ -111,12 +111,12 @@ namespace LTL
             return GetValue<T>(Unwrap(), index);
         }
 
-        void Pop(size_t n = 1)
+        inline void Pop(size_t n = 1)
         {
             return lua_pop(Unwrap(), static_cast<int>(n));
         }
 
-        void Close()
+        inline void Close()
         {
             lua_close(Unwrap());
         }
@@ -147,43 +147,43 @@ namespace LTL
             }
         }
 
-        lua_CFunction SetAtPanicFuntion(lua_CFunction func)
+        inline lua_CFunction SetAtPanicFuntion(lua_CFunction func)
         {
             return lua_atpanic(Unwrap(), func);
         }
 
-        void SetAllocFunction(lua_Alloc func, void* ud = nullptr)
+        inline void SetAllocFunction(lua_Alloc func, void* ud = nullptr)
         {
             return lua_setallocf(Unwrap(), func, ud);
         }
 
-        void Remove(int index)
+        inline void Remove(int index)
         {
             return lua_remove(Unwrap(), index);
         }
 
-        void Rotate(int index, int n)
+        inline void Rotate(int index, int n)
         {
             return lua_rotate(Unwrap(), index, n);
         }
 
-        void Duplicate(int index)
+        inline void Duplicate(int index)
         {
             return lua_pushvalue(Unwrap(), index);
         }
 
-        void SetTable(int index)
+        inline void SetTable(int index)
         {
             return lua_settable(Unwrap(), index);
         }
 
-        Type GetTable(int index)
+        inline Type GetTable(int index)
         {
             return static_cast<Type>(lua_gettable(Unwrap(), index));
         }
 
         template<typename ...Ts>
-        const char* PushFormatString(const char* fmt, const Ts& ...args)
+        inline const char* PushFormatString(const char* fmt, const Ts& ...args)
         {
             return lua_pushfstring(Unwrap(), fmt, args...);
         }
