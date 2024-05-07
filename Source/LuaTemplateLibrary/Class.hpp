@@ -15,7 +15,7 @@ namespace LTL
         constexpr MetaMethodName newindex{ "__newindex" };
         constexpr MetaMethodName call{ "__call" };
         constexpr MetaMethodName metatable{ "__metatable" };
-        constexpr MetaMethodName mode{ "__mode " };
+        constexpr MetaMethodName mode{ "__mode" };
         constexpr MetaMethodName gc{ "__gc" };
 
         constexpr MetaMethodName add{ "__add" };
