@@ -55,6 +55,8 @@ namespace LTL
      */
     struct StackTopRestorer final
     {
+        StackTopRestorer() = delete;
+
         StackTopRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
 
         ~StackTopRestorer()
