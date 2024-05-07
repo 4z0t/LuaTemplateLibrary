@@ -13,11 +13,34 @@ namespace LTL
     {
         constexpr MetaMethodName index{ "__index" };
         constexpr MetaMethodName newindex{ "__newindex" };
+        constexpr MetaMethodName call{ "__call" };
         constexpr MetaMethodName metatable{ "__metatable" };
+        constexpr MetaMethodName mode{ "__mode " };
         constexpr MetaMethodName gc{ "__gc" };
 
         constexpr MetaMethodName add{ "__add" };
+        constexpr MetaMethodName sub{ "__sub" };
+        constexpr MetaMethodName mul{ "__mul" };
+        constexpr MetaMethodName div{ "__div" };
+        constexpr MetaMethodName mod{ "__mod" };
+        constexpr MetaMethodName pow{ "__pow" };
+        constexpr MetaMethodName unm{ "__unm" };
+        constexpr MetaMethodName idiv{ "__idiv" };
+
+        constexpr MetaMethodName  band{ "__band" };
+        constexpr MetaMethodName  bor{ "__bor" };
+        constexpr MetaMethodName  bxor{ "__bxor" };
+        constexpr MetaMethodName  bnot{ "__bnot" };
+        constexpr MetaMethodName  shl{ "__shl" };
+        constexpr MetaMethodName  shr{ "__shr" };
+
+        constexpr MetaMethodName  eq{ "__eq" };
+        constexpr MetaMethodName  lt{ "__lt" };
+        constexpr MetaMethodName  le{ "__le" };
+
+        constexpr MetaMethodName len{ "__len" };
         constexpr MetaMethodName tostring{ "__tostring" };
+        constexpr MetaMethodName concat{ "__concat" };
     }
 
 
