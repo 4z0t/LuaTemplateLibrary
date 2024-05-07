@@ -26,7 +26,7 @@ namespace LTL
 
     namespace Libs
     {
-        constexpr Lib global{ LUA_GNAME, luaopen_base };
+        constexpr Lib base{ LUA_GNAME, luaopen_base };
         constexpr Lib package{ LUA_LOADLIBNAME, luaopen_package };
         constexpr Lib coroutine{ LUA_COLIBNAME, luaopen_coroutine };
         constexpr Lib table{ LUA_TABLIBNAME, luaopen_table };

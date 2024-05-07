@@ -26,7 +26,7 @@ TEST_F(LibsTest, CheckLibs)
 
     {
         State s;
-        s.OpenLibs(Libs::global, Libs::math, Libs::string, Libs::table);
+        s.OpenLibs(Libs::base, Libs::math, Libs::string, Libs::table);
 
         ASSERT_TRUE(s.GetGlobal("string").Is<Type::Table>());
         ASSERT_TRUE(s.GetGlobal("math").Is<Type::Table>());

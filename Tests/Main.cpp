@@ -1061,7 +1061,7 @@ void LibsTest()
 
 
     State s;
-    s.OpenLibs(Libs::global, Libs::math, Libs::string, Libs::table);
+    s.OpenLibs(Libs::base, Libs::math, Libs::string, Libs::table);
 
     s.Run(R"===(
         print(string)
