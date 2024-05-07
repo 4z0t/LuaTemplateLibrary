@@ -1098,10 +1098,6 @@ void MetatableTest()
         print(a.method)
         print(mymeta)
         )");
-
-
-
-
 }
 
 int main()
