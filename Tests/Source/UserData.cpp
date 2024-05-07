@@ -435,6 +435,7 @@ TEST_F(UserDataTests, PropertyTests)
         .Add("y", Property<Vector3f, float, &Vector3f::y>{})
         .Add("z", Property<Vector3f, float, &Vector3f::z>{})
         .Add("Length", Method<&Vector3f::Length>{})
+        .AddGetter("len", Method<&Vector3f::Length>{})
         .AddGetter("length", CFunction<&Vector3f::Length, UserData<Vector3f>>{})
         ;
     ASSERT_EQ(0, lua_gettop(l));
@@ -492,6 +493,13 @@ TEST_F(UserDataTests, PropertyTests)
             ASSERT_TRUE(Result().Is<float>());
             ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
         }
+        {
+            Run("v = Vector(1,2,3)  "
+                "result = v.len  "
+            );
+            ASSERT_TRUE(Result().Is<float>());
+            ASSERT_FLOAT_EQ(Result().To<float>(), Vector3f(1, 2, 3).Length());
+        }
     }
     {
         using UDVector3f = UserData<Vector3f>;
@@ -537,6 +545,7 @@ TEST_F(UserDataTests, PropertyTests)
             ASSERT_FLOAT_EQ(v->x, 1);
             ASSERT_FLOAT_EQ(v->y, 2);
             ASSERT_FLOAT_EQ(v->z, 3);
+            v->Length();
         }
     }
 }

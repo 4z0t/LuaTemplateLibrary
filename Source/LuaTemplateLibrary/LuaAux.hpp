@@ -59,10 +59,7 @@ namespace LTL
 
         StackTopRestorer(lua_State* l) : m_state(l), m_top(lua_gettop(l)) {}
 
-        ~StackTopRestorer()
-        {
-            lua_settop(m_state, m_top);
-        }
+        ~StackTopRestorer() { lua_settop(m_state, m_top); }
 
         StackTopRestorer(const StackTopRestorer&) = delete;
         StackTopRestorer(StackTopRestorer&&) = delete;
