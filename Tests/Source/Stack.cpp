@@ -242,7 +242,7 @@ TEST_F(StackObjectViewTest, TestStack)
         Run(R"===(
                 local t = {
                     __eq = function(self, other)
-                        return self.n == other
+                        return self.n == other.n
                     end,
                     __lt = function(self, other)
                         return self.n < other
@@ -253,22 +253,24 @@ TEST_F(StackObjectViewTest, TestStack)
                     __len = function(self) return self.n end,
                 }
                 t.__index = t
-                result = setmetatable({ n = 4 }, t)
+                t1 = setmetatable({ n = 4 }, t)
+                t2 = setmetatable({ n = 5 }, t)
                 )===");
-        lua_getglobal(l, "result");
+        lua_getglobal(l, "t1");
         CheckStackChange(0, {
                 StackObjectView s1{ l };
                 ASSERT_TRUE(s1.Is<Type::Table>());
+                ASSERT_EQ(s1.Type(), Type::Table);
             });
         CheckStackChange(1, {
                 StackObjectView s1{ l };
-                s1.Push();
+                lua_getglobal(l, "t2");
                 StackObjectView s2{ l };
-                ASSERT_TRUE(s1 == s2);
-                ASSERT_FALSE(s1 != s2);
+                ASSERT_FALSE(s1 == s2);
+                ASSERT_TRUE(s1 != s2);
                 ASSERT_FALSE(s1 == nullptr);
                 ASSERT_TRUE(s1 != nullptr);
-                ASSERT_TRUE(s1.RawEqual(s2));
+                ASSERT_FALSE(s1.RawEqual(s2));
             });
         CheckStackChange(0, {
                 StackObjectView s1{ l };
@@ -286,17 +288,17 @@ TEST_F(StackObjectViewTest, TestStack)
                 ASSERT_EQ(s1.RawLen(), 0);
                 ASSERT_EQ(s1.Len<int>(), 4);
             });
-        CheckStackChange(1, {
-                StackObjectView s1{ l };
-                auto s2 = s1.GetMetaTable();
-                ASSERT_TRUE(s2.Is<Type::Table>());
-            });
         CheckStackChange(2, {
                 StackObjectView s1{ l };
                 auto s3 = s1.Get("__index");
                 ASSERT_FALSE(s3 == nullptr);
                 auto s4 = s1.RawGet("__index");
                 ASSERT_TRUE(s4 == nullptr);
+            });
+        CheckStackChange(1, {
+                StackObjectView s1{ l };
+                auto s2 = s1.GetMetaTable();
+                ASSERT_TRUE(s2.Is<Type::Table>());
             });
         CheckStackChange(3, {
                 StackObjectView s1{ l };
