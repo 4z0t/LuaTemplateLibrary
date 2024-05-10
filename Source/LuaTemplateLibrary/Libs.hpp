@@ -11,10 +11,10 @@ namespace LTL
         Lib() = delete;
         constexpr Lib(const char* const name, lua_CFunction const func) : name(name), func(func) {}
 
-        inline void Register(lua_State* l) const
+        inline void Register(CState* cstate) const
         {
-            luaL_requiref(l, name, func, 1);
-            lua_pop(l, 1);
+            cstate->Require(name, func);
+            cstate->Pop();
         }
 
         ~Lib() = default;
