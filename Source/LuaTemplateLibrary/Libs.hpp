@@ -5,12 +5,21 @@
 
 namespace LTL
 {
+    /**
+     * @brief Класс библиотеки ВМ Lua.
+     * 
+     */
     class Lib
     {
     public:
         Lib() = delete;
         constexpr Lib(const char* const name, lua_CFunction const func) : name(name), func(func) {}
 
+        /**
+         * @brief Добавляет библиотеку в данную ВМ.
+         * 
+         * @param cstate 
+         */
         inline void Register(CState* cstate) const
         {
             cstate->Require(name, func);
@@ -26,6 +35,10 @@ namespace LTL
 
     namespace Libs
     {
+        /**
+         * @brief Библиотека базовых функций Lua
+         * 
+         */
         constexpr Lib base{ LUA_GNAME, luaopen_base };
         constexpr Lib package{ LUA_LOADLIBNAME, luaopen_package };
         constexpr Lib coroutine{ LUA_COLIBNAME, luaopen_coroutine };
