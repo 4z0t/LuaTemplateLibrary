@@ -90,6 +90,11 @@ namespace LTL
 
     struct MultReturnBase {};
 
+    /**
+     * @brief Класс для возврата множества значений из функции.
+     * 
+     * @tparam Ts 
+     */
     template<typename ...Ts>
     struct MultReturn : std::tuple<Ts...>, MultReturnBase
     {
@@ -108,6 +113,10 @@ namespace LTL
         }
     };
 
+    /**
+     * @brief Класс для возвращения количества результатов работы функции на стеке.
+     * 
+     */
     struct StackResult
     {
         const size_t n_results = 1;
