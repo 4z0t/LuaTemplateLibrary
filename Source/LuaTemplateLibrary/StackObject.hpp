@@ -463,7 +463,7 @@ namespace LTL
          * длину объекта.
          * @return size_t длина объекта
          */
-        lua_Unsigned RawLen() const
+        inline auto RawLen() const
         {
             return lua_rawlen(m_state, m_index);
         }
