@@ -4,6 +4,10 @@
 
 namespace LTL
 {
+    /**
+     * @brief Класс-обертка, дублирующий функционал lua_State*.
+     * 
+     */
     class CState final
     {
     public:

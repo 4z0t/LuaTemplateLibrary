@@ -9,6 +9,10 @@
 
 namespace LTL
 {
+    /**
+     * @brief Метаметоды ВМ Lua.
+     * 
+     */
     namespace MetaMethods
     {
         constexpr MetaMethodName index{ "__index" };
@@ -76,6 +80,14 @@ namespace LTL
         using DeduceClass_t = typename FuncUtility::DeduceClass<decltype(fn)>::type;
     }
 
+    /**
+     * @brief Класс универсальной функции, преобразующий методы пользовательских типов 
+     * для использования с UserData.
+     * Оборачивает пользовательские типы в UserData
+     * 
+     * @tparam fn 
+     * @tparam TArgs 
+     */
     template<auto fn, typename ...TArgs>
     class Method :
         public CFunction<fn, UserData<Internal::DeduceClass_t<fn>>, Internal::AUDVW_t<Internal::DeduceClass_t<fn>, TArgs>...>,
@@ -99,6 +111,11 @@ namespace LTL
         Method() = default;
     };
 
+    /**
+     * @brief Класс для добавления пользовательского класса в ВМ Lua.
+     * 
+     * @tparam T 
+     */
     template<typename T>
     struct Class
     {
