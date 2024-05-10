@@ -7,7 +7,17 @@ namespace LTL
 {
     template<typename T>
     class State;
-
+    /**
+     * @brief Базовый класс для классов-ссылок.
+     * 
+     * @tparam RefClass Класс реализующий интерфейс
+     * @tparam ParentClass Главный класс
+     * @tparam RefAccess Класс для доступа к объектам по ссылке
+     * 
+     * @see RefObject
+     * @see RefTableEntryObject
+     * @see RefGlobalAccess
+     */
     template<typename RefClass, typename ParentClass, typename RefAccess>
     class RefObjectBase
     {
@@ -79,6 +89,12 @@ namespace LTL
         Iterator begin()const { return Iterator(ParentClass(_This())).Next(); };
         Iterator end()const { return Iterator(ParentClass(_This())); }
 
+        /**
+         * @brief Преобразует объект к данному типу.
+         * 
+         * @tparam T 
+         * @return T 
+         */
         template<typename T>
         T To()const
         {
@@ -87,6 +103,12 @@ namespace LTL
             return r;
         }
 
+        /**
+         * @brief Преобразует объект к данному типу.
+         * 
+         * @tparam T 
+         * @return T 
+         */
         template<typename T>
         operator T()const
         {
@@ -234,19 +256,33 @@ namespace LTL
          * длину объекта.
          * @return size_t длина объекта
          */
-        lua_Unsigned RawLen() const
+        auto RawLen() const
         {
             auto r = PushView().RawLen();
             Pop();
             return r;
         }
 
+        /**
+         * @brief Проверяет является ли объект данного типа.
+         * 
+         * @tparam LType 
+         * @return true 
+         * @return false 
+         */
         template <Type LType>
         bool Is() const
         {
             return Type() == LType;
         }
 
+        /**
+         * @brief Проверяет может ли объект быть преобразован к данному типу.
+         * 
+         * @tparam LType 
+         * @return true 
+         * @return false 
+         */
         template<typename T>
         bool Is()const
         {
@@ -270,6 +306,11 @@ namespace LTL
             return Type() == Type::Userdata;
         }
 
+        /**
+         * @brief Возвращает тип объекта.
+         * 
+         * @return Type 
+         */
         Type Type()const
         {
             auto t = PushView().Type();
@@ -277,6 +318,11 @@ namespace LTL
             return t;
         }
 
+        /**
+         * @brief Возвращает имя типа объекта.
+         * 
+         * @return const char* 
+         */
         const char* TypeName()const
         {
             Push();
@@ -285,6 +331,11 @@ namespace LTL
             return t;
         }
 
+        /**
+         * @brief Возвращает строковую репрезентацию объекта.
+         * 
+         * @return const char* 
+         */
         const char* ToString()const
         {
             Push();
@@ -303,6 +354,12 @@ namespace LTL
             return this->m_state;
         }
 
+        /**
+         * @brief Помещает на стек объект и возвращает его StackObjectView
+         * 
+         * @return StackObjectView 
+         * @see StackObjectView
+         */
         StackObjectView PushView()const
         {
             Push();
@@ -384,14 +441,14 @@ namespace LTL
         friend class Base;
         using Base::Base;
 
-        RefObject(const RefObject& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefObject& obj) : Base(obj.m_state)
         {
             obj.Push();
             Ref();
         }
 
         template<typename T>
-        RefObject(lua_State* l, const T& value) noexcept :Base(l)
+        RefObject(lua_State* l, const T& value) :Base(l)
         {
             PushValue(l, value);
             Ref();
@@ -403,7 +460,7 @@ namespace LTL
             obj.Clear();
         }
 
-        RefObject(const RefTableEntryObjectT& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefTableEntryObjectT& obj) : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -445,6 +502,13 @@ namespace LTL
             return *this;
         }
 
+        /**
+         * @brief Возвращает прокси-объект элемента таблицы по данному ключу.
+         * 
+         * @tparam T 
+         * @param key 
+         * @return RefTableEntryObjectT 
+         */
         template<typename T>
         RefTableEntryObjectT operator[](const T& key)const
         {
@@ -455,7 +519,13 @@ namespace LTL
             obj.m_table_ref = this->GetRef();
             return obj;
         }
-
+        
+        /**
+         * @brief Снимает с вершины стека объект и возвращает объект-ссылку на него
+         * 
+         * @param l 
+         * @return RefObject 
+         */
         static RefObject FromTop(lua_State* l)
         {
             RefObject obj{ l };
