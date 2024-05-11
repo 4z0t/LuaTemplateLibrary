@@ -17,9 +17,9 @@ TEST_F(UserDataTests, Class_Basic)
         MyClass(MyClass&&) = default;
         ~MyClass() = default;
 
-        int GetA()const { return a; }
+        int GetA()const noexcept { return a; }
 
-        void SetA(int a) { this->a = a; }
+        void SetA(int a) noexcept { this->a = a; }
     };
     using namespace LTL;
 
@@ -107,9 +107,9 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
         MyClass(MyClass&&) = default;
         ~MyClass() = default;
 
-        int GetA()const { return a; }
+        int GetA()const noexcept { return a; }
 
-        void SetA(int a) { this->a = a; }
+        void SetA(int a) noexcept { this->a = a; }
     };
     using namespace LTL;
 
