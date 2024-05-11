@@ -26,5 +26,9 @@ extern "C" {
     Измените при необходимости на свой файл с заголовочными файлами
     или используйте макросы выше.
 */
-#include <Lua/LuaLibrary.h>
+extern "C" {
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
+}
 #endif
