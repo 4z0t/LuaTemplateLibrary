@@ -1,5 +1,4 @@
 #pragma once
-#include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
 #include <gtest/gtest.h>
 

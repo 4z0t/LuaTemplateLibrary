@@ -1,6 +1,7 @@
 set(LTL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LuaTemplateLibrary)
 
 set(LTL_HEADERS
+    ${LTL_DIR}/LTLConfig.hpp
     ${LTL_DIR}/Internal.hpp
     ${LTL_DIR}/FuncArguments.hpp
     ${LTL_DIR}/Types.hpp

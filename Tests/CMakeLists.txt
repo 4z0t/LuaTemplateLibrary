@@ -41,6 +41,8 @@ set_target_properties(TestLTL FreeTest_LTL PROPERTIES
 
 target_include_directories(TestLTL PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
+target_compile_definitions(TestLTL PUBLIC LTL_INCLUDED_LUA_DIR)
+
 target_link_libraries(TestLTL
     LuaTemplateLibrary
     Lua54
