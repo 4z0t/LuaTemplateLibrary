@@ -1,342 +1,656 @@
 #pragma once
 #include "LuaAux.hpp"
-#include "LuaState.hpp"
-#include "LuaTypes.hpp"
-#include "RefObject.hpp"
+#include "Types.hpp"
+#include "CState.hpp"
 
-namespace Lua
+namespace LTL
 {
+    template <typename T>
+    class State;
+
+    /**
+     * @brief Представляет ООП доступ к стеку Lua.
+     * После назначения индекса объекта на стеке с ним можно работать.
+     * Очистка стека должна выполняться вручную.
+     */
     class StackObjectView
     {
     public:
-        StackObjectView() = delete;
-        StackObjectView(lua_State* l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
+#pragma region Ctors
 
-        template<typename T>
-        T To()const
+        /**
+         * @brief Для внутреннего использования.
+         * Не использовать самому.
+         */
+        StackObjectView() = default;
+
+        /**
+         * @brief Назначает индекс объекта на стеке.
+         *
+         * @param l Состояние ВМ Lua.
+         * @param index Индекс объекта на стеке.
+         */
+        StackObjectView(lua_State *l, int index = -1) : m_state(l), m_index(lua_absindex(l, index)) {}
+        StackObjectView(CState *cstate, int index = -1) : StackObjectView(cstate->Unwrap(), index) {}
+        template <typename T>
+        StackObjectView(const State<T> &state, int index = -1) : StackObjectView(state.GetState(), index) {}
+
+        StackObjectView(const StackObjectView &other) = default;
+        StackObjectView(StackObjectView &&other) = default;
+        StackObjectView &operator=(const StackObjectView &other) = default;
+        StackObjectView &operator=(StackObjectView &&other) = default;
+
+#pragma endregion
+
+        /**
+         * @brief Преобразует объект к данному типу.
+         *
+         * @tparam T Тип преобразования.
+         * @return T Результат преобразования.
+         */
+        template <typename T>
+        T To() const
         {
             return StackType<T>::Get(m_state, m_index);
         }
 
-        template<Type LType>
-        bool Is()const
+        /**
+         * @brief Проверяет является ли объект заданного типа.
+         *
+         * @tparam LType Проверяемый тип.
+         * @return true Объект относится к данному типу
+         * @return false Объект не относится к данному типу
+         */
+        template <Type LType>
+        bool Is() const
         {
-            return lua_type(m_state, m_index) == static_cast<int>(LType);
+            return Type() == LType;
         }
 
-        template<typename T>
-        bool Is()const
+        /**
+         * @brief Возвращает тип объекта на стеке
+         *
+         * @return Type
+         */
+        Type Type() const
+        {
+            return static_cast<LTL::Type>(lua_type(m_state, m_index));
+        }
+
+        /**
+         * @brief Проверяет является ли объект заданного типа.
+         *
+         * @tparam T Проверяемый тип.
+         * @return true Объект относится к данному типу
+         * @return false Объект не относится к данному типу
+         */
+        template <typename T>
+        bool Is() const
         {
             return StackType<T>::Check(m_state, m_index);
         }
 
-        void Push()const
+        /**
+         * @brief Помещает объект на стек.
+         */
+        void Push() const
         {
             lua_pushvalue(m_state, m_index);
         }
 
-        template<typename T>
-        bool operator==(const T& value)const
+        const char *ToString() const
         {
-            StackPopper pop{ m_state,1 };
-            PushValue(m_state, value);
-            return lua_compare(m_state, m_index, -1, LUA_OPEQ);
+            const char *s = luaL_tolstring(m_state, m_index, nullptr);
+            lua_pop(m_state, 1);
+            return s;
         }
 
-        template<>
-        bool operator==(const StackObjectView& value)const
+        friend static std::ostream &operator<<(std::ostream &os, const StackObjectView &obj)
         {
-            return m_state == value.m_state && lua_compare(m_state, m_index, value.m_index, LUA_OPEQ);
+            return os << obj.ToString();
         }
 
-        template<typename T>
-        bool RawEqual(const T& value)
+#pragma region Comparison operators
+
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T Тип сравниваемого значения.
+         * @param value сравниваемое значение.
+         * @return true Объекты равны с точки зрения Lua
+         * @return false Объекты неравны с точки зрения Lua
+         */
+        template <typename T>
+        bool operator==(const T &value) const
         {
-            StackPopper pop{ m_state,1 };
-            PushValue(m_state, value);
-            return lua_rawequal(m_state, m_index, -1);
+            return Compare<LUA_OPEQ>(value);
         }
 
-        template<>
-        bool RawEqual(const StackObjectView& value)
+        template <>
+        bool operator==(const std::nullptr_t &) const
         {
-            return lua_rawequal(m_state, m_index, value.m_index);
+            return Type() == Type::Nil;
         }
 
-        template<typename T>
-        bool operator!=(const T& value)const
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool operator!=(const T &value) const
         {
             return !(*this == value);
         }
 
-        template<typename R, typename T>
-        R Get(const T& key)const
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T Тип сравниваемого значения.
+         * @param value сравниваемое значение.
+         * @return true Объекты равны с точки зрения Lua
+         * @return false Объекты неравны с точки зрения Lua
+         */
+        template <typename T>
+        bool operator<=(const T &value) const
         {
-            StackPopper pop{ m_state, 1 };
-            PushValue(m_state, key);
-            lua_gettable(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            return Compare<LUA_OPLE>(value);
         }
 
-        template<typename T>
-        StackObjectView Get(const T& key)const
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool operator>(const T &value) const
+        {
+            return !(*this <= value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T Тип сравниваемого значения.
+         * @param value сравниваемое значение.
+         * @return true Объекты равны с точки зрения Lua
+         * @return false Объекты неравны с точки зрения Lua
+         */
+        template <typename T>
+        bool operator<(const T &value) const
+        {
+            return Compare<LUA_OPLT>(value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов с использованием метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool operator>=(const T &value) const
+        {
+            return !(*this < value);
+        }
+
+        /**
+         * @brief Результат сравнения объектов без вызова метаметода
+         *
+         * @tparam T
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <typename T>
+        bool RawEqual(const T &value) const
+        {
+            PushValue(m_state, value);
+            bool r = lua_rawequal(m_state, m_index, -1);
+            lua_pop(m_state, 1);
+            return r;
+        }
+
+        /**
+         * @brief Результат сравнения объектов без вызова метаметода
+         *
+         * @tparam
+         * @param value
+         * @return true
+         * @return false
+         */
+        template <>
+        bool RawEqual(const StackObjectView &value) const
+        {
+            return lua_rawequal(m_state, m_index, value.m_index);
+        }
+
+#pragma endregion
+
+#pragma region Get/Set methods
+
+        /**
+         * @brief Возвращает значение по заданному ключу с вызовом метаметода
+         *
+         * @tparam R
+         * @tparam T
+         * @param key
+         * @return R
+         */
+        template <typename R, typename T>
+        R Get(const T &key) const
         {
             PushValue(m_state, key);
             lua_gettable(m_state, m_index);
-            return { m_state };
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
-        template<typename K, typename V>
-        void Set(const K& key, const V& value)
+        /**
+         * @brief Возвращает значение по ключу с вызовом метаметода
+         *
+         * @tparam T
+         * @param key
+         * @return StackObjectView
+         */
+        template <typename T>
+        StackObjectView Get(const T &key) const
+        {
+            PushValue(m_state, key);
+            lua_gettable(m_state, m_index);
+            return {m_state};
+        }
+
+        /**
+         * @brief Возвращает значение по заданному индексу с вызовом метаметода
+         *
+         * @tparam R
+         * @param key
+         * @return R
+         */
+        template <typename R>
+        R GetI(lua_Integer index) const
+        {
+            lua_geti(m_state, m_index, index);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
+        }
+
+        /**
+         * @brief Помещает на стек значение по заданному индексу с вызовом метаметода
+         *
+         * @param key
+         * @return StackObjectView
+         */
+        StackObjectView GetI(lua_Integer index) const
+        {
+            lua_geti(m_state, m_index, index);
+            return {m_state};
+        }
+
+        /**
+         * @brief Устанавливает по ключу значение на объект с вызовом метаметода
+         *
+         * @tparam K
+         * @tparam V
+         * @param key
+         * @param value
+         */
+        template <typename K, typename V>
+        void Set(const K &key, const V &value) const
         {
             PushValue(m_state, key);
             PushValue(m_state, value);
             lua_settable(m_state, m_index);
         }
 
-        template<typename R, typename T>
-        R RawGet(const T& key)const
+        /**
+         * @brief Устанавливает по индексу значение на объект с вызовом метаметода
+         *
+         * @tparam V
+         * @param i
+         * @param value
+         */
+        template <typename V>
+        void SetI(lua_Integer i, const V &value) const
         {
-            StackPopper pop{ m_state, 1 };
-            PushValue(m_state, key);
-            lua_rawget(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            PushValue(m_state, value);
+            lua_seti(m_state, m_index, i);
         }
 
-        template<typename T>
-        StackObjectView RawGet(const T& key)const
+#pragma endregion
+
+#pragma region Raw Get/Set methods
+
+        /**
+         * @brief Возвращает значение по ключу без вызова метаметода
+         *
+         * @tparam R
+         * @tparam T
+         * @param key
+         * @return R
+         */
+        template <typename R, typename T>
+        R RawGet(const T &key) const
         {
             PushValue(m_state, key);
             lua_rawget(m_state, m_index);
-            return { m_state };
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
-        template<typename R>
-        R RawGetI(int i)const
+        /**
+         * @brief Возвращает значение по ключу без вызова метаметода
+         *
+         * @tparam T
+         * @param key
+         * @return StackObjectView
+         */
+        template <typename T>
+        StackObjectView RawGet(const T &key) const
         {
-            StackPopper pop{ m_state, 1 };
+            PushValue(m_state, key);
+            lua_rawget(m_state, m_index);
+            return {m_state};
+        }
+
+        /**
+         * @brief Возвращает значение по индексу без вызова метаметода
+         *
+         * @tparam R
+         * @param i
+         * @return R
+         */
+        template <typename R>
+        R RawGetI(lua_Integer i) const
+        {
             lua_rawgeti(m_state, m_index, i);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
-        template<typename V>
-        void RawSetI(int i, const V& value)
+        /**
+         * @brief Помещает на стек значение по индексу без вызова метаметода
+         *
+         * @param i
+         * @return StackObjectView
+         */
+        StackObjectView RawGetI(lua_Integer i) const
+        {
+            lua_rawgeti(m_state, m_index, i);
+            return {m_state};
+        }
+
+        /**
+         * @brief Устанавливает значение с заданным индексом на объект
+         * без вызова метаметодов.
+         *
+         * @tparam V
+         * @param i индекс
+         * @param value значение
+         */
+        template <typename V>
+        void RawSetI(lua_Integer i, const V &value) const
         {
             PushValue(m_state, value);
             lua_rawseti(m_state, m_index, i);
         }
 
-        template<typename K, typename V>
-        void RawSet(const K& key, const V& value)
+        /**
+         * @brief Устанавливает значение с заданным ключом на объект
+         * без вызова метаметодов.
+         *
+         * @tparam K
+         * @tparam V
+         * @param key ключ
+         * @param value значение
+         */
+        template <typename K, typename V>
+        void RawSet(const K &key, const V &value) const
         {
             PushValue(m_state, key);
             PushValue(m_state, value);
             lua_rawset(m_state, m_index);
         }
 
-        template<typename R>
-        R Len()const
+#pragma endregion
+
+#pragma region Len methods
+
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return R
+         */
+        template <typename R>
+        R Len() const
         {
-            StackPopper pop{ m_state, 1 };
             lua_len(m_state, m_index);
-            return GetValue<R>(m_state, -1);
+            R r = GetValue<R>(m_state, -1);
+            lua_pop(m_state, 1);
+            return r;
         }
 
-        StackObjectView Len()const
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return StackObjectView
+         */
+        StackObjectView Len() const
         {
             lua_len(m_state, m_index);
-            return { m_state };
+            return {m_state};
         }
 
-        size_t RawLen()const
+        /**
+         * @brief Возвращает необработанную
+         * длину объекта.
+         * @return size_t длина объекта
+         */
+        inline auto RawLen() const
         {
             return lua_rawlen(m_state, m_index);
         }
 
-        StackObjectView GetMetaTable()const
+#pragma endregion
+
+#pragma region get/set metatable methods
+
+        /**
+         * @brief Возвращает StackObjectView с метатаблицей объекта.
+         * Если ее нет возвращает nil.
+         * @return StackObjectView
+         */
+        StackObjectView GetMetaTable() const
         {
             if (!lua_getmetatable(m_state, m_index))
             {
                 lua_pushnil(m_state);
             }
-            return { m_state };
+            return {m_state};
         }
 
-        template<typename T>
-        void SetMetaTable(const T& value)
+        /**
+         * @brief Устанавливает на объект данную метатаблицу
+         *
+         * @tparam T тип мететаблицы
+         * @param value метатаблица
+         */
+        template <typename T>
+        void SetMetaTable(const T &value) const
         {
             PushValue(m_state, value);
             lua_setmetatable(m_state, m_index);
         }
 
-        static StackObjectView Global(lua_State* l, const char* name)
+#pragma endregion
+
+#pragma region Call methods
+
+        /**
+         * @brief Вызывает объект с данными аргументами и возвращает результат.
+         *
+         * @tparam TReturn тип возвращаемого значения. По ум. void.
+         * @tparam TArgs типы аргументов
+         * @param args аргументы
+         * @return TReturn
+         */
+        template <typename TReturn = void, typename... TArgs>
+        TReturn Call(TArgs &&...args) const
         {
-            lua_getglobal(l, name);
-            return StackObjectView{ l };
+            return CallFunction<TReturn>(m_state, *this, std::forward<TArgs>(args)...);
         }
 
-        ~StackObjectView() {}
+        /**
+         * @brief Безопасно вызывает объект с данными аргументами и возвращает результат.
+         *
+         * @tparam TReturn тип возвращаемого значения. По ум. void.
+         * @tparam TArgs типы аргументов
+         * @param args
+         * @return PCallReturn<TReturn>
+         */
+        template <typename TReturn = void, typename... TArgs>
+        PCallReturn<TReturn> PCall(TArgs &&...args) const
+        {
+            return PCallFunction<TReturn>(m_state, *this, std::forward<TArgs>(args)...);
+        }
 
-        lua_State* const GetState()const
+        /**
+         * @brief Вызывает метод объекта по ключу с данными аргументами.
+         *
+         * @tparam TReturn тип возвращаемого значения. По ум. void.
+         * @tparam TArgs типы аргументов
+         * @param key имя метода
+         * @param args
+         * @return TReturn
+         */
+        template <typename TReturn = void, typename... TArgs>
+        TReturn SelfCall(const char *key, TArgs &&...args) const
+        {
+            Push();
+            lua_getfield(m_state, -1, key);
+            lua_rotate(m_state, -2, 1);
+            const size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
+            return CallStack<TReturn>(m_state, n);
+        }
+
+        /**
+         * @brief Безопасно вызывает метод объекта по ключу с данными аргументами.
+         *
+         * @tparam TReturn тип возвращаемого значения. По ум. void.
+         * @tparam TArgs типы аргументов
+         * @param key имя метода
+         * @param args
+         * @return PCallReturn<TReturn>
+         */
+        template <typename TReturn = void, typename... TArgs>
+        PCallReturn<TReturn> SelfPCall(const char *key, TArgs &&...args) const
+        {
+            Push();
+            lua_getfield(m_state, -1, key);
+            lua_rotate(m_state, -2, 1);
+            const size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
+            return PCallStack<TReturn>(m_state, n);
+        }
+
+#pragma endregion
+
+        /**
+         * @brief Помещает на стек глобальное значение.
+         *
+         * @param l Состояние ВМ Lua.
+         * @param name Имя глобального значения.
+         * @return StackObjectView
+         */
+        static StackObjectView Global(lua_State *l, const char *name)
+        {
+            lua_getglobal(l, name);
+            return StackObjectView{l};
+        }
+
+        ~StackObjectView() = default;
+
+        /**
+         * @brief Возвращает состояние ВМ Lua.
+         *
+         * @return lua_State* const
+         */
+        lua_State *const GetState() const noexcept
         {
             return m_state;
         }
 
-        const int GetIndex()const
+        /**
+         * @brief Возвращает индекс объекта на стеке.
+         *
+         * @return int
+         */
+        const int GetIndex() const noexcept
         {
             return m_index;
         }
+
+    private:
+        template <int COMPARE_OP, typename T>
+        bool Compare(const T &value) const
+        {
+            PushValue(m_state, value);
+            bool r = lua_compare(m_state, m_index, -1, COMPARE_OP);
+            lua_pop(m_state, 1);
+            return r;
+        }
+
+        template <int COMPARE_OP>
+        bool Compare(const StackObjectView &other) const
+        {
+            return lua_compare(m_state, m_index, other.m_index, COMPARE_OP);
+        }
+
     protected:
-        lua_State* const m_state;
-        const int m_index;
+        lua_State *m_state = nullptr;
+        int m_index = 0;
     };
 
-    template<>
+    /**
+     * @brief Реализация преобразования типа на стеке для StackObjectView.
+     *
+     * @see StackObjectView
+     * @tparam StackObjectView
+     */
+    template <>
     struct StackType<StackObjectView>
     {
-        static StackObjectView Get(lua_State* l, int index)
+        static StackObjectView Get(lua_State *l, int index)
         {
-            return { l, index };
+            return {l, index};
         }
 
-        static bool Check(lua_State* l, int index)
+        static bool Check(lua_State *l, int index)
         {
             return !lua_isnone(l, index);
         }
 
-        static void Push(lua_State* l, const StackObjectView& value)
+        static void Push(lua_State *l, const StackObjectView &value)
         {
             assert(value.GetState() == l);
             value.Push();
         }
     };
-
-    class StackObject : public StackObjectView
-    {
-    public:
-        StackObject(lua_State* l, int index) : StackObjectView(l, PushIndex(l, index)) {}
-
-        template<typename T>
-        StackObject(const RefObject<T>& obj) : StackObjectView(obj.GetState(), PushRefObject(obj)) {}
-
-        StackObject() = delete;
-        StackObject(const StackObject&) = delete;
-        StackObject(StackObject&&) = delete;
-
-        StackObject& operator=(const StackObject&) = delete;
-        StackObject& operator=(StackObject&&) = delete;
-
-        template<typename T>
-        static StackObject FromValue(lua_State* l, const T& value)
-        {
-            PushValue(l, value);
-            return StackObject{ l };
-        }
-
-        static StackObject Global(lua_State* l, const char* name)
-        {
-            return StackObjectView::Global(l, name);
-        }
-
-        using StackObjectView::Get;
-
-        template<typename T>
-        StackObject Get(const T& key)const
-        {
-            return StackObjectView::Get(key);
-        }
-
-        using StackObjectView::RawGet;
-
-        template<typename T>
-        StackObject RawGet(const T& key)const
-        {
-            return StackObjectView::RawGet(key);
-        }
-
-        StackObject GetMetaTable()const
-        {
-            return StackObjectView::GetMetaTable();
-        }
-
-        StackObject Len()const
-        {
-            return StackObjectView::Len();
-        }
-
-        template<typename T>
-        bool RawEqual(const T& value)
-        {
-            return StackObjectView::RawEqual(value);
-        }
-
-        template<>
-        bool RawEqual(const StackObject& value)
-        {
-            return StackObjectView::RawEqual(static_cast<const StackObjectView&>(value));
-        }
-
-        ~StackObject()
-        {
-            if (lua_gettop(m_state) == m_index)
-            {
-                lua_pop(m_state, 1);
-            }
-            else
-            {
-                lua_remove(m_state, m_index);
-            }
-            /*
-            * lua_pushnil(m_state);
-            * lua_replace(m_state, m_index);
-            */
-        }
-
-    protected:
-        StackObject(StackObjectView&& view) :StackObjectView(view) {}
-        StackObject(lua_State* l) : StackObjectView(l, -1) {}
-
-        static int PushIndex(lua_State* l, int index)
-        {
-            lua_pushvalue(l, index);
-            return index;
-        }
-
-        template<typename T>
-        static int PushRefObject(const RefObject<T>& obj)
-        {
-            obj.Push();
-            return -1;
-        }
-    };
-
-    template<>
-    bool StackObjectView::RawEqual(const StackObject& value)
-    {
-        return StackObjectView::RawEqual(static_cast<const StackObjectView&>(value));
-    }
-
-
-
-    template<>
-    struct StackType<StackObject>
-    {
-        static StackObject Get(lua_State* l, int index)
-        {
-            return { l, index };
-        }
-
-        static bool Check(lua_State* l, int index)
-        {
-            return !lua_isnone(l, index);
-        }
-
-        static void Push(lua_State* l, const StackObject& value)
-        {
-            assert(value.GetState() == l);
-            value.Push();
-        }
-    };
-
 
 }

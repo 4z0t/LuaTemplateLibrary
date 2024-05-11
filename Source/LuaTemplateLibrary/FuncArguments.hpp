@@ -3,9 +3,9 @@
 #include <type_traits>
 #include <iostream>
 #include <vector>
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 
-namespace Lua
+namespace LTL
 {
 
     struct UnwrapTypeBase {};
@@ -67,26 +67,66 @@ namespace Lua
     struct IsUpvalueType<Upvalue<T>> : std::true_type {};
 
     template<typename T>
-    struct StackType<T, EnableIfOptionalArg<T>>
+    struct CheckOptional
     {
-        using TReturn = Unwrap_t<T>;
-
-        static constexpr TReturn Get(lua_State* l, int index)
-        {
-            if (StackType<TReturn>::Check(l, index))
-                return StackType<TReturn>::Get(l, index);
-            return T::value;
-        }
-
         static constexpr bool Check(lua_State* l, int index)
         {
-            return StackType<TReturn>::Check(l, index) || lua_isnoneornil(l, index);
+            return lua_isnoneornil(l, index) || StackType<T>::Check(l, index);
         }
+    };
+
+    template<typename TOpt>
+    struct StackType<TOpt, EnableIfOptionalArg<TOpt>> : CheckOptional<Unwrap_t<TOpt>>
+    {
+        using T = Unwrap_t<TOpt>;
+
+        static constexpr T Get(lua_State* l, int index)
+        {
+            if (lua_isnoneornil(l, index))
+                return TOpt::value;
+            return StackType<T>::Get(l, index);
+        }
+    };
+
+    struct MultReturnBase {};
+
+    /**
+     * @brief Класс для возврата множества значений из функции.
+     * 
+     * @tparam Ts 
+     */
+    template<typename ...Ts>
+    struct MultReturn : std::tuple<Ts...>, MultReturnBase
+    {
+        using std::tuple<Ts...>::tuple;
+
+        template <size_t N>
+        decltype(auto) Get()
+        {
+            return std::get<N>(*this);
+        }
+
+        template <size_t N>
+        decltype(auto) Get()const
+        {
+            return std::get<N>(*this);
+        }
+    };
+
+    /**
+     * @brief Класс для возвращения количества результатов работы функции на стеке.
+     * 
+     */
+    struct StackResult
+    {
+        const size_t n_results = 1;
+
+        StackResult(size_t n) : n_results(n) { }
     };
 }
 
 #define LuaOptionalArg(name_, type_, value_) \
-struct name_ : Lua::OptionalBase<type_>\
+struct name_ : LTL::OptionalBase<type_>\
 {\
   static const type_ value; \
 };\

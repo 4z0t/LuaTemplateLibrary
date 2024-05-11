@@ -1,7 +1,7 @@
 #pragma once
-#include <gtest/gtest.h>
 #include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
+#include <gtest/gtest.h>
 
 struct TestBase : public testing::Test
 {
@@ -13,7 +13,7 @@ struct TestBase : public testing::Test
         l = nullptr;
         l = luaL_newstate();
         luaL_openlibs(l);
-        lua_atpanic(l, Lua::Exception::PanicFunc);
+        lua_atpanic(l, LTL::Exception::PanicFunc);
     }
 
     void TearDown() override
@@ -24,21 +24,34 @@ struct TestBase : public testing::Test
         }
     }
 
-    void Run(const std::string &s)
+    void Run(const std::string& s)
     {
-        if (luaL_loadstring(l, s.c_str()) != 0)
+        if (luaL_dostring(l, s.c_str()))
         {
-            throw std::runtime_error(lua_tostring(l, -1));
-        }
-
-        if (lua_pcall(l, 0, 0, 0) != 0)
-        {
-            throw std::runtime_error(lua_tostring(l, -1));
+            lua_error(l);
         }
     }
 
-    Lua::GRefObject Result()
+    int Top()const
     {
-        return Lua::GRefObject::Global(l, "result");
+        return lua_gettop(l);
+    }
+
+    LTL::GRefObject Result()
+    {
+        return LTL::GRefObject::Global(l, "result");
     }
 };
+
+//struct TestBase : public testing::Test
+//{
+//    void SetUp() override
+//    {
+//        //arranging the state and env
+//    }
+//
+//    void TearDown() override
+//    {
+//        //destroying state and env
+//    }
+//};

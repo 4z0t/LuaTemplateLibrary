@@ -1,52 +1,31 @@
 #pragma once
 #include "LuaAux.hpp"
-#include "LuaState.hpp"
-#include "LuaTypes.hpp"
+#include "Types.hpp"
+#include "StackObject.hpp"
 
-namespace Lua
+namespace LTL
 {
-
-    struct RefGlobalAccess
-    {
-        static int GetRef(lua_State* l)
-        {
-            return luaL_ref(l, LUA_REGISTRYINDEX);
-        }
-
-        static void Unref(lua_State* l, int ref)
-        {
-            luaL_unref(l, LUA_REGISTRYINDEX, ref);
-        }
-
-        static void PushRef(lua_State* l, int ref)
-        {
-            lua_rawgeti(l, LUA_REGISTRYINDEX, ref);
-        }
-    };
-
+    template<typename T>
+    class State;
+    /**
+     * @brief Базовый класс для классов-ссылок.
+     * 
+     * @tparam RefClass Класс реализующий интерфейс
+     * @tparam ParentClass Главный класс
+     * @tparam RefAccess Класс для доступа к объектам по ссылке
+     * 
+     * @see RefObject
+     * @see RefTableEntryObject
+     * @see RefGlobalAccess
+     */
     template<typename RefClass, typename ParentClass, typename RefAccess>
     class RefObjectBase
     {
     public:
-        RefObjectBase() {};
+        RefObjectBase() = default;
         RefObjectBase(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
         template<typename T>
         RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
-
-        class AutoPop
-        {
-        public:
-            AutoPop(const RefObjectBase& obj) : m_obj(obj)
-            {
-                m_obj.Push();
-            }
-            ~AutoPop()
-            {
-                m_obj.Pop();
-            }
-            const RefObjectBase& m_obj;
-        };
-        friend class AutoPop;
 
         class Iterator
         {
@@ -55,12 +34,11 @@ namespace Lua
 
             Iterator& Next()
             {
-                lua_State* l = m_table.GetState();
+                lua_State* const l = m_table.GetState();
                 m_table.Push();
                 m_key.Push();
                 if (lua_next(l, -2) != 0)
                 {
-
                     m_value = ParentClass::FromTop(l);
                     m_key = ParentClass::FromTop(l);
                 }
@@ -93,13 +71,13 @@ namespace Lua
                 return { m_key,m_value };
             }
 
-            ParentClass operator->()const
+            const ParentClass& operator->()const
             {
                 return m_value;
             }
 
-            ParentClass Key()const { return m_key; }
-            ParentClass Value()const { return m_value; }
+            const ParentClass& Key()const { return m_key; }
+            const ParentClass& Value()const { return m_value; }
 
         private:
             ParentClass m_table{};
@@ -111,13 +89,26 @@ namespace Lua
         Iterator begin()const { return Iterator(ParentClass(_This())).Next(); };
         Iterator end()const { return Iterator(ParentClass(_This())); }
 
+        /**
+         * @brief Преобразует объект к данному типу.
+         * 
+         * @tparam T 
+         * @return T 
+         */
         template<typename T>
         T To()const
         {
-            AutoPop pop(*this);
-            return StackType<T>::Get(m_state, -1);
+            auto r = PushView().To<T>();
+            Pop();
+            return r;
         }
 
+        /**
+         * @brief Преобразует объект к данному типу.
+         * 
+         * @tparam T 
+         * @return T 
+         */
         template<typename T>
         operator T()const
         {
@@ -142,6 +133,12 @@ namespace Lua
             return this->Compare<LUA_OPEQ>(other);
         }
 
+        template<>
+        bool operator==(const std::nullptr_t&)const
+        {
+            return this->IsNil();
+        }
+
         template<typename T>
         bool operator>(const T& other)const
         {
@@ -161,15 +158,19 @@ namespace Lua
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        TReturn Call(TArgs&& ...args)
+        TReturn Call(TArgs&& ...args)const
         {
-            Push();
-            size_t n = PushArgs(m_state, std::forward<TArgs>(args)...);
-            return CallStack<TReturn>(m_state, n);
+            return CallFunction<TReturn>(m_state, _This(), std::forward<TArgs>(args)...);
         }
 
         template<typename TReturn = void, typename ...TArgs>
-        TReturn SelfCall(const char* key, TArgs&& ...args)
+        PCallReturn<TReturn> PCall(TArgs&& ...args)const
+        {
+            return PCallFunction<TReturn>(m_state, _This(), std::forward<TArgs>(args)...);
+        }
+
+        template<typename TReturn = void, typename ...TArgs>
+        TReturn SelfCall(const char* key, TArgs&& ...args)const
         {
             Push();
             lua_getfield(m_state, -1, key);
@@ -178,55 +179,169 @@ namespace Lua
             return CallStack<TReturn>(m_state, n);
         }
 
+        template<typename TReturn = void, typename ...TArgs>
+        PCallReturn<TReturn> SelfPCall(const char* key, TArgs&& ...args)const
+        {
+            Push();
+            lua_getfield(m_state, -1, key);
+            lua_rotate(m_state, -2, 1);
+            size_t n = PushArgs(m_state, std::forward<TArgs>(args)...) + 1;
+            return PCallStack<TReturn>(m_state, n);
+        }
+
         template<typename ...TArgs>
-        ParentClass operator()(TArgs&& ...args)
+        ParentClass operator()(TArgs&& ...args)const
         {
             return this->Call<ParentClass>(std::forward<TArgs>(args)...);
         }
 
+        /**
+         * @brief Возвращает RefObject с метатаблицей объекта.
+         * Если ее нет возвращает nil.
+         * @return ParentClass
+         */
+        ParentClass GetMetaTable() const
+        {
+            PushView().GetMetaTable();
+            ParentClass res = ParentClass::FromTop(m_state);
+            Pop();
+            return res;
+        }
+
+        /**
+         * @brief Устанавливает на объект данную метатаблицу
+         *
+         * @tparam T тип мететаблицы
+         * @param value метатаблица
+         */
+        template <typename T>
+        void SetMetaTable(const T& value) const
+        {
+            PushView().SetMetaTable(value);
+            Pop();
+        }
+
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return R
+         */
+        template <typename R>
+        R Len() const
+        {
+            R l = PushView().Len<R>();
+            Pop();
+            return l;
+        }
+
+        /**
+         * @brief возвращает результат работы метаметода
+         * __len, если таковой присутствует, в противном
+         * случае возвращает результат RawLen.
+         *
+         * @return ParentClass
+         */
+        ParentClass Len() const
+        {
+            PushView().Len();
+            ParentClass res = ParentClass::FromTop(m_state);
+            Pop();
+            return res;
+        }
+
+        /**
+         * @brief Возвращает необработанную
+         * длину объекта.
+         * @return size_t длина объекта
+         */
+        auto RawLen() const
+        {
+            auto r = PushView().RawLen();
+            Pop();
+            return r;
+        }
+
+        /**
+         * @brief Проверяет является ли объект данного типа.
+         * 
+         * @tparam LType 
+         * @return true 
+         * @return false 
+         */
+        template <Type LType>
+        bool Is() const
+        {
+            return Type() == LType;
+        }
+
+        /**
+         * @brief Проверяет может ли объект быть преобразован к данному типу.
+         * 
+         * @tparam LType 
+         * @return true 
+         * @return false 
+         */
         template<typename T>
         bool Is()const
         {
-            AutoPop pop(*this);
-            return StackType<T>::Check(m_state, -1);
+            bool r = PushView().Is<T>();
+            Pop();
+            return r;
         }
 
         bool IsNil()const
         {
-            AutoPop pop(*this);
-            return lua_isnil(m_state, -1);
+            return Type() == Type::Nil;
         }
 
         bool IsTable()const
         {
-            AutoPop pop(*this);
-            return lua_istable(m_state, -1);
+            return Type() == Type::Table;
         }
 
         bool IsUserData()const
         {
-            AutoPop pop(*this);
-            return lua_isuserdata(m_state, -1);
+            return Type() == Type::Userdata;
         }
 
+        /**
+         * @brief Возвращает тип объекта.
+         * 
+         * @return Type 
+         */
         Type Type()const
         {
-            AutoPop pop(*this);
-            return static_cast<Lua::Type>(lua_type(m_state, -1));
+            auto t = PushView().Type();
+            Pop();
+            return t;
         }
 
+        /**
+         * @brief Возвращает имя типа объекта.
+         * 
+         * @return const char* 
+         */
         const char* TypeName()const
         {
-            AutoPop pop(*this);
-            return lua_typename(m_state, lua_type(m_state, -1));
+            Push();
+            auto t = lua_typename(m_state, lua_type(m_state, -1));
+            Pop();
+            return t;
         }
 
+        /**
+         * @brief Возвращает строковую репрезентацию объекта.
+         * 
+         * @return const char* 
+         */
         const char* ToString()const
         {
-            lua_getglobal(m_state, "tostring");
-            AutoPop pop(*this);
-            lua_call(m_state, 1, 1);
-            return lua_tostring(m_state, -1);
+            Push();
+            const char* s = luaL_tolstring(m_state, -1, nullptr);
+            lua_pop(m_state, 2);
+            return s;
         }
 
         friend static std::ostream& operator<<(std::ostream& os, const RefObjectBase& obj)
@@ -239,6 +354,18 @@ namespace Lua
             return this->m_state;
         }
 
+        /**
+         * @brief Помещает на стек объект и возвращает его StackObjectView
+         * 
+         * @return StackObjectView 
+         * @see StackObjectView
+         */
+        StackObjectView PushView()const
+        {
+            Push();
+            return { m_state };
+        }
+
         ~RefObjectBase()
         {
             Unref();
@@ -249,10 +376,11 @@ namespace Lua
         template <int COMPARE_OP, typename T>
         bool Compare(const T& value)const
         {
-            StackPopper pop{ m_state, 2 };
-            this->Push();
+            Push();
             PushValue(m_state, value);
-            return lua_compare(m_state, -2, -1, COMPARE_OP);
+            bool r = lua_compare(m_state, -2, -1, COMPARE_OP);
+            lua_pop(m_state, 2);
+            return r;
         }
 
         void Unref()
@@ -274,13 +402,14 @@ namespace Lua
         {
             _This().Pop();
         }
+
     protected:
         void PushRef(int ref)const
         {
             RefAccess::PushRef(m_state, ref);
         }
 
-        int GetRef()
+        int GetRef()const
         {
             return RefAccess::GetRef(m_state);
         }
@@ -301,25 +430,25 @@ namespace Lua
     class RefObject;
 
     template<typename RefAccess>
-    class RefTableObject;
+    class RefTableEntryObject;
 
     template<typename RefAccess>
     class RefObject : public RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
         using Base = RefObjectBase<RefObject<RefAccess>, RefObject<RefAccess>, RefAccess>;
-        using RefTableObjectT = RefTableObject<RefAccess>;
+        using RefTableEntryObjectT = RefTableEntryObject<RefAccess>;
         friend class Base;
         using Base::Base;
 
-        RefObject(const RefObject& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefObject& obj) : Base(obj.m_state)
         {
             obj.Push();
             Ref();
         }
 
         template<typename T>
-        RefObject(lua_State* l, const T& value) noexcept :Base(l)
+        RefObject(lua_State* l, const T& value) :Base(l)
         {
             PushValue(l, value);
             Ref();
@@ -331,7 +460,7 @@ namespace Lua
             obj.Clear();
         }
 
-        RefObject(const RefTableObjectT& obj) noexcept : Base(obj.m_state)
+        RefObject(const RefTableEntryObjectT& obj) : Base(obj.m_state)
         {
             obj.Push();
             Ref();
@@ -355,7 +484,7 @@ namespace Lua
             return *this;
         }
 
-        RefObject& operator=(const RefTableObjectT& obj)
+        RefObject& operator=(const RefTableEntryObjectT& obj)
         {
             Unref();
             obj.Push();
@@ -373,17 +502,30 @@ namespace Lua
             return *this;
         }
 
+        /**
+         * @brief Возвращает прокси-объект элемента таблицы по данному ключу.
+         * 
+         * @tparam T 
+         * @param key 
+         * @return RefTableEntryObjectT 
+         */
         template<typename T>
-        RefTableObjectT operator[](const T& key)
+        RefTableEntryObjectT operator[](const T& key)const
         {
-            RefTableObjectT obj{ this->m_state };
+            RefTableEntryObjectT obj{ this->m_state };
             PushValue(this->m_state, key);
             obj.m_key_ref = this->GetRef();
             Push();
             obj.m_table_ref = this->GetRef();
             return obj;
         }
-
+        
+        /**
+         * @brief Снимает с вершины стека объект и возвращает объект-ссылку на него
+         * 
+         * @param l 
+         * @return RefObject 
+         */
         static RefObject FromTop(lua_State* l)
         {
             RefObject obj{ l };
@@ -452,8 +594,7 @@ namespace Lua
             m_ref = this->GetRef();
         }
 
-
-        void Clear()
+        void Clear()noexcept
         {
             this->m_state = nullptr;
             m_ref = LUA_NOREF;
@@ -468,22 +609,22 @@ namespace Lua
     };
 
     template<typename RefAccess>
-    class RefTableObject : public RefObjectBase<RefTableObject<RefAccess>, RefObject<RefAccess>, RefAccess>
+    class RefTableEntryObject : public RefObjectBase<RefTableEntryObject<RefAccess>, RefObject<RefAccess>, RefAccess>
     {
     public:
         using RefClass = RefObject<RefAccess>;
-        using Base = RefObjectBase<RefTableObject, RefObject<RefAccess>, RefAccess>;
+        using Base = RefObjectBase<RefTableEntryObject, RefObject<RefAccess>, RefAccess>;
         friend class RefClass;
         friend class Base;
 
         template<typename T>
-        RefTableObject operator[](const T& key)
+        RefTableEntryObject operator[](const T& key)
         {
             return RefClass(*this)[key];
         }
 
         template<typename T>
-        RefTableObject& operator=(const T& value)
+        RefTableEntryObject& operator=(const T& value)
         {
             PushTable();
             PushKey();
@@ -494,7 +635,7 @@ namespace Lua
         }
 
         template<>
-        RefTableObject& operator=(const RefClass& obj)
+        RefTableEntryObject& operator=(const RefClass& obj)
         {
             PushTable();
             PushKey();
@@ -504,7 +645,7 @@ namespace Lua
             return *this;
         }
 
-        RefTableObject& operator=(const RefTableObject& obj)
+        RefTableEntryObject& operator=(const RefTableEntryObject& obj)
         {
             return *this = RefClass(obj);
         }
@@ -528,17 +669,17 @@ namespace Lua
             }
         }
     private:
-        RefTableObject() :Base() {};
-        RefTableObject(lua_State* l) noexcept :Base(l) { };
+        RefTableEntryObject() = delete;
+        RefTableEntryObject(lua_State* l) noexcept :Base(l) { };
         template<typename T>
-        RefTableObject(const State<T>& state) noexcept : Base(state) {};
-        RefTableObject(const RefTableObject& obj) : Base(obj.m_state)
-        {
-            obj.PushKey();
-            m_key_ref = this->GetRef();
+        RefTableEntryObject(const State<T>& state) noexcept : Base(state) {};
+        RefTableEntryObject(const RefTableEntryObject& obj) = delete;
 
-            obj.PushTable();
-            m_table_ref = this->GetRef();
+        RefTableEntryObject(RefTableEntryObject&& obj)noexcept : Base(obj.m_state)
+        {
+            m_table_ref = obj.m_table_ref;
+            m_key_ref = obj.m_key_ref;
+            obj.Clear();
         }
 
         void PushKey()const
@@ -551,7 +692,7 @@ namespace Lua
             this->PushRef(m_table_ref);
         }
 
-        void Clear()
+        void Clear()noexcept
         {
             this->m_state = nullptr;
             m_table_ref = LUA_NOREF;
@@ -590,9 +731,9 @@ namespace Lua
     };
 
     template<typename T>
-    struct StackType<RefTableObject<T>>
+    struct StackType<RefTableEntryObject<T>>
     {
-        using Type = RefTableObject<T>;
+        using Type = RefTableEntryObject<T>;
 
         static bool Check(lua_State* l, int index)
         {

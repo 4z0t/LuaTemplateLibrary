@@ -1,10 +1,12 @@
 #pragma once
-#include "LuaTypes.hpp"
+#include "Types.hpp"
 #include <map>
 #include <unordered_map>
+#include <optional>
 #include "StackObject.hpp"
+#include "FuncArguments.hpp"
 
-namespace Lua
+namespace LTL
 {
 
     struct TableChecker
@@ -75,5 +77,31 @@ namespace Lua
         }
     };
 
+    template<typename T>
+    struct StackType<std::optional<T>> : CheckOptional<T>
+    {
+        using Type = std::optional<T>;
+
+        static Type Get(lua_State* l, int index)
+        {
+            if (lua_isnoneornil(l, index))
+            {
+                return std::nullopt;
+            }
+            return { StackType<T>::Get(l, index) };
+        }
+
+        static void Push(lua_State* l, const Type& value)
+        {
+            if (value.has_value())
+            {
+                StackType<T>::Push(l, value.value());
+            }
+            else
+            {
+                lua_pushnil(l);
+            }
+        }
+    };
 
 }

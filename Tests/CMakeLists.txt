@@ -1,7 +1,15 @@
 set(LTL_TEST_SOURCE_FILES
     Source/RefObject.cpp
+    Source/Stack.cpp
     Source/Exception.cpp
     Source/Main.cpp
+    Source/TestBase.hpp
+    Source/STL.cpp
+    Source/State.cpp
+    Source/UserData.cpp
+    Source/Misc.cpp
+    Source/Types.cpp
+    Source/Libs.cpp
 )
 
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})
@@ -48,8 +56,10 @@ target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
 
-target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/Zi;/EHa>")
-target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
+target_compile_options(TestLTL PRIVATE "/Zi;/EHa")
+target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/MD>")
+target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Debug>:/MDd>")
+target_compile_options(TestLTL PRIVATE "/permissive-")
 target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
 target_link_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
 
