@@ -18,7 +18,6 @@ file(GLOB LUA54_FILES
     Lua/master/*.c
     Lua/master/*.h
     Lua/master/*.hpp
-    Lua/LuaLibrary.h
 )
 list(FILTER LUA54_FILES EXCLUDE REGEX ".*lua\\.c$")
 
