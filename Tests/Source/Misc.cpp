@@ -1,5 +1,5 @@
 #include "TestBase.hpp"
-
+#include <algorithm>
 
 
 #pragma region Memory tests
@@ -91,5 +91,37 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
         ASSERT_ANY_THROW(s.GetState()->Error());
     }
 }
+
+struct PCallSafety :TestBase
+{
+
+};
+// I wonder if it is ok to use PCall with long jump
+TEST_F(PCallSafety, StringTest)
+{
+
+    using namespace LTL;
+    using namespace std;
+    struct MyFunctions
+    {
+        static bool Fn(const vector<int>& s, int a)
+        {
+            return find(s.begin(), s.end(), a) != s.end();
+        }
+    };
+
+    {
+        MemoryLeakDetector leakDetector;
+        State s;
+        s.ThrowExceptions();
+        s.Add("Fn", CFunction<MyFunctions::Fn, vector<int>, int>{});
+
+
+        GRefObject tbl{ s,vector<int>({ 1,2,3,4 }) };
+        s.PCall("Fn", tbl);
+    }
+}
+
+
 #endif // WINDOWS
 #pragma endregion

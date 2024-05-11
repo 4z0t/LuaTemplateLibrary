@@ -56,7 +56,7 @@ target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
 target_link_options(FreeTest_LTL PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
 
-target_compile_options(TestLTL PRIVATE "/Zi;/EHa")
+target_compile_options(TestLTL PRIVATE "/Zi;/EHs")
 target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Release>:/MD>")
 target_compile_options(TestLTL PRIVATE "$<$<CONFIG:Debug>:/MDd>")
 target_compile_options(TestLTL PRIVATE "/permissive-")
