@@ -288,7 +288,7 @@ namespace LTL
         template<typename Element>
         EnableIf<BaseOf< Internal::CFunctionBase, Element>> AddSetter(const char* key, const Element&)
         {
-            static_assert(Element::min_arg_count <= 2, "Setter can't receive more than 2 argument");
+            static_assert(Element::min_arg_count <= 2, "Setter can't receive more than 2 arguments");
             AddSetter(key, Element::Function);
             return *this;
         }
