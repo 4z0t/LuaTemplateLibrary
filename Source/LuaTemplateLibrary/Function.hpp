@@ -128,6 +128,9 @@ namespace LTL
         template <typename... TArgs>
         struct FunctionHelper : CFunctionBase
         {
+            constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
+            constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
+
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
             static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
             {
@@ -137,6 +140,25 @@ namespace LTL
             static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
             {
                 return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
+            }
+
+            static constexpr void CheckArgCount(lua_State* l)
+            {
+                const size_t n = static_cast<size_t>(lua_gettop(l));
+                if constexpr (min_arg_count == max_arg_count)
+                {
+                    if (max_arg_count != n)
+                    {
+                        luaL_error(l, "Expected %d arguments, but got %d.", max_arg_count, n);
+                    }
+                }
+                else
+                {
+                    if (n < min_arg_count && n > max_arg_count)
+                    {
+                        luaL_error(l, "Expected arguments between %d and %d, but got %d.", min_arg_count, max_arg_count, n);
+                    }
+                }
             }
         };
 
@@ -299,11 +321,9 @@ namespace LTL
         {
         };
 
-        constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
-        constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
-
         static int Function(lua_State* l)
         {
+            _FunctionHelper::CheckArgCount(l);
             if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
             {
                 return _Caller(l);
@@ -369,6 +389,7 @@ namespace LTL
 
         static int Function(lua_State* l)
         {
+            _FunctionHelper::CheckArgCount(l);
             if constexpr (!FuncUtility::CanThrow<decltype(fn)>::value)
             {
                 return _Caller(l);

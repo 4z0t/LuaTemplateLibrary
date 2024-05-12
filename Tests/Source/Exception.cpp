@@ -37,6 +37,7 @@ TEST_F(ExceptionTests, BaseExceptions)
         ASSERT_THROW(Run("VectorLen(2, 'invalid value!')"), Exception);
         ASSERT_THROW(Run("VectorLen('invalid value!')"), Exception);
         ASSERT_THROW(Run("VectorLen('invalid value!', 2)"), Exception);
+        ASSERT_THROW(Run("VectorLen(1, 2, 3)"), Exception);
 
         Run("a = VectorLen(3, 4)");
         ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
@@ -46,6 +47,7 @@ TEST_F(ExceptionTests, BaseExceptions)
         ASSERT_THROW(cstate->Call<float>("VectorLen", 2.f, "invalid value!"), Exception);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!"), Exception);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!", 1.f), Exception);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f, 2.f, 3.f), Exception);
 
         ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
     }
@@ -106,6 +108,7 @@ TEST_F(ExceptionTests, UserExceptions)
         ASSERT_THROW(Run("VectorLen(2, 'invalid value!')"), runtime_error);
         ASSERT_THROW(Run("VectorLen('invalid value!')"), runtime_error);
         ASSERT_THROW(Run("VectorLen('invalid value!', 2)"), runtime_error);
+        ASSERT_THROW(Run("VectorLen(1,2,3)"), runtime_error);
 
         Run("a = VectorLen(3, 4)");
         ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
@@ -115,6 +118,7 @@ TEST_F(ExceptionTests, UserExceptions)
         ASSERT_THROW(cstate->Call<float>("VectorLen", 2.f, "invalid value!"), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!"), runtime_error);
         ASSERT_THROW(cstate->Call<float>("VectorLen", "invalid value!", 1.f), runtime_error);
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f, 2.f, 3.f), runtime_error);
 
         ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
     }

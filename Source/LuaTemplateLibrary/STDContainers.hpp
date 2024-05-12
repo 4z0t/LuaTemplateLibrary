@@ -5,6 +5,7 @@
 #include <optional>
 #include "StackObject.hpp"
 #include "FuncArguments.hpp"
+#include "FuncUtils.hpp"
 
 namespace LTL
 {
@@ -103,5 +104,8 @@ namespace LTL
             }
         }
     };
+
+    template<typename T>
+    struct FuncUtility::IsOptionalArgumentType<std::optional<T>> : std::true_type {};
 
 }
