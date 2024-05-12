@@ -2,7 +2,7 @@
 \hypertarget{class_l_t_l_1_1_ref_object_base}{}\label{class_l_t_l_1_1_ref_object_base}\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
 
 
-Базовый класс для классов-\/ссылок.  
+Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РґР»СЏ РєР»Р°СЃСЃРѕРІ-\/СЃСЃС‹Р»РѕРє.  
 
 
 
@@ -30,9 +30,9 @@ class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}
 \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}} {\bfseries end} () const
 \item 
 {\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a}{To}} () const
-\begin{DoxyCompactList}\small\item\em Преобразует объект к данному типу. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РѕР±СЉРµРєС‚ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_ab8cfa8b27486f8654a4208cb60b9664f}{operator T}} () const
-\begin{DoxyCompactList}\small\item\em Преобразует объект к данному типу. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РѕР±СЉРµРєС‚ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. \end{DoxyCompactList}\item 
 \Hypertarget{class_l_t_l_1_1_ref_object_base_a91ffcaa403866d5b914f1f7210013bc9}\label{class_l_t_l_1_1_ref_object_base_a91ffcaa403866d5b914f1f7210013bc9} 
 {\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator$<$} (const T \&other) const
 \item 
@@ -70,19 +70,19 @@ template$<$$>$ bool {\bfseries operator==} (const std\+::nullptr\+\_\+t \&) cons
 {\footnotesize template$<$typename ... TArgs$>$ }\\Parent\+Class {\bfseries operator()} (TArgs \&\&...args) const
 \item 
 Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a45f9aa25e818a4223d61516f192c111e}{Get\+Meta\+Table}} () const
-\begin{DoxyCompactList}\small\item\em Возвращает \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} с метатаблицей объекта. Если ее нет возвращает nil. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Р’РѕР·РІСЂР°С‰Р°РµС‚ \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} СЃ РјРµС‚Р°С‚Р°Р±Р»РёС†РµР№ РѕР±СЉРµРєС‚Р°. Р•СЃР»Рё РµРµ РЅРµС‚ РІРѕР·РІСЂР°С‰Р°РµС‚ nil. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1}{Set\+Meta\+Table}} (const T \&value) const
-\begin{DoxyCompactList}\small\item\em Устанавливает на объект данную метатаблицу \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РЅР° РѕР±СЉРµРєС‚ РґР°РЅРЅСѓСЋ РјРµС‚Р°С‚Р°Р±Р»РёС†Сѓ \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename R $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a20d0e75c86b50001ef16eac090b958fc}{Len}} () const
-\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ РјРµС‚Р°РјРµС‚РѕРґР° \+\_\+\+\_\+len, РµСЃР»Рё С‚Р°РєРѕРІРѕР№ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ Raw\+Len. \end{DoxyCompactList}\item 
 Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a72c33bcb1ef4c55fae1aff43488e79a7}{Len}} () const
-\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ РјРµС‚Р°РјРµС‚РѕРґР° \+\_\+\+\_\+len, РµСЃР»Рё С‚Р°РєРѕРІРѕР№ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ Raw\+Len. \end{DoxyCompactList}\item 
 auto \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a330e9037b1e2cd0e9fe7dca0fbe23dcc}{Raw\+Len}} () const
-\begin{DoxyCompactList}\small\item\em Возвращает необработанную длину объекта. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅСѓСЋ РґР»РёРЅСѓ РѕР±СЉРµРєС‚Р°. \end{DoxyCompactList}\item 
 {\footnotesize template$<$\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}{Type}} LType$>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}{Is}} () const
-\begin{DoxyCompactList}\small\item\em Проверяет является ли объект данного типа. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РџСЂРѕРІРµСЂСЏРµС‚ СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±СЉРµРєС‚ РґР°РЅРЅРѕРіРѕ С‚РёРїР°. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}{Is}} () const
-\begin{DoxyCompactList}\small\item\em Проверяет может ли объект быть преобразован к данному типу. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em РџСЂРѕРІРµСЂСЏРµС‚ РјРѕР¶РµС‚ Р»Рё РѕР±СЉРµРєС‚ Р±С‹С‚СЊ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. \end{DoxyCompactList}\item 
 \Hypertarget{class_l_t_l_1_1_ref_object_base_a69f9589aa159209cda3d00bd67eb2e27}\label{class_l_t_l_1_1_ref_object_base_a69f9589aa159209cda3d00bd67eb2e27} 
 bool {\bfseries Is\+Nil} () const
 \item 
@@ -93,16 +93,16 @@ bool {\bfseries Is\+Table} () const
 bool {\bfseries Is\+User\+Data} () const
 \item 
 Type \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}{Type}} () const
-\begin{DoxyCompactList}\small\item\em Возвращает тип объекта. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РёРї РѕР±СЉРµРєС‚Р°. \end{DoxyCompactList}\item 
 const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_ac8dcdb782a83a83fb118f3dcd642f0e0}{Type\+Name}} () const
-\begin{DoxyCompactList}\small\item\em Возвращает имя типа объекта. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРјСЏ С‚РёРїР° РѕР±СЉРµРєС‚Р°. \end{DoxyCompactList}\item 
 const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a2908a3c36fa7a1f27da81b7263ed2b9c}{To\+String}} () const
-\begin{DoxyCompactList}\small\item\em Возвращает строковую репрезентацию объекта. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєРѕРІСѓСЋ СЂРµРїСЂРµР·РµРЅС‚Р°С†РёСЋ РѕР±СЉРµРєС‚Р°. \end{DoxyCompactList}\item 
 \Hypertarget{class_l_t_l_1_1_ref_object_base_a6182a540efca077a2ed68dfa9c039cc1}\label{class_l_t_l_1_1_ref_object_base_a6182a540efca077a2ed68dfa9c039cc1} 
 lua\+\_\+\+State \texorpdfstring{$\ast$}{*}const {\bfseries Get\+State} () const
 \item 
 \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a1f0abecfe6018b78a471e8d16b2f9abb}{Push\+View}} () const
-\begin{DoxyCompactList}\small\item\em Помещает на стек объект и возвращает его \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em РџРѕРјРµС‰Р°РµС‚ РЅР° СЃС‚РµРє РѕР±СЉРµРєС‚ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РµРіРѕ \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Р—Р°С‰РёС‰РµРЅРЅС‹Рµ С‡Р»РµРЅС‹}
 \begin{DoxyCompactItemize}
 \item 
@@ -135,15 +135,15 @@ static friend std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os,
 \doxysubsection{РџРѕРґСЂРѕР±РЅРѕРµ РѕРїРёСЃР°РЅРёРµ}
 \subsubsection*{template$<$typename Ref\+Class, typename Parent\+Class, typename Ref\+Access$>$\newline
 class LTL\+::\+Ref\+Object\+Base$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$}
-Базовый класс для классов-\/ссылок. 
+Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ РґР»СЏ РєР»Р°СЃСЃРѕРІ-\/СЃСЃС‹Р»РѕРє. 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
-{\em Ref\+Class} & Класс реализующий интерфейс \\
+{\em Ref\+Class} & РљР»Р°СЃСЃ СЂРµР°Р»РёР·СѓСЋС‰РёР№ РёРЅС‚РµСЂС„РµР№СЃ \\
 \hline
-{\em Parent\+Class} & Главный класс \\
+{\em Parent\+Class} & Р“Р»Р°РІРЅС‹Р№ РєР»Р°СЃСЃ \\
 \hline
-{\em Ref\+Access} & Класс для доступа к объектам по ссылке\\
+{\em Ref\+Access} & РљР»Р°СЃСЃ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РѕР±СЉРµРєС‚Р°Рј РїРѕ СЃСЃС‹Р»РєРµ\\
 \hline
 \end{DoxyTemplParams}
 \begin{DoxySeeAlso}{РЎРј. С‚Р°РєР¶Рµ}
@@ -165,7 +165,7 @@ Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Ob
 
 
 
-Возвращает \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} с метатаблицей объекта. Если ее нет возвращает nil. 
+Р’РѕР·РІСЂР°С‰Р°РµС‚ \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} СЃ РјРµС‚Р°С‚Р°Р±Р»РёС†РµР№ РѕР±СЉРµРєС‚Р°. Р•СЃР»Рё РµРµ РЅРµС‚ РІРѕР·РІСЂР°С‰Р°РµС‚ nil. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 Parent\+Class 
@@ -180,7 +180,7 @@ bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Bas
 
 
 
-Проверяет является ли объект данного типа. 
+РџСЂРѕРІРµСЂСЏРµС‚ СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±СЉРµРєС‚ РґР°РЅРЅРѕРіРѕ С‚РёРїР°. 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
@@ -202,7 +202,7 @@ bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Bas
 
 
 
-Проверяет может ли объект быть преобразован к данному типу. 
+РџСЂРѕРІРµСЂСЏРµС‚ РјРѕР¶РµС‚ Р»Рё РѕР±СЉРµРєС‚ Р±С‹С‚СЊ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
@@ -224,7 +224,7 @@ R \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}
 
 
 
-возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ РјРµС‚Р°РјРµС‚РѕРґР° \+\_\+\+\_\+len, РµСЃР»Рё С‚Р°РєРѕРІРѕР№ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ Raw\+Len. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 R 
@@ -238,7 +238,7 @@ Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Ob
 
 
 
-возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ РјРµС‚Р°РјРµС‚РѕРґР° \+\_\+\+\_\+len, РµСЃР»Рё С‚Р°РєРѕРІРѕР№ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ Raw\+Len. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 Parent\+Class 
@@ -253,7 +253,7 @@ template$<$typename T $>$ \\
 
 
 
-Преобразует объект к данному типу. 
+РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РѕР±СЉРµРєС‚ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
@@ -272,7 +272,7 @@ T
 
 
 
-Помещает на стек объект и возвращает его \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. 
+РџРѕРјРµС‰Р°РµС‚ РЅР° СЃС‚РµРє РѕР±СЉРµРєС‚ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РµРіРѕ \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
@@ -289,10 +289,10 @@ auto \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Bas
 
 
 
-Возвращает необработанную длину объекта. 
+Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРµРѕР±СЂР°Р±РѕС‚Р°РЅРЅСѓСЋ РґР»РёРЅСѓ РѕР±СЉРµРєС‚Р°. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
-size\+\_\+t длина объекта 
+size\+\_\+t РґР»РёРЅР° РѕР±СЉРµРєС‚Р° 
 \end{DoxyReturn}
 \Hypertarget{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1}\label{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1} 
 \index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!SetMetaTable@{SetMetaTable}}
@@ -304,16 +304,16 @@ void \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Bas
 
 
 
-Устанавливает на объект данную метатаблицу 
+РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РЅР° РѕР±СЉРµРєС‚ РґР°РЅРЅСѓСЋ РјРµС‚Р°С‚Р°Р±Р»РёС†Сѓ 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
-{\em T} & тип мететаблицы \\
+{\em T} & С‚РёРї РјРµС‚РµС‚Р°Р±Р»РёС†С‹ \\
 \hline
 \end{DoxyTemplParams}
 
 \begin{DoxyParams}{РђСЂРіСѓРјРµРЅС‚С‹}
-{\em value} & метатаблица \\
+{\em value} & РјРµС‚Р°С‚Р°Р±Р»РёС†Р° \\
 \hline
 \end{DoxyParams}
 \Hypertarget{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a}\label{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a} 
@@ -326,7 +326,7 @@ T \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}
 
 
 
-Преобразует объект к данному типу. 
+РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РѕР±СЉРµРєС‚ Рє РґР°РЅРЅРѕРјСѓ С‚РёРїСѓ. 
 
 
 \begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
@@ -345,7 +345,7 @@ const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_objec
 
 
 
-Возвращает строковую репрезентацию объекта. 
+Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєРѕРІСѓСЋ СЂРµРїСЂРµР·РµРЅС‚Р°С†РёСЋ РѕР±СЉРµРєС‚Р°. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 const char\texorpdfstring{$\ast$}{*} 
@@ -359,7 +359,7 @@ Type \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Bas
 
 
 
-Возвращает тип объекта. 
+Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РёРї РѕР±СЉРµРєС‚Р°. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 Type 
@@ -373,7 +373,7 @@ const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_objec
 
 
 
-Возвращает имя типа объекта. 
+Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРјСЏ С‚РёРїР° РѕР±СЉРµРєС‚Р°. 
 
 \begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
 const char\texorpdfstring{$\ast$}{*} 

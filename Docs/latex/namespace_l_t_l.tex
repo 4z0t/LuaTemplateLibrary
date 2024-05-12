@@ -1,0 +1,331 @@
+\doxysection{Пространство имен LTL}
+\hypertarget{namespace_l_t_l}{}\label{namespace_l_t_l}\index{LTL@{LTL}}
+
+
+Пространство имен Lua Template Library. Содержит все классы, которые может использовать пользователь.  
+
+
+\doxysubsubsection*{Пространства имен}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_l_t_l_1_1_meta_methods}{Meta\+Methods}}
+\begin{DoxyCompactList}\small\item\em Метаметоды ВМ Lua. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_a_getter}{AGetter}}
+\begin{DoxyCompactList}\small\item\em Класс для описания геттера пользовательского класса. Автоматически определяет класс и тип поля по его ссылке. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_always_valid}{Always\+Valid}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_a_property}{AProperty}}
+\begin{DoxyCompactList}\small\item\em Класс для описания свойства пользовательского класса. Автоматически определяет класс и тип поля по его ссылке. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_a_setter}{ASetter}}
+\begin{DoxyCompactList}\small\item\em Класс для описания сеттера пользовательского класса. Автоматически определяет класс и тип поля по его ссылке. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{CFunction}}
+\begin{DoxyCompactList}\small\item\em Класс для преобразования функции в универсальную функцию Lua. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_c_function_3_01fn_00_01_t_ret_07_t_args_8_8_8_08_4}{CFunction$<$ fn, TRet(\+TArgs...)$>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_check_optional}{Check\+Optional}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}
+\begin{DoxyCompactList}\small\item\em Класс для добавления пользовательского класса в ВМ Lua. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_constructor}{Constructor}}
+\begin{DoxyCompactList}\small\item\em Класс для преобразования конструктора в универсальную функцию. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}}
+\begin{DoxyCompactList}\small\item\em Класс контекста для \doxylink{class_l_t_l_1_1_ref}{Ref}. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно быть выполнено вручную. Используется только на стеке. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}
+\begin{DoxyCompactList}\small\item\em Класс-\/обертка, дублирующий функционал lua\+\_\+\+State\texorpdfstring{$\ast$}{*}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_default}{Default}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_exception}{Exception}}
+\begin{DoxyCompactList}\small\item\em Класс для исключений, возникающих внутри Lua. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_field_deductor}{Field\+Deductor}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_getter}{Getter}}
+\begin{DoxyCompactList}\small\item\em Класс для описания геттера пользовательского класса. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_getter_base}{Getter\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_global_value}{Global\+Value}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_is_upvalue_type}{Is\+Upvalue\+Type}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_is_upvalue_type_3_01_upvalue_3_01_t_01_4_01_4}{Is\+Upvalue\+Type$<$ Upvalue$<$ T $>$ $>$}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}}
+\begin{DoxyCompactList}\small\item\em Класс библиотеки ВМ Lua. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_match_argument_types}{Match\+Argument\+Types}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_meta_method_name}{Meta\+Method\+Name}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_method}{Method}}
+\begin{DoxyCompactList}\small\item\em Класс универсальной функции, преобразующий методы пользовательских типов для использования с \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}. Оборачивает пользовательские типы в \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_method_3_01fn_00_01_t_return_07_t_args_8_8_8_08_4}{Method$<$ fn, TReturn(\+TArgs...)$>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_mult_return}{Mult\+Return}}
+\begin{DoxyCompactList}\small\item\em Класс для возврата множества значений из функции. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_mult_return_base}{Mult\+Return\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_op_new_allocator}{Op\+New\+Allocator}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_optional_arg}{Optional\+Arg}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_optional_base}{Optional\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return_3_01void_01_4}{PCall\+Return$<$ void $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return_base}{PCall\+Return\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_property}{Property}}
+\begin{DoxyCompactList}\small\item\em Класс для описания свойства пользовательского класса. Совмещает в себе геттер и сеттер для поля. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_property_base}{Property\+Base}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}
+\begin{DoxyCompactList}\small\item\em Класс ссылки на объект внутри ВМ. представляет из себя только ссылку на объект без самой ВМ. Уничтожение объекта должно быть выполнено вручную. Имеется класс-\/обертка для работы со ссылаемым объектом \doxylink{class_l_t_l_1_1_context_ref}{Context\+Ref}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_ref_global_access}{Ref\+Global\+Access}}
+\begin{DoxyCompactList}\small\item\em Класс для доступа к объектам по ссылке внутри ВМ Lua. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{Ref\+Object}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Ref\+Object\+Base}}
+\begin{DoxyCompactList}\small\item\em Базовый класс для классов-\/ссылок. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_ref_table_entry_object}{Ref\+Table\+Entry\+Object}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_registry_table_base}{Registry\+Table\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_resullt_num}{Resullt\+Num}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_resullt_num_3_01_mult_return_3_01_ts_8_8_8_01_4_01_4}{Resullt\+Num$<$ Mult\+Return$<$ Ts... $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_setter}{Setter}}
+\begin{DoxyCompactList}\small\item\em Класс для описания сеттера пользовательского класса. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_setter_base}{Setter\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_index}{Stack\+Index}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}}
+\begin{DoxyCompactList}\small\item\em Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать. Очистка стека должна выполняться вручную. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_result}{Stack\+Result}}
+\begin{DoxyCompactList}\small\item\em Класс для возвращения количества результатов работы функции на стеке. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_result_getter}{Stack\+Result\+Getter}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_result_getter_3_01_mult_return_3_01_ts_8_8_8_01_4_01_4}{Stack\+Result\+Getter$<$ Mult\+Return$<$ Ts... $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_top_restorer}{Stack\+Top\+Restorer}}
+\begin{DoxyCompactList}\small\item\em Класс для восстановления стека после выхода из области видимости \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{Stack\+Type}}
+\begin{DoxyCompactList}\small\item\em Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответствие. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01bool_01_4}{Stack\+Type$<$ bool $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01char_01_4}{Stack\+Type$<$ char $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01const_01char_01_5_01_4}{Stack\+Type$<$ const char \texorpdfstring{$\ast$}{*} $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_c_state_01_5_01_4}{Stack\+Type$<$ CState \texorpdfstring{$\ast$}{*} $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01double_01_4}{Stack\+Type$<$ double $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01float_01_4}{Stack\+Type$<$ float $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_global_value_01_4}{Stack\+Type$<$ Global\+Value $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01int_01_4}{Stack\+Type$<$ int $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01long_01double_01_4}{Stack\+Type$<$ long double $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01long_01long_01_4}{Stack\+Type$<$ long long $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01lua___c_function_01_4}{Stack\+Type$<$ lua\+\_\+\+CFunction $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01lua___state_01_5_01_4}{Stack\+Type$<$ lua\+\_\+\+State \texorpdfstring{$\ast$}{*} $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_meta_method_name_01_4}{Stack\+Type$<$ Meta\+Method\+Name $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_ref_object_3_01_t_01_4_01_4}{Stack\+Type$<$ Ref\+Object$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_ref_table_entry_object_3_01_t_01_4_01_4}{Stack\+Type$<$ Ref\+Table\+Entry\+Object$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01short_01_4}{Stack\+Type$<$ short $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_stack_index_3_01_index_01_4_01_4}{Stack\+Type$<$ Stack\+Index$<$ Index $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_stack_object_view_01_4}{Stack\+Type$<$ Stack\+Object\+View $>$}}
+\begin{DoxyCompactList}\small\item\em Реализация преобразования типа на стеке для \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1nullptr__t_01_4}{Stack\+Type$<$ std\+::nullptr\+\_\+t $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1optional_3_01_t_01_4_01_4}{Stack\+Type$<$ std\+::optional$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1string_01_4}{Stack\+Type$<$ std\+::string $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1string__view_01_4}{Stack\+Type$<$ std\+::string\+\_\+view $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1unordered__map_3_01_k_00_01_v_01_4_01_4}{Stack\+Type$<$ std\+::unordered\+\_\+map$<$ K, V $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01std_1_1vector_3_01_t_01_4_01_4}{Stack\+Type$<$ std\+::vector$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_t_opt_00_01_enable_if_optional_arg_3_01_t_opt_01_4_01_4}{Stack\+Type$<$ TOpt, Enable\+If\+Optional\+Arg$<$ TOpt $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01unsigned_01char_01_4}{Stack\+Type$<$ unsigned char $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01unsigned_01int_01_4}{Stack\+Type$<$ unsigned int $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01unsigned_01long_01long_01_4}{Stack\+Type$<$ unsigned long long $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01unsigned_01short_01_4}{Stack\+Type$<$ unsigned short $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01_user_data_3_01_t_01_4_01_4}{Stack\+Type$<$ User\+Data$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_3_01void_01_4}{Stack\+Type$<$ void $>$}}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}
+\begin{DoxyCompactList}\small\item\em Класс состояния виртуальной машины Lua. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_table_checker}{Table\+Checker}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_type_base}{Type\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_unwrap}{Unwrap}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_unwrap_3_01_t_00_01_enable_if_unwrappable_3_01_t_01_4_01_4}{Unwrap$<$ T, Enable\+If\+Unwrappable$<$ T $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_unwrap_type_base}{Unwrap\+Type\+Base}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_upvalue}{Upvalue}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{User\+Data}}
+\begin{DoxyCompactList}\small\item\em Класс представляющий пользовательский тип в Lua. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Определения типов}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespace_l_t_l_a58cc7a7c9f8838cf1b84dd526d2bd866}\label{namespace_l_t_l_a58cc7a7c9f8838cf1b84dd526d2bd866} 
+{\footnotesize template$<$typename T $>$ }\\using {\bfseries Enable\+If\+Unwrappable} = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+base\+\_\+of\+\_\+v$<$\mbox{\hyperlink{struct_l_t_l_1_1_unwrap_type_base}{Unwrap\+Type\+Base}}, T$>$$>$
+\item 
+\Hypertarget{namespace_l_t_l_a617d749fae2ad14665ac8b6795b46850}\label{namespace_l_t_l_a617d749fae2ad14665ac8b6795b46850} 
+{\footnotesize template$<$typename T $>$ }\\using {\bfseries Enable\+If\+Optional\+Arg} = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+base\+\_\+of\+\_\+v$<$\mbox{\hyperlink{struct_l_t_l_1_1_optional_arg}{Optional\+Arg}}, T$>$$>$
+\item 
+\Hypertarget{namespace_l_t_l_a4b6b635ba88381df723fe50b8bdfd192}\label{namespace_l_t_l_a4b6b635ba88381df723fe50b8bdfd192} 
+{\footnotesize template$<$typename T , typename Derived\+From\+Super  = void$>$ }\\using {\bfseries Unwrap\+\_\+t} = typename \mbox{\hyperlink{struct_l_t_l_1_1_unwrap}{Unwrap}}$<$T, Derived\+From\+Super$>$\+::type
+\item 
+\Hypertarget{namespace_l_t_l_a494d20586c141e641174b43380bcfeeb}\label{namespace_l_t_l_a494d20586c141e641174b43380bcfeeb} 
+{\footnotesize template$<$typename T $>$ }\\using {\bfseries const\+\_\+decay\+\_\+t} = std\+::decay\+\_\+t$<$const T$>$
+\item 
+\Hypertarget{namespace_l_t_l_acda3a20d813dece1bff8207ec5d0131b}\label{namespace_l_t_l_acda3a20d813dece1bff8207ec5d0131b} 
+using {\bfseries GRef\+Object} = \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{Ref\+Object}}$<$\mbox{\hyperlink{struct_l_t_l_1_1_ref_global_access}{Ref\+Global\+Access}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Перечисления}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespace_l_t_l_adb99935f421d3d24433048f9eb4f1964}\label{namespace_l_t_l_adb99935f421d3d24433048f9eb4f1964} 
+enum class {\bfseries PCall\+Result} \+: int \{ \newline
+{\bfseries Ok} = LUA\+\_\+\+OK
+, {\bfseries Yield} = LUA\+\_\+\+YIELD
+, {\bfseries ERRRUN} = LUA\+\_\+\+ERRRUN
+, {\bfseries ERRSYNTAX} = LUA\+\_\+\+ERRSYNTAX
+, \newline
+{\bfseries ERRMEM} = LUA\+\_\+\+ERRMEM
+, {\bfseries ERRERR} = LUA\+\_\+\+ERRERR
+ \}
+\item 
+\Hypertarget{namespace_l_t_l_a4f93707b2abeb10297d03f356a42aa96}\label{namespace_l_t_l_a4f93707b2abeb10297d03f356a42aa96} 
+enum class {\bfseries Type} \+: int \{ \newline
+{\bfseries None} = LUA\+\_\+\+TNONE
+, {\bfseries Nil} = LUA\+\_\+\+TNIL
+, {\bfseries Boolean} = LUA\+\_\+\+TBOOLEAN
+, {\bfseries Lightdata} = LUA\+\_\+\+TLIGHTUSERDATA
+, \newline
+{\bfseries Number} = LUA\+\_\+\+TNUMBER
+, {\bfseries String} = LUA\+\_\+\+TSTRING
+, {\bfseries Table} = LUA\+\_\+\+TTABLE
+, {\bfseries Function} = LUA\+\_\+\+TFUNCTION
+, \newline
+{\bfseries Userdata} = LUA\+\_\+\+TUSERDATA
+, {\bfseries Thread} = LUA\+\_\+\+TTHREAD
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespace_l_t_l_a0105baa1db7e646a4bf0aa22ad7eeae7}\label{namespace_l_t_l_a0105baa1db7e646a4bf0aa22ad7eeae7} 
+\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Wrap\+State} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{namespace_l_t_l_a5eac4500541ee8b0a584903eea86bc34}\label{namespace_l_t_l_a5eac4500541ee8b0a584903eea86bc34} 
+{\footnotesize template$<$typename T $>$ }\\T {\bfseries Get\+Value} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\item 
+\Hypertarget{namespace_l_t_l_a62c47fcc4680e0dac1f78394528164af}\label{namespace_l_t_l_a62c47fcc4680e0dac1f78394528164af} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries Push\+Value} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const T \&arg)
+\item 
+\Hypertarget{namespace_l_t_l_a95b763837e6e2b3bfdf10854d875c741}\label{namespace_l_t_l_a95b763837e6e2b3bfdf10854d875c741} 
+{\footnotesize template$<$size\+\_\+t N$>$ }\\size\+\_\+t {\bfseries \+\_\+\+Push\+Args} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{namespace_l_t_l_ac7294554424048e4b167de16d8ebd396}\label{namespace_l_t_l_ac7294554424048e4b167de16d8ebd396} 
+{\footnotesize template$<$size\+\_\+t N, typename T , typename ... Ts$>$ }\\size\+\_\+t {\bfseries \+\_\+\+Push\+Args} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, T \&\&arg, Ts \&\&... args)
+\item 
+\Hypertarget{namespace_l_t_l_a64c685f0df4886011cf9f298c4f2b935}\label{namespace_l_t_l_a64c685f0df4886011cf9f298c4f2b935} 
+{\footnotesize template$<$typename ... Ts$>$ }\\size\+\_\+t {\bfseries Push\+Args} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Ts \&\&...args)
+\item 
+\Hypertarget{namespace_l_t_l_afd098baaaa00355bcdc74b123eb445f9}\label{namespace_l_t_l_afd098baaaa00355bcdc74b123eb445f9} 
+void {\bfseries Register\+Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const char \texorpdfstring{$\ast$}{*}name, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{namespace_l_t_l_a1cb4d22a458772dd985a9b6126af118b}\label{namespace_l_t_l_a1cb4d22a458772dd985a9b6126af118b} 
+void {\bfseries Register\+Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const std\+::string \&name, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{namespace_l_t_l_a91642b7c5ba3397544ac9f026e766fd8}\label{namespace_l_t_l_a91642b7c5ba3397544ac9f026e766fd8} 
+{\footnotesize template$<$typename ... Ts$>$ }\\void {\bfseries Register\+Closure} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const char \texorpdfstring{$\ast$}{*}name, lua\+\_\+\+CFunction func, Ts \&\&... args)
+\item 
+\Hypertarget{namespace_l_t_l_ad2ca73610c773a54cdb8fee6409d0e7a}\label{namespace_l_t_l_ad2ca73610c773a54cdb8fee6409d0e7a} 
+{\footnotesize template$<$int Index, size\+\_\+t N, typename Tuple $>$ }\\constexpr void {\bfseries \+\_\+\+Get\+Tuple\+From\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Tuple \&tpl)
+\item 
+\Hypertarget{namespace_l_t_l_a5b635385dd33f38928892d992a646e74}\label{namespace_l_t_l_a5b635385dd33f38928892d992a646e74} 
+{\footnotesize template$<$int Index, size\+\_\+t N, typename Tuple , typename TArg , typename ... TArgs$>$ }\\constexpr void {\bfseries \+\_\+\+Get\+Tuple\+From\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Tuple \&tpl)
+\item 
+\Hypertarget{namespace_l_t_l_af89ba1d80beeac59add7eab505105e66}\label{namespace_l_t_l_af89ba1d80beeac59add7eab505105e66} 
+{\footnotesize template$<$int Index, typename ... TArgs$>$ }\\constexpr decltype(auto) {\bfseries Get\+Tuple\+From\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{namespace_l_t_l_ab044894f9682ec7a8fab01740832ac90}\label{namespace_l_t_l_ab044894f9682ec7a8fab01740832ac90} 
+{\footnotesize template$<$typename TReturn  = void$>$ }\\TReturn {\bfseries Call\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const size\+\_\+t n\+\_\+args)
+\item 
+\Hypertarget{namespace_l_t_l_a61dada79dbf2fedc0089d59c2ad828f6}\label{namespace_l_t_l_a61dada79dbf2fedc0089d59c2ad828f6} 
+template$<$$>$ void {\bfseries Call\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const size\+\_\+t n\+\_\+args)
+\item 
+\Hypertarget{namespace_l_t_l_ab6964264d1d711ae6344d3ef5a2ba4f2}\label{namespace_l_t_l_ab6964264d1d711ae6344d3ef5a2ba4f2} 
+{\footnotesize template$<$typename TReturn  = void$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ {\bfseries PCall\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const size\+\_\+t n\+\_\+args)
+\item 
+\Hypertarget{namespace_l_t_l_a3aaa84911af07e6e46a05cce02a24580}\label{namespace_l_t_l_a3aaa84911af07e6e46a05cce02a24580} 
+template$<$$>$ \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ void $>$ {\bfseries PCall\+Stack} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const size\+\_\+t n\+\_\+args)
+\item 
+\Hypertarget{namespace_l_t_l_adc9f276eceaed0ad6b7e2a94065b6a78}\label{namespace_l_t_l_adc9f276eceaed0ad6b7e2a94065b6a78} 
+{\footnotesize template$<$typename TReturn  = void, typename F , typename ... TArgs$>$ }\\TReturn {\bfseries Call\+Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const F \&func, TArgs \&\&...args)
+\item 
+\Hypertarget{namespace_l_t_l_a8dcae6b7a15daced0675e1c58b272c90}\label{namespace_l_t_l_a8dcae6b7a15daced0675e1c58b272c90} 
+{\footnotesize template$<$typename TReturn  = void, typename F , typename ... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ {\bfseries PCall\+Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const F \&func, TArgs \&\&...args)
+\item 
+\Hypertarget{namespace_l_t_l_adf04ff9475e2b41fe7810a7d7ee695fc}\label{namespace_l_t_l_adf04ff9475e2b41fe7810a7d7ee695fc} 
+{\footnotesize template$<$size\+\_\+t Index, typename TResult $>$ }\\size\+\_\+t {\bfseries \+\_\+\+Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TResult \&result)
+\item 
+\Hypertarget{namespace_l_t_l_a238f5ef8e3e06ebb92aff8a7a1b3dd5a}\label{namespace_l_t_l_a238f5ef8e3e06ebb92aff8a7a1b3dd5a} 
+{\footnotesize template$<$size\+\_\+t Index, typename TResult , typename T , typename ... Ts$>$ }\\size\+\_\+t {\bfseries \+\_\+\+Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TResult \&result)
+\item 
+\Hypertarget{namespace_l_t_l_ac74397afdc3e335372fcb6ab171ab57a}\label{namespace_l_t_l_ac74397afdc3e335372fcb6ab171ab57a} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries \+\_\+\+Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const T \&result)
+\item 
+\Hypertarget{namespace_l_t_l_a63d23024ebf17fdf464edd70c81d3790}\label{namespace_l_t_l_a63d23024ebf17fdf464edd70c81d3790} 
+{\footnotesize template$<$typename UnwrappedT , typename T  = UnwrappedT$>$ }\\size\+\_\+t {\bfseries Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, UnwrappedT \&result)
+\item 
+\Hypertarget{namespace_l_t_l_ac08e3fec3e1b3de3efb1531b60dbe893}\label{namespace_l_t_l_ac08e3fec3e1b3de3efb1531b60dbe893} 
+{\footnotesize template$<$typename ... Ts$>$ }\\size\+\_\+t {\bfseries Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{struct_l_t_l_1_1_mult_return}{Mult\+Return}}$<$ Ts... $>$ \&result)
+\item 
+\Hypertarget{namespace_l_t_l_a7706979f7bf3a27866625d1d06a1a415}\label{namespace_l_t_l_a7706979f7bf3a27866625d1d06a1a415} 
+template$<$$>$ size\+\_\+t {\bfseries Push\+Result} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, \mbox{\hyperlink{struct_l_t_l_1_1_stack_result}{Stack\+Result}} \&result)
+\item 
+\Hypertarget{namespace_l_t_l_adc5dd860b5f2ff4124694f2c13410b83}\label{namespace_l_t_l_adc5dd860b5f2ff4124694f2c13410b83} 
+{\footnotesize template$<$size\+\_\+t Index, typename TResult $>$ }\\constexpr size\+\_\+t {\bfseries \+\_\+\+Replace\+Upvalue} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TResult \&upvalues)
+\item 
+\Hypertarget{namespace_l_t_l_a4b3afe8b99edba5e5e1b3a7e4e525ffa}\label{namespace_l_t_l_a4b3afe8b99edba5e5e1b3a7e4e525ffa} 
+{\footnotesize template$<$size\+\_\+t Index, typename TResult , typename T , typename ... Ts$>$ }\\size\+\_\+t {\bfseries \+\_\+\+Replace\+Upvalue} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TResult \&upvalues)
+\item 
+\Hypertarget{namespace_l_t_l_a58ed225eba2d134ad96420b7fc0b2213}\label{namespace_l_t_l_a58ed225eba2d134ad96420b7fc0b2213} 
+{\footnotesize template$<$typename ... CArgs$>$ }\\void {\bfseries Replace\+Upvalues} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, std\+::tuple$<$ CArgs... $>$ \&upvalues)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Пространство имен Lua Template Library. Содержит все классы, которые может использовать пользователь. 
