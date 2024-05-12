@@ -52,7 +52,7 @@ namespace LTL
          * @param l
          * @return void* const
          */
-        static T* const  Allocate(lua_State* l)
+        static T* const Allocate(lua_State* l)
         {
             Data* const data = (Data*)lua_newuserdata(l, sizeof(Data));
             data->isDestroyed = false;
@@ -309,7 +309,7 @@ namespace LTL
 #pragma region ThrowFunctions
         static void ThrowInvalidUserData(lua_State* l, int index)
         {
-            luaL_argerror(l, index, "invalind UserData");
+            luaL_argerror(l, index, "Invalind UserData");
         }
 
         static void ThrowWrongUserDataType(lua_State* l, int index)
@@ -329,7 +329,7 @@ namespace LTL
 
         static void ThrowUDDestroyed(lua_State* l, int index)
         {
-            luaL_argerror(l, index, "Userdata was destroyed");
+            luaL_argerror(l, index, "Userdata has been destroyed");
         }
 #pragma endregion
     };
