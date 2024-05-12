@@ -98,6 +98,11 @@ namespace LTL
             lua_pushvalue(m_state, m_index);
         }
 
+        bool Next()const
+        {
+            return lua_next(m_state, m_index);
+        }
+
         const char *ToString() const
         {
             const char *s = luaL_tolstring(m_state, m_index, nullptr);
