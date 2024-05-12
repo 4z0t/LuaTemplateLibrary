@@ -1,0 +1,1766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: Класс LTL::StackObjectView</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>LTL</b></li><li class="navelem"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pub-static-methods">Открытые статические члены</a> &#124;
+<a href="#pro-attribs">Защищенные данные</a> &#124;
+<a href="#friends">Друзья</a> &#124;
+<a href="class_l_t_l_1_1_stack_object_view-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Класс LTL::StackObjectView</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать. Очистка стека должна выполняться вручную.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_stack_object_8hpp_source.html">StackObject.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a987a7cecc67196027768f6b52e27badb" id="r_a987a7cecc67196027768f6b52e27badb"><td class="memItemLeft" align="right" valign="top"><a id="a987a7cecc67196027768f6b52e27badb" name="a987a7cecc67196027768f6b52e27badb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>StackObjectView</b> ()=default</td></tr>
+<tr class="memdesc:a987a7cecc67196027768f6b52e27badb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Для внутреннего использования. Не использовать самому. <br /></td></tr>
+<tr class="separator:a987a7cecc67196027768f6b52e27badb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a878ac1e4d6d80b9540dd0df626d88031" id="r_a878ac1e4d6d80b9540dd0df626d88031"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a878ac1e4d6d80b9540dd0df626d88031">StackObjectView</a> (lua_State *l, int index=-1)</td></tr>
+<tr class="memdesc:a878ac1e4d6d80b9540dd0df626d88031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Назначает индекс объекта на стеке.  <br /></td></tr>
+<tr class="separator:a878ac1e4d6d80b9540dd0df626d88031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e0839fa1b663c2e6a77a7b3aeedd511" id="r_a1e0839fa1b663c2e6a77a7b3aeedd511"><td class="memItemLeft" align="right" valign="top"><a id="a1e0839fa1b663c2e6a77a7b3aeedd511" name="a1e0839fa1b663c2e6a77a7b3aeedd511"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>StackObjectView</b> (<a class="el" href="class_l_t_l_1_1_c_state.html">CState</a> *cstate, int index=-1)</td></tr>
+<tr class="separator:a1e0839fa1b663c2e6a77a7b3aeedd511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dc9bd84fc284247848b33cec795174a" id="r_a7dc9bd84fc284247848b33cec795174a"><td class="memTemplParams" colspan="2"><a id="a7dc9bd84fc284247848b33cec795174a" name="a7dc9bd84fc284247848b33cec795174a"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7dc9bd84fc284247848b33cec795174a"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>StackObjectView</b> (const <a class="el" href="class_l_t_l_1_1_state.html">State</a>&lt; T &gt; &amp;state, int index=-1)</td></tr>
+<tr class="separator:a7dc9bd84fc284247848b33cec795174a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12c4b56a3ea400afb4ba2f9a276d7969" id="r_a12c4b56a3ea400afb4ba2f9a276d7969"><td class="memItemLeft" align="right" valign="top"><a id="a12c4b56a3ea400afb4ba2f9a276d7969" name="a12c4b56a3ea400afb4ba2f9a276d7969"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>StackObjectView</b> (const <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;other)=default</td></tr>
+<tr class="separator:a12c4b56a3ea400afb4ba2f9a276d7969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57991d48b73be0a1325e79b391b83d93" id="r_a57991d48b73be0a1325e79b391b83d93"><td class="memItemLeft" align="right" valign="top"><a id="a57991d48b73be0a1325e79b391b83d93" name="a57991d48b73be0a1325e79b391b83d93"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>StackObjectView</b> (<a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;&amp;other)=default</td></tr>
+<tr class="separator:a57991d48b73be0a1325e79b391b83d93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3288ced5ce265263ca8c90ba4235768a" id="r_a3288ced5ce265263ca8c90ba4235768a"><td class="memItemLeft" align="right" valign="top"><a id="a3288ced5ce265263ca8c90ba4235768a" name="a3288ced5ce265263ca8c90ba4235768a"></a>
+<a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;other)=default</td></tr>
+<tr class="separator:a3288ced5ce265263ca8c90ba4235768a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad98913270f393a9298fe6bef127cbd63" id="r_ad98913270f393a9298fe6bef127cbd63"><td class="memItemLeft" align="right" valign="top"><a id="ad98913270f393a9298fe6bef127cbd63" name="ad98913270f393a9298fe6bef127cbd63"></a>
+<a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;&amp;other)=default</td></tr>
+<tr class="separator:ad98913270f393a9298fe6bef127cbd63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa35b36f4549dbe32d1d87a4df3d2875" id="r_afa35b36f4549dbe32d1d87a4df3d2875"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:afa35b36f4549dbe32d1d87a4df3d2875"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afa35b36f4549dbe32d1d87a4df3d2875">To</a> () const</td></tr>
+<tr class="memdesc:afa35b36f4549dbe32d1d87a4df3d2875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразует объект к данному типу.  <br /></td></tr>
+<tr class="separator:afa35b36f4549dbe32d1d87a4df3d2875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae6497bf228436aa8a41792513c1d6e" id="r_abae6497bf228436aa8a41792513c1d6e"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="#a052fa465cbfbd1eba8af0116f262693a">Type</a> LType&gt; </td></tr>
+<tr class="memitem:abae6497bf228436aa8a41792513c1d6e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abae6497bf228436aa8a41792513c1d6e">Is</a> () const</td></tr>
+<tr class="memdesc:abae6497bf228436aa8a41792513c1d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет является ли объект заданного типа.  <br /></td></tr>
+<tr class="separator:abae6497bf228436aa8a41792513c1d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a052fa465cbfbd1eba8af0116f262693a" id="r_a052fa465cbfbd1eba8af0116f262693a"><td class="memItemLeft" align="right" valign="top">Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a052fa465cbfbd1eba8af0116f262693a">Type</a> () const</td></tr>
+<tr class="memdesc:a052fa465cbfbd1eba8af0116f262693a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает тип объекта на стеке  <br /></td></tr>
+<tr class="separator:a052fa465cbfbd1eba8af0116f262693a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae6497bf228436aa8a41792513c1d6e" id="r_abae6497bf228436aa8a41792513c1d6e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:abae6497bf228436aa8a41792513c1d6e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abae6497bf228436aa8a41792513c1d6e">Is</a> () const</td></tr>
+<tr class="memdesc:abae6497bf228436aa8a41792513c1d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет является ли объект заданного типа.  <br /></td></tr>
+<tr class="separator:abae6497bf228436aa8a41792513c1d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a839f818ca175d86afb4a37cb7a27eee1" id="r_a839f818ca175d86afb4a37cb7a27eee1"><td class="memItemLeft" align="right" valign="top"><a id="a839f818ca175d86afb4a37cb7a27eee1" name="a839f818ca175d86afb4a37cb7a27eee1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Push</b> () const</td></tr>
+<tr class="memdesc:a839f818ca175d86afb4a37cb7a27eee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Помещает объект на стек. <br /></td></tr>
+<tr class="separator:a839f818ca175d86afb4a37cb7a27eee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3cf662c189375e0237c1025ac8ecf90" id="r_af3cf662c189375e0237c1025ac8ecf90"><td class="memItemLeft" align="right" valign="top"><a id="af3cf662c189375e0237c1025ac8ecf90" name="af3cf662c189375e0237c1025ac8ecf90"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Next</b> () const</td></tr>
+<tr class="separator:af3cf662c189375e0237c1025ac8ecf90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d597d6df7274969e6f4dc35640af782" id="r_a6d597d6df7274969e6f4dc35640af782"><td class="memItemLeft" align="right" valign="top"><a id="a6d597d6df7274969e6f4dc35640af782" name="a6d597d6df7274969e6f4dc35640af782"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> () const</td></tr>
+<tr class="separator:a6d597d6df7274969e6f4dc35640af782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb686b8c158f0bb1cc95c3bb21c598f0" id="r_adb686b8c158f0bb1cc95c3bb21c598f0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:adb686b8c158f0bb1cc95c3bb21c598f0"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adb686b8c158f0bb1cc95c3bb21c598f0">operator==</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:adb686b8c158f0bb1cc95c3bb21c598f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:adb686b8c158f0bb1cc95c3bb21c598f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b40c1f7b6275273ab3d5edd4355046c" id="r_a9b40c1f7b6275273ab3d5edd4355046c"><td class="memItemLeft" align="right" valign="top"><a id="a9b40c1f7b6275273ab3d5edd4355046c" name="a9b40c1f7b6275273ab3d5edd4355046c"></a>
+template&lt;&gt; </td></tr>
+<tr class="memitem:a9b40c1f7b6275273ab3d5edd4355046c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const std::nullptr_t &amp;) const</td></tr>
+<tr class="separator:a9b40c1f7b6275273ab3d5edd4355046c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04aa29181747a8d9a486d460a4817046" id="r_a04aa29181747a8d9a486d460a4817046"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a04aa29181747a8d9a486d460a4817046"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a04aa29181747a8d9a486d460a4817046">operator!=</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a04aa29181747a8d9a486d460a4817046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:a04aa29181747a8d9a486d460a4817046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d79cbee91999c5d363448f232fa08b" id="r_a14d79cbee91999c5d363448f232fa08b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a14d79cbee91999c5d363448f232fa08b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a14d79cbee91999c5d363448f232fa08b">operator&lt;=</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a14d79cbee91999c5d363448f232fa08b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:a14d79cbee91999c5d363448f232fa08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1338d73c5e7a2ae2e23fc8045811436" id="r_ae1338d73c5e7a2ae2e23fc8045811436"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ae1338d73c5e7a2ae2e23fc8045811436"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae1338d73c5e7a2ae2e23fc8045811436">operator&gt;</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:ae1338d73c5e7a2ae2e23fc8045811436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:ae1338d73c5e7a2ae2e23fc8045811436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa130e31a625cae1316867d31fb3bb5" id="r_adaa130e31a625cae1316867d31fb3bb5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:adaa130e31a625cae1316867d31fb3bb5"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adaa130e31a625cae1316867d31fb3bb5">operator&lt;</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:adaa130e31a625cae1316867d31fb3bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:adaa130e31a625cae1316867d31fb3bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7f53d6ac8cfbbf7523dc93abd1af92" id="r_a6f7f53d6ac8cfbbf7523dc93abd1af92"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6f7f53d6ac8cfbbf7523dc93abd1af92"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6f7f53d6ac8cfbbf7523dc93abd1af92">operator&gt;=</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a6f7f53d6ac8cfbbf7523dc93abd1af92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов с использованием метаметода  <br /></td></tr>
+<tr class="separator:a6f7f53d6ac8cfbbf7523dc93abd1af92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9780633c9ef882af72854ad1667c7230" id="r_a9780633c9ef882af72854ad1667c7230"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9780633c9ef882af72854ad1667c7230"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a9780633c9ef882af72854ad1667c7230">RawEqual</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a9780633c9ef882af72854ad1667c7230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов без вызова метаметода  <br /></td></tr>
+<tr class="separator:a9780633c9ef882af72854ad1667c7230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1316b0139de91dcd1affd8fadca61850" id="r_a1316b0139de91dcd1affd8fadca61850"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:a1316b0139de91dcd1affd8fadca61850"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1316b0139de91dcd1affd8fadca61850">RawEqual</a> (const <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;value) const</td></tr>
+<tr class="memdesc:a1316b0139de91dcd1affd8fadca61850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Результат сравнения объектов без вызова метаметода  <br /></td></tr>
+<tr class="separator:a1316b0139de91dcd1affd8fadca61850"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2137397924756d34afe2bb2e81977fa" id="r_ab2137397924756d34afe2bb2e81977fa"><td class="memTemplParams" colspan="2">template&lt;typename R , typename T &gt; </td></tr>
+<tr class="memitem:ab2137397924756d34afe2bb2e81977fa"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab2137397924756d34afe2bb2e81977fa">Get</a> (const T &amp;key) const</td></tr>
+<tr class="memdesc:ab2137397924756d34afe2bb2e81977fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по заданному ключу с вызовом метаметода  <br /></td></tr>
+<tr class="separator:ab2137397924756d34afe2bb2e81977fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a331a5f75d0d02853d300e2a92c2204b9" id="r_a331a5f75d0d02853d300e2a92c2204b9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a331a5f75d0d02853d300e2a92c2204b9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a331a5f75d0d02853d300e2a92c2204b9">Get</a> (const T &amp;key) const</td></tr>
+<tr class="memdesc:a331a5f75d0d02853d300e2a92c2204b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по ключу с вызовом метаметода  <br /></td></tr>
+<tr class="separator:a331a5f75d0d02853d300e2a92c2204b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d171d59fd550e184f88e1853f646500" id="r_a1d171d59fd550e184f88e1853f646500"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:a1d171d59fd550e184f88e1853f646500"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1d171d59fd550e184f88e1853f646500">GetI</a> (lua_Integer index) const</td></tr>
+<tr class="memdesc:a1d171d59fd550e184f88e1853f646500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по заданному индексу с вызовом метаметода  <br /></td></tr>
+<tr class="separator:a1d171d59fd550e184f88e1853f646500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a970ab982dba343cf3890837092fff18e" id="r_a970ab982dba343cf3890837092fff18e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a970ab982dba343cf3890837092fff18e">GetI</a> (lua_Integer index) const</td></tr>
+<tr class="memdesc:a970ab982dba343cf3890837092fff18e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Помещает на стек значение по заданному индексу с вызовом метаметода  <br /></td></tr>
+<tr class="separator:a970ab982dba343cf3890837092fff18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49356681dfe2968896c07d2b579f7757" id="r_a49356681dfe2968896c07d2b579f7757"><td class="memTemplParams" colspan="2">template&lt;typename K , typename V &gt; </td></tr>
+<tr class="memitem:a49356681dfe2968896c07d2b579f7757"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a49356681dfe2968896c07d2b579f7757">Set</a> (const K &amp;key, const V &amp;value) const</td></tr>
+<tr class="memdesc:a49356681dfe2968896c07d2b579f7757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает по ключу значение на объект с вызовом метаметода  <br /></td></tr>
+<tr class="separator:a49356681dfe2968896c07d2b579f7757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf5e6316b23dfdd74c4cda19f63be67f" id="r_aaf5e6316b23dfdd74c4cda19f63be67f"><td class="memTemplParams" colspan="2">template&lt;typename V &gt; </td></tr>
+<tr class="memitem:aaf5e6316b23dfdd74c4cda19f63be67f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aaf5e6316b23dfdd74c4cda19f63be67f">SetI</a> (lua_Integer i, const V &amp;value) const</td></tr>
+<tr class="memdesc:aaf5e6316b23dfdd74c4cda19f63be67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает по индексу значение на объект с вызовом метаметода  <br /></td></tr>
+<tr class="separator:aaf5e6316b23dfdd74c4cda19f63be67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe43a1b452ac60850fae363cae37767e" id="r_afe43a1b452ac60850fae363cae37767e"><td class="memTemplParams" colspan="2">template&lt;typename R , typename T &gt; </td></tr>
+<tr class="memitem:afe43a1b452ac60850fae363cae37767e"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afe43a1b452ac60850fae363cae37767e">RawGet</a> (const T &amp;key) const</td></tr>
+<tr class="memdesc:afe43a1b452ac60850fae363cae37767e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по ключу без вызова метаметода  <br /></td></tr>
+<tr class="separator:afe43a1b452ac60850fae363cae37767e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae03bcb0083ebb3facfc317a1195fe506" id="r_ae03bcb0083ebb3facfc317a1195fe506"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ae03bcb0083ebb3facfc317a1195fe506"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae03bcb0083ebb3facfc317a1195fe506">RawGet</a> (const T &amp;key) const</td></tr>
+<tr class="memdesc:ae03bcb0083ebb3facfc317a1195fe506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по ключу без вызова метаметода  <br /></td></tr>
+<tr class="separator:ae03bcb0083ebb3facfc317a1195fe506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4722400e7c00bf7dbf96555f04cdfff6" id="r_a4722400e7c00bf7dbf96555f04cdfff6"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:a4722400e7c00bf7dbf96555f04cdfff6"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4722400e7c00bf7dbf96555f04cdfff6">RawGetI</a> (lua_Integer i) const</td></tr>
+<tr class="memdesc:a4722400e7c00bf7dbf96555f04cdfff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает значение по индексу без вызова метаметода  <br /></td></tr>
+<tr class="separator:a4722400e7c00bf7dbf96555f04cdfff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70130ba629e8005c4424f236d4aa989" id="r_af70130ba629e8005c4424f236d4aa989"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af70130ba629e8005c4424f236d4aa989">RawGetI</a> (lua_Integer i) const</td></tr>
+<tr class="memdesc:af70130ba629e8005c4424f236d4aa989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Помещает на стек значение по индексу без вызова метаметода  <br /></td></tr>
+<tr class="separator:af70130ba629e8005c4424f236d4aa989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825a702eb52f2b619d599eedbab3d2d0" id="r_a825a702eb52f2b619d599eedbab3d2d0"><td class="memTemplParams" colspan="2">template&lt;typename V &gt; </td></tr>
+<tr class="memitem:a825a702eb52f2b619d599eedbab3d2d0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a825a702eb52f2b619d599eedbab3d2d0">RawSetI</a> (lua_Integer i, const V &amp;value) const</td></tr>
+<tr class="memdesc:a825a702eb52f2b619d599eedbab3d2d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает значение с заданным индексом на объект без вызова метаметодов.  <br /></td></tr>
+<tr class="separator:a825a702eb52f2b619d599eedbab3d2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67fe64416da1fc6a9f3bc5e8933f349e" id="r_a67fe64416da1fc6a9f3bc5e8933f349e"><td class="memTemplParams" colspan="2">template&lt;typename K , typename V &gt; </td></tr>
+<tr class="memitem:a67fe64416da1fc6a9f3bc5e8933f349e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a67fe64416da1fc6a9f3bc5e8933f349e">RawSet</a> (const K &amp;key, const V &amp;value) const</td></tr>
+<tr class="memdesc:a67fe64416da1fc6a9f3bc5e8933f349e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает значение с заданным ключом на объект без вызова метаметодов.  <br /></td></tr>
+<tr class="separator:a67fe64416da1fc6a9f3bc5e8933f349e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679b426917a40dd724f5e3aedb729a58" id="r_a679b426917a40dd724f5e3aedb729a58"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:a679b426917a40dd724f5e3aedb729a58"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a679b426917a40dd724f5e3aedb729a58">Len</a> () const</td></tr>
+<tr class="memdesc:a679b426917a40dd724f5e3aedb729a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen.  <br /></td></tr>
+<tr class="separator:a679b426917a40dd724f5e3aedb729a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b0ee8e4417dec59dd3217e1cdbc5ce" id="r_af6b0ee8e4417dec59dd3217e1cdbc5ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6b0ee8e4417dec59dd3217e1cdbc5ce">Len</a> () const</td></tr>
+<tr class="memdesc:af6b0ee8e4417dec59dd3217e1cdbc5ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen.  <br /></td></tr>
+<tr class="separator:af6b0ee8e4417dec59dd3217e1cdbc5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2084d6b000c55996ea80029ec2a8f8c3" id="r_a2084d6b000c55996ea80029ec2a8f8c3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2084d6b000c55996ea80029ec2a8f8c3">RawLen</a> () const</td></tr>
+<tr class="memdesc:a2084d6b000c55996ea80029ec2a8f8c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает необработанную длину объекта.  <br /></td></tr>
+<tr class="separator:a2084d6b000c55996ea80029ec2a8f8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a587641114ab1ed5b9d0d4cb0d9757185" id="r_a587641114ab1ed5b9d0d4cb0d9757185"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a587641114ab1ed5b9d0d4cb0d9757185">GetMetaTable</a> () const</td></tr>
+<tr class="memdesc:a587641114ab1ed5b9d0d4cb0d9757185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает <a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> с метатаблицей объекта. Если ее нет возвращает nil.  <br /></td></tr>
+<tr class="separator:a587641114ab1ed5b9d0d4cb0d9757185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86ac1222c69842e1a4af5c53187836a7" id="r_a86ac1222c69842e1a4af5c53187836a7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a86ac1222c69842e1a4af5c53187836a7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a86ac1222c69842e1a4af5c53187836a7">SetMetaTable</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a86ac1222c69842e1a4af5c53187836a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает на объект данную метатаблицу  <br /></td></tr>
+<tr class="separator:a86ac1222c69842e1a4af5c53187836a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac69ddc44430dc734e0f3d6f99e15c866" id="r_ac69ddc44430dc734e0f3d6f99e15c866"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... TArgs&gt; </td></tr>
+<tr class="memitem:ac69ddc44430dc734e0f3d6f99e15c866"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac69ddc44430dc734e0f3d6f99e15c866">Call</a> (TArgs &amp;&amp;...args) const</td></tr>
+<tr class="memdesc:ac69ddc44430dc734e0f3d6f99e15c866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вызывает объект с данными аргументами и возвращает результат.  <br /></td></tr>
+<tr class="separator:ac69ddc44430dc734e0f3d6f99e15c866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76fe835fd0bb01f65f99f62bc4e57e7" id="r_af76fe835fd0bb01f65f99f62bc4e57e7"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... TArgs&gt; </td></tr>
+<tr class="memitem:af76fe835fd0bb01f65f99f62bc4e57e7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af76fe835fd0bb01f65f99f62bc4e57e7">PCall</a> (TArgs &amp;&amp;...args) const</td></tr>
+<tr class="memdesc:af76fe835fd0bb01f65f99f62bc4e57e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасно вызывает объект с данными аргументами и возвращает результат.  <br /></td></tr>
+<tr class="separator:af76fe835fd0bb01f65f99f62bc4e57e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b019b4db88057441214d089da15c3ec" id="r_a4b019b4db88057441214d089da15c3ec"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... TArgs&gt; </td></tr>
+<tr class="memitem:a4b019b4db88057441214d089da15c3ec"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4b019b4db88057441214d089da15c3ec">SelfCall</a> (const char *key, TArgs &amp;&amp;...args) const</td></tr>
+<tr class="memdesc:a4b019b4db88057441214d089da15c3ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вызывает метод объекта по ключу с данными аргументами.  <br /></td></tr>
+<tr class="separator:a4b019b4db88057441214d089da15c3ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a670846a33f2d4a7f09d78831cae3b5d2" id="r_a670846a33f2d4a7f09d78831cae3b5d2"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... TArgs&gt; </td></tr>
+<tr class="memitem:a670846a33f2d4a7f09d78831cae3b5d2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a670846a33f2d4a7f09d78831cae3b5d2">SelfPCall</a> (const char *key, TArgs &amp;&amp;...args) const</td></tr>
+<tr class="memdesc:a670846a33f2d4a7f09d78831cae3b5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасно вызывает метод объекта по ключу с данными аргументами.  <br /></td></tr>
+<tr class="separator:a670846a33f2d4a7f09d78831cae3b5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51096f799f84b61cf0b30da7cbd10c26" id="r_a51096f799f84b61cf0b30da7cbd10c26"><td class="memItemLeft" align="right" valign="top">lua_State *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51096f799f84b61cf0b30da7cbd10c26">GetState</a> () const noexcept</td></tr>
+<tr class="memdesc:a51096f799f84b61cf0b30da7cbd10c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает состояние ВМ Lua.  <br /></td></tr>
+<tr class="separator:a51096f799f84b61cf0b30da7cbd10c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae37e83a3e978e60ff6ff16a0855422f7" id="r_ae37e83a3e978e60ff6ff16a0855422f7"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae37e83a3e978e60ff6ff16a0855422f7">GetIndex</a> () const noexcept</td></tr>
+<tr class="memdesc:ae37e83a3e978e60ff6ff16a0855422f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает индекс объекта на стеке.  <br /></td></tr>
+<tr class="separator:ae37e83a3e978e60ff6ff16a0855422f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Открытые статические члены</h2></td></tr>
+<tr class="memitem:a38a496b733d1986a02170e888d19a727" id="r_a38a496b733d1986a02170e888d19a727"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38a496b733d1986a02170e888d19a727">Global</a> (lua_State *l, const char *name)</td></tr>
+<tr class="memdesc:a38a496b733d1986a02170e888d19a727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Помещает на стек глобальное значение.  <br /></td></tr>
+<tr class="separator:a38a496b733d1986a02170e888d19a727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Защищенные данные</h2></td></tr>
+<tr class="memitem:aa947477858e3c531d6391015250e1601" id="r_aa947477858e3c531d6391015250e1601"><td class="memItemLeft" align="right" valign="top"><a id="aa947477858e3c531d6391015250e1601" name="aa947477858e3c531d6391015250e1601"></a>
+lua_State *&#160;</td><td class="memItemRight" valign="bottom"><b>m_state</b> = nullptr</td></tr>
+<tr class="separator:aa947477858e3c531d6391015250e1601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a446287afed96ccdce4a325cca1fb9846" id="r_a446287afed96ccdce4a325cca1fb9846"><td class="memItemLeft" align="right" valign="top"><a id="a446287afed96ccdce4a325cca1fb9846" name="a446287afed96ccdce4a325cca1fb9846"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_index</b> = 0</td></tr>
+<tr class="separator:a446287afed96ccdce4a325cca1fb9846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Друзья</h2></td></tr>
+<tr class="memitem:aa067612df3014cbb1ec37d326cd03c36" id="r_aa067612df3014cbb1ec37d326cd03c36"><td class="memItemLeft" align="right" valign="top"><a id="aa067612df3014cbb1ec37d326cd03c36" name="aa067612df3014cbb1ec37d326cd03c36"></a>
+static friend std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;obj)</td></tr>
+<tr class="separator:aa067612df3014cbb1ec37d326cd03c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать. Очистка стека должна выполняться вручную. </p>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a878ac1e4d6d80b9540dd0df626d88031" name="a878ac1e4d6d80b9540dd0df626d88031"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a878ac1e4d6d80b9540dd0df626d88031">&#9670;&#160;</a></span>StackObjectView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">LTL::StackObjectView::StackObjectView </td>
+          <td>(</td>
+          <td class="paramtype">lua_State *</td>          <td class="paramname"><span class="paramname"><em>l</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em><span class="paramdefsep"> = </span><span class="paramdefval">-1</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Назначает индекс объекта на стеке. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>Состояние ВМ Lua. </td></tr>
+    <tr><td class="paramname">index</td><td>Индекс объекта на стеке. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ac69ddc44430dc734e0f3d6f99e15c866" name="ac69ddc44430dc734e0f3d6f99e15c866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac69ddc44430dc734e0f3d6f99e15c866">&#9670;&#160;</a></span>Call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TReturn LTL::StackObjectView::Call </td>
+          <td>(</td>
+          <td class="paramtype">TArgs &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вызывает объект с данными аргументами и возвращает результат. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>тип возвращаемого значения. По ум. void. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>аргументы </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>TReturn </dd></dl>
+
+</div>
+</div>
+<a id="ab2137397924756d34afe2bb2e81977fa" name="ab2137397924756d34afe2bb2e81977fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2137397924756d34afe2bb2e81977fa">&#9670;&#160;</a></span>Get() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R , typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R LTL::StackObjectView::Get </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по заданному ключу с вызовом метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td></td></tr>
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="a331a5f75d0d02853d300e2a92c2204b9" name="a331a5f75d0d02853d300e2a92c2204b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a331a5f75d0d02853d300e2a92c2204b9">&#9670;&#160;</a></span>Get() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::Get </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по ключу с вызовом метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a1d171d59fd550e184f88e1853f646500" name="a1d171d59fd550e184f88e1853f646500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d171d59fd550e184f88e1853f646500">&#9670;&#160;</a></span>GetI() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R LTL::StackObjectView::GetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по заданному индексу с вызовом метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="a970ab982dba343cf3890837092fff18e" name="a970ab982dba343cf3890837092fff18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a970ab982dba343cf3890837092fff18e">&#9670;&#160;</a></span>GetI() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::GetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Помещает на стек значение по заданному индексу с вызовом метаметода </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="ae37e83a3e978e60ff6ff16a0855422f7" name="ae37e83a3e978e60ff6ff16a0855422f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae37e83a3e978e60ff6ff16a0855422f7">&#9670;&#160;</a></span>GetIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int LTL::StackObjectView::GetIndex </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает индекс объекта на стеке. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>int </dd></dl>
+
+</div>
+</div>
+<a id="a587641114ab1ed5b9d0d4cb0d9757185" name="a587641114ab1ed5b9d0d4cb0d9757185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a587641114ab1ed5b9d0d4cb0d9757185">&#9670;&#160;</a></span>GetMetaTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::GetMetaTable </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает <a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> с метатаблицей объекта. Если ее нет возвращает nil. </p>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a51096f799f84b61cf0b30da7cbd10c26" name="a51096f799f84b61cf0b30da7cbd10c26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51096f799f84b61cf0b30da7cbd10c26">&#9670;&#160;</a></span>GetState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lua_State *const LTL::StackObjectView::GetState </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает состояние ВМ Lua. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>lua_State* const </dd></dl>
+
+</div>
+</div>
+<a id="a38a496b733d1986a02170e888d19a727" name="a38a496b733d1986a02170e888d19a727"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38a496b733d1986a02170e888d19a727">&#9670;&#160;</a></span>Global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::Global </td>
+          <td>(</td>
+          <td class="paramtype">lua_State *</td>          <td class="paramname"><span class="paramname"><em>l</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Помещает на стек глобальное значение. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>Состояние ВМ Lua. </td></tr>
+    <tr><td class="paramname">name</td><td>Имя глобального значения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="abae6497bf228436aa8a41792513c1d6e" name="abae6497bf228436aa8a41792513c1d6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abae6497bf228436aa8a41792513c1d6e">&#9670;&#160;</a></span>Is() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="#a052fa465cbfbd1eba8af0116f262693a">Type</a> LType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::Is </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверяет является ли объект заданного типа. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">LType</td><td>Проверяемый тип. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true Объект относится к данному типу </dd>
+<dd>
+false Объект не относится к данному типу </dd></dl>
+
+</div>
+</div>
+<a id="abae6497bf228436aa8a41792513c1d6e" name="abae6497bf228436aa8a41792513c1d6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abae6497bf228436aa8a41792513c1d6e">&#9670;&#160;</a></span>Is() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::Is </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверяет является ли объект заданного типа. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Проверяемый тип. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true Объект относится к данному типу </dd>
+<dd>
+false Объект не относится к данному типу </dd></dl>
+
+</div>
+</div>
+<a id="a679b426917a40dd724f5e3aedb729a58" name="a679b426917a40dd724f5e3aedb729a58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a679b426917a40dd724f5e3aedb729a58">&#9670;&#160;</a></span>Len() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R LTL::StackObjectView::Len </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="af6b0ee8e4417dec59dd3217e1cdbc5ce" name="af6b0ee8e4417dec59dd3217e1cdbc5ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6b0ee8e4417dec59dd3217e1cdbc5ce">&#9670;&#160;</a></span>Len() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::Len </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen. </p>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a04aa29181747a8d9a486d460a4817046" name="a04aa29181747a8d9a486d460a4817046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04aa29181747a8d9a486d460a4817046">&#9670;&#160;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="adaa130e31a625cae1316867d31fb3bb5" name="adaa130e31a625cae1316867d31fb3bb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaa130e31a625cae1316867d31fb3bb5">&#9670;&#160;</a></span>operator&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Тип сравниваемого значения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>сравниваемое значение. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true Объекты равны с точки зрения Lua </dd>
+<dd>
+false Объекты неравны с точки зрения Lua </dd></dl>
+
+</div>
+</div>
+<a id="a14d79cbee91999c5d363448f232fa08b" name="a14d79cbee91999c5d363448f232fa08b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14d79cbee91999c5d363448f232fa08b">&#9670;&#160;</a></span>operator&lt;=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator&lt;= </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Тип сравниваемого значения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>сравниваемое значение. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true Объекты равны с точки зрения Lua </dd>
+<dd>
+false Объекты неравны с точки зрения Lua </dd></dl>
+
+</div>
+</div>
+<a id="adb686b8c158f0bb1cc95c3bb21c598f0" name="adb686b8c158f0bb1cc95c3bb21c598f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb686b8c158f0bb1cc95c3bb21c598f0">&#9670;&#160;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Тип сравниваемого значения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>сравниваемое значение. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true Объекты равны с точки зрения Lua </dd>
+<dd>
+false Объекты неравны с точки зрения Lua </dd></dl>
+
+</div>
+</div>
+<a id="ae1338d73c5e7a2ae2e23fc8045811436" name="ae1338d73c5e7a2ae2e23fc8045811436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1338d73c5e7a2ae2e23fc8045811436">&#9670;&#160;</a></span>operator&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator&gt; </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="a6f7f53d6ac8cfbbf7523dc93abd1af92" name="a6f7f53d6ac8cfbbf7523dc93abd1af92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f7f53d6ac8cfbbf7523dc93abd1af92">&#9670;&#160;</a></span>operator&gt;=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::operator&gt;= </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов с использованием метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="af76fe835fd0bb01f65f99f62bc4e57e7" name="af76fe835fd0bb01f65f99f62bc4e57e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76fe835fd0bb01f65f99f62bc4e57e7">&#9670;&#160;</a></span>PCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt; LTL::StackObjectView::PCall </td>
+          <td>(</td>
+          <td class="paramtype">TArgs &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Безопасно вызывает объект с данными аргументами и возвращает результат. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>тип возвращаемого значения. По ум. void. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>PCallReturn&lt;TReturn&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a1316b0139de91dcd1affd8fadca61850" name="a1316b0139de91dcd1affd8fadca61850"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1316b0139de91dcd1affd8fadca61850">&#9670;&#160;</a></span>RawEqual() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::RawEqual </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов без вызова метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>param value </p><dl class="section return"><dt>Возвращает</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="a9780633c9ef882af72854ad1667c7230" name="a9780633c9ef882af72854ad1667c7230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9780633c9ef882af72854ad1667c7230">&#9670;&#160;</a></span>RawEqual() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LTL::StackObjectView::RawEqual </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Результат сравнения объектов без вызова метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="afe43a1b452ac60850fae363cae37767e" name="afe43a1b452ac60850fae363cae37767e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe43a1b452ac60850fae363cae37767e">&#9670;&#160;</a></span>RawGet() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R , typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R LTL::StackObjectView::RawGet </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по ключу без вызова метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td></td></tr>
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="ae03bcb0083ebb3facfc317a1195fe506" name="ae03bcb0083ebb3facfc317a1195fe506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae03bcb0083ebb3facfc317a1195fe506">&#9670;&#160;</a></span>RawGet() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::RawGet </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по ключу без вызова метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a4722400e7c00bf7dbf96555f04cdfff6" name="a4722400e7c00bf7dbf96555f04cdfff6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4722400e7c00bf7dbf96555f04cdfff6">&#9670;&#160;</a></span>RawGetI() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R LTL::StackObjectView::RawGetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает значение по индексу без вызова метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="af70130ba629e8005c4424f236d4aa989" name="af70130ba629e8005c4424f236d4aa989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af70130ba629e8005c4424f236d4aa989">&#9670;&#160;</a></span>RawGetI() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> LTL::StackObjectView::RawGetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Помещает на стек значение по индексу без вызова метаметода </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a2084d6b000c55996ea80029ec2a8f8c3" name="a2084d6b000c55996ea80029ec2a8f8c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2084d6b000c55996ea80029ec2a8f8c3">&#9670;&#160;</a></span>RawLen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto LTL::StackObjectView::RawLen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает необработанную длину объекта. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>size_t длина объекта </dd></dl>
+
+</div>
+</div>
+<a id="a67fe64416da1fc6a9f3bc5e8933f349e" name="a67fe64416da1fc6a9f3bc5e8933f349e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67fe64416da1fc6a9f3bc5e8933f349e">&#9670;&#160;</a></span>RawSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename K , typename V &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LTL::StackObjectView::RawSet </td>
+          <td>(</td>
+          <td class="paramtype">const K &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const V &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает значение с заданным ключом на объект без вызова метаметодов. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">K</td><td></td></tr>
+    <tr><td class="paramname">V</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключ </td></tr>
+    <tr><td class="paramname">value</td><td>значение </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a825a702eb52f2b619d599eedbab3d2d0" name="a825a702eb52f2b619d599eedbab3d2d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a825a702eb52f2b619d599eedbab3d2d0">&#9670;&#160;</a></span>RawSetI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LTL::StackObjectView::RawSetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>i</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const V &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает значение с заданным индексом на объект без вызова метаметодов. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">V</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>индекс </td></tr>
+    <tr><td class="paramname">value</td><td>значение </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4b019b4db88057441214d089da15c3ec" name="a4b019b4db88057441214d089da15c3ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b019b4db88057441214d089da15c3ec">&#9670;&#160;</a></span>SelfCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TReturn LTL::StackObjectView::SelfCall </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TArgs &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вызывает метод объекта по ключу с данными аргументами. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>тип возвращаемого значения. По ум. void. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>имя метода </td></tr>
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>TReturn </dd></dl>
+
+</div>
+</div>
+<a id="a670846a33f2d4a7f09d78831cae3b5d2" name="a670846a33f2d4a7f09d78831cae3b5d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a670846a33f2d4a7f09d78831cae3b5d2">&#9670;&#160;</a></span>SelfPCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt; LTL::StackObjectView::SelfPCall </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TArgs &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Безопасно вызывает метод объекта по ключу с данными аргументами. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>тип возвращаемого значения. По ум. void. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>имя метода </td></tr>
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>PCallReturn&lt;TReturn&gt; </dd></dl>
+
+</div>
+</div>
+<a id="a49356681dfe2968896c07d2b579f7757" name="a49356681dfe2968896c07d2b579f7757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49356681dfe2968896c07d2b579f7757">&#9670;&#160;</a></span>Set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename K , typename V &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LTL::StackObjectView::Set </td>
+          <td>(</td>
+          <td class="paramtype">const K &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const V &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает по ключу значение на объект с вызовом метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">K</td><td></td></tr>
+    <tr><td class="paramname">V</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaf5e6316b23dfdd74c4cda19f63be67f" name="aaf5e6316b23dfdd74c4cda19f63be67f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf5e6316b23dfdd74c4cda19f63be67f">&#9670;&#160;</a></span>SetI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LTL::StackObjectView::SetI </td>
+          <td>(</td>
+          <td class="paramtype">lua_Integer</td>          <td class="paramname"><span class="paramname"><em>i</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const V &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает по индексу значение на объект с вызовом метаметода </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">V</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td></td></tr>
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86ac1222c69842e1a4af5c53187836a7" name="a86ac1222c69842e1a4af5c53187836a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86ac1222c69842e1a4af5c53187836a7">&#9670;&#160;</a></span>SetMetaTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LTL::StackObjectView::SetMetaTable </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает на объект данную метатаблицу </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>тип мететаблицы </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>метатаблица </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afa35b36f4549dbe32d1d87a4df3d2875" name="afa35b36f4549dbe32d1d87a4df3d2875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa35b36f4549dbe32d1d87a4df3d2875">&#9670;&#160;</a></span>To()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T LTL::StackObjectView::To </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Преобразует объект к данному типу. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Тип преобразования. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>T Результат преобразования. </dd></dl>
+
+</div>
+</div>
+<a id="a052fa465cbfbd1eba8af0116f262693a" name="a052fa465cbfbd1eba8af0116f262693a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a052fa465cbfbd1eba8af0116f262693a">&#9670;&#160;</a></span>Type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Type LTL::StackObjectView::Type </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает тип объекта на стеке </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Type </dd></dl>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_stack_object_8hpp_source.html">StackObject.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

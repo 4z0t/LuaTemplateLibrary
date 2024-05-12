@@ -1,0 +1,45 @@
+\doxysection{Шаблон структуры LTL\+::Internal\+::Function\+Caller\texorpdfstring{$<$}{<} fn, TArgs \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller}{}\label{struct_l_t_l_1_1_internal_1_1_function_caller}\index{LTL::Internal::FunctionCaller$<$ fn, TArgs $>$@{LTL::Internal::FunctionCaller$<$ fn, TArgs $>$}}
+\doxysubsubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper}{Call\+Helper}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_5_08_07_ts_8_8_8_08_01noexcept_01_4}{Call\+Helper$<$ R(\texorpdfstring{$\ast$}{*})(\+Ts...) noexcept $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_5_08_07_ts_8_8_8_08_4}{Call\+Helper$<$ R(\texorpdfstring{$\ast$}{*})(\+Ts...)$>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_c_1_1_5_08_07_ts_8_8_8_08_01const_01_4}{Call\+Helper$<$ R(\+C\+::\texorpdfstring{$\ast$}{*})(\+Ts...) const $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_c_1_1_5_08_07_ts_8_8_8_08_01const_01noexcept_01_4}{Call\+Helper$<$ R(\+C\+::\texorpdfstring{$\ast$}{*})(\+Ts...) const noexcept $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_c_1_1_5_08_07_ts_8_8_8_08_01noexcept_01_4}{Call\+Helper$<$ R(\+C\+::\texorpdfstring{$\ast$}{*})(\+Ts...) noexcept $>$}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller_1_1_call_helper_3_01_r_07_c_1_1_5_08_07_ts_8_8_8_08_4}{Call\+Helper$<$ R(\+C\+::\texorpdfstring{$\ast$}{*})(\+Ts...)$>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller_a6a32261c02308099dd756202ac9cb5dd}\label{struct_l_t_l_1_1_internal_1_1_function_caller_a6a32261c02308099dd756202ac9cb5dd} 
+using {\bfseries Fn\+Type} = decltype(fn)
+\item 
+\Hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller_a17b82d1edbe1d5b80d7542b6bb5314c4}\label{struct_l_t_l_1_1_internal_1_1_function_caller_a17b82d1edbe1d5b80d7542b6bb5314c4} 
+using {\bfseries Args\+Tuple} = std\+::tuple$<$Unwrap\+\_\+t$<$TArgs$>$...$>$
+\item 
+\Hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller_ab325391cdb339a046e898ebdcb9267d4}\label{struct_l_t_l_1_1_internal_1_1_function_caller_ab325391cdb339a046e898ebdcb9267d4} 
+using {\bfseries TReturn} = std\+::invoke\+\_\+result\+\_\+t$<$Fn\+Type, Unwrap\+\_\+t$<$TArgs$>$ \&...$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller_ab6f5683e7fd7a265cfa7a7ab50d7bdd6}\label{struct_l_t_l_1_1_internal_1_1_function_caller_ab6f5683e7fd7a265cfa7a7ab50d7bdd6} 
+{\footnotesize template$<$size\+\_\+t... Is$>$ }\\static TReturn {\bfseries Call} (Args\+Tuple \&args)
+\item 
+\Hypertarget{struct_l_t_l_1_1_internal_1_1_function_caller_af81085835350c0edd2c166501170e6a2}\label{struct_l_t_l_1_1_internal_1_1_function_caller_af81085835350c0edd2c166501170e6a2} 
+{\footnotesize template$<$size\+\_\+t... Is$>$ }\\static TReturn {\bfseries Unpack\+Args} (Args\+Tuple \&args, const std\+::index\+\_\+sequence$<$ Is... $>$)
+\end{DoxyCompactItemize}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Function.\+hpp\end{DoxyCompactItemize}

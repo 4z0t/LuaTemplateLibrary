@@ -1,0 +1,136 @@
+\doxysection{Класс LTL\+::CState}
+\hypertarget{class_l_t_l_1_1_c_state}{}\label{class_l_t_l_1_1_c_state}\index{LTL::CState@{LTL::CState}}
+
+
+Класс-\/обертка, дублирующий функционал lua\+\_\+\+State\texorpdfstring{$\ast$}{*}.  
+
+
+
+
+{\ttfamily \#include $<$CState.\+hpp$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7d03c15627d9ca50a8530bee09c457f5}\label{class_l_t_l_1_1_c_state_a7d03c15627d9ca50a8530bee09c457f5} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af5fe0edb02fb6258b16314af3151bca9}\label{class_l_t_l_1_1_c_state_af5fe0edb02fb6258b16314af3151bca9} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a40cfc8e7d11ca04d1333174393e703a1}\label{class_l_t_l_1_1_c_state_a40cfc8e7d11ca04d1333174393e703a1} 
+void {\bfseries Open\+Libs} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aebdfad6684344cc82eea32b865f9de24}\label{class_l_t_l_1_1_c_state_aebdfad6684344cc82eea32b865f9de24} 
+void {\bfseries Require} (const char \texorpdfstring{$\ast$}{*}modname, lua\+\_\+\+CFunction openf, bool global=true)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a728d144a94d547da1d42b0f8ac74b97c}\label{class_l_t_l_1_1_c_state_a728d144a94d547da1d42b0f8ac74b97c} 
+PCall\+Result {\bfseries Load\+File} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}mode=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a041f732b37017c6e2dc608c983b94dad}\label{class_l_t_l_1_1_c_state_a041f732b37017c6e2dc608c983b94dad} 
+void {\bfseries Call} (int n\+\_\+args, int n\+\_\+results, lua\+\_\+\+KContext ctx=0, lua\+\_\+\+KFunction k=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a41b0693ca560064d7f9bf58ac34d70b2}\label{class_l_t_l_1_1_c_state_a41b0693ca560064d7f9bf58ac34d70b2} 
+PCall\+Result {\bfseries PCall} (int n\+\_\+args, int n\+\_\+results, int i\+\_\+errfunc=0, lua\+\_\+\+KContext ctx=0, lua\+\_\+\+KFunction k=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a4c43d561b162ca2aa8074325954a4d31}\label{class_l_t_l_1_1_c_state_a4c43d561b162ca2aa8074325954a4d31} 
+PCall\+Result {\bfseries Do\+File} (const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_afdf376910a06afd56574cb603dd72711}\label{class_l_t_l_1_1_c_state_afdf376910a06afd56574cb603dd72711} 
+PCall\+Result {\bfseries Load\+String} (const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a92e848e44e08b874125220667a7090e3}\label{class_l_t_l_1_1_c_state_a92e848e44e08b874125220667a7090e3} 
+PCall\+Result {\bfseries Do\+String} (const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a0977f017a8ac3e622441100291562123}\label{class_l_t_l_1_1_c_state_a0977f017a8ac3e622441100291562123} 
+void {\bfseries Error} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_ad730db2bcafafc4b9b87355b7e69f16c}\label{class_l_t_l_1_1_c_state_ad730db2bcafafc4b9b87355b7e69f16c} 
+int {\bfseries Get\+Top} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af35415535edcc3996a0b3a1977207e93}\label{class_l_t_l_1_1_c_state_af35415535edcc3996a0b3a1977207e93} 
+void {\bfseries Set\+Top} (int top)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a0b1dec4b4ef061abe5eae85f3f21a1d3}\label{class_l_t_l_1_1_c_state_a0b1dec4b4ef061abe5eae85f3f21a1d3} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries Push} (const T \&value)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aeca6712a0fc4f02421adf706ad1fe72c}\label{class_l_t_l_1_1_c_state_aeca6712a0fc4f02421adf706ad1fe72c} 
+{\footnotesize template$<$typename T $>$ }\\T {\bfseries Get} (int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a0a88770adebf50bc2cc81eaf2fa152d5}\label{class_l_t_l_1_1_c_state_a0a88770adebf50bc2cc81eaf2fa152d5} 
+void {\bfseries Pop} (size\+\_\+t n=1)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aba4d35696b837bf9ce6aabcef03e9526}\label{class_l_t_l_1_1_c_state_aba4d35696b837bf9ce6aabcef03e9526} 
+void {\bfseries Close} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a958406317622688f1d6fbe0097e0efb4}\label{class_l_t_l_1_1_c_state_a958406317622688f1d6fbe0097e0efb4} 
+{\footnotesize template$<$typename ... TArgs$>$ }\\void {\bfseries Register\+Closure} (const char \texorpdfstring{$\ast$}{*}name, lua\+\_\+\+CFunction func, TArgs \&\&... args)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a1ef377c331ad82b820573cda1745094d}\label{class_l_t_l_1_1_c_state_a1ef377c331ad82b820573cda1745094d} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\TReturn {\bfseries Call} (const char \texorpdfstring{$\ast$}{*}name, TArgs \&\&... args)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_ad3567620c80a2613f8bf3d124d14d814}\label{class_l_t_l_1_1_c_state_ad3567620c80a2613f8bf3d124d14d814} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ {\bfseries PCall} (const char \texorpdfstring{$\ast$}{*}name, TArgs \&\&... args)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a54da1b0a8ec5a281ea11ef6e870c0d9a}\label{class_l_t_l_1_1_c_state_a54da1b0a8ec5a281ea11ef6e870c0d9a} 
+void {\bfseries Run} (const char \texorpdfstring{$\ast$}{*}const s) noexcept(false)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a16479f7bdd87eb2b9c510ef55d0d1afb}\label{class_l_t_l_1_1_c_state_a16479f7bdd87eb2b9c510ef55d0d1afb} 
+lua\+\_\+\+CFunction {\bfseries Set\+At\+Panic\+Funtion} (lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_af969056e4e57d0231be4490432d53cc4}\label{class_l_t_l_1_1_c_state_af969056e4e57d0231be4490432d53cc4} 
+void {\bfseries Set\+Alloc\+Function} (lua\+\_\+\+Alloc func, void \texorpdfstring{$\ast$}{*}ud=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7020f01692835769df0a4c2dfb17a457}\label{class_l_t_l_1_1_c_state_a7020f01692835769df0a4c2dfb17a457} 
+void {\bfseries Remove} (int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abf671a4a20e930b135cf479f3d4e752b}\label{class_l_t_l_1_1_c_state_abf671a4a20e930b135cf479f3d4e752b} 
+void {\bfseries Rotate} (int index, int n)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a7d0b9b760bd549eba7f7d920d89dc07d}\label{class_l_t_l_1_1_c_state_a7d0b9b760bd549eba7f7d920d89dc07d} 
+void {\bfseries Duplicate} (int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_adcfff3aabd5bc9096a05353ffcd49b40}\label{class_l_t_l_1_1_c_state_adcfff3aabd5bc9096a05353ffcd49b40} 
+void {\bfseries Set\+Table} (int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abfe5906effb13fa9897e4c035b08503f}\label{class_l_t_l_1_1_c_state_abfe5906effb13fa9897e4c035b08503f} 
+Type {\bfseries Get\+Table} (int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_ade43ff71d5b5d8b8aec36ce6c7a53bc4}\label{class_l_t_l_1_1_c_state_ade43ff71d5b5d8b8aec36ce6c7a53bc4} 
+{\footnotesize template$<$typename ... Ts$>$ }\\const char \texorpdfstring{$\ast$}{*} {\bfseries Push\+Format\+String} (const char \texorpdfstring{$\ast$}{*}fmt, const Ts \&...args)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a3d9518485fda5cee2541fb58ac9cec25}\label{class_l_t_l_1_1_c_state_a3d9518485fda5cee2541fb58ac9cec25} 
+Type {\bfseries Get\+Global} (const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abc5c84d85be7d1d9a7ab06f2d0261520}\label{class_l_t_l_1_1_c_state_abc5c84d85be7d1d9a7ab06f2d0261520} 
+void {\bfseries Set\+Global} (const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_aa8d443816501ba02ea54c9e1111ee47f}\label{class_l_t_l_1_1_c_state_aa8d443816501ba02ea54c9e1111ee47f} 
+{\footnotesize template$<$typename T $>$ }\\T {\bfseries Get\+Global} (const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a9d9b381266105feec946cbca1f55f2f0}\label{class_l_t_l_1_1_c_state_a9d9b381266105feec946cbca1f55f2f0} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries Set\+Global} (const char \texorpdfstring{$\ast$}{*}name, const T \&value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a52e3ee529b53dd56d027aab0d09d90d8}\label{class_l_t_l_1_1_c_state_a52e3ee529b53dd56d027aab0d09d90d8} 
+static \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Wrap} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_add9ac72a52dcebfbc71619292459fe65}\label{class_l_t_l_1_1_c_state_add9ac72a52dcebfbc71619292459fe65} 
+static \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Create} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_abb5a67f0710a594cbf4cc0cfd6f507fd}\label{class_l_t_l_1_1_c_state_abb5a67f0710a594cbf4cc0cfd6f507fd} 
+static \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*} {\bfseries Create} (lua\+\_\+\+Alloc f, void \texorpdfstring{$\ast$}{*}ud=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_c_state_a4592632957dcc431c06d4f1db9c46b73}\label{class_l_t_l_1_1_c_state_a4592632957dcc431c06d4f1db9c46b73} 
+static lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries Unwrap} (const \mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*}s)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Класс-\/обертка, дублирующий функционал lua\+\_\+\+State\texorpdfstring{$\ast$}{*}. 
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/CState.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,385 @@
+\doxysection{РЁР°Р±Р»РѕРЅ РєР»Р°СЃСЃР° LTL\+::Ref\+Object\+Base\texorpdfstring{$<$}{<} Ref\+Class, Parent\+Class, Ref\+Access \texorpdfstring{$>$}{>}}
+\hypertarget{class_l_t_l_1_1_ref_object_base}{}\label{class_l_t_l_1_1_ref_object_base}\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+
+
+Базовый класс для классов-\/ссылок.  
+
+
+
+
+{\ttfamily \#include $<$Ref\+Object.\+hpp$>$}
+
+\doxysubsubsection*{РљР»Р°СЃСЃС‹}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{РћС‚РєСЂС‹С‚С‹Рµ С‡Р»РµРЅС‹}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ad338c5e2057b1022c8a0192e0067dc67}\label{class_l_t_l_1_1_ref_object_base_ad338c5e2057b1022c8a0192e0067dc67} 
+{\bfseries Ref\+Object\+Base} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a9335fa0d9aa5de3548fe681ebf8ff7a1}\label{class_l_t_l_1_1_ref_object_base_a9335fa0d9aa5de3548fe681ebf8ff7a1} 
+{\footnotesize template$<$typename T $>$ }\\{\bfseries Ref\+Object\+Base} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}$<$ T $>$ \&state) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ae38929b4b0b61c33c8769fa041fa4b39}\label{class_l_t_l_1_1_ref_object_base_ae38929b4b0b61c33c8769fa041fa4b39} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}} {\bfseries begin} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_aeca624d0f25bd31b1105001150ea1526}\label{class_l_t_l_1_1_ref_object_base_aeca624d0f25bd31b1105001150ea1526} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_1_1_iterator}{Iterator}} {\bfseries end} () const
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a}{To}} () const
+\begin{DoxyCompactList}\small\item\em Преобразует объект к данному типу. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_ab8cfa8b27486f8654a4208cb60b9664f}{operator T}} () const
+\begin{DoxyCompactList}\small\item\em Преобразует объект к данному типу. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a91ffcaa403866d5b914f1f7210013bc9}\label{class_l_t_l_1_1_ref_object_base_a91ffcaa403866d5b914f1f7210013bc9} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator$<$} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a6c1f8de1636b8886952a63854eadb9c0}\label{class_l_t_l_1_1_ref_object_base_a6c1f8de1636b8886952a63854eadb9c0} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator$<$=} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a96e1c0b8b5218d31bec6bc3d15e0e808}\label{class_l_t_l_1_1_ref_object_base_a96e1c0b8b5218d31bec6bc3d15e0e808} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator==} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a7b75d2055f76c8504bf69ebfb9457893}\label{class_l_t_l_1_1_ref_object_base_a7b75d2055f76c8504bf69ebfb9457893} 
+template$<$$>$ bool {\bfseries operator==} (const std\+::nullptr\+\_\+t \&) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a9ded7779dd5d3e156d02c8a02cfb1a01}\label{class_l_t_l_1_1_ref_object_base_a9ded7779dd5d3e156d02c8a02cfb1a01} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator$>$} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_adafab338f2d1be898558f8961f141735}\label{class_l_t_l_1_1_ref_object_base_adafab338f2d1be898558f8961f141735} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator$>$=} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a75c1538396e746ded391e5fc1c4659bf}\label{class_l_t_l_1_1_ref_object_base_a75c1538396e746ded391e5fc1c4659bf} 
+{\footnotesize template$<$typename T $>$ }\\bool {\bfseries operator!=} (const T \&other) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a099b88d7a1bac3d5a5ff8c5a35aa7f0a}\label{class_l_t_l_1_1_ref_object_base_a099b88d7a1bac3d5a5ff8c5a35aa7f0a} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\TReturn {\bfseries Call} (TArgs \&\&...args) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_aa0d8509ea456546d2f71fdf8ae852824}\label{class_l_t_l_1_1_ref_object_base_aa0d8509ea456546d2f71fdf8ae852824} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ {\bfseries PCall} (TArgs \&\&...args) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ae42d062879fff824d1f4b5ac7fe98d98}\label{class_l_t_l_1_1_ref_object_base_ae42d062879fff824d1f4b5ac7fe98d98} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\TReturn {\bfseries Self\+Call} (const char \texorpdfstring{$\ast$}{*}key, TArgs \&\&...args) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ad14f5c594e7b8c2f4fddf6c9b58e4a1f}\label{class_l_t_l_1_1_ref_object_base_ad14f5c594e7b8c2f4fddf6c9b58e4a1f} 
+{\footnotesize template$<$typename TReturn  = void, typename ... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ {\bfseries Self\+PCall} (const char \texorpdfstring{$\ast$}{*}key, TArgs \&\&...args) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ae92114d0a956d47e4df3b43eb8b30611}\label{class_l_t_l_1_1_ref_object_base_ae92114d0a956d47e4df3b43eb8b30611} 
+{\footnotesize template$<$typename ... TArgs$>$ }\\Parent\+Class {\bfseries operator()} (TArgs \&\&...args) const
+\item 
+Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a45f9aa25e818a4223d61516f192c111e}{Get\+Meta\+Table}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} с метатаблицей объекта. Если ее нет возвращает nil. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1}{Set\+Meta\+Table}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает на объект данную метатаблицу \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a20d0e75c86b50001ef16eac090b958fc}{Len}} () const
+\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a72c33bcb1ef4c55fae1aff43488e79a7}{Len}} () const
+\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a330e9037b1e2cd0e9fe7dca0fbe23dcc}{Raw\+Len}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает необработанную длину объекта. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}{Type}} LType$>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}{Is}} () const
+\begin{DoxyCompactList}\small\item\em Проверяет является ли объект данного типа. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}{Is}} () const
+\begin{DoxyCompactList}\small\item\em Проверяет может ли объект быть преобразован к данному типу. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a69f9589aa159209cda3d00bd67eb2e27}\label{class_l_t_l_1_1_ref_object_base_a69f9589aa159209cda3d00bd67eb2e27} 
+bool {\bfseries Is\+Nil} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_aa95ea2ea0c06315677dd9ed67d292d7d}\label{class_l_t_l_1_1_ref_object_base_aa95ea2ea0c06315677dd9ed67d292d7d} 
+bool {\bfseries Is\+Table} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ad5ac09c76649857a838c66ffd1977c37}\label{class_l_t_l_1_1_ref_object_base_ad5ac09c76649857a838c66ffd1977c37} 
+bool {\bfseries Is\+User\+Data} () const
+\item 
+Type \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}{Type}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает тип объекта. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_ac8dcdb782a83a83fb118f3dcd642f0e0}{Type\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает имя типа объекта. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a2908a3c36fa7a1f27da81b7263ed2b9c}{To\+String}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает строковую репрезентацию объекта. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a6182a540efca077a2ed68dfa9c039cc1}\label{class_l_t_l_1_1_ref_object_base_a6182a540efca077a2ed68dfa9c039cc1} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*}const {\bfseries Get\+State} () const
+\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_a1f0abecfe6018b78a471e8d16b2f9abb}{Push\+View}} () const
+\begin{DoxyCompactList}\small\item\em Помещает на стек объект и возвращает его \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Р—Р°С‰РёС‰РµРЅРЅС‹Рµ С‡Р»РµРЅС‹}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a64daeca809b6f1dfda7a185ded7396e3}\label{class_l_t_l_1_1_ref_object_base_a64daeca809b6f1dfda7a185ded7396e3} 
+void {\bfseries Push\+Ref} (int ref) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a6f798f30b71ccc89a36a769f05434e40}\label{class_l_t_l_1_1_ref_object_base_a6f798f30b71ccc89a36a769f05434e40} 
+int {\bfseries Get\+Ref} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a4177f540825c26661e9c7652f5f681de}\label{class_l_t_l_1_1_ref_object_base_a4177f540825c26661e9c7652f5f681de} 
+void {\bfseries Unref\+Ref} (int ref)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Р—Р°С‰РёС‰РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_abd2e3d8b3334a43deaaf2246268f6ee4}\label{class_l_t_l_1_1_ref_object_base_abd2e3d8b3334a43deaaf2246268f6ee4} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+state} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Р”СЂСѓР·СЊСЏ}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a9830fc407400559db7e7783cc10a9394}\label{class_l_t_l_1_1_ref_object_base_a9830fc407400559db7e7783cc10a9394} 
+class {\bfseries Iterator}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_object_base_adce4f73649aebb6be506883daf1d9fce}\label{class_l_t_l_1_1_ref_object_base_adce4f73649aebb6be506883daf1d9fce} 
+static friend std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{Ref\+Object\+Base}} \&obj)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{РџРѕРґСЂРѕР±РЅРѕРµ РѕРїРёСЃР°РЅРёРµ}
+\subsubsection*{template$<$typename Ref\+Class, typename Parent\+Class, typename Ref\+Access$>$\newline
+class LTL\+::\+Ref\+Object\+Base$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$}
+Базовый класс для классов-\/ссылок. 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em Ref\+Class} & Класс реализующий интерфейс \\
+\hline
+{\em Parent\+Class} & Главный класс \\
+\hline
+{\em Ref\+Access} & Класс для доступа к объектам по ссылке\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxySeeAlso}{РЎРј. С‚Р°РєР¶Рµ}
+\doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} 
+
+\doxylink{class_l_t_l_1_1_ref_table_entry_object}{Ref\+Table\+Entry\+Object} 
+
+\doxylink{struct_l_t_l_1_1_ref_global_access}{Ref\+Global\+Access} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{РњРµС‚РѕРґС‹}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a45f9aa25e818a4223d61516f192c111e}\label{class_l_t_l_1_1_ref_object_base_a45f9aa25e818a4223d61516f192c111e} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!GetMetaTable@{GetMetaTable}}
+\index{GetMetaTable@{GetMetaTable}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{GetMetaTable()}{GetMetaTable()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Get\+Meta\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает \doxylink{class_l_t_l_1_1_ref_object}{Ref\+Object} с метатаблицей объекта. Если ее нет возвращает nil. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+Parent\+Class 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}\label{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!Is@{Is}}
+\index{Is@{Is}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{Is()}{Is()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}{Type}} LType$>$ \\
+bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Is (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Проверяет является ли объект данного типа. 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em LType} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee}\label{class_l_t_l_1_1_ref_object_base_a632ad6f23b85d3dc8f08bf1c605998ee} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!Is@{Is}}
+\index{Is@{Is}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{Is()}{Is()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$typename T $>$ \\
+bool \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Is (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Проверяет может ли объект быть преобразован к данному типу. 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em LType} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a20d0e75c86b50001ef16eac090b958fc}\label{class_l_t_l_1_1_ref_object_base_a20d0e75c86b50001ef16eac090b958fc} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!Len@{Len}}
+\index{Len@{Len}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{Len()}{Len()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$typename R $>$ \\
+R \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a72c33bcb1ef4c55fae1aff43488e79a7}\label{class_l_t_l_1_1_ref_object_base_a72c33bcb1ef4c55fae1aff43488e79a7} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!Len@{Len}}
+\index{Len@{Len}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{Len()}{Len()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+Parent\+Class \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+Parent\+Class 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ab8cfa8b27486f8654a4208cb60b9664f}\label{class_l_t_l_1_1_ref_object_base_ab8cfa8b27486f8654a4208cb60b9664f} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!operator T@{operator T}}
+\index{operator T@{operator T}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{operator T()}{operator T()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$typename T $>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::operator T (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Преобразует объект к данному типу. 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+T 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a1f0abecfe6018b78a471e8d16b2f9abb}\label{class_l_t_l_1_1_ref_object_base_a1f0abecfe6018b78a471e8d16b2f9abb} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!PushView@{PushView}}
+\index{PushView@{PushView}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{PushView()}{PushView()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Push\+View (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Помещает на стек объект и возвращает его \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{РЎРј. С‚Р°РєР¶Рµ}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxySeeAlso}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a330e9037b1e2cd0e9fe7dca0fbe23dcc}\label{class_l_t_l_1_1_ref_object_base_a330e9037b1e2cd0e9fe7dca0fbe23dcc} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!RawLen@{RawLen}}
+\index{RawLen@{RawLen}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{RawLen()}{RawLen()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+auto \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Raw\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает необработанную длину объекта. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+size\+\_\+t длина объекта 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1}\label{class_l_t_l_1_1_ref_object_base_a7fcaf86de0828f552649573d8d1cddd1} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!SetMetaTable@{SetMetaTable}}
+\index{SetMetaTable@{SetMetaTable}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{SetMetaTable()}{SetMetaTable()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Set\+Meta\+Table (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает на объект данную метатаблицу 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em T} & тип мететаблицы \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{РђСЂРіСѓРјРµРЅС‚С‹}
+{\em value} & метатаблица \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a}\label{class_l_t_l_1_1_ref_object_base_a06e2ea60acd400c84d2b51906ceedd4a} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!To@{To}}
+\index{To@{To}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{To()}{To()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+template$<$typename T $>$ \\
+T \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+To (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Преобразует объект к данному типу. 
+
+
+\begin{DoxyTemplParams}{РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+T 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_a2908a3c36fa7a1f27da81b7263ed2b9c}\label{class_l_t_l_1_1_ref_object_base_a2908a3c36fa7a1f27da81b7263ed2b9c} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!ToString@{ToString}}
+\index{ToString@{ToString}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает строковую репрезентацию объекта. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+const char\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d}\label{class_l_t_l_1_1_ref_object_base_acb7c7eb14cf2baa83e21e17cb324155d} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!Type@{Type}}
+\index{Type@{Type}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{Type()}{Type()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+Type \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает тип объекта. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+Type 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_ref_object_base_ac8dcdb782a83a83fb118f3dcd642f0e0}\label{class_l_t_l_1_1_ref_object_base_ac8dcdb782a83a83fb118f3dcd642f0e0} 
+\index{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}!TypeName@{TypeName}}
+\index{TypeName@{TypeName}!LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$@{LTL::RefObjectBase$<$ RefClass, ParentClass, RefAccess $>$}}
+\doxysubsubsection{\texorpdfstring{TypeName()}{TypeName()}}
+{\footnotesize\ttfamily template$<$typename Ref\+Class , typename Parent\+Class , typename Ref\+Access $>$ \\
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_t_l_1_1_ref_object_base}{LTL\+::\+Ref\+Object\+Base}}$<$ Ref\+Class, Parent\+Class, Ref\+Access $>$\+::\+Type\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает имя типа объекта. 
+
+\begin{DoxyReturn}{Р’РѕР·РІСЂР°С‰Р°РµС‚}
+const char\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+
+РћР±СЉСЏРІР»РµРЅРёСЏ Рё РѕРїРёСЃР°РЅРёСЏ С‡Р»РµРЅРѕРІ РєР»Р°СЃСЃР° РЅР°С…РѕРґСЏС‚СЃСЏ РІ С„Р°Р№Р»Рµ\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Ref\+Object.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,265 @@
+\doxysection{Шаблон структуры LTL\+::User\+Data\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_user_data}{}\label{struct_l_t_l_1_1_user_data}\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+
+
+Класс представляющий пользовательский тип в Lua.  
+
+
+
+
+{\ttfamily \#include $<$User\+Data.\+hpp$>$}
+
+Граф наследования\+:LTL\+::User\+Data\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_l_t_l_1_1_user_data}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_class_table}{Class\+Table}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_data}{Data}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_index_table}{Index\+Table}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_meta_table}{Meta\+Table}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_methods_table}{Methods\+Table}}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_new_index_table}{New\+Index\+Table}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a7b499f5899bdf04aeabc3c7b0407c6d6}\label{struct_l_t_l_1_1_user_data_a7b499f5899bdf04aeabc3c7b0407c6d6} 
+using {\bfseries \+\_\+\+User\+Data\+Value} = \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_user_data_ptr}{Internal\+::\+User\+Data\+Ptr}}$<$T$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data_a0d8f32f62937ba3561722498ef8889f7}{Push\+Copy}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, T \&\&other)
+\begin{DoxyCompactList}\small\item\em Помещает на стек User\+Data$<$\+T$>$ через move copy данного объекта \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data_a40de69941cf099513e7e6582953ec747}{Push\+Copy}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const T \&other)
+\begin{DoxyCompactList}\small\item\em Помещает на стек User\+Data$<$\+T$>$ -\/ копию данного объекта \end{DoxyCompactList}\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a0236cfc7ac0e4bfd59b565682009d77c}\label{struct_l_t_l_1_1_user_data_a0236cfc7ac0e4bfd59b565682009d77c} 
+{\footnotesize template$<$typename ... TArgs$>$ }\\static T \texorpdfstring{$\ast$}{*} {\bfseries New} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TArgs \&\&... args)
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_ac5064b7cbb08c93430a04f434a9a01d1}\label{struct_l_t_l_1_1_user_data_ac5064b7cbb08c93430a04f434a9a01d1} 
+{\footnotesize template$<$typename ... TArgs$>$ }\\static T \texorpdfstring{$\ast$}{*} {\bfseries New} (\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*}cstate, TArgs \&\&... args)
+\item 
+{\footnotesize template$<$typename Alloc , typename ... TArgs$>$ }\\static \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{struct_l_t_l_1_1_user_data_a3a5316efbe73033c476a0bced11b5810}{Make}} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}$<$ Alloc $>$ \&s, TArgs \&\&... args)
+\begin{DoxyCompactList}\small\item\em Создает User\+Data$<$\+T$>$ и возвращает объект-\/ссылку с ним \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename ... TArgs$>$ }\\static \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{struct_l_t_l_1_1_user_data_a34da8f70dc9ed6e06988a56ce0c71e50}{Make}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, TArgs \&\&... args)
+\begin{DoxyCompactList}\small\item\em Создает User\+Data$<$\+T$>$ и возвращает объект-\/ссылку с ним \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data_af28e446da38082fe380d2694a7c0cf1a}{Set\+Class\+Meta\+Table}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\begin{DoxyCompactList}\small\item\em Устанавливает метатаблицу класса на объект на стеке \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{struct_l_t_l_1_1_user_data_aded3b23eebab2b1c0c1b7fc496e27842}{Destructor\+Function}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\begin{DoxyCompactList}\small\item\em Функция для уничтожения User\+Data$<$\+T$>$ \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{struct_l_t_l_1_1_user_data_accb749c732996b0001f48fc7e3acd56c}{Is\+User\+Data}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\begin{DoxyCompactList}\small\item\em Проверяет является ли объект по индексу на стеке User\+Data$<$\+T$>$ \end{DoxyCompactList}\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a11ac43cbf15e7b55587ef2a62850c53d}\label{struct_l_t_l_1_1_user_data_a11ac43cbf15e7b55587ef2a62850c53d} 
+static \mbox{\hyperlink{struct_l_t_l_1_1_user_data_1_1_data}{Data}} \texorpdfstring{$\ast$}{*} {\bfseries To\+User\+Data} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a2f8b731e8410ce536cd4941af30985f2}\label{struct_l_t_l_1_1_user_data_a2f8b731e8410ce536cd4941af30985f2} 
+static T \texorpdfstring{$\ast$}{*} {\bfseries Validate\+User\+Data} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a7e3a12943974290b68465c601d334fa3}\label{struct_l_t_l_1_1_user_data_a7e3a12943974290b68465c601d334fa3} 
+static int {\bfseries Index\+Method} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_ac4b76e4221a0aad911ebc3aa527e56e0}\label{struct_l_t_l_1_1_user_data_ac4b76e4221a0aad911ebc3aa527e56e0} 
+static int {\bfseries New\+Index\+Method} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{struct_l_t_l_1_1_user_data_a7c743597018cb86ef9b789cd9875efdb}\label{struct_l_t_l_1_1_user_data_a7c743597018cb86ef9b789cd9875efdb} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries Get\+Class\+Name} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Дополнительные унаследованные члены}
+\doxysubsection*{Открытые члены унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_user_data_ptr}{LTL\+::\+Internal\+::\+User\+Data\+Ptr$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries User\+Data\+Ptr} (T \texorpdfstring{$\ast$}{*}value)
+\item 
+{\bfseries operator T\&} ()
+\item 
+{\bfseries operator T\texorpdfstring{$\ast$}{*}const} ()
+\item 
+const T \texorpdfstring{$\ast$}{*}const {\bfseries operator-\/$>$} () const
+\item 
+const T \& {\bfseries operator\texorpdfstring{$\ast$}{*}} () const
+\item 
+T \texorpdfstring{$\ast$}{*}const {\bfseries operator-\/$>$} ()
+\item 
+T \& {\bfseries operator\texorpdfstring{$\ast$}{*}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename T$>$\newline
+struct LTL\+::\+User\+Data$<$ T $>$}
+Класс представляющий пользовательский тип в Lua. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & пользовательский тип \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Методы}
+\Hypertarget{struct_l_t_l_1_1_user_data_aded3b23eebab2b1c0c1b7fc496e27842}\label{struct_l_t_l_1_1_user_data_aded3b23eebab2b1c0c1b7fc496e27842} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!DestructorFunction@{DestructorFunction}}
+\index{DestructorFunction@{DestructorFunction}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DestructorFunction()}{DestructorFunction()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static int \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Destructor\+Function (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Функция для уничтожения User\+Data$<$\+T$>$ 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+int 
+\end{DoxyReturn}
+\Hypertarget{struct_l_t_l_1_1_user_data_accb749c732996b0001f48fc7e3acd56c}\label{struct_l_t_l_1_1_user_data_accb749c732996b0001f48fc7e3acd56c} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!IsUserData@{IsUserData}}
+\index{IsUserData@{IsUserData}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{IsUserData()}{IsUserData()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static bool \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Is\+User\+Data (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Проверяет является ли объект по индексу на стеке User\+Data$<$\+T$>$ 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{struct_l_t_l_1_1_user_data_a3a5316efbe73033c476a0bced11b5810}\label{struct_l_t_l_1_1_user_data_a3a5316efbe73033c476a0bced11b5810} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!Make@{Make}}
+\index{Make@{Make}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Make()}{Make()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename Alloc , typename ... TArgs$>$ \\
+static \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Make (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}$<$ Alloc $>$ \&}]{s,  }\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Создает User\+Data$<$\+T$>$ и возвращает объект-\/ссылку с ним 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em Alloc} & \\
+\hline
+{\em TArgs} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em s} & \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+GRef\+Object 
+\end{DoxyReturn}
+\Hypertarget{struct_l_t_l_1_1_user_data_a34da8f70dc9ed6e06988a56ce0c71e50}\label{struct_l_t_l_1_1_user_data_a34da8f70dc9ed6e06988a56ce0c71e50} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!Make@{Make}}
+\index{Make@{Make}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Make()}{Make()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename ... TArgs$>$ \\
+static \mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Make (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Создает User\+Data$<$\+T$>$ и возвращает объект-\/ссылку с ним 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TArgs} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+GRef\+Object 
+\end{DoxyReturn}
+\Hypertarget{struct_l_t_l_1_1_user_data_a40de69941cf099513e7e6582953ec747}\label{struct_l_t_l_1_1_user_data_a40de69941cf099513e7e6582953ec747} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!PushCopy@{PushCopy}}
+\index{PushCopy@{PushCopy}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{PushCopy()}{PushCopy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Push\+Copy (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{const T \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Помещает на стек User\+Data$<$\+T$>$ -\/ копию данного объекта 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_l_t_l_1_1_user_data_a0d8f32f62937ba3561722498ef8889f7}\label{struct_l_t_l_1_1_user_data_a0d8f32f62937ba3561722498ef8889f7} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!PushCopy@{PushCopy}}
+\index{PushCopy@{PushCopy}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{PushCopy()}{PushCopy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Push\+Copy (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{T \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Помещает на стек User\+Data$<$\+T$>$ через move copy данного объекта 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_l_t_l_1_1_user_data_af28e446da38082fe380d2694a7c0cf1a}\label{struct_l_t_l_1_1_user_data_af28e446da38082fe380d2694a7c0cf1a} 
+\index{LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}!SetClassMetaTable@{SetClassMetaTable}}
+\index{SetClassMetaTable@{SetClassMetaTable}!LTL::UserData$<$ T $>$@{LTL::UserData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetClassMetaTable()}{SetClassMetaTable()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static void \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{LTL\+::\+User\+Data}}$<$ T $>$\+::\+Set\+Class\+Meta\+Table (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Устанавливает метатаблицу класса на объект на стеке 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & \\
+\hline
+\end{DoxyParams}
+
+
+Объявления и описания членов структур находятся в файлах\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/State.\+hpp\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/User\+Data.\+hpp\end{DoxyCompactItemize}

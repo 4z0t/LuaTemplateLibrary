@@ -1,0 +1,366 @@
+\doxysection{Шаблон класса LTL\+::State\texorpdfstring{$<$}{<} Allocator \texorpdfstring{$>$}{>}}
+\hypertarget{class_l_t_l_1_1_state}{}\label{class_l_t_l_1_1_state}\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+
+
+Класс состояния виртуальной машины Lua.  
+
+
+
+
+{\ttfamily \#include $<$State.\+hpp$>$}
+
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_state_ad9883fda9de2cf09abe7c298f88e0d31}\label{class_l_t_l_1_1_state_ad9883fda9de2cf09abe7c298f88e0d31} 
+{\footnotesize template$<$typename Base , typename Derived $>$ }\\using {\bfseries Enable\+If\+Base\+Of} = std\+::enable\+\_\+if\+\_\+t$<$std\+::is\+\_\+base\+\_\+of\+\_\+v$<$Base, Derived$>$, \mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \&$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_state_acb67f0951ae59a95369b22328c3e4da3}\label{class_l_t_l_1_1_state_acb67f0951ae59a95369b22328c3e4da3} 
+{\bfseries State} (void \texorpdfstring{$\ast$}{*}obj=nullptr)
+\item 
+\Hypertarget{class_l_t_l_1_1_state_aba9582bae3d375eff8b9279742886dcf}\label{class_l_t_l_1_1_state_aba9582bae3d375eff8b9279742886dcf} 
+{\bfseries State} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \&)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_state_af3a4929bb45ea9041529eedc3b5c7d7f}\label{class_l_t_l_1_1_state_af3a4929bb45ea9041529eedc3b5c7d7f} 
+{\bfseries State} (\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \&\&)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_state_a557c10375fea0b9ccd7bd7519d323ae3}\label{class_l_t_l_1_1_state_a557c10375fea0b9ccd7bd7519d323ae3} 
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \&)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_state_adf2e76df4cf028181fb3377f4242d715}\label{class_l_t_l_1_1_state_adf2e76df4cf028181fb3377f4242d715} 
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& {\bfseries operator=} (\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \&\&)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_state_a4cf0385921bea8da79a18918e2fdddb6}\label{class_l_t_l_1_1_state_a4cf0385921bea8da79a18918e2fdddb6} 
+void {\bfseries Throw\+Exceptions} ()
+\begin{DoxyCompactList}\small\item\em Включает стандартный обработчик исключений. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_state_a8e3a369fb138b70b9ceb5c5e9dfc071f}\label{class_l_t_l_1_1_state_a8e3a369fb138b70b9ceb5c5e9dfc071f} 
+void {\bfseries Open\+Libs} ()
+\begin{DoxyCompactList}\small\item\em Открывает все библиотеки Lua. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_t_l_1_1_state_ad98ac1e7e676044dc6a6c220407d4901}{Open\+Lib}} (const \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}} \&lib)
+\begin{DoxyCompactList}\small\item\em Открывает данную библиотеку Lua. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_state_aec67b35f015d45652a443265b4505cb6}\label{class_l_t_l_1_1_state_aec67b35f015d45652a443265b4505cb6} 
+void {\bfseries Open\+Libs} (const \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}} \&lib)
+\item 
+{\footnotesize template$<$typename... Ts$>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_state_a96992d73dd2e9349d559ff7868ae5b1b}{Open\+Libs}} (const \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}} \&lib, const Ts \&...libs)
+\begin{DoxyCompactList}\small\item\em Открывает данные библиотеки Lua. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state_a2115d81d0e821d665640e335e7730a9a}{Add\+Function}} (const char \texorpdfstring{$\ast$}{*}const name, lua\+\_\+\+CFunction func)
+\begin{DoxyCompactList}\small\item\em Добавляет глобальную функцию \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Ts$>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state_ac122675ac838abaab0fccca7656317a7}{Add\+Closure}} (const char \texorpdfstring{$\ast$}{*}const name, lua\+\_\+\+CFunction func, Ts \&\&...args)
+\begin{DoxyCompactList}\small\item\em Добавляет глобальное замыкание с данными upvalue. \end{DoxyCompactList}\item 
+PCall\+Result \mbox{\hyperlink{class_l_t_l_1_1_state_aa42c509b0156c860f47f501547c1a083}{Do\+File}} (const char \texorpdfstring{$\ast$}{*}const path)
+\begin{DoxyCompactList}\small\item\em Исполняет файл и возвращает результат работы \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... Ts$>$ }\\TReturn \mbox{\hyperlink{class_l_t_l_1_1_state_a60f66b55e1a3ec4b197cda642be7b8ba}{Call}} (const char \texorpdfstring{$\ast$}{*}name, Ts \&\&...args)
+\begin{DoxyCompactList}\small\item\em Вызывает глобальную функцию с данными аргументами и возвращает результат \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... Ts$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ \mbox{\hyperlink{class_l_t_l_1_1_state_a6b0cac5339a5518f764bae91a4e59e95}{PCall}} (const char \texorpdfstring{$\ast$}{*}name, Ts \&\&...args)
+\begin{DoxyCompactList}\small\item\em Безопасно вызывает глобальную функцию с данными аргументами и возвращает результат \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_t_l_1_1_state_adb6731e34554ac7bf88b7523a9fed3a5}{Run}} (const char \texorpdfstring{$\ast$}{*}const s) noexcept(false)
+\begin{DoxyCompactList}\small\item\em Выполняет данную строку. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_t_l_1_1_state_ae661fd4bed0cd1068b805f09e1d3895d}{Run}} (const std\+::string \&s)
+\begin{DoxyCompactList}\small\item\em Выполняет данную строку. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = GRef\+Object$>$ }\\TReturn \mbox{\hyperlink{class_l_t_l_1_1_state_ad326a3813f96f9e366e66da937f6b0a8}{Get\+Global}} (const char \texorpdfstring{$\ast$}{*}key)
+\begin{DoxyCompactList}\small\item\em Возвращает глобальное значение по имени \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state_a4470a3d38c8c4ee761c62faf2c1fcfad}{Set\+Global}} (const char \texorpdfstring{$\ast$}{*}name, const T \&value)
+\begin{DoxyCompactList}\small\item\em Устанавливает глобальное значение с данным именем \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TClass , typename... TArgs$>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{class_l_t_l_1_1_state_aae2d0b8bb96895fe70ce76259aeb7856}{Make\+User\+Data}} (TArgs \&\&...args)
+\begin{DoxyCompactList}\small\item\em Создает User\+Data$<$\+T$>$ с данными аргументами и возвращает объект-\/ссылку на нее. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_state_a0c50f182329fb1568ce3342cd3f86185}\label{class_l_t_l_1_1_state_a0c50f182329fb1568ce3342cd3f86185} 
+{\footnotesize template$<$typename T , typename... TUpvalues$>$ }\\Enable\+If\+Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{Internal\+::\+CFunction\+Base}}, T $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const T \&, TUpvalues \&\&...upvalues)
+\item 
+\Hypertarget{class_l_t_l_1_1_state_a6010f1654ddf90699b8579f48cd097d9}\label{class_l_t_l_1_1_state_a6010f1654ddf90699b8579f48cd097d9} 
+\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*}const {\bfseries Get\+State} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename Allocator = void$>$\newline
+class LTL\+::\+State$<$ Allocator $>$}
+Класс состояния виртуальной машины Lua. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em Allocator} & класс-\/интерфейс для управления памятью. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Методы}
+\Hypertarget{class_l_t_l_1_1_state_ac122675ac838abaab0fccca7656317a7}\label{class_l_t_l_1_1_state_ac122675ac838abaab0fccca7656317a7} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!AddClosure@{AddClosure}}
+\index{AddClosure@{AddClosure}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{AddClosure()}{AddClosure()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename... Ts$>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Add\+Closure (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}const}]{name,  }\item[{lua\+\_\+\+CFunction}]{func,  }\item[{Ts \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Добавляет глобальное замыкание с данными upvalue. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em Ts} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & имя замыкания \\
+\hline
+{\em func} & замыкание \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_state}{State}\& 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_a2115d81d0e821d665640e335e7730a9a}\label{class_l_t_l_1_1_state_a2115d81d0e821d665640e335e7730a9a} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!AddFunction@{AddFunction}}
+\index{AddFunction@{AddFunction}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{AddFunction()}{AddFunction()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Add\+Function (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}const}]{name,  }\item[{lua\+\_\+\+CFunction}]{func }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Добавляет глобальную функцию 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & имя функции \\
+\hline
+{\em func} & функция \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_state}{State}\& 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_a60f66b55e1a3ec4b197cda642be7b8ba}\label{class_l_t_l_1_1_state_a60f66b55e1a3ec4b197cda642be7b8ba} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!Call@{Call}}
+\index{Call@{Call}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{Call()}{Call()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename TReturn  = void, typename... Ts$>$ \\
+TReturn \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Call (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{Ts \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Вызывает глобальную функцию с данными аргументами и возвращает результат 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & Тип результата функции \\
+\hline
+{\em Ts} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & имя функции \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+TReturn 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_aa42c509b0156c860f47f501547c1a083}\label{class_l_t_l_1_1_state_aa42c509b0156c860f47f501547c1a083} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!DoFile@{DoFile}}
+\index{DoFile@{DoFile}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{DoFile()}{DoFile()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+PCall\+Result \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Do\+File (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}const}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Исполняет файл и возвращает результат работы 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em path} & путь к файлу \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+PCall\+Result 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_ad326a3813f96f9e366e66da937f6b0a8}\label{class_l_t_l_1_1_state_ad326a3813f96f9e366e66da937f6b0a8} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!GetGlobal@{GetGlobal}}
+\index{GetGlobal@{GetGlobal}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{GetGlobal()}{GetGlobal()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename TReturn  = GRef\+Object$>$ \\
+TReturn \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Get\+Global (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает глобальное значение по имени 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+TReturn 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_aae2d0b8bb96895fe70ce76259aeb7856}\label{class_l_t_l_1_1_state_aae2d0b8bb96895fe70ce76259aeb7856} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!MakeUserData@{MakeUserData}}
+\index{MakeUserData@{MakeUserData}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{MakeUserData()}{MakeUserData()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename TClass , typename... TArgs$>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_ref_object}{GRef\+Object}} \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Make\+User\+Data (\begin{DoxyParamCaption}\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Создает User\+Data$<$\+T$>$ с данными аргументами и возвращает объект-\/ссылку на нее. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TClass} & класс пользовательского типа \\
+\hline
+{\em TArgs} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+GRef\+Object 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_ad98ac1e7e676044dc6a6c220407d4901}\label{class_l_t_l_1_1_state_ad98ac1e7e676044dc6a6c220407d4901} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!OpenLib@{OpenLib}}
+\index{OpenLib@{OpenLib}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{OpenLib()}{OpenLib()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+void \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Open\+Lib (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}} \&}]{lib }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Открывает данную библиотеку Lua. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em lib} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_state_a96992d73dd2e9349d559ff7868ae5b1b}\label{class_l_t_l_1_1_state_a96992d73dd2e9349d559ff7868ae5b1b} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!OpenLibs@{OpenLibs}}
+\index{OpenLibs@{OpenLibs}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{OpenLibs()}{OpenLibs()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename... Ts$>$ \\
+void \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Open\+Libs (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}} \&}]{lib,  }\item[{const Ts \&...}]{libs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Открывает данные библиотеки Lua. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em lib} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_state_a6b0cac5339a5518f764bae91a4e59e95}\label{class_l_t_l_1_1_state_a6b0cac5339a5518f764bae91a4e59e95} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!PCall@{PCall}}
+\index{PCall@{PCall}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{PCall()}{PCall()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename TReturn  = void, typename... Ts$>$ \\
+\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+PCall (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{Ts \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Безопасно вызывает глобальную функцию с данными аргументами и возвращает результат 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & Тип результата функции \\
+\hline
+{\em Ts} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & имя функции \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+PCall\+Return$<$\+TReturn$>$ 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_state_adb6731e34554ac7bf88b7523a9fed3a5}\label{class_l_t_l_1_1_state_adb6731e34554ac7bf88b7523a9fed3a5} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!Run@{Run}}
+\index{Run@{Run}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+void \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Run (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}const}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Выполняет данную строку. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em s} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_state_ae661fd4bed0cd1068b805f09e1d3895d}\label{class_l_t_l_1_1_state_ae661fd4bed0cd1068b805f09e1d3895d} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!Run@{Run}}
+\index{Run@{Run}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+void \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Run (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Выполняет данную строку. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em s} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_state_a4470a3d38c8c4ee761c62faf2c1fcfad}\label{class_l_t_l_1_1_state_a4470a3d38c8c4ee761c62faf2c1fcfad} 
+\index{LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}!SetGlobal@{SetGlobal}}
+\index{SetGlobal@{SetGlobal}!LTL::State$<$ Allocator $>$@{LTL::State$<$ Allocator $>$}}
+\doxysubsubsection{\texorpdfstring{SetGlobal()}{SetGlobal()}}
+{\footnotesize\ttfamily template$<$typename Allocator  = void$>$ \\
+template$<$typename T $>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_state}{State}} \& \mbox{\hyperlink{class_l_t_l_1_1_state}{LTL\+::\+State}}$<$ Allocator $>$\+::\+Set\+Global (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает глобальное значение с данным именем 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em name} & \\
+\hline
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_state}{State}\& 
+\end{DoxyReturn}
+
+
+Объявления и описания членов классов находятся в файлах\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Ref\+Object.\+hpp\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/State.\+hpp\end{DoxyCompactItemize}

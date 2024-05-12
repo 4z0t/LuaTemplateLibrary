@@ -1,0 +1,79 @@
+\doxysection{Шаблон класса LTL\+::Context\+Ref\texorpdfstring{$<$}{<} Ref\+Access \texorpdfstring{$>$}{>}}
+\hypertarget{class_l_t_l_1_1_context_ref}{}\label{class_l_t_l_1_1_context_ref}\index{LTL::ContextRef$<$ RefAccess $>$@{LTL::ContextRef$<$ RefAccess $>$}}
+
+
+Класс контекста для \doxylink{class_l_t_l_1_1_ref}{Ref}. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно быть выполнено вручную. Используется только на стеке.  
+
+
+
+
+{\ttfamily \#include $<$Ref.\+hpp$>$}
+
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a20f5b9d5d1bfc6d701648702db9b2bbb}\label{class_l_t_l_1_1_context_ref_a20f5b9d5d1bfc6d701648702db9b2bbb} 
+using {\bfseries Ref\+Class} = \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}$<$Ref\+Access$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a73dc263861cdb276aa16f112e68bb31b}\label{class_l_t_l_1_1_context_ref_a73dc263861cdb276aa16f112e68bb31b} 
+{\bfseries Context\+Ref} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_afe22df80e9cd3d6effd1c98926d781c8}\label{class_l_t_l_1_1_context_ref_afe22df80e9cd3d6effd1c98926d781c8} 
+{\bfseries Context\+Ref} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref\+Class}} \&ref) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a3b35e44f8b0dc5320b7e5d536c8dc0d9}\label{class_l_t_l_1_1_context_ref_a3b35e44f8b0dc5320b7e5d536c8dc0d9} 
+{\bfseries Context\+Ref} (const \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \&other)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a0db1660e2a213e2fa1c2672e98bfc86b}\label{class_l_t_l_1_1_context_ref_a0db1660e2a213e2fa1c2672e98bfc86b} 
+{\bfseries Context\+Ref} (\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \&\&other)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_afd855300636dfc301d3155cebbb6d7bd}\label{class_l_t_l_1_1_context_ref_afd855300636dfc301d3155cebbb6d7bd} 
+\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \&other)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a42ff6838365bc437617022f1b5c5791e}\label{class_l_t_l_1_1_context_ref_a42ff6838365bc437617022f1b5c5791e} 
+\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \& {\bfseries operator=} (\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \&\&other)=delete
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a2b7a185b1864077853c407571be3c4d4}\label{class_l_t_l_1_1_context_ref_a2b7a185b1864077853c407571be3c4d4} 
+\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref\+Class}} \&ref) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_abbeaf55f65722b442ad0975090c2566f}\label{class_l_t_l_1_1_context_ref_abbeaf55f65722b442ad0975090c2566f} 
+void {\bfseries Push} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_af4e311dbefa47ffd721a69da22f6b5de}\label{class_l_t_l_1_1_context_ref_af4e311dbefa47ffd721a69da22f6b5de} 
+void {\bfseries Release} ()
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_ad7bcadb96118e1dfa127c30f17a51cb2}\label{class_l_t_l_1_1_context_ref_ad7bcadb96118e1dfa127c30f17a51cb2} 
+const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref\+Class}} \& {\bfseries Get\+Ref} () const noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a27ae4fb2c578c1976e458dc5fe8064dd}\label{class_l_t_l_1_1_context_ref_a27ae4fb2c578c1976e458dc5fe8064dd} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref\+Class}} \& {\bfseries Get\+Ref} () noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a773761c93be2b172308efc104b41fc9c}\label{class_l_t_l_1_1_context_ref_a773761c93be2b172308efc104b41fc9c} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*}const {\bfseries Get\+State} () const noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_context_ref_a2044728c2141b935f8f94cee201dadf9}\label{class_l_t_l_1_1_context_ref_a2044728c2141b935f8f94cee201dadf9} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries Get\+State} () noexcept
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename Ref\+Access = Ref\+Global\+Access$>$\newline
+class LTL\+::\+Context\+Ref$<$ Ref\+Access $>$}
+Класс контекста для \doxylink{class_l_t_l_1_1_ref}{Ref}. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно быть выполнено вручную. Используется только на стеке. 
+
+\begin{DoxySeeAlso}{См. также}
+\doxylink{class_l_t_l_1_1_ref}{Ref} 
+\end{DoxySeeAlso}
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em Ref\+Access} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Ref.\+hpp\end{DoxyCompactItemize}

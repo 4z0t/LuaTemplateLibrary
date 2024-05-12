@@ -1,0 +1,955 @@
+\doxysection{Класс LTL\+::Stack\+Object\+View}
+\hypertarget{class_l_t_l_1_1_stack_object_view}{}\label{class_l_t_l_1_1_stack_object_view}\index{LTL::StackObjectView@{LTL::StackObjectView}}
+
+
+Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать. Очистка стека должна выполняться вручную.  
+
+
+
+
+{\ttfamily \#include $<$Stack\+Object.\+hpp$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}\label{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb} 
+{\bfseries Stack\+Object\+View} ()=default
+\begin{DoxyCompactList}\small\item\em Для внутреннего использования. Не использовать самому. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a878ac1e4d6d80b9540dd0df626d88031}{Stack\+Object\+View}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index=-\/1)
+\begin{DoxyCompactList}\small\item\em Назначает индекс объекта на стеке. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a1e0839fa1b663c2e6a77a7b3aeedd511}\label{class_l_t_l_1_1_stack_object_view_a1e0839fa1b663c2e6a77a7b3aeedd511} 
+{\bfseries Stack\+Object\+View} (\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}} \texorpdfstring{$\ast$}{*}cstate, int index=-\/1)
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a7dc9bd84fc284247848b33cec795174a}\label{class_l_t_l_1_1_stack_object_view_a7dc9bd84fc284247848b33cec795174a} 
+{\footnotesize template$<$typename T $>$ }\\{\bfseries Stack\+Object\+View} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}$<$ T $>$ \&state, int index=-\/1)
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a12c4b56a3ea400afb4ba2f9a276d7969}\label{class_l_t_l_1_1_stack_object_view_a12c4b56a3ea400afb4ba2f9a276d7969} 
+{\bfseries Stack\+Object\+View} (const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&other)=default
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a57991d48b73be0a1325e79b391b83d93}\label{class_l_t_l_1_1_stack_object_view_a57991d48b73be0a1325e79b391b83d93} 
+{\bfseries Stack\+Object\+View} (\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&\&other)=default
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a3288ced5ce265263ca8c90ba4235768a}\label{class_l_t_l_1_1_stack_object_view_a3288ced5ce265263ca8c90ba4235768a} 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&other)=default
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ad98913270f393a9298fe6bef127cbd63}\label{class_l_t_l_1_1_stack_object_view_ad98913270f393a9298fe6bef127cbd63} 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \& {\bfseries operator=} (\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&\&other)=default
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_afa35b36f4549dbe32d1d87a4df3d2875}{To}} () const
+\begin{DoxyCompactList}\small\item\em Преобразует объект к данному типу. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}} LType$>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}{Is}} () const
+\begin{DoxyCompactList}\small\item\em Проверяет является ли объект заданного типа. \end{DoxyCompactList}\item 
+Type \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает тип объекта на стеке \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}{Is}} () const
+\begin{DoxyCompactList}\small\item\em Проверяет является ли объект заданного типа. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1}\label{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1} 
+void {\bfseries Push} () const
+\begin{DoxyCompactList}\small\item\em Помещает объект на стек. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_af3cf662c189375e0237c1025ac8ecf90}\label{class_l_t_l_1_1_stack_object_view_af3cf662c189375e0237c1025ac8ecf90} 
+bool {\bfseries Next} () const
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a6d597d6df7274969e6f4dc35640af782}\label{class_l_t_l_1_1_stack_object_view_a6d597d6df7274969e6f4dc35640af782} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries To\+String} () const
+\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_adb686b8c158f0bb1cc95c3bb21c598f0}{operator==}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a9b40c1f7b6275273ab3d5edd4355046c}\label{class_l_t_l_1_1_stack_object_view_a9b40c1f7b6275273ab3d5edd4355046c} 
+template$<$$>$ bool {\bfseries operator==} (const std\+::nullptr\+\_\+t \&) const
+\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a04aa29181747a8d9a486d460a4817046}{operator!=}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a14d79cbee91999c5d363448f232fa08b}{operator$<$=}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae1338d73c5e7a2ae2e23fc8045811436}{operator$>$}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_adaa130e31a625cae1316867d31fb3bb5}{operator$<$}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a6f7f53d6ac8cfbbf7523dc93abd1af92}{operator$>$=}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов с использованием метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a9780633c9ef882af72854ad1667c7230}{Raw\+Equal}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов без вызова метаметода \end{DoxyCompactList}\item 
+template$<$$>$ bool \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a1316b0139de91dcd1affd8fadca61850}{Raw\+Equal}} (const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&value) const
+\begin{DoxyCompactList}\small\item\em Результат сравнения объектов без вызова метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R , typename T $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ab2137397924756d34afe2bb2e81977fa}{Get}} (const T \&key) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по заданному ключу с вызовом метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a331a5f75d0d02853d300e2a92c2204b9}{Get}} (const T \&key) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по ключу с вызовом метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a1d171d59fd550e184f88e1853f646500}{GetI}} (lua\+\_\+\+Integer index) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по заданному индексу с вызовом метаметода \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a970ab982dba343cf3890837092fff18e}{GetI}} (lua\+\_\+\+Integer index) const
+\begin{DoxyCompactList}\small\item\em Помещает на стек значение по заданному индексу с вызовом метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename K , typename V $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a49356681dfe2968896c07d2b579f7757}{Set}} (const K \&key, const V \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает по ключу значение на объект с вызовом метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename V $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_aaf5e6316b23dfdd74c4cda19f63be67f}{SetI}} (lua\+\_\+\+Integer i, const V \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает по индексу значение на объект с вызовом метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R , typename T $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_afe43a1b452ac60850fae363cae37767e}{Raw\+Get}} (const T \&key) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по ключу без вызова метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae03bcb0083ebb3facfc317a1195fe506}{Raw\+Get}} (const T \&key) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по ключу без вызова метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a4722400e7c00bf7dbf96555f04cdfff6}{Raw\+GetI}} (lua\+\_\+\+Integer i) const
+\begin{DoxyCompactList}\small\item\em Возвращает значение по индексу без вызова метаметода \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af70130ba629e8005c4424f236d4aa989}{Raw\+GetI}} (lua\+\_\+\+Integer i) const
+\begin{DoxyCompactList}\small\item\em Помещает на стек значение по индексу без вызова метаметода \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename V $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a825a702eb52f2b619d599eedbab3d2d0}{Raw\+SetI}} (lua\+\_\+\+Integer i, const V \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает значение с заданным индексом на объект без вызова метаметодов. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename K , typename V $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a67fe64416da1fc6a9f3bc5e8933f349e}{Raw\+Set}} (const K \&key, const V \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает значение с заданным ключом на объект без вызова метаметодов. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename R $>$ }\\R \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a679b426917a40dd724f5e3aedb729a58}{Len}} () const
+\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af6b0ee8e4417dec59dd3217e1cdbc5ce}{Len}} () const
+\begin{DoxyCompactList}\small\item\em возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a2084d6b000c55996ea80029ec2a8f8c3}{Raw\+Len}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает необработанную длину объекта. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a587641114ab1ed5b9d0d4cb0d9757185}{Get\+Meta\+Table}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} с метатаблицей объекта. Если ее нет возвращает nil. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a86ac1222c69842e1a4af5c53187836a7}{Set\+Meta\+Table}} (const T \&value) const
+\begin{DoxyCompactList}\small\item\em Устанавливает на объект данную метатаблицу \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... TArgs$>$ }\\TReturn \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ac69ddc44430dc734e0f3d6f99e15c866}{Call}} (TArgs \&\&...args) const
+\begin{DoxyCompactList}\small\item\em Вызывает объект с данными аргументами и возвращает результат. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af76fe835fd0bb01f65f99f62bc4e57e7}{PCall}} (TArgs \&\&...args) const
+\begin{DoxyCompactList}\small\item\em Безопасно вызывает объект с данными аргументами и возвращает результат. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... TArgs$>$ }\\TReturn \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a4b019b4db88057441214d089da15c3ec}{Self\+Call}} (const char \texorpdfstring{$\ast$}{*}key, TArgs \&\&...args) const
+\begin{DoxyCompactList}\small\item\em Вызывает метод объекта по ключу с данными аргументами. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename TReturn  = void, typename... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a670846a33f2d4a7f09d78831cae3b5d2}{Self\+PCall}} (const char \texorpdfstring{$\ast$}{*}key, TArgs \&\&...args) const
+\begin{DoxyCompactList}\small\item\em Безопасно вызывает метод объекта по ключу с данными аргументами. \end{DoxyCompactList}\item 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*}const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26}{Get\+State}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Возвращает состояние ВМ Lua. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae37e83a3e978e60ff6ff16a0855422f7}{Get\+Index}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Возвращает индекс объекта на стеке. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a38a496b733d1986a02170e888d19a727}{Global}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Помещает на стек глобальное значение. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Защищенные данные}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_aa947477858e3c531d6391015250e1601}\label{class_l_t_l_1_1_stack_object_view_aa947477858e3c531d6391015250e1601} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+state} = nullptr
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a446287afed96ccdce4a325cca1fb9846}\label{class_l_t_l_1_1_stack_object_view_a446287afed96ccdce4a325cca1fb9846} 
+int {\bfseries m\+\_\+index} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Друзья}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_stack_object_view_aa067612df3014cbb1ec37d326cd03c36}\label{class_l_t_l_1_1_stack_object_view_aa067612df3014cbb1ec37d326cd03c36} 
+static friend std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&obj)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Представляет ООП доступ к стеку Lua. После назначения индекса объекта на стеке с ним можно работать. Очистка стека должна выполняться вручную. 
+
+\doxysubsection{Конструктор(ы)}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a878ac1e4d6d80b9540dd0df626d88031}\label{class_l_t_l_1_1_stack_object_view_a878ac1e4d6d80b9540dd0df626d88031} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!StackObjectView@{StackObjectView}}
+\index{StackObjectView@{StackObjectView}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{StackObjectView()}{StackObjectView()}}
+{\footnotesize\ttfamily LTL\+::\+Stack\+Object\+View\+::\+Stack\+Object\+View (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{int}]{index = {\ttfamily -\/1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Назначает индекс объекта на стеке. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & Состояние ВМ Lua. \\
+\hline
+{\em index} & Индекс объекта на стеке. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Методы}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ac69ddc44430dc734e0f3d6f99e15c866}\label{class_l_t_l_1_1_stack_object_view_ac69ddc44430dc734e0f3d6f99e15c866} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Call@{Call}}
+\index{Call@{Call}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Call()}{Call()}}
+{\footnotesize\ttfamily template$<$typename TReturn  = void, typename... TArgs$>$ \\
+TReturn LTL\+::\+Stack\+Object\+View\+::\+Call (\begin{DoxyParamCaption}\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Вызывает объект с данными аргументами и возвращает результат. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & тип возвращаемого значения. По ум. void. \\
+\hline
+{\em TArgs} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em args} & аргументы \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+TReturn 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ab2137397924756d34afe2bb2e81977fa}\label{class_l_t_l_1_1_stack_object_view_ab2137397924756d34afe2bb2e81977fa} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Get@{Get}}
+\index{Get@{Get}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename T $>$ \\
+R LTL\+::\+Stack\+Object\+View\+::\+Get (\begin{DoxyParamCaption}\item[{const T \&}]{key }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по заданному ключу с вызовом метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em R} & \\
+\hline
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a331a5f75d0d02853d300e2a92c2204b9}\label{class_l_t_l_1_1_stack_object_view_a331a5f75d0d02853d300e2a92c2204b9} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Get@{Get}}
+\index{Get@{Get}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Get (\begin{DoxyParamCaption}\item[{const T \&}]{key }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по ключу с вызовом метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a1d171d59fd550e184f88e1853f646500}\label{class_l_t_l_1_1_stack_object_view_a1d171d59fd550e184f88e1853f646500} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!GetI@{GetI}}
+\index{GetI@{GetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{GetI()}{GetI()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R $>$ \\
+R LTL\+::\+Stack\+Object\+View\+::\+GetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по заданному индексу с вызовом метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em R} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a970ab982dba343cf3890837092fff18e}\label{class_l_t_l_1_1_stack_object_view_a970ab982dba343cf3890837092fff18e} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!GetI@{GetI}}
+\index{GetI@{GetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{GetI()}{GetI()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+GetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Помещает на стек значение по заданному индексу с вызовом метаметода 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ae37e83a3e978e60ff6ff16a0855422f7}\label{class_l_t_l_1_1_stack_object_view_ae37e83a3e978e60ff6ff16a0855422f7} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!GetIndex@{GetIndex}}
+\index{GetIndex@{GetIndex}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{GetIndex()}{GetIndex()}}
+{\footnotesize\ttfamily const int LTL\+::\+Stack\+Object\+View\+::\+Get\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Возвращает индекс объекта на стеке. 
+
+\begin{DoxyReturn}{Возвращает}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a587641114ab1ed5b9d0d4cb0d9757185}\label{class_l_t_l_1_1_stack_object_view_a587641114ab1ed5b9d0d4cb0d9757185} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!GetMetaTable@{GetMetaTable}}
+\index{GetMetaTable@{GetMetaTable}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{GetMetaTable()}{GetMetaTable()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Get\+Meta\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает \doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} с метатаблицей объекта. Если ее нет возвращает nil. 
+
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26}\label{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!GetState@{GetState}}
+\index{GetState@{GetState}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{GetState()}{GetState()}}
+{\footnotesize\ttfamily lua\+\_\+\+State \texorpdfstring{$\ast$}{*}const LTL\+::\+Stack\+Object\+View\+::\+Get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Возвращает состояние ВМ Lua. 
+
+\begin{DoxyReturn}{Возвращает}
+lua\+\_\+\+State\texorpdfstring{$\ast$}{*} const 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a38a496b733d1986a02170e888d19a727}\label{class_l_t_l_1_1_stack_object_view_a38a496b733d1986a02170e888d19a727} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Global@{Global}}
+\index{Global@{Global}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Global()}{Global()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Global (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Помещает на стек глобальное значение. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & Состояние ВМ Lua. \\
+\hline
+{\em name} & Имя глобального значения. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}\label{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Is@{Is}}
+\index{Is@{Is}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Is()}{Is()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}} LType$>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::\+Is (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Проверяет является ли объект заданного типа. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em LType} & Проверяемый тип. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Возвращает}
+true Объект относится к данному типу 
+
+false Объект не относится к данному типу 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}\label{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Is@{Is}}
+\index{Is@{Is}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Is()}{Is()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::\+Is (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Проверяет является ли объект заданного типа. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & Проверяемый тип. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Возвращает}
+true Объект относится к данному типу 
+
+false Объект не относится к данному типу 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a679b426917a40dd724f5e3aedb729a58}\label{class_l_t_l_1_1_stack_object_view_a679b426917a40dd724f5e3aedb729a58} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Len@{Len}}
+\index{Len@{Len}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Len()}{Len()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R $>$ \\
+R LTL\+::\+Stack\+Object\+View\+::\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+
+\begin{DoxyReturn}{Возвращает}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_af6b0ee8e4417dec59dd3217e1cdbc5ce}\label{class_l_t_l_1_1_stack_object_view_af6b0ee8e4417dec59dd3217e1cdbc5ce} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Len@{Len}}
+\index{Len@{Len}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Len()}{Len()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+возвращает результат работы метаметода \+\_\+\+\_\+len, если таковой присутствует, в противном случае возвращает результат Raw\+Len. 
+
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a04aa29181747a8d9a486d460a4817046}\label{class_l_t_l_1_1_stack_object_view_a04aa29181747a8d9a486d460a4817046} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator!= (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_adaa130e31a625cae1316867d31fb3bb5}\label{class_l_t_l_1_1_stack_object_view_adaa130e31a625cae1316867d31fb3bb5} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator$<$ (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & Тип сравниваемого значения. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & сравниваемое значение. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true Объекты равны с точки зрения Lua 
+
+false Объекты неравны с точки зрения Lua 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a14d79cbee91999c5d363448f232fa08b}\label{class_l_t_l_1_1_stack_object_view_a14d79cbee91999c5d363448f232fa08b} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator$<$=()}{operator<=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator$<$= (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & Тип сравниваемого значения. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & сравниваемое значение. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true Объекты равны с точки зрения Lua 
+
+false Объекты неравны с точки зрения Lua 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_adb686b8c158f0bb1cc95c3bb21c598f0}\label{class_l_t_l_1_1_stack_object_view_adb686b8c158f0bb1cc95c3bb21c598f0} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator==@{operator==}}
+\index{operator==@{operator==}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator== (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & Тип сравниваемого значения. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & сравниваемое значение. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true Объекты равны с точки зрения Lua 
+
+false Объекты неравны с точки зрения Lua 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ae1338d73c5e7a2ae2e23fc8045811436}\label{class_l_t_l_1_1_stack_object_view_ae1338d73c5e7a2ae2e23fc8045811436} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator$>$()}{operator>()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator$>$ (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a6f7f53d6ac8cfbbf7523dc93abd1af92}\label{class_l_t_l_1_1_stack_object_view_a6f7f53d6ac8cfbbf7523dc93abd1af92} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{operator$>$=()}{operator>=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::operator$>$= (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов с использованием метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_af76fe835fd0bb01f65f99f62bc4e57e7}\label{class_l_t_l_1_1_stack_object_view_af76fe835fd0bb01f65f99f62bc4e57e7} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!PCall@{PCall}}
+\index{PCall@{PCall}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{PCall()}{PCall()}}
+{\footnotesize\ttfamily template$<$typename TReturn  = void, typename... TArgs$>$ \\
+\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ LTL\+::\+Stack\+Object\+View\+::\+PCall (\begin{DoxyParamCaption}\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Безопасно вызывает объект с данными аргументами и возвращает результат. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & тип возвращаемого значения. По ум. void. \\
+\hline
+{\em TArgs} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+PCall\+Return$<$\+TReturn$>$ 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a1316b0139de91dcd1affd8fadca61850}\label{class_l_t_l_1_1_stack_object_view_a1316b0139de91dcd1affd8fadca61850} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawEqual@{RawEqual}}
+\index{RawEqual@{RawEqual}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawEqual()}{RawEqual()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::\+Raw\+Equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов без вызова метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em } & \\
+\hline
+\end{DoxyTemplParams}
+param value \begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a9780633c9ef882af72854ad1667c7230}\label{class_l_t_l_1_1_stack_object_view_a9780633c9ef882af72854ad1667c7230} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawEqual@{RawEqual}}
+\index{RawEqual@{RawEqual}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawEqual()}{RawEqual()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool LTL\+::\+Stack\+Object\+View\+::\+Raw\+Equal (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Результат сравнения объектов без вызова метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_afe43a1b452ac60850fae363cae37767e}\label{class_l_t_l_1_1_stack_object_view_afe43a1b452ac60850fae363cae37767e} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawGet@{RawGet}}
+\index{RawGet@{RawGet}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawGet()}{RawGet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R , typename T $>$ \\
+R LTL\+::\+Stack\+Object\+View\+::\+Raw\+Get (\begin{DoxyParamCaption}\item[{const T \&}]{key }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по ключу без вызова метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em R} & \\
+\hline
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_ae03bcb0083ebb3facfc317a1195fe506}\label{class_l_t_l_1_1_stack_object_view_ae03bcb0083ebb3facfc317a1195fe506} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawGet@{RawGet}}
+\index{RawGet@{RawGet}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawGet()}{RawGet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Raw\+Get (\begin{DoxyParamCaption}\item[{const T \&}]{key }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по ключу без вызова метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a4722400e7c00bf7dbf96555f04cdfff6}\label{class_l_t_l_1_1_stack_object_view_a4722400e7c00bf7dbf96555f04cdfff6} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawGetI@{RawGetI}}
+\index{RawGetI@{RawGetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawGetI()}{RawGetI()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename R $>$ \\
+R LTL\+::\+Stack\+Object\+View\+::\+Raw\+GetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает значение по индексу без вызова метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em R} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+R 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_af70130ba629e8005c4424f236d4aa989}\label{class_l_t_l_1_1_stack_object_view_af70130ba629e8005c4424f236d4aa989} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawGetI@{RawGetI}}
+\index{RawGetI@{RawGetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawGetI()}{RawGetI()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View}} LTL\+::\+Stack\+Object\+View\+::\+Raw\+GetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Помещает на стек значение по индексу без вызова метаметода 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\doxylink{class_l_t_l_1_1_stack_object_view}{Stack\+Object\+View} 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a2084d6b000c55996ea80029ec2a8f8c3}\label{class_l_t_l_1_1_stack_object_view_a2084d6b000c55996ea80029ec2a8f8c3} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawLen@{RawLen}}
+\index{RawLen@{RawLen}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawLen()}{RawLen()}}
+{\footnotesize\ttfamily auto LTL\+::\+Stack\+Object\+View\+::\+Raw\+Len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает необработанную длину объекта. 
+
+\begin{DoxyReturn}{Возвращает}
+size\+\_\+t длина объекта 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a67fe64416da1fc6a9f3bc5e8933f349e}\label{class_l_t_l_1_1_stack_object_view_a67fe64416da1fc6a9f3bc5e8933f349e} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawSet@{RawSet}}
+\index{RawSet@{RawSet}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawSet()}{RawSet()}}
+{\footnotesize\ttfamily template$<$typename K , typename V $>$ \\
+void LTL\+::\+Stack\+Object\+View\+::\+Raw\+Set (\begin{DoxyParamCaption}\item[{const K \&}]{key,  }\item[{const V \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает значение с заданным ключом на объект без вызова метаметодов. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em K} & \\
+\hline
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & ключ \\
+\hline
+{\em value} & значение \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a825a702eb52f2b619d599eedbab3d2d0}\label{class_l_t_l_1_1_stack_object_view_a825a702eb52f2b619d599eedbab3d2d0} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!RawSetI@{RawSetI}}
+\index{RawSetI@{RawSetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{RawSetI()}{RawSetI()}}
+{\footnotesize\ttfamily template$<$typename V $>$ \\
+void LTL\+::\+Stack\+Object\+View\+::\+Raw\+SetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{i,  }\item[{const V \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает значение с заданным индексом на объект без вызова метаметодов. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em i} & индекс \\
+\hline
+{\em value} & значение \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a4b019b4db88057441214d089da15c3ec}\label{class_l_t_l_1_1_stack_object_view_a4b019b4db88057441214d089da15c3ec} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!SelfCall@{SelfCall}}
+\index{SelfCall@{SelfCall}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{SelfCall()}{SelfCall()}}
+{\footnotesize\ttfamily template$<$typename TReturn  = void, typename... TArgs$>$ \\
+TReturn LTL\+::\+Stack\+Object\+View\+::\+Self\+Call (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{key,  }\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Вызывает метод объекта по ключу с данными аргументами. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & тип возвращаемого значения. По ум. void. \\
+\hline
+{\em TArgs} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & имя метода \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+TReturn 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a670846a33f2d4a7f09d78831cae3b5d2}\label{class_l_t_l_1_1_stack_object_view_a670846a33f2d4a7f09d78831cae3b5d2} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!SelfPCall@{SelfPCall}}
+\index{SelfPCall@{SelfPCall}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{SelfPCall()}{SelfPCall()}}
+{\footnotesize\ttfamily template$<$typename TReturn  = void, typename... TArgs$>$ \\
+\mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCall\+Return}}$<$ TReturn $>$ LTL\+::\+Stack\+Object\+View\+::\+Self\+PCall (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{key,  }\item[{TArgs \&\&...}]{args }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Безопасно вызывает метод объекта по ключу с данными аргументами. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em TReturn} & тип возвращаемого значения. По ум. void. \\
+\hline
+{\em TArgs} & типы аргументов \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & имя метода \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+PCall\+Return$<$\+TReturn$>$ 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a49356681dfe2968896c07d2b579f7757}\label{class_l_t_l_1_1_stack_object_view_a49356681dfe2968896c07d2b579f7757} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Set@{Set}}
+\index{Set@{Set}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily template$<$typename K , typename V $>$ \\
+void LTL\+::\+Stack\+Object\+View\+::\+Set (\begin{DoxyParamCaption}\item[{const K \&}]{key,  }\item[{const V \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает по ключу значение на объект с вызовом метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em K} & \\
+\hline
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & \\
+\hline
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_aaf5e6316b23dfdd74c4cda19f63be67f}\label{class_l_t_l_1_1_stack_object_view_aaf5e6316b23dfdd74c4cda19f63be67f} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!SetI@{SetI}}
+\index{SetI@{SetI}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{SetI()}{SetI()}}
+{\footnotesize\ttfamily template$<$typename V $>$ \\
+void LTL\+::\+Stack\+Object\+View\+::\+SetI (\begin{DoxyParamCaption}\item[{lua\+\_\+\+Integer}]{i,  }\item[{const V \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает по индексу значение на объект с вызовом метаметода 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em i} & \\
+\hline
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a86ac1222c69842e1a4af5c53187836a7}\label{class_l_t_l_1_1_stack_object_view_a86ac1222c69842e1a4af5c53187836a7} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!SetMetaTable@{SetMetaTable}}
+\index{SetMetaTable@{SetMetaTable}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{SetMetaTable()}{SetMetaTable()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void LTL\+::\+Stack\+Object\+View\+::\+Set\+Meta\+Table (\begin{DoxyParamCaption}\item[{const T \&}]{value }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Устанавливает на объект данную метатаблицу 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & тип мететаблицы \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Аргументы}
+{\em value} & метатаблица \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_afa35b36f4549dbe32d1d87a4df3d2875}\label{class_l_t_l_1_1_stack_object_view_afa35b36f4549dbe32d1d87a4df3d2875} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!To@{To}}
+\index{To@{To}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{To()}{To()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T LTL\+::\+Stack\+Object\+View\+::\+To (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Преобразует объект к данному типу. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & Тип преобразования. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Возвращает}
+T Результат преобразования. 
+\end{DoxyReturn}
+\Hypertarget{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}\label{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a} 
+\index{LTL::StackObjectView@{LTL::StackObjectView}!Type@{Type}}
+\index{Type@{Type}!LTL::StackObjectView@{LTL::StackObjectView}}
+\doxysubsubsection{\texorpdfstring{Type()}{Type()}}
+{\footnotesize\ttfamily Type LTL\+::\+Stack\+Object\+View\+::\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Возвращает тип объекта на стеке 
+
+\begin{DoxyReturn}{Возвращает}
+Type 
+\end{DoxyReturn}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Stack\+Object.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,82 @@
+\doxysection{Шаблон класса LTL\+::Method\texorpdfstring{$<$}{<} fn, TArgs \texorpdfstring{$>$}{>}}
+\hypertarget{class_l_t_l_1_1_method}{}\label{class_l_t_l_1_1_method}\index{LTL::Method$<$ fn, TArgs $>$@{LTL::Method$<$ fn, TArgs $>$}}
+
+
+Класс универсальной функции, преобразующий методы пользовательских типов для использования с \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}. Оборачивает пользовательские типы в \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}.  
+
+
+
+
+{\ttfamily \#include $<$Class.\+hpp$>$}
+
+Граф наследования\+:LTL\+::Method\texorpdfstring{$<$}{<} fn, TArgs \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.991589cm]{class_l_t_l_1_1_method}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_method_a3613654e1363bedbf4119b3144a17781}\label{class_l_t_l_1_1_method_a3613654e1363bedbf4119b3144a17781} 
+using {\bfseries TClass} = \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}$<$Internal\+::\+Deduce\+Class\+\_\+t$<$fn$>$$>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые типы унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LTL\+::\+CFunction$<$ fn, User\+Data$<$ Internal\+::\+Deduce\+Class\+\_\+t$<$ fn $>$ $>$, Internal\+::\+AUDVW\+\_\+t$<$ Internal\+::\+Deduce\+Class\+\_\+t$<$ fn $>$, TArgs $>$... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries \+\_\+\+Function\+Helper}
+\item 
+using {\bfseries \+\_\+\+Function\+Caller}
+\item 
+using {\bfseries TReturn}
+\item 
+using {\bfseries Args\+Tuple}
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые типы унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries Args\+Tuple}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Дополнительные унаследованные члены}
+\doxysubsection*{Открытые статические члены унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_c_function}{LTL\+::\+CFunction$<$ fn, User\+Data$<$ Internal\+::\+Deduce\+Class\+\_\+t$<$ fn $>$ $>$, Internal\+::\+AUDVW\+\_\+t$<$ Internal\+::\+Deduce\+Class\+\_\+t$<$ fn $>$, TArgs $>$... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static int {\bfseries Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+static int {\bfseries \+\_\+\+Caller} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые статические члены унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t {\bfseries Get\+Args} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Args\+Tuple \&args)
+\item 
+static constexpr size\+\_\+t {\bfseries Replace\+Upvalues} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Args\+Tuple \&args)
+\item 
+static constexpr void {\bfseries Check\+Arg\+Count} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+\doxysubsection*{Статические открытые данные унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t {\bfseries min\+\_\+arg\+\_\+count}
+\item 
+static constexpr size\+\_\+t {\bfseries max\+\_\+arg\+\_\+count}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$auto fn, typename ... TArgs$>$\newline
+class LTL\+::\+Method$<$ fn, TArgs $>$}
+Класс универсальной функции, преобразующий методы пользовательских типов для использования с \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}. Оборачивает пользовательские типы в \doxylink{struct_l_t_l_1_1_user_data}{User\+Data}. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em fn} & \\
+\hline
+{\em TArgs} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Class.\+hpp\end{DoxyCompactItemize}

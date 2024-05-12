@@ -1,0 +1,715 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: РЁР°Р±Р»РѕРЅ РєР»Р°СЃСЃР° LTL::RefObjectBase&lt; RefClass, ParentClass, RefAccess &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- РЎРѕР·РґР°РЅРѕ СЃРёСЃС‚РµРјРѕР№ Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','РџРѕРёСЃРє');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Р—Р°РіСЂСѓР·РєР°...</div>
+<div class="SRStatus" id="Searching">РџРѕРёСЃРє...</div>
+<div class="SRStatus" id="NoMatches">РќРµ РЅР°Р№РґРµРЅРѕ</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>LTL</b></li><li class="navelem"><a class="el" href="class_l_t_l_1_1_ref_object_base.html">RefObjectBase</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">РљР»Р°СЃСЃС‹</a> &#124;
+<a href="#pub-methods">РћС‚РєСЂС‹С‚С‹Рµ С‡Р»РµРЅС‹</a> &#124;
+<a href="#pro-methods">Р—Р°С‰РёС‰РµРЅРЅС‹Рµ С‡Р»РµРЅС‹</a> &#124;
+<a href="#pro-attribs">Р—Р°С‰РёС‰РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ</a> &#124;
+<a href="#friends">Р”СЂСѓР·СЊСЏ</a> &#124;
+<a href="class_l_t_l_1_1_ref_object_base-members.html">РџРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє С‡Р»РµРЅРѕРІ РєР»Р°СЃСЃР°</a>  </div>
+  <div class="headertitle"><div class="title">РЁР°Р±Р»РѕРЅ РєР»Р°СЃСЃР° LTL::RefObjectBase&lt; RefClass, ParentClass, RefAccess &gt;</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Базовый класс для классов-ссылок.  
+ <a href="#details">РџРѕРґСЂРѕР±РЅРµРµ...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_ref_object_8hpp_source.html">RefObject.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+РљР»Р°СЃСЃС‹</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_l_t_l_1_1_ref_object_base_1_1_iterator.html">Iterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+РћС‚РєСЂС‹С‚С‹Рµ С‡Р»РµРЅС‹</h2></td></tr>
+<tr class="memitem:ad338c5e2057b1022c8a0192e0067dc67" id="r_ad338c5e2057b1022c8a0192e0067dc67"><td class="memItemLeft" align="right" valign="top"><a id="ad338c5e2057b1022c8a0192e0067dc67" name="ad338c5e2057b1022c8a0192e0067dc67"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RefObjectBase</b> (lua_State *l) noexcept</td></tr>
+<tr class="separator:ad338c5e2057b1022c8a0192e0067dc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9335fa0d9aa5de3548fe681ebf8ff7a1" id="r_a9335fa0d9aa5de3548fe681ebf8ff7a1"><td class="memTemplParams" colspan="2"><a id="a9335fa0d9aa5de3548fe681ebf8ff7a1" name="a9335fa0d9aa5de3548fe681ebf8ff7a1"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9335fa0d9aa5de3548fe681ebf8ff7a1"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>RefObjectBase</b> (const <a class="el" href="class_l_t_l_1_1_state.html">State</a>&lt; T &gt; &amp;state) noexcept</td></tr>
+<tr class="separator:a9335fa0d9aa5de3548fe681ebf8ff7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae38929b4b0b61c33c8769fa041fa4b39" id="r_ae38929b4b0b61c33c8769fa041fa4b39"><td class="memItemLeft" align="right" valign="top"><a id="ae38929b4b0b61c33c8769fa041fa4b39" name="ae38929b4b0b61c33c8769fa041fa4b39"></a>
+<a class="el" href="class_l_t_l_1_1_ref_object_base_1_1_iterator.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</td></tr>
+<tr class="separator:ae38929b4b0b61c33c8769fa041fa4b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca624d0f25bd31b1105001150ea1526" id="r_aeca624d0f25bd31b1105001150ea1526"><td class="memItemLeft" align="right" valign="top"><a id="aeca624d0f25bd31b1105001150ea1526" name="aeca624d0f25bd31b1105001150ea1526"></a>
+<a class="el" href="class_l_t_l_1_1_ref_object_base_1_1_iterator.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="separator:aeca624d0f25bd31b1105001150ea1526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06e2ea60acd400c84d2b51906ceedd4a" id="r_a06e2ea60acd400c84d2b51906ceedd4a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a06e2ea60acd400c84d2b51906ceedd4a"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a06e2ea60acd400c84d2b51906ceedd4a">To</a> () const</td></tr>
+<tr class="memdesc:a06e2ea60acd400c84d2b51906ceedd4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразует объект к данному типу.  <br /></td></tr>
+<tr class="separator:a06e2ea60acd400c84d2b51906ceedd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8cfa8b27486f8654a4208cb60b9664f" id="r_ab8cfa8b27486f8654a4208cb60b9664f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab8cfa8b27486f8654a4208cb60b9664f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab8cfa8b27486f8654a4208cb60b9664f">operator T</a> () const</td></tr>
+<tr class="memdesc:ab8cfa8b27486f8654a4208cb60b9664f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Преобразует объект к данному типу.  <br /></td></tr>
+<tr class="separator:ab8cfa8b27486f8654a4208cb60b9664f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91ffcaa403866d5b914f1f7210013bc9" id="r_a91ffcaa403866d5b914f1f7210013bc9"><td class="memTemplParams" colspan="2"><a id="a91ffcaa403866d5b914f1f7210013bc9" name="a91ffcaa403866d5b914f1f7210013bc9"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a91ffcaa403866d5b914f1f7210013bc9"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;</b> (const T &amp;other) const</td></tr>
+<tr class="separator:a91ffcaa403866d5b914f1f7210013bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c1f8de1636b8886952a63854eadb9c0" id="r_a6c1f8de1636b8886952a63854eadb9c0"><td class="memTemplParams" colspan="2"><a id="a6c1f8de1636b8886952a63854eadb9c0" name="a6c1f8de1636b8886952a63854eadb9c0"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6c1f8de1636b8886952a63854eadb9c0"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;=</b> (const T &amp;other) const</td></tr>
+<tr class="separator:a6c1f8de1636b8886952a63854eadb9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e1c0b8b5218d31bec6bc3d15e0e808" id="r_a96e1c0b8b5218d31bec6bc3d15e0e808"><td class="memTemplParams" colspan="2"><a id="a96e1c0b8b5218d31bec6bc3d15e0e808" name="a96e1c0b8b5218d31bec6bc3d15e0e808"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a96e1c0b8b5218d31bec6bc3d15e0e808"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const T &amp;other) const</td></tr>
+<tr class="separator:a96e1c0b8b5218d31bec6bc3d15e0e808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b75d2055f76c8504bf69ebfb9457893" id="r_a7b75d2055f76c8504bf69ebfb9457893"><td class="memItemLeft" align="right" valign="top"><a id="a7b75d2055f76c8504bf69ebfb9457893" name="a7b75d2055f76c8504bf69ebfb9457893"></a>
+template&lt;&gt; </td></tr>
+<tr class="memitem:a7b75d2055f76c8504bf69ebfb9457893"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const std::nullptr_t &amp;) const</td></tr>
+<tr class="separator:a7b75d2055f76c8504bf69ebfb9457893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ded7779dd5d3e156d02c8a02cfb1a01" id="r_a9ded7779dd5d3e156d02c8a02cfb1a01"><td class="memTemplParams" colspan="2"><a id="a9ded7779dd5d3e156d02c8a02cfb1a01" name="a9ded7779dd5d3e156d02c8a02cfb1a01"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9ded7779dd5d3e156d02c8a02cfb1a01"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;</b> (const T &amp;other) const</td></tr>
+<tr class="separator:a9ded7779dd5d3e156d02c8a02cfb1a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adafab338f2d1be898558f8961f141735" id="r_adafab338f2d1be898558f8961f141735"><td class="memTemplParams" colspan="2"><a id="adafab338f2d1be898558f8961f141735" name="adafab338f2d1be898558f8961f141735"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:adafab338f2d1be898558f8961f141735"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;=</b> (const T &amp;other) const</td></tr>
+<tr class="separator:adafab338f2d1be898558f8961f141735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75c1538396e746ded391e5fc1c4659bf" id="r_a75c1538396e746ded391e5fc1c4659bf"><td class="memTemplParams" colspan="2"><a id="a75c1538396e746ded391e5fc1c4659bf" name="a75c1538396e746ded391e5fc1c4659bf"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a75c1538396e746ded391e5fc1c4659bf"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (const T &amp;other) const</td></tr>
+<tr class="separator:a75c1538396e746ded391e5fc1c4659bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099b88d7a1bac3d5a5ff8c5a35aa7f0a" id="r_a099b88d7a1bac3d5a5ff8c5a35aa7f0a"><td class="memTemplParams" colspan="2"><a id="a099b88d7a1bac3d5a5ff8c5a35aa7f0a" name="a099b88d7a1bac3d5a5ff8c5a35aa7f0a"></a>
+template&lt;typename TReturn  = void, typename ... TArgs&gt; </td></tr>
+<tr class="memitem:a099b88d7a1bac3d5a5ff8c5a35aa7f0a"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Call</b> (TArgs &amp;&amp;...args) const</td></tr>
+<tr class="separator:a099b88d7a1bac3d5a5ff8c5a35aa7f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0d8509ea456546d2f71fdf8ae852824" id="r_aa0d8509ea456546d2f71fdf8ae852824"><td class="memTemplParams" colspan="2"><a id="aa0d8509ea456546d2f71fdf8ae852824" name="aa0d8509ea456546d2f71fdf8ae852824"></a>
+template&lt;typename TReturn  = void, typename ... TArgs&gt; </td></tr>
+<tr class="memitem:aa0d8509ea456546d2f71fdf8ae852824"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>PCall</b> (TArgs &amp;&amp;...args) const</td></tr>
+<tr class="separator:aa0d8509ea456546d2f71fdf8ae852824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae42d062879fff824d1f4b5ac7fe98d98" id="r_ae42d062879fff824d1f4b5ac7fe98d98"><td class="memTemplParams" colspan="2"><a id="ae42d062879fff824d1f4b5ac7fe98d98" name="ae42d062879fff824d1f4b5ac7fe98d98"></a>
+template&lt;typename TReturn  = void, typename ... TArgs&gt; </td></tr>
+<tr class="memitem:ae42d062879fff824d1f4b5ac7fe98d98"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><b>SelfCall</b> (const char *key, TArgs &amp;&amp;...args) const</td></tr>
+<tr class="separator:ae42d062879fff824d1f4b5ac7fe98d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad14f5c594e7b8c2f4fddf6c9b58e4a1f" id="r_ad14f5c594e7b8c2f4fddf6c9b58e4a1f"><td class="memTemplParams" colspan="2"><a id="ad14f5c594e7b8c2f4fddf6c9b58e4a1f" name="ad14f5c594e7b8c2f4fddf6c9b58e4a1f"></a>
+template&lt;typename TReturn  = void, typename ... TArgs&gt; </td></tr>
+<tr class="memitem:ad14f5c594e7b8c2f4fddf6c9b58e4a1f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>SelfPCall</b> (const char *key, TArgs &amp;&amp;...args) const</td></tr>
+<tr class="separator:ad14f5c594e7b8c2f4fddf6c9b58e4a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92114d0a956d47e4df3b43eb8b30611" id="r_ae92114d0a956d47e4df3b43eb8b30611"><td class="memTemplParams" colspan="2"><a id="ae92114d0a956d47e4df3b43eb8b30611" name="ae92114d0a956d47e4df3b43eb8b30611"></a>
+template&lt;typename ... TArgs&gt; </td></tr>
+<tr class="memitem:ae92114d0a956d47e4df3b43eb8b30611"><td class="memTemplItemLeft" align="right" valign="top">ParentClass&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (TArgs &amp;&amp;...args) const</td></tr>
+<tr class="separator:ae92114d0a956d47e4df3b43eb8b30611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45f9aa25e818a4223d61516f192c111e" id="r_a45f9aa25e818a4223d61516f192c111e"><td class="memItemLeft" align="right" valign="top">ParentClass&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45f9aa25e818a4223d61516f192c111e">GetMetaTable</a> () const</td></tr>
+<tr class="memdesc:a45f9aa25e818a4223d61516f192c111e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает <a class="el" href="class_l_t_l_1_1_ref_object.html">RefObject</a> с метатаблицей объекта. Если ее нет возвращает nil.  <br /></td></tr>
+<tr class="separator:a45f9aa25e818a4223d61516f192c111e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fcaf86de0828f552649573d8d1cddd1" id="r_a7fcaf86de0828f552649573d8d1cddd1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7fcaf86de0828f552649573d8d1cddd1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7fcaf86de0828f552649573d8d1cddd1">SetMetaTable</a> (const T &amp;value) const</td></tr>
+<tr class="memdesc:a7fcaf86de0828f552649573d8d1cddd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает на объект данную метатаблицу  <br /></td></tr>
+<tr class="separator:a7fcaf86de0828f552649573d8d1cddd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d0e75c86b50001ef16eac090b958fc" id="r_a20d0e75c86b50001ef16eac090b958fc"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:a20d0e75c86b50001ef16eac090b958fc"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a20d0e75c86b50001ef16eac090b958fc">Len</a> () const</td></tr>
+<tr class="memdesc:a20d0e75c86b50001ef16eac090b958fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen.  <br /></td></tr>
+<tr class="separator:a20d0e75c86b50001ef16eac090b958fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c33bcb1ef4c55fae1aff43488e79a7" id="r_a72c33bcb1ef4c55fae1aff43488e79a7"><td class="memItemLeft" align="right" valign="top">ParentClass&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72c33bcb1ef4c55fae1aff43488e79a7">Len</a> () const</td></tr>
+<tr class="memdesc:a72c33bcb1ef4c55fae1aff43488e79a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen.  <br /></td></tr>
+<tr class="separator:a72c33bcb1ef4c55fae1aff43488e79a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a330e9037b1e2cd0e9fe7dca0fbe23dcc" id="r_a330e9037b1e2cd0e9fe7dca0fbe23dcc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a330e9037b1e2cd0e9fe7dca0fbe23dcc">RawLen</a> () const</td></tr>
+<tr class="memdesc:a330e9037b1e2cd0e9fe7dca0fbe23dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает необработанную длину объекта.  <br /></td></tr>
+<tr class="separator:a330e9037b1e2cd0e9fe7dca0fbe23dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632ad6f23b85d3dc8f08bf1c605998ee" id="r_a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="#acb7c7eb14cf2baa83e21e17cb324155d">Type</a> LType&gt; </td></tr>
+<tr class="memitem:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a632ad6f23b85d3dc8f08bf1c605998ee">Is</a> () const</td></tr>
+<tr class="memdesc:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет является ли объект данного типа.  <br /></td></tr>
+<tr class="separator:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632ad6f23b85d3dc8f08bf1c605998ee" id="r_a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a632ad6f23b85d3dc8f08bf1c605998ee">Is</a> () const</td></tr>
+<tr class="memdesc:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет может ли объект быть преобразован к данному типу.  <br /></td></tr>
+<tr class="separator:a632ad6f23b85d3dc8f08bf1c605998ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f9589aa159209cda3d00bd67eb2e27" id="r_a69f9589aa159209cda3d00bd67eb2e27"><td class="memItemLeft" align="right" valign="top"><a id="a69f9589aa159209cda3d00bd67eb2e27" name="a69f9589aa159209cda3d00bd67eb2e27"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsNil</b> () const</td></tr>
+<tr class="separator:a69f9589aa159209cda3d00bd67eb2e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa95ea2ea0c06315677dd9ed67d292d7d" id="r_aa95ea2ea0c06315677dd9ed67d292d7d"><td class="memItemLeft" align="right" valign="top"><a id="aa95ea2ea0c06315677dd9ed67d292d7d" name="aa95ea2ea0c06315677dd9ed67d292d7d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsTable</b> () const</td></tr>
+<tr class="separator:aa95ea2ea0c06315677dd9ed67d292d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ac09c76649857a838c66ffd1977c37" id="r_ad5ac09c76649857a838c66ffd1977c37"><td class="memItemLeft" align="right" valign="top"><a id="ad5ac09c76649857a838c66ffd1977c37" name="ad5ac09c76649857a838c66ffd1977c37"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsUserData</b> () const</td></tr>
+<tr class="separator:ad5ac09c76649857a838c66ffd1977c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7c7eb14cf2baa83e21e17cb324155d" id="r_acb7c7eb14cf2baa83e21e17cb324155d"><td class="memItemLeft" align="right" valign="top">Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb7c7eb14cf2baa83e21e17cb324155d">Type</a> () const</td></tr>
+<tr class="memdesc:acb7c7eb14cf2baa83e21e17cb324155d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает тип объекта.  <br /></td></tr>
+<tr class="separator:acb7c7eb14cf2baa83e21e17cb324155d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8dcdb782a83a83fb118f3dcd642f0e0" id="r_ac8dcdb782a83a83fb118f3dcd642f0e0"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8dcdb782a83a83fb118f3dcd642f0e0">TypeName</a> () const</td></tr>
+<tr class="memdesc:ac8dcdb782a83a83fb118f3dcd642f0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает имя типа объекта.  <br /></td></tr>
+<tr class="separator:ac8dcdb782a83a83fb118f3dcd642f0e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2908a3c36fa7a1f27da81b7263ed2b9c" id="r_a2908a3c36fa7a1f27da81b7263ed2b9c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2908a3c36fa7a1f27da81b7263ed2b9c">ToString</a> () const</td></tr>
+<tr class="memdesc:a2908a3c36fa7a1f27da81b7263ed2b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает строковую репрезентацию объекта.  <br /></td></tr>
+<tr class="separator:a2908a3c36fa7a1f27da81b7263ed2b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6182a540efca077a2ed68dfa9c039cc1" id="r_a6182a540efca077a2ed68dfa9c039cc1"><td class="memItemLeft" align="right" valign="top"><a id="a6182a540efca077a2ed68dfa9c039cc1" name="a6182a540efca077a2ed68dfa9c039cc1"></a>
+lua_State *const&#160;</td><td class="memItemRight" valign="bottom"><b>GetState</b> () const</td></tr>
+<tr class="separator:a6182a540efca077a2ed68dfa9c039cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0abecfe6018b78a471e8d16b2f9abb" id="r_a1f0abecfe6018b78a471e8d16b2f9abb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f0abecfe6018b78a471e8d16b2f9abb">PushView</a> () const</td></tr>
+<tr class="memdesc:a1f0abecfe6018b78a471e8d16b2f9abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Помещает на стек объект и возвращает его <a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="РџСЂРµРґСЃС‚Р°РІР»СЏРµС‚ РћРћРџ РґРѕСЃС‚СѓРї Рє СЃС‚РµРєСѓ Lua. РџРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРёСЏ РёРЅРґРµРєСЃР° РѕР±СЉРµРєС‚Р° РЅР° СЃС‚РµРєРµ СЃ РЅРёРј РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ....">StackObjectView</a>.  <br /></td></tr>
+<tr class="separator:a1f0abecfe6018b78a471e8d16b2f9abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Р—Р°С‰РёС‰РµРЅРЅС‹Рµ С‡Р»РµРЅС‹</h2></td></tr>
+<tr class="memitem:a64daeca809b6f1dfda7a185ded7396e3" id="r_a64daeca809b6f1dfda7a185ded7396e3"><td class="memItemLeft" align="right" valign="top"><a id="a64daeca809b6f1dfda7a185ded7396e3" name="a64daeca809b6f1dfda7a185ded7396e3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PushRef</b> (int ref) const</td></tr>
+<tr class="separator:a64daeca809b6f1dfda7a185ded7396e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f798f30b71ccc89a36a769f05434e40" id="r_a6f798f30b71ccc89a36a769f05434e40"><td class="memItemLeft" align="right" valign="top"><a id="a6f798f30b71ccc89a36a769f05434e40" name="a6f798f30b71ccc89a36a769f05434e40"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetRef</b> () const</td></tr>
+<tr class="separator:a6f798f30b71ccc89a36a769f05434e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4177f540825c26661e9c7652f5f681de" id="r_a4177f540825c26661e9c7652f5f681de"><td class="memItemLeft" align="right" valign="top"><a id="a4177f540825c26661e9c7652f5f681de" name="a4177f540825c26661e9c7652f5f681de"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnrefRef</b> (int ref)</td></tr>
+<tr class="separator:a4177f540825c26661e9c7652f5f681de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Р—Р°С‰РёС‰РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ</h2></td></tr>
+<tr class="memitem:abd2e3d8b3334a43deaaf2246268f6ee4" id="r_abd2e3d8b3334a43deaaf2246268f6ee4"><td class="memItemLeft" align="right" valign="top"><a id="abd2e3d8b3334a43deaaf2246268f6ee4" name="abd2e3d8b3334a43deaaf2246268f6ee4"></a>
+lua_State *&#160;</td><td class="memItemRight" valign="bottom"><b>m_state</b> = nullptr</td></tr>
+<tr class="separator:abd2e3d8b3334a43deaaf2246268f6ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Р”СЂСѓР·СЊСЏ</h2></td></tr>
+<tr class="memitem:a9830fc407400559db7e7783cc10a9394" id="r_a9830fc407400559db7e7783cc10a9394"><td class="memItemLeft" align="right" valign="top"><a id="a9830fc407400559db7e7783cc10a9394" name="a9830fc407400559db7e7783cc10a9394"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Iterator</b></td></tr>
+<tr class="separator:a9830fc407400559db7e7783cc10a9394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adce4f73649aebb6be506883daf1d9fce" id="r_adce4f73649aebb6be506883daf1d9fce"><td class="memItemLeft" align="right" valign="top"><a id="adce4f73649aebb6be506883daf1d9fce" name="adce4f73649aebb6be506883daf1d9fce"></a>
+static friend std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_l_t_l_1_1_ref_object_base.html">RefObjectBase</a> &amp;obj)</td></tr>
+<tr class="separator:adce4f73649aebb6be506883daf1d9fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">РџРѕРґСЂРѕР±РЅРѕРµ РѕРїРёСЃР°РЅРёРµ</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename RefClass, typename ParentClass, typename RefAccess&gt;<br />
+class LTL::RefObjectBase&lt; RefClass, ParentClass, RefAccess &gt;</div><p>Базовый класс для классов-ссылок. </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RefClass</td><td>Класс реализующий интерфейс </td></tr>
+    <tr><td class="paramname">ParentClass</td><td>Главный класс </td></tr>
+    <tr><td class="paramname">RefAccess</td><td>Класс для доступа к объектам по ссылке</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>РЎРј. С‚Р°РєР¶Рµ</dt><dd><a class="el" href="class_l_t_l_1_1_ref_object.html">RefObject</a> </dd>
+<dd>
+<a class="el" href="class_l_t_l_1_1_ref_table_entry_object.html">RefTableEntryObject</a> </dd>
+<dd>
+<a class="el" href="struct_l_t_l_1_1_ref_global_access.html" title="РљР»Р°СЃСЃ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РѕР±СЉРµРєС‚Р°Рј РїРѕ СЃСЃС‹Р»РєРµ РІРЅСѓС‚СЂРё Р’Рњ Lua.">RefGlobalAccess</a> </dd></dl>
+</div><h2 class="groupheader">РњРµС‚РѕРґС‹</h2>
+<a id="a45f9aa25e818a4223d61516f192c111e" name="a45f9aa25e818a4223d61516f192c111e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45f9aa25e818a4223d61516f192c111e">&#9670;&#160;</a></span>GetMetaTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ParentClass <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::GetMetaTable </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает <a class="el" href="class_l_t_l_1_1_ref_object.html">RefObject</a> с метатаблицей объекта. Если ее нет возвращает nil. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>ParentClass </dd></dl>
+
+</div>
+</div>
+<a id="a632ad6f23b85d3dc8f08bf1c605998ee" name="a632ad6f23b85d3dc8f08bf1c605998ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a632ad6f23b85d3dc8f08bf1c605998ee">&#9670;&#160;</a></span>Is() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="#acb7c7eb14cf2baa83e21e17cb324155d">Type</a> LType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::Is </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверяет является ли объект данного типа. </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">LType</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="a632ad6f23b85d3dc8f08bf1c605998ee" name="a632ad6f23b85d3dc8f08bf1c605998ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a632ad6f23b85d3dc8f08bf1c605998ee">&#9670;&#160;</a></span>Is() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::Is </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверяет может ли объект быть преобразован к данному типу. </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">LType</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+</div>
+</div>
+<a id="a20d0e75c86b50001ef16eac090b958fc" name="a20d0e75c86b50001ef16eac090b958fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20d0e75c86b50001ef16eac090b958fc">&#9670;&#160;</a></span>Len() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;typename R &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">R <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::Len </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>R </dd></dl>
+
+</div>
+</div>
+<a id="a72c33bcb1ef4c55fae1aff43488e79a7" name="a72c33bcb1ef4c55fae1aff43488e79a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72c33bcb1ef4c55fae1aff43488e79a7">&#9670;&#160;</a></span>Len() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ParentClass <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::Len </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает результат работы метаметода __len, если таковой присутствует, в противном случае возвращает результат RawLen. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>ParentClass </dd></dl>
+
+</div>
+</div>
+<a id="ab8cfa8b27486f8654a4208cb60b9664f" name="ab8cfa8b27486f8654a4208cb60b9664f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8cfa8b27486f8654a4208cb60b9664f">&#9670;&#160;</a></span>operator T()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::operator T </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Преобразует объект к данному типу. </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>T </dd></dl>
+
+</div>
+</div>
+<a id="a1f0abecfe6018b78a471e8d16b2f9abb" name="a1f0abecfe6018b78a471e8d16b2f9abb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0abecfe6018b78a471e8d16b2f9abb">&#9670;&#160;</a></span>PushView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_stack_object_view.html">StackObjectView</a> <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::PushView </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Помещает на стек объект и возвращает его <a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="РџСЂРµРґСЃС‚Р°РІР»СЏРµС‚ РћРћРџ РґРѕСЃС‚СѓРї Рє СЃС‚РµРєСѓ Lua. РџРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРёСЏ РёРЅРґРµРєСЃР° РѕР±СЉРµРєС‚Р° РЅР° СЃС‚РµРєРµ СЃ РЅРёРј РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ....">StackObjectView</a>. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="РџСЂРµРґСЃС‚Р°РІР»СЏРµС‚ РћРћРџ РґРѕСЃС‚СѓРї Рє СЃС‚РµРєСѓ Lua. РџРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРёСЏ РёРЅРґРµРєСЃР° РѕР±СЉРµРєС‚Р° РЅР° СЃС‚РµРєРµ СЃ РЅРёРј РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ....">StackObjectView</a> </dd></dl>
+<dl class="section see"><dt>РЎРј. С‚Р°РєР¶Рµ</dt><dd><a class="el" href="class_l_t_l_1_1_stack_object_view.html" title="РџСЂРµРґСЃС‚Р°РІР»СЏРµС‚ РћРћРџ РґРѕСЃС‚СѓРї Рє СЃС‚РµРєСѓ Lua. РџРѕСЃР»Рµ РЅР°Р·РЅР°С‡РµРЅРёСЏ РёРЅРґРµРєСЃР° РѕР±СЉРµРєС‚Р° РЅР° СЃС‚РµРєРµ СЃ РЅРёРј РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ....">StackObjectView</a> </dd></dl>
+
+</div>
+</div>
+<a id="a330e9037b1e2cd0e9fe7dca0fbe23dcc" name="a330e9037b1e2cd0e9fe7dca0fbe23dcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a330e9037b1e2cd0e9fe7dca0fbe23dcc">&#9670;&#160;</a></span>RawLen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::RawLen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает необработанную длину объекта. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>size_t длина объекта </dd></dl>
+
+</div>
+</div>
+<a id="a7fcaf86de0828f552649573d8d1cddd1" name="a7fcaf86de0828f552649573d8d1cddd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fcaf86de0828f552649573d8d1cddd1">&#9670;&#160;</a></span>SetMetaTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::SetMetaTable </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает на объект данную метатаблицу </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>тип мететаблицы </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>РђСЂРіСѓРјРµРЅС‚С‹</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>метатаблица </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a06e2ea60acd400c84d2b51906ceedd4a" name="a06e2ea60acd400c84d2b51906ceedd4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06e2ea60acd400c84d2b51906ceedd4a">&#9670;&#160;</a></span>To()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::To </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Преобразует объект к данному типу. </p>
+<dl class="tparams"><dt>РџР°СЂР°РјРµС‚СЂС‹ С€Р°Р±Р»РѕРЅР°</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>T </dd></dl>
+
+</div>
+</div>
+<a id="a2908a3c36fa7a1f27da81b7263ed2b9c" name="a2908a3c36fa7a1f27da81b7263ed2b9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2908a3c36fa7a1f27da81b7263ed2b9c">&#9670;&#160;</a></span>ToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::ToString </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает строковую репрезентацию объекта. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>const char* </dd></dl>
+
+</div>
+</div>
+<a id="acb7c7eb14cf2baa83e21e17cb324155d" name="acb7c7eb14cf2baa83e21e17cb324155d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7c7eb14cf2baa83e21e17cb324155d">&#9670;&#160;</a></span>Type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Type <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::Type </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает тип объекта. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>Type </dd></dl>
+
+</div>
+</div>
+<a id="ac8dcdb782a83a83fb118f3dcd642f0e0" name="ac8dcdb782a83a83fb118f3dcd642f0e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8dcdb782a83a83fb118f3dcd642f0e0">&#9670;&#160;</a></span>TypeName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RefClass , typename ParentClass , typename RefAccess &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * <a class="el" href="class_l_t_l_1_1_ref_object_base.html">LTL::RefObjectBase</a>&lt; RefClass, ParentClass, RefAccess &gt;::TypeName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает имя типа объекта. </p>
+<dl class="section return"><dt>Р’РѕР·РІСЂР°С‰Р°РµС‚</dt><dd>const char* </dd></dl>
+
+</div>
+</div>
+<hr/>РћР±СЉСЏРІР»РµРЅРёСЏ Рё РѕРїРёСЃР°РЅРёСЏ С‡Р»РµРЅРѕРІ РєР»Р°СЃСЃР° РЅР°С…РѕРґСЏС‚СЃСЏ РІ С„Р°Р№Р»Рµ:<ul>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_ref_object_8hpp_source.html">RefObject.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+РЎРѕР·РґР°РЅРѕ СЃРёСЃС‚РµРјРѕР№&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

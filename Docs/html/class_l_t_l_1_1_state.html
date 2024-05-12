@@ -1,0 +1,713 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: Шаблон класса LTL::State&lt; Allocator &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>LTL</b></li><li class="navelem"><a class="el" href="class_l_t_l_1_1_state.html">State</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="class_l_t_l_1_1_state-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса LTL::State&lt; Allocator &gt;</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Класс состояния виртуальной машины Lua.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_state_8hpp_source.html">State.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:ad9883fda9de2cf09abe7c298f88e0d31" id="r_ad9883fda9de2cf09abe7c298f88e0d31"><td class="memTemplParams" colspan="2"><a id="ad9883fda9de2cf09abe7c298f88e0d31" name="ad9883fda9de2cf09abe7c298f88e0d31"></a>
+template&lt;typename Base , typename Derived &gt; </td></tr>
+<tr class="memitem:ad9883fda9de2cf09abe7c298f88e0d31"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>EnableIfBaseOf</b> = std::enable_if_t&lt;std::is_base_of_v&lt;Base, Derived&gt;, <a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&gt;</td></tr>
+<tr class="separator:ad9883fda9de2cf09abe7c298f88e0d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:acb67f0951ae59a95369b22328c3e4da3" id="r_acb67f0951ae59a95369b22328c3e4da3"><td class="memItemLeft" align="right" valign="top"><a id="acb67f0951ae59a95369b22328c3e4da3" name="acb67f0951ae59a95369b22328c3e4da3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>State</b> (void *obj=nullptr)</td></tr>
+<tr class="separator:acb67f0951ae59a95369b22328c3e4da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9582bae3d375eff8b9279742886dcf" id="r_aba9582bae3d375eff8b9279742886dcf"><td class="memItemLeft" align="right" valign="top"><a id="aba9582bae3d375eff8b9279742886dcf" name="aba9582bae3d375eff8b9279742886dcf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>State</b> (const <a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;)=delete</td></tr>
+<tr class="separator:aba9582bae3d375eff8b9279742886dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3a4929bb45ea9041529eedc3b5c7d7f" id="r_af3a4929bb45ea9041529eedc3b5c7d7f"><td class="memItemLeft" align="right" valign="top"><a id="af3a4929bb45ea9041529eedc3b5c7d7f" name="af3a4929bb45ea9041529eedc3b5c7d7f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>State</b> (<a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:af3a4929bb45ea9041529eedc3b5c7d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a557c10375fea0b9ccd7bd7519d323ae3" id="r_a557c10375fea0b9ccd7bd7519d323ae3"><td class="memItemLeft" align="right" valign="top"><a id="a557c10375fea0b9ccd7bd7519d323ae3" name="a557c10375fea0b9ccd7bd7519d323ae3"></a>
+<a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;)=delete</td></tr>
+<tr class="separator:a557c10375fea0b9ccd7bd7519d323ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf2e76df4cf028181fb3377f4242d715" id="r_adf2e76df4cf028181fb3377f4242d715"><td class="memItemLeft" align="right" valign="top"><a id="adf2e76df4cf028181fb3377f4242d715" name="adf2e76df4cf028181fb3377f4242d715"></a>
+<a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:adf2e76df4cf028181fb3377f4242d715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf0385921bea8da79a18918e2fdddb6" id="r_a4cf0385921bea8da79a18918e2fdddb6"><td class="memItemLeft" align="right" valign="top"><a id="a4cf0385921bea8da79a18918e2fdddb6" name="a4cf0385921bea8da79a18918e2fdddb6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ThrowExceptions</b> ()</td></tr>
+<tr class="memdesc:a4cf0385921bea8da79a18918e2fdddb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает стандартный обработчик исключений. <br /></td></tr>
+<tr class="separator:a4cf0385921bea8da79a18918e2fdddb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3a369fb138b70b9ceb5c5e9dfc071f" id="r_a8e3a369fb138b70b9ceb5c5e9dfc071f"><td class="memItemLeft" align="right" valign="top"><a id="a8e3a369fb138b70b9ceb5c5e9dfc071f" name="a8e3a369fb138b70b9ceb5c5e9dfc071f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenLibs</b> ()</td></tr>
+<tr class="memdesc:a8e3a369fb138b70b9ceb5c5e9dfc071f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Открывает все библиотеки Lua. <br /></td></tr>
+<tr class="separator:a8e3a369fb138b70b9ceb5c5e9dfc071f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad98ac1e7e676044dc6a6c220407d4901" id="r_ad98ac1e7e676044dc6a6c220407d4901"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad98ac1e7e676044dc6a6c220407d4901">OpenLib</a> (const <a class="el" href="class_l_t_l_1_1_lib.html">Lib</a> &amp;lib)</td></tr>
+<tr class="memdesc:ad98ac1e7e676044dc6a6c220407d4901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Открывает данную библиотеку Lua.  <br /></td></tr>
+<tr class="separator:ad98ac1e7e676044dc6a6c220407d4901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec67b35f015d45652a443265b4505cb6" id="r_aec67b35f015d45652a443265b4505cb6"><td class="memItemLeft" align="right" valign="top"><a id="aec67b35f015d45652a443265b4505cb6" name="aec67b35f015d45652a443265b4505cb6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenLibs</b> (const <a class="el" href="class_l_t_l_1_1_lib.html">Lib</a> &amp;lib)</td></tr>
+<tr class="separator:aec67b35f015d45652a443265b4505cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96992d73dd2e9349d559ff7868ae5b1b" id="r_a96992d73dd2e9349d559ff7868ae5b1b"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a96992d73dd2e9349d559ff7868ae5b1b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a96992d73dd2e9349d559ff7868ae5b1b">OpenLibs</a> (const <a class="el" href="class_l_t_l_1_1_lib.html">Lib</a> &amp;lib, const Ts &amp;...libs)</td></tr>
+<tr class="memdesc:a96992d73dd2e9349d559ff7868ae5b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Открывает данные библиотеки Lua.  <br /></td></tr>
+<tr class="separator:a96992d73dd2e9349d559ff7868ae5b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2115d81d0e821d665640e335e7730a9a" id="r_a2115d81d0e821d665640e335e7730a9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2115d81d0e821d665640e335e7730a9a">AddFunction</a> (const char *const name, lua_CFunction func)</td></tr>
+<tr class="memdesc:a2115d81d0e821d665640e335e7730a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавляет глобальную функцию  <br /></td></tr>
+<tr class="separator:a2115d81d0e821d665640e335e7730a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac122675ac838abaab0fccca7656317a7" id="r_ac122675ac838abaab0fccca7656317a7"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ac122675ac838abaab0fccca7656317a7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac122675ac838abaab0fccca7656317a7">AddClosure</a> (const char *const name, lua_CFunction func, Ts &amp;&amp;...args)</td></tr>
+<tr class="memdesc:ac122675ac838abaab0fccca7656317a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавляет глобальное замыкание с данными upvalue.  <br /></td></tr>
+<tr class="separator:ac122675ac838abaab0fccca7656317a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42c509b0156c860f47f501547c1a083" id="r_aa42c509b0156c860f47f501547c1a083"><td class="memItemLeft" align="right" valign="top">PCallResult&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa42c509b0156c860f47f501547c1a083">DoFile</a> (const char *const path)</td></tr>
+<tr class="memdesc:aa42c509b0156c860f47f501547c1a083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Исполняет файл и возвращает результат работы  <br /></td></tr>
+<tr class="separator:aa42c509b0156c860f47f501547c1a083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f66b55e1a3ec4b197cda642be7b8ba" id="r_a60f66b55e1a3ec4b197cda642be7b8ba"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... Ts&gt; </td></tr>
+<tr class="memitem:a60f66b55e1a3ec4b197cda642be7b8ba"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a60f66b55e1a3ec4b197cda642be7b8ba">Call</a> (const char *name, Ts &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a60f66b55e1a3ec4b197cda642be7b8ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вызывает глобальную функцию с данными аргументами и возвращает результат  <br /></td></tr>
+<tr class="separator:a60f66b55e1a3ec4b197cda642be7b8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b0cac5339a5518f764bae91a4e59e95" id="r_a6b0cac5339a5518f764bae91a4e59e95"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = void, typename... Ts&gt; </td></tr>
+<tr class="memitem:a6b0cac5339a5518f764bae91a4e59e95"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6b0cac5339a5518f764bae91a4e59e95">PCall</a> (const char *name, Ts &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a6b0cac5339a5518f764bae91a4e59e95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Безопасно вызывает глобальную функцию с данными аргументами и возвращает результат  <br /></td></tr>
+<tr class="separator:a6b0cac5339a5518f764bae91a4e59e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb6731e34554ac7bf88b7523a9fed3a5" id="r_adb6731e34554ac7bf88b7523a9fed3a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb6731e34554ac7bf88b7523a9fed3a5">Run</a> (const char *const s) noexcept(false)</td></tr>
+<tr class="memdesc:adb6731e34554ac7bf88b7523a9fed3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выполняет данную строку.  <br /></td></tr>
+<tr class="separator:adb6731e34554ac7bf88b7523a9fed3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae661fd4bed0cd1068b805f09e1d3895d" id="r_ae661fd4bed0cd1068b805f09e1d3895d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae661fd4bed0cd1068b805f09e1d3895d">Run</a> (const std::string &amp;s)</td></tr>
+<tr class="memdesc:ae661fd4bed0cd1068b805f09e1d3895d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выполняет данную строку.  <br /></td></tr>
+<tr class="separator:ae661fd4bed0cd1068b805f09e1d3895d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad326a3813f96f9e366e66da937f6b0a8" id="r_ad326a3813f96f9e366e66da937f6b0a8"><td class="memTemplParams" colspan="2">template&lt;typename TReturn  = GRefObject&gt; </td></tr>
+<tr class="memitem:ad326a3813f96f9e366e66da937f6b0a8"><td class="memTemplItemLeft" align="right" valign="top">TReturn&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad326a3813f96f9e366e66da937f6b0a8">GetGlobal</a> (const char *key)</td></tr>
+<tr class="memdesc:ad326a3813f96f9e366e66da937f6b0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает глобальное значение по имени  <br /></td></tr>
+<tr class="separator:ad326a3813f96f9e366e66da937f6b0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4470a3d38c8c4ee761c62faf2c1fcfad" id="r_a4470a3d38c8c4ee761c62faf2c1fcfad"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4470a3d38c8c4ee761c62faf2c1fcfad"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4470a3d38c8c4ee761c62faf2c1fcfad">SetGlobal</a> (const char *name, const T &amp;value)</td></tr>
+<tr class="memdesc:a4470a3d38c8c4ee761c62faf2c1fcfad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает глобальное значение с данным именем  <br /></td></tr>
+<tr class="separator:a4470a3d38c8c4ee761c62faf2c1fcfad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae2d0b8bb96895fe70ce76259aeb7856" id="r_aae2d0b8bb96895fe70ce76259aeb7856"><td class="memTemplParams" colspan="2">template&lt;typename TClass , typename... TArgs&gt; </td></tr>
+<tr class="memitem:aae2d0b8bb96895fe70ce76259aeb7856"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_l_t_l_1_1_ref_object.html">GRefObject</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aae2d0b8bb96895fe70ce76259aeb7856">MakeUserData</a> (TArgs &amp;&amp;...args)</td></tr>
+<tr class="memdesc:aae2d0b8bb96895fe70ce76259aeb7856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает UserData&lt;T&gt; с данными аргументами и возвращает объект-ссылку на нее.  <br /></td></tr>
+<tr class="separator:aae2d0b8bb96895fe70ce76259aeb7856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c50f182329fb1568ce3342cd3f86185" id="r_a0c50f182329fb1568ce3342cd3f86185"><td class="memTemplParams" colspan="2"><a id="a0c50f182329fb1568ce3342cd3f86185" name="a0c50f182329fb1568ce3342cd3f86185"></a>
+template&lt;typename T , typename... TUpvalues&gt; </td></tr>
+<tr class="memitem:a0c50f182329fb1568ce3342cd3f86185"><td class="memTemplItemLeft" align="right" valign="top">EnableIfBaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_c_function_base.html">Internal::CFunctionBase</a>, T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const T &amp;, TUpvalues &amp;&amp;...upvalues)</td></tr>
+<tr class="separator:a0c50f182329fb1568ce3342cd3f86185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6010f1654ddf90699b8579f48cd097d9" id="r_a6010f1654ddf90699b8579f48cd097d9"><td class="memItemLeft" align="right" valign="top"><a id="a6010f1654ddf90699b8579f48cd097d9" name="a6010f1654ddf90699b8579f48cd097d9"></a>
+<a class="el" href="class_l_t_l_1_1_c_state.html">CState</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>GetState</b> () const</td></tr>
+<tr class="separator:a6010f1654ddf90699b8579f48cd097d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Allocator = void&gt;<br />
+class LTL::State&lt; Allocator &gt;</div><p>Класс состояния виртуальной машины Lua. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Allocator</td><td>класс-интерфейс для управления памятью. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Методы</h2>
+<a id="ac122675ac838abaab0fccca7656317a7" name="ac122675ac838abaab0fccca7656317a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac122675ac838abaab0fccca7656317a7">&#9670;&#160;</a></span>AddClosure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp; <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::AddClosure </td>
+          <td>(</td>
+          <td class="paramtype">const char *const</td>          <td class="paramname"><span class="paramname"><em>name</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lua_CFunction</td>          <td class="paramname"><span class="paramname"><em>func</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Ts &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Добавляет глобальное замыкание с данными upvalue. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Ts</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>имя замыкания </td></tr>
+    <tr><td class="paramname">func</td><td>замыкание </td></tr>
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_state.html" title="Класс состояния виртуальной машины Lua.">State</a>&amp; </dd></dl>
+
+</div>
+</div>
+<a id="a2115d81d0e821d665640e335e7730a9a" name="a2115d81d0e821d665640e335e7730a9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2115d81d0e821d665640e335e7730a9a">&#9670;&#160;</a></span>AddFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp; <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::AddFunction </td>
+          <td>(</td>
+          <td class="paramtype">const char *const</td>          <td class="paramname"><span class="paramname"><em>name</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lua_CFunction</td>          <td class="paramname"><span class="paramname"><em>func</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Добавляет глобальную функцию </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>имя функции </td></tr>
+    <tr><td class="paramname">func</td><td>функция </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_state.html" title="Класс состояния виртуальной машины Lua.">State</a>&amp; </dd></dl>
+
+</div>
+</div>
+<a id="a60f66b55e1a3ec4b197cda642be7b8ba" name="a60f66b55e1a3ec4b197cda642be7b8ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60f66b55e1a3ec4b197cda642be7b8ba">&#9670;&#160;</a></span>Call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TReturn <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::Call </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Ts &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вызывает глобальную функцию с данными аргументами и возвращает результат </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>Тип результата функции </td></tr>
+    <tr><td class="paramname">Ts</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>имя функции </td></tr>
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>TReturn </dd></dl>
+
+</div>
+</div>
+<a id="aa42c509b0156c860f47f501547c1a083" name="aa42c509b0156c860f47f501547c1a083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa42c509b0156c860f47f501547c1a083">&#9670;&#160;</a></span>DoFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PCallResult <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::DoFile </td>
+          <td>(</td>
+          <td class="paramtype">const char *const</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Исполняет файл и возвращает результат работы </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>путь к файлу </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>PCallResult </dd></dl>
+
+</div>
+</div>
+<a id="ad326a3813f96f9e366e66da937f6b0a8" name="ad326a3813f96f9e366e66da937f6b0a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad326a3813f96f9e366e66da937f6b0a8">&#9670;&#160;</a></span>GetGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename TReturn  = GRefObject&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TReturn <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::GetGlobal </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает глобальное значение по имени </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>TReturn </dd></dl>
+
+</div>
+</div>
+<a id="aae2d0b8bb96895fe70ce76259aeb7856" name="aae2d0b8bb96895fe70ce76259aeb7856"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae2d0b8bb96895fe70ce76259aeb7856">&#9670;&#160;</a></span>MakeUserData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename TClass , typename... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_ref_object.html">GRefObject</a> <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::MakeUserData </td>
+          <td>(</td>
+          <td class="paramtype">TArgs &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает UserData&lt;T&gt; с данными аргументами и возвращает объект-ссылку на нее. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TClass</td><td>класс пользовательского типа </td></tr>
+    <tr><td class="paramname">TArgs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>GRefObject </dd></dl>
+
+</div>
+</div>
+<a id="ad98ac1e7e676044dc6a6c220407d4901" name="ad98ac1e7e676044dc6a6c220407d4901"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad98ac1e7e676044dc6a6c220407d4901">&#9670;&#160;</a></span>OpenLib()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::OpenLib </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_l_t_l_1_1_lib.html">Lib</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>lib</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Открывает данную библиотеку Lua. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lib</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a96992d73dd2e9349d559ff7868ae5b1b" name="a96992d73dd2e9349d559ff7868ae5b1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96992d73dd2e9349d559ff7868ae5b1b">&#9670;&#160;</a></span>OpenLibs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::OpenLibs </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_l_t_l_1_1_lib.html">Lib</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>lib</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Ts &amp;...</td>          <td class="paramname"><span class="paramname"><em>libs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Открывает данные библиотеки Lua. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lib</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6b0cac5339a5518f764bae91a4e59e95" name="a6b0cac5339a5518f764bae91a4e59e95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b0cac5339a5518f764bae91a4e59e95">&#9670;&#160;</a></span>PCall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename TReturn  = void, typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_l_t_l_1_1_p_call_return.html">PCallReturn</a>&lt; TReturn &gt; <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::PCall </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Ts &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Безопасно вызывает глобальную функцию с данными аргументами и возвращает результат </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TReturn</td><td>Тип результата функции </td></tr>
+    <tr><td class="paramname">Ts</td><td>типы аргументов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>имя функции </td></tr>
+    <tr><td class="paramname">args</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>PCallReturn&lt;TReturn&gt; </dd></dl>
+
+</div>
+</div>
+<a id="adb6731e34554ac7bf88b7523a9fed3a5" name="adb6731e34554ac7bf88b7523a9fed3a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb6731e34554ac7bf88b7523a9fed3a5">&#9670;&#160;</a></span>Run() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::Run </td>
+          <td>(</td>
+          <td class="paramtype">const char *const</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Выполняет данную строку. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae661fd4bed0cd1068b805f09e1d3895d" name="ae661fd4bed0cd1068b805f09e1d3895d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae661fd4bed0cd1068b805f09e1d3895d">&#9670;&#160;</a></span>Run() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::Run </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Выполняет данную строку. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4470a3d38c8c4ee761c62faf2c1fcfad" name="a4470a3d38c8c4ee761c62faf2c1fcfad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4470a3d38c8c4ee761c62faf2c1fcfad">&#9670;&#160;</a></span>SetGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Allocator  = void&gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_l_t_l_1_1_state.html">State</a> &amp; <a class="el" href="class_l_t_l_1_1_state.html">LTL::State</a>&lt; Allocator &gt;::SetGlobal </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Устанавливает глобальное значение с данным именем </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td></td></tr>
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><a class="el" href="class_l_t_l_1_1_state.html" title="Класс состояния виртуальной машины Lua.">State</a>&amp; </dd></dl>
+
+</div>
+</div>
+<hr/>Объявления и описания членов классов находятся в файлах:<ul>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_ref_object_8hpp_source.html">RefObject.hpp</a></li>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_state_8hpp_source.html">State.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

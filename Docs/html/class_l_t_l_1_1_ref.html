@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: Шаблон класса LTL::Ref&lt; RefAccess &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>LTL</b></li><li class="navelem"><a class="el" href="class_l_t_l_1_1_ref.html">Ref</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="class_l_t_l_1_1_ref-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса LTL::Ref&lt; RefAccess &gt;</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Класс ссылки на объект внутри ВМ. представляет из себя только ссылку на объект без самой ВМ. Уничтожение объекта должно быть выполнено вручную. Имеется класс-обертка для работы со ссылаемым объектом <a class="el" href="class_l_t_l_1_1_context_ref.html" title="Класс контекста для Ref. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно...">ContextRef</a>.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_ref_8hpp_source.html">Ref.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:adfd31954b081ea81037b448f83718616" id="r_adfd31954b081ea81037b448f83718616"><td class="memItemLeft" align="right" valign="top"><a id="adfd31954b081ea81037b448f83718616" name="adfd31954b081ea81037b448f83718616"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Ref</b> (lua_State *l, int index)</td></tr>
+<tr class="separator:adfd31954b081ea81037b448f83718616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac192ed780e0d0cd4a39971f67da4beba" id="r_ac192ed780e0d0cd4a39971f67da4beba"><td class="memItemLeft" align="right" valign="top"><a id="ac192ed780e0d0cd4a39971f67da4beba" name="ac192ed780e0d0cd4a39971f67da4beba"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Ref</b> (const <a class="el" href="class_l_t_l_1_1_context_ref.html">ContextRef</a>&lt; RefAccess &gt; &amp;sref) noexcept</td></tr>
+<tr class="separator:ac192ed780e0d0cd4a39971f67da4beba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d807242fa26f1102bd5c205967f2477" id="r_a8d807242fa26f1102bd5c205967f2477"><td class="memItemLeft" align="right" valign="top"><a id="a8d807242fa26f1102bd5c205967f2477" name="a8d807242fa26f1102bd5c205967f2477"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Ref</b> (const <a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;other) noexcept</td></tr>
+<tr class="separator:a8d807242fa26f1102bd5c205967f2477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00cc9ab2f107caa0c0224655b9959b14" id="r_a00cc9ab2f107caa0c0224655b9959b14"><td class="memItemLeft" align="right" valign="top"><a id="a00cc9ab2f107caa0c0224655b9959b14" name="a00cc9ab2f107caa0c0224655b9959b14"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Ref</b> (<a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:a00cc9ab2f107caa0c0224655b9959b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae38af832ad74a42f5fd4d8578ca0d5bf" id="r_ae38af832ad74a42f5fd4d8578ca0d5bf"><td class="memItemLeft" align="right" valign="top"><a id="ae38af832ad74a42f5fd4d8578ca0d5bf" name="ae38af832ad74a42f5fd4d8578ca0d5bf"></a>
+<a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_l_t_l_1_1_context_ref.html">ContextRef</a>&lt; RefAccess &gt; &amp;sref) noexcept</td></tr>
+<tr class="separator:ae38af832ad74a42f5fd4d8578ca0d5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad64c71f6d5df418db2ab7607383170b6" id="r_ad64c71f6d5df418db2ab7607383170b6"><td class="memItemLeft" align="right" valign="top"><a id="ad64c71f6d5df418db2ab7607383170b6" name="ad64c71f6d5df418db2ab7607383170b6"></a>
+<a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;other) noexcept</td></tr>
+<tr class="separator:ad64c71f6d5df418db2ab7607383170b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db03b036a5fe2c90e9cb21c8805bab0" id="r_a5db03b036a5fe2c90e9cb21c8805bab0"><td class="memItemLeft" align="right" valign="top"><a id="a5db03b036a5fe2c90e9cb21c8805bab0" name="a5db03b036a5fe2c90e9cb21c8805bab0"></a>
+<a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;&amp;ref) noexcept</td></tr>
+<tr class="separator:a5db03b036a5fe2c90e9cb21c8805bab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7edf2a67c58df7aa051990cdf243e9d" id="r_ad7edf2a67c58df7aa051990cdf243e9d"><td class="memItemLeft" align="right" valign="top"><a id="ad7edf2a67c58df7aa051990cdf243e9d" name="ad7edf2a67c58df7aa051990cdf243e9d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Push</b> (lua_State *l) const</td></tr>
+<tr class="separator:ad7edf2a67c58df7aa051990cdf243e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3f2e5e56e3453b1fef0c85025a3e166" id="r_af3f2e5e56e3453b1fef0c85025a3e166"><td class="memItemLeft" align="right" valign="top"><a id="af3f2e5e56e3453b1fef0c85025a3e166" name="af3f2e5e56e3453b1fef0c85025a3e166"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Unref</b> (lua_State *l)</td></tr>
+<tr class="separator:af3f2e5e56e3453b1fef0c85025a3e166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5129078e9cc90a184b6e0f422ac8318b" id="r_a5129078e9cc90a184b6e0f422ac8318b"><td class="memItemLeft" align="right" valign="top"><a id="a5129078e9cc90a184b6e0f422ac8318b" name="a5129078e9cc90a184b6e0f422ac8318b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Duplicate</b> (lua_State *l, const <a class="el" href="class_l_t_l_1_1_ref.html">Ref</a> &amp;other)</td></tr>
+<tr class="separator:a5129078e9cc90a184b6e0f422ac8318b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename RefAccess = RefGlobalAccess&gt;<br />
+class LTL::Ref&lt; RefAccess &gt;</div><p>Класс ссылки на объект внутри ВМ. представляет из себя только ссылку на объект без самой ВМ. Уничтожение объекта должно быть выполнено вручную. Имеется класс-обертка для работы со ссылаемым объектом <a class="el" href="class_l_t_l_1_1_context_ref.html" title="Класс контекста для Ref. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно...">ContextRef</a>. </p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_l_t_l_1_1_context_ref.html" title="Класс контекста для Ref. Совмещает в себе состояние ВМ и ссылку на объект. Уничтожение объекта должно...">ContextRef</a> </dd></dl>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RefAccess</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+</div><hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_ref_8hpp_source.html">Ref.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

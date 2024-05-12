@@ -1,0 +1,37 @@
+\doxysection{Класс LTL\+::Exception}
+\hypertarget{class_l_t_l_1_1_exception}{}\label{class_l_t_l_1_1_exception}\index{LTL::Exception@{LTL::Exception}}
+
+
+Класс для исключений, возникающих внутри Lua.  
+
+
+
+
+{\ttfamily \#include $<$Exception.\+hpp$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_exception_ad612276772dc73e2f929a3283ad2bf7f}\label{class_l_t_l_1_1_exception_ad612276772dc73e2f929a3283ad2bf7f} 
+{\bfseries Exception} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{class_l_t_l_1_1_exception_ad12c61c97ff7528a273c7e41d7347d0a}\label{class_l_t_l_1_1_exception_ad12c61c97ff7528a273c7e41d7347d0a} 
+lua\+\_\+\+State \texorpdfstring{$\ast$}{*} {\bfseries Get\+State} () const noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_exception_a882d05d2597112a8b75accb834fe1fab}\label{class_l_t_l_1_1_exception_a882d05d2597112a8b75accb834fe1fab} 
+const std\+::string \& {\bfseries Get\+Reason} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_exception_ab0697769077f78c2d055f1fdc8edba60}\label{class_l_t_l_1_1_exception_ab0697769077f78c2d055f1fdc8edba60} 
+static int {\bfseries Panic\+Func} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l) noexcept(false)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Класс для исключений, возникающих внутри Lua. 
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Exception.\+hpp\end{DoxyCompactItemize}

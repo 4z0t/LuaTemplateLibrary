@@ -1,0 +1,102 @@
+\doxysection{Шаблон структуры LTL\+::Stack\+Type\texorpdfstring{$<$}{<} T, Extension \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_stack_type}{}\label{struct_l_t_l_1_1_stack_type}\index{LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}}
+
+
+Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответствие.  
+
+
+
+
+{\ttfamily \#include $<$Types.\+hpp$>$}
+
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static T \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\begin{DoxyCompactList}\small\item\em преобразует объект на стеке ВМ Lua по индексу {\itshape index} в тип {\bfseries{T}} \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\begin{DoxyCompactList}\small\item\em проверяет объект на стеке ВМ Lua по индексу {\itshape index} на соответствие типу {\bfseries{T}} \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const T \&value)
+\begin{DoxyCompactList}\small\item\em помещает объект типа {\bfseries{T}} на вершину стека ВМ Lua \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename T, typename Extension = void$>$\newline
+struct LTL\+::\+Stack\+Type$<$ T, Extension $>$}
+Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответствие. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+{\em Extension} & используется для std\+::enable\+\_\+if \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxySeeAlso}{См. также}
+std\+::enable\+\_\+if 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Методы}
+\Hypertarget{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}\label{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31} 
+\index{LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}!Check@{Check}}
+\index{Check@{Check}!LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}}
+\doxysubsubsection{\texorpdfstring{Check()}{Check()}}
+{\footnotesize\ttfamily template$<$typename T , typename Extension  = void$>$ \\
+static bool \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{LTL\+::\+Stack\+Type}}$<$ T, Extension $>$\+::\+Check (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+проверяет объект на стеке ВМ Lua по индексу {\itshape index} на соответствие типу {\bfseries{T}} 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & состояние ВМ Lua \\
+\hline
+{\em index} & индекс объекта на стеке \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}\label{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963} 
+\index{LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}!Get@{Get}}
+\index{Get@{Get}!LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily template$<$typename T , typename Extension  = void$>$ \\
+static T \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{LTL\+::\+Stack\+Type}}$<$ T, Extension $>$\+::\+Get (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+преобразует объект на стеке ВМ Lua по индексу {\itshape index} в тип {\bfseries{T}} 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & состояние ВМ Lua \\
+\hline
+{\em index} & индекс объекта на стеке \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+T 
+\end{DoxyReturn}
+\Hypertarget{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}\label{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403} 
+\index{LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}!Push@{Push}}
+\index{Push@{Push}!LTL::StackType$<$ T, Extension $>$@{LTL::StackType$<$ T, Extension $>$}}
+\doxysubsubsection{\texorpdfstring{Push()}{Push()}}
+{\footnotesize\ttfamily template$<$typename T , typename Extension  = void$>$ \\
+static void \mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{LTL\+::\+Stack\+Type}}$<$ T, Extension $>$\+::\+Push (\begin{DoxyParamCaption}\item[{lua\+\_\+\+State \texorpdfstring{$\ast$}{*}}]{l,  }\item[{const T \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+помещает объект типа {\bfseries{T}} на вершину стека ВМ Lua 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em l} & состояние ВМ Lua \\
+\hline
+{\em value} & помещаемый на стек объект \\
+\hline
+\end{DoxyParams}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Types.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,385 @@
+\doxysection{Stack\+Object.\+hpp}
+\hypertarget{_stack_object_8hpp_source}{}\label{_stack_object_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/StackObject.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/StackObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Types.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}CState.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }State;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}}
+\DoxyCodeLine{00017\ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#pragma\ region\ Ctors}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a878ac1e4d6d80b9540dd0df626d88031}{StackObjectView}}(lua\_State\ *l,\ \textcolor{keywordtype}{int}\ index\ =\ -\/1)\ :\ m\_state(l),\ m\_index(lua\_absindex(l,\ index))\ \{\}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}(\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}\ *cstate,\ \textcolor{keywordtype}{int}\ index\ =\ -\/1)\ :\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}(cstate-\/>\mbox{\hyperlink{struct_l_t_l_1_1_unwrap}{Unwrap}}(),\ index)\ \{\}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}(\textcolor{keyword}{const}\ State<T>\ \&state,\ \textcolor{keywordtype}{int}\ index\ =\ -\/1)\ :\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}(state.\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26}{GetState}}(),\ index)\ \{\}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&other)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}(\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&\&other)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&other)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&operator=(\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&\&other)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ T\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_afa35b36f4549dbe32d1d87a4df3d2875}{To}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00053\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{StackType<T>::Get}}(m\_state,\ m\_index);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <Type\ LType>}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}{Is}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00066\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}}()\ ==\ LType;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ Type\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00076\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}LTL::Type\textcolor{keyword}{>}(lua\_type(m\_state,\ m\_index));}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_abae6497bf228436aa8a41792513c1d6e}{Is}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00089\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{StackType<T>::Check}}(m\_state,\ m\_index);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1}{Push}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00097\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pushvalue(m\_state,\ m\_index);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Next()\textcolor{keyword}{const}}
+\DoxyCodeLine{00102\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_next(m\_state,\ m\_index);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *ToString()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00107\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s\ =\ luaL\_tolstring(m\_state,\ m\_index,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{static}\ std::ostream\ \&operator<<(std::ostream\ \&os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&obj)}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ obj.ToString();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#pragma\ region\ Comparison\ operators}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_adb686b8c158f0bb1cc95c3bb21c598f0}{operator==}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Compare<LUA\_OPEQ>(value);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_adb686b8c158f0bb1cc95c3bb21c598f0}{operator==}}(\textcolor{keyword}{const}\ std::nullptr\_t\ \&)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00136\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a052fa465cbfbd1eba8af0116f262693a}{Type}}()\ ==\ Type::Nil;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a04aa29181747a8d9a486d460a4817046}{operator!=}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00150\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ value);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a14d79cbee91999c5d363448f232fa08b}{operator<=}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00164\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Compare<LUA\_OPLE>(value);}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae1338d73c5e7a2ae2e23fc8045811436}{operator>}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00178\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ <=\ value);}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_adaa130e31a625cae1316867d31fb3bb5}{operator<}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00192\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Compare<LUA\_OPLT>(value);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a6f7f53d6ac8cfbbf7523dc93abd1af92}{operator>=}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00206\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ <\ value);}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a9780633c9ef882af72854ad1667c7230}{RawEqual}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00220\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ r\ =\ lua\_rawequal(m\_state,\ m\_index,\ -\/1);}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a1316b0139de91dcd1affd8fadca61850}{RawEqual}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00237\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_rawequal(m\_state,\ m\_index,\ value.m\_index);}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \textcolor{preprocessor}{\#pragma\ region\ Get/Set\ methods}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ R,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ R\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ab2137397924756d34afe2bb2e81977fa}{Get}}(\textcolor{keyword}{const}\ T\ \&key)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00255\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_gettable(m\_state,\ m\_index);}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ R\ r\ =\ GetValue<R>(m\_state,\ -\/1);}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a331a5f75d0d02853d300e2a92c2204b9}{Get}}(\textcolor{keyword}{const}\ T\ \&key)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00272\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_gettable(m\_state,\ m\_index);}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ R>}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ R\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a1d171d59fd550e184f88e1853f646500}{GetI}}(lua\_Integer\ index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00287\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_geti(m\_state,\ m\_index,\ index);}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ R\ r\ =\ GetValue<R>(m\_state,\ -\/1);}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a970ab982dba343cf3890837092fff18e}{GetI}}(lua\_Integer\ index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00301\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_geti(m\_state,\ m\_index,\ index);}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ K,\ \textcolor{keyword}{typename}\ V>}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a49356681dfe2968896c07d2b579f7757}{Set}}(\textcolor{keyword}{const}\ K\ \&key,\ \textcolor{keyword}{const}\ V\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00316\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_settable(m\_state,\ m\_index);}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ V>}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_aaf5e6316b23dfdd74c4cda19f63be67f}{SetI}}(lua\_Integer\ i,\ \textcolor{keyword}{const}\ V\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00331\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_seti(m\_state,\ m\_index,\ i);}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ \textcolor{preprocessor}{\#pragma\ region\ Raw\ Get/Set\ methods}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ R,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ R\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_afe43a1b452ac60850fae363cae37767e}{RawGet}}(\textcolor{keyword}{const}\ T\ \&key)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00350\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawget(m\_state,\ m\_index);}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ R\ r\ =\ GetValue<R>(m\_state,\ -\/1);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae03bcb0083ebb3facfc317a1195fe506}{RawGet}}(\textcolor{keyword}{const}\ T\ \&key)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00367\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawget(m\_state,\ m\_index);}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ R>}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ R\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a4722400e7c00bf7dbf96555f04cdfff6}{RawGetI}}(lua\_Integer\ i)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00382\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawgeti(m\_state,\ m\_index,\ i);}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ R\ r\ =\ GetValue<R>(m\_state,\ -\/1);}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af70130ba629e8005c4424f236d4aa989}{RawGetI}}(lua\_Integer\ i)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00396\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawgeti(m\_state,\ m\_index,\ i);}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ V>}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a825a702eb52f2b619d599eedbab3d2d0}{RawSetI}}(lua\_Integer\ i,\ \textcolor{keyword}{const}\ V\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00411\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawseti(m\_state,\ m\_index,\ i);}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ K,\ \textcolor{keyword}{typename}\ V>}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a67fe64416da1fc6a9f3bc5e8933f349e}{RawSet}}(\textcolor{keyword}{const}\ K\ \&key,\ \textcolor{keyword}{const}\ V\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00427\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ key);}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rawset(m\_state,\ m\_index);}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00434\ }
+\DoxyCodeLine{00435\ \textcolor{preprocessor}{\#pragma\ region\ Len\ methods}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ R>}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ R\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a679b426917a40dd724f5e3aedb729a58}{Len}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00446\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_len(m\_state,\ m\_index);}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ R\ r\ =\ GetValue<R>(m\_state,\ -\/1);}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af6b0ee8e4417dec59dd3217e1cdbc5ce}{Len}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00461\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_len(m\_state,\ m\_index);}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00465\ }
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a2084d6b000c55996ea80029ec2a8f8c3}{RawLen}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00472\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_rawlen(m\_state,\ m\_index);}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00478\ \textcolor{preprocessor}{\#pragma\ region\ get/set\ metatable\ methods}}
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a587641114ab1ed5b9d0d4cb0d9757185}{GetMetaTable}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00486\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!lua\_getmetatable(m\_state,\ m\_index))}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pushnil(m\_state);}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{m\_state\};}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a86ac1222c69842e1a4af5c53187836a7}{SetMetaTable}}(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00502\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_setmetatable(m\_state,\ m\_index);}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00507\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00508\ }
+\DoxyCodeLine{00509\ \textcolor{preprocessor}{\#pragma\ region\ Call\ methods}}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}...\ TArgs>}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ TReturn\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ac69ddc44430dc734e0f3d6f99e15c866}{Call}}(TArgs\ \&\&...args)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00521\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ CallFunction<TReturn>(m\_state,\ *\textcolor{keyword}{this},\ std::forward<TArgs>(args)...);}
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}...\ TArgs>}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCallReturn<TReturn>}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_af76fe835fd0bb01f65f99f62bc4e57e7}{PCall}}(TArgs\ \&\&...args)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00535\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ PCallFunction<TReturn>(m\_state,\ *\textcolor{keyword}{this},\ std::forward<TArgs>(args)...);}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00538\ }
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}...\ TArgs>}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ TReturn\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a4b019b4db88057441214d089da15c3ec}{SelfCall}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key,\ TArgs\ \&\&...args)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00550\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1}{Push}}();}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_getfield(m\_state,\ -\/1,\ key);}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rotate(m\_state,\ -\/2,\ 1);}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ PushArgs(m\_state,\ std::forward<TArgs>(args)...)\ +\ 1;}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ CallStack<TReturn>(m\_state,\ n);}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReturn\ =\ void,\ \textcolor{keyword}{typename}...\ TArgs>}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_l_t_l_1_1_p_call_return}{PCallReturn<TReturn>}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a670846a33f2d4a7f09d78831cae3b5d2}{SelfPCall}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key,\ TArgs\ \&\&...args)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00569\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1}{Push}}();}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_getfield(m\_state,\ -\/1,\ key);}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_rotate(m\_state,\ -\/2,\ 1);}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ n\ =\ PushArgs(m\_state,\ std::forward<TArgs>(args)...)\ +\ 1;}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ PCallStack<TReturn>(m\_state,\ n);}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00576\ }
+\DoxyCodeLine{00577\ \textcolor{preprocessor}{\#pragma\ endregion}}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a38a496b733d1986a02170e888d19a727}{Global}}(lua\_State\ *l,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name)}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_getglobal(l,\ name);}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\{l\};}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00591\ }
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{\string~StackObjectView}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ lua\_State\ *\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26}{GetState}}()\ const\ noexcept}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_state;}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00603\ }
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_ae37e83a3e978e60ff6ff16a0855422f7}{GetIndex}}()\ const\ noexcept}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_index;}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00614\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{int}\ COMPARE\_OP,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Compare(\textcolor{keyword}{const}\ T\ \&value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00617\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \ \ \ \ PushValue(m\_state,\ value);}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ r\ =\ lua\_compare(m\_state,\ m\_index,\ -\/1,\ COMPARE\_OP);}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pop(m\_state,\ 1);}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{int}\ COMPARE\_OP>}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Compare(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a987a7cecc67196027768f6b52e27badb}{StackObjectView}}\ \&other)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00626\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lua\_compare(m\_state,\ m\_index,\ other.m\_index,\ COMPARE\_OP);}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ lua\_State\ *m\_state\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_index\ =\ 0;}
+\DoxyCodeLine{00633\ \ \ \ \ \};}
+\DoxyCodeLine{00634\ }
+\DoxyCodeLine{00641\ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00642\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_l_t_l_1_1_stack_type}{StackType}}<\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}>}
+\DoxyCodeLine{00643\ \ \ \ \ \{}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_a1f94b9bd72e14272ccda9160c52f4963}{Get}}(lua\_State\ *l,\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{l,\ index\};}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00648\ }
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ac57f1a375f74a319211524fccc743f31}{Check}}(lua\_State\ *l,\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !lua\_isnone(l,\ index);}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00653\ }
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_l_t_l_1_1_stack_type_ad6c0f153eef35819778dd2f0a864b403}{Push}}(lua\_State\ *l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_stack_object_view}{StackObjectView}}\ \&value)}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ \ \ assert(value.\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a51096f799f84b61cf0b30da7cbd10c26}{GetState}}()\ ==\ l);}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \ \ \ \ value.\mbox{\hyperlink{class_l_t_l_1_1_stack_object_view_a839f818ca175d86afb4a37cb7a27eee1}{Push}}();}
+\DoxyCodeLine{00658\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00659\ \ \ \ \ \};}
+\DoxyCodeLine{00660\ }
+\DoxyCodeLine{00661\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,112 @@
+\doxysection{Шаблон структуры LTL\+::Class\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_class}{}\label{struct_l_t_l_1_1_class}\index{LTL::Class$<$ T $>$@{LTL::Class$<$ T $>$}}
+
+
+Класс для добавления пользовательского класса в ВМ Lua.  
+
+
+
+
+{\ttfamily \#include $<$Class.\+hpp$>$}
+
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a11a2c2691eed0810f17398000659ceed}\label{struct_l_t_l_1_1_class_a11a2c2691eed0810f17398000659ceed} 
+using {\bfseries UData} = \mbox{\hyperlink{struct_l_t_l_1_1_user_data}{User\+Data}}$<$T$>$
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ae0eaa525d252c8d2b458146fb18b42cc}\label{struct_l_t_l_1_1_class_ae0eaa525d252c8d2b458146fb18b42cc} 
+{\footnotesize template$<$bool condition$>$ }\\using {\bfseries Enable\+If} = std\+::enable\+\_\+if\+\_\+t$<$condition, \mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}}\&$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ac277953683d55564340e37a4cfaf786c}\label{struct_l_t_l_1_1_class_ac277953683d55564340e37a4cfaf786c} 
+{\bfseries Class} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a9bbe0db5add25fdab1666d545b862da5}\label{struct_l_t_l_1_1_class_a9bbe0db5add25fdab1666d545b862da5} 
+{\footnotesize template$<$typename TAlloc $>$ }\\{\bfseries Class} (const \mbox{\hyperlink{class_l_t_l_1_1_state}{State}}$<$ TAlloc $>$ \&state, const char \texorpdfstring{$\ast$}{*}name)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_aebbf96c2cfb8010cfa4e0b3bc1ae818a}\label{struct_l_t_l_1_1_class_aebbf96c2cfb8010cfa4e0b3bc1ae818a} 
+{\footnotesize template$<$typename ... TArgs$>$ }\\\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add\+Constructor} ()
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a609110d7f197b49121577ae98ae2fa03}\label{struct_l_t_l_1_1_class_a609110d7f197b49121577ae98ae2fa03} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add\+Getter} (const char \texorpdfstring{$\ast$}{*}key, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a238cd4afee72bb20c011bb8990466e3f}\label{struct_l_t_l_1_1_class_a238cd4afee72bb20c011bb8990466e3f} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add\+Setter} (const char \texorpdfstring{$\ast$}{*}key, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a706b2d457f1cd9660fed93f8357d7d74}\label{struct_l_t_l_1_1_class_a706b2d457f1cd9660fed93f8357d7d74} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add\+Meta\+Method} (const char \texorpdfstring{$\ast$}{*}name, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a440435af16ea3a76243e855ab207b945}\label{struct_l_t_l_1_1_class_a440435af16ea3a76243e855ab207b945} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add\+Method} (const char \texorpdfstring{$\ast$}{*}name, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ae4ac904e5e82c86e27784e43a777a78a}\label{struct_l_t_l_1_1_class_ae4ac904e5e82c86e27784e43a777a78a} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Set\+Index\+Function} (lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_af0e5dc9bb83db8b00fae2634c994f2b5}\label{struct_l_t_l_1_1_class_af0e5dc9bb83db8b00fae2634c994f2b5} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Set\+New\+Index\+Function} (lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a0cc5dbbee648aa56188524eae20b5e15}\label{struct_l_t_l_1_1_class_a0cc5dbbee648aa56188524eae20b5e15} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add} (const \mbox{\hyperlink{struct_l_t_l_1_1_meta_method_name}{Meta\+Method\+Name}} \&key, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_aa325d770f7df85c3afe878e9f11f4e17}\label{struct_l_t_l_1_1_class_aa325d770f7df85c3afe878e9f11f4e17} 
+\mbox{\hyperlink{struct_l_t_l_1_1_class}{Class}} \& {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}key, lua\+\_\+\+CFunction func)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ad892e34353994a929e1af202a36d67c8}\label{struct_l_t_l_1_1_class_ad892e34353994a929e1af202a36d67c8} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_property_base}{Property\+Base}}, Element $>$ $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ac7212b02df5d69d4cee9320a2b8cafea}\label{struct_l_t_l_1_1_class_ac7212b02df5d69d4cee9320a2b8cafea} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_getter_base}{Getter\+Base}}, Element $>$ $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const Element \&element)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ad080f84bcd8444ba1be83f3d89e5b8e4}\label{struct_l_t_l_1_1_class_ad080f84bcd8444ba1be83f3d89e5b8e4} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_setter_base}{Setter\+Base}}, Element $>$ $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const Element \&element)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a60446a4d4427e32e0a148e3324e956d3}\label{struct_l_t_l_1_1_class_a60446a4d4427e32e0a148e3324e956d3} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{Internal\+::\+CFunction\+Base}}, Element $>$ \&\&!Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_method_base}{Internal\+::\+Method\+Base}}, Element $>$ $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ad7d47d7cc7e1bf01da26bf76adabe405}\label{struct_l_t_l_1_1_class_ad7d47d7cc7e1bf01da26bf76adabe405} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{Internal\+::\+CFunction\+Base}}, Element $>$ \&\&!Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_method_base}{Internal\+::\+Method\+Base}}, Element $>$ $>$ {\bfseries Add} (const \mbox{\hyperlink{struct_l_t_l_1_1_meta_method_name}{Meta\+Method\+Name}} \&name, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_ad3c90d7d5b8309e03b9cd6600f55f360}\label{struct_l_t_l_1_1_class_ad3c90d7d5b8309e03b9cd6600f55f360} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_method_base}{Internal\+::\+Method\+Base}}, Element $>$ $>$ {\bfseries Add} (const \mbox{\hyperlink{struct_l_t_l_1_1_meta_method_name}{Meta\+Method\+Name}} \&name, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a4a94f5ae3b9c3581ced5c7a3c2480143}\label{struct_l_t_l_1_1_class_a4a94f5ae3b9c3581ced5c7a3c2480143} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_method_base}{Internal\+::\+Method\+Base}}, Element $>$ $>$ {\bfseries Add} (const char \texorpdfstring{$\ast$}{*}name, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_aed9e2add59aaedc6bd97fa5f5fbd47d6}\label{struct_l_t_l_1_1_class_aed9e2add59aaedc6bd97fa5f5fbd47d6} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_getter_base}{Getter\+Base}}, Element $>$ $>$ {\bfseries Add\+Getter} (const char \texorpdfstring{$\ast$}{*}key, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a1b78aa516684864a788ff037520023ff}\label{struct_l_t_l_1_1_class_a1b78aa516684864a788ff037520023ff} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_setter_base}{Setter\+Base}}, Element $>$ $>$ {\bfseries Add\+Setter} (const char \texorpdfstring{$\ast$}{*}key, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a2e037ac41810ac354de525542ab2e0d4}\label{struct_l_t_l_1_1_class_a2e037ac41810ac354de525542ab2e0d4} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{Internal\+::\+CFunction\+Base}}, Element $>$ $>$ {\bfseries Add\+Getter} (const char \texorpdfstring{$\ast$}{*}key, const Element \&)
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a22794460a6b4652d5a9d64d72d35ae4d}\label{struct_l_t_l_1_1_class_a22794460a6b4652d5a9d64d72d35ae4d} 
+{\footnotesize template$<$typename Element $>$ }\\Enable\+If$<$ Base\+Of$<$ \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_c_function_base}{Internal\+::\+CFunction\+Base}}, Element $>$ $>$ {\bfseries Add\+Setter} (const char \texorpdfstring{$\ast$}{*}key, const Element \&)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Статические открытые данные}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_class_a231909a4ddf44050e59982361f7bef8b}\label{struct_l_t_l_1_1_class_a231909a4ddf44050e59982361f7bef8b} 
+{\footnotesize template$<$typename Base , typename Derived $>$ }\\static constexpr bool {\bfseries Base\+Of} = std\+::is\+\_\+base\+\_\+of\+\_\+v$<$Base, Derived$>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename T$>$\newline
+struct LTL\+::\+Class$<$ T $>$}
+Класс для добавления пользовательского класса в ВМ Lua. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Class.\+hpp\end{DoxyCompactItemize}

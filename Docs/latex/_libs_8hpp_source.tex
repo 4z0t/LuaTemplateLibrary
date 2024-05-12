@@ -1,0 +1,47 @@
+\doxysection{Libs.\+hpp}
+\hypertarget{_libs_8hpp_source}{}\label{_libs_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Libs.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Libs.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Types.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}CState.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}}}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{class_l_t_l_1_1_lib}{Lib}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keyword}{const}\ name,\ lua\_CFunction\ \textcolor{keyword}{const}\ func)\ :\ name(name),\ func(func)\ \{\}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_t_l_1_1_lib_ae13cf369d55c97f4bb35c79fcda8f940}{Register}}(\mbox{\hyperlink{class_l_t_l_1_1_c_state}{CState}}*\ cstate)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ cstate-\/>Require(name,\ func);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ cstate-\/>Pop();}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_lib}{\string~Lib}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keyword}{const}\ name;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ lua\_CFunction\ \textcolor{keyword}{const}\ func;}
+\DoxyCodeLine{00033\ \ \ \ \ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{namespace\ }Libs}
+\DoxyCodeLine{00037\ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ base\{\ LUA\_GNAME,\ luaopen\_base\ \};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ package\{\ LUA\_LOADLIBNAME,\ luaopen\_package\ \};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ coroutine\{\ LUA\_COLIBNAME,\ luaopen\_coroutine\ \};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ table\{\ LUA\_TABLIBNAME,\ luaopen\_table\ \};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ io\{\ LUA\_IOLIBNAME,\ luaopen\_io\ \};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ os\{\ LUA\_OSLIBNAME,\ luaopen\_os\ \};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ \textcolor{keywordtype}{string}\{\ LUA\_STRLIBNAME,\ luaopen\_string\ \};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ math\{\ LUA\_MATHLIBNAME,\ luaopen\_math\ \};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ utf8\{\ LUA\_UTF8LIBNAME,\ luaopen\_utf8\ \};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ Lib\ debug\{\ LUA\_DBLIBNAME,\ luaopen\_debug\ \};}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,94 @@
+\doxysection{Шаблон структуры LTL\+::CFunction\texorpdfstring{$<$}{<} fn, TArgs \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_c_function}{}\label{struct_l_t_l_1_1_c_function}\index{LTL::CFunction$<$ fn, TArgs $>$@{LTL::CFunction$<$ fn, TArgs $>$}}
+
+
+Класс для преобразования функции в универсальную функцию Lua.  
+
+
+
+
+{\ttfamily \#include $<$Function.\+hpp$>$}
+
+Граф наследования\+:LTL\+::CFunction\texorpdfstring{$<$}{<} fn, TArgs \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{struct_l_t_l_1_1_c_function}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_l_t_l_1_1_c_function_1_1_valid_upvalues}{Valid\+Upvalues}}
+\begin{DoxyCompactList}\small\item\em Проверяет типы на соответствие \doxylink{struct_l_t_l_1_1_upvalue}{Upvalue} типам аргументов \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_a1ccd351e4f713cd8d35e4091f1d7acb1}\label{struct_l_t_l_1_1_c_function_a1ccd351e4f713cd8d35e4091f1d7acb1} 
+using {\bfseries \+\_\+\+Function\+Helper} = \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{Internal\+::\+Function\+Helper}}$<$TArgs...$>$
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_a0b2895e81ac96283d6ad11037aa239fb}\label{struct_l_t_l_1_1_c_function_a0b2895e81ac96283d6ad11037aa239fb} 
+using {\bfseries \+\_\+\+Function\+Caller} = \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_caller}{Internal\+::\+Function\+Caller}}$<$fn, TArgs...$>$
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_ad233a8b3b8829d3114e4b7b7e0e72f53}\label{struct_l_t_l_1_1_c_function_ad233a8b3b8829d3114e4b7b7e0e72f53} 
+using {\bfseries TReturn} = typename \+\_\+\+Function\+Caller\+::\+TReturn
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_a391133e1eaf5d26b92942df4b07336c6}\label{struct_l_t_l_1_1_c_function_a391133e1eaf5d26b92942df4b07336c6} 
+using {\bfseries Args\+Tuple} = typename \+\_\+\+Function\+Helper\+::\+Args\+Tuple
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые типы унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries Args\+Tuple}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_ae28420e94b2fe5a8eea433aa84868020}\label{struct_l_t_l_1_1_c_function_ae28420e94b2fe5a8eea433aa84868020} 
+static int {\bfseries Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{struct_l_t_l_1_1_c_function_a8a0f0d30a73d20aeefced8528e8c7539}\label{struct_l_t_l_1_1_c_function_a8a0f0d30a73d20aeefced8528e8c7539} 
+static int {\bfseries \+\_\+\+Caller} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые статические члены унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t {\bfseries Get\+Args} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Args\+Tuple \&args)
+\item 
+static constexpr size\+\_\+t {\bfseries Replace\+Upvalues} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, Args\+Tuple \&args)
+\item 
+static constexpr void {\bfseries Check\+Arg\+Count} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Дополнительные унаследованные члены}
+\doxysubsection*{Статические открытые данные унаследованные от \mbox{\hyperlink{struct_l_t_l_1_1_internal_1_1_function_helper}{LTL\+::\+Internal\+::\+Function\+Helper$<$ TArgs... $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr size\+\_\+t {\bfseries min\+\_\+arg\+\_\+count}
+\item 
+static constexpr size\+\_\+t {\bfseries max\+\_\+arg\+\_\+count}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$auto fn, typename... TArgs$>$\newline
+struct LTL\+::\+CFunction$<$ fn, TArgs $>$}
+Класс для преобразования функции в универсальную функцию Lua. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em fn} & Функция. \\
+\hline
+{\em TArgs} & Типы аргументов. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxySeeAlso}{См. также}
+Default$<$\+T$>$ 
+
+Optional$<$\+T$>$ 
+
+Upvalue$<$\+T$>$ 
+\end{DoxySeeAlso}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Function.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,42 @@
+\doxysection{Шаблон структуры LTL\+::Constructor\texorpdfstring{$<$}{<} C, TArgs \texorpdfstring{$>$}{>}}
+\hypertarget{struct_l_t_l_1_1_constructor}{}\label{struct_l_t_l_1_1_constructor}\index{LTL::Constructor$<$ C, TArgs $>$@{LTL::Constructor$<$ C, TArgs $>$}}
+
+
+Класс для преобразования конструктора в универсальную функцию.  
+
+
+
+
+{\ttfamily \#include $<$Class\+Constructor.\+hpp$>$}
+
+\doxysubsubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_constructor_af75df39a9161048bac922d882aeca514}\label{struct_l_t_l_1_1_constructor_af75df39a9161048bac922d882aeca514} 
+using {\bfseries Args\+Tuple} = std\+::tuple$<$Unwrap\+\_\+t$<$TArgs$>$...$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_l_t_l_1_1_constructor_a1bad20ae6818674c0e8dd0f6f01725ad}\label{struct_l_t_l_1_1_constructor_a1bad20ae6818674c0e8dd0f6f01725ad} 
+static int {\bfseries Function} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$class C, typename... TArgs$>$\newline
+struct LTL\+::\+Constructor$<$ C, TArgs $>$}
+Класс для преобразования конструктора в универсальную функцию. 
+
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em C} & Класс. \\
+\hline
+{\em TArgs} & Типы аргументов конструктора. \\
+\hline
+\end{DoxyTemplParams}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Class\+Constructor.\+hpp\end{DoxyCompactItemize}

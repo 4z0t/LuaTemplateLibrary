@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: Шаблон структуры LTL::Class&lt; T &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>LTL</b></li><li class="navelem"><a class="el" href="struct_l_t_l_1_1_class.html">Class</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pub-static-attribs">Статические открытые данные</a> &#124;
+<a href="struct_l_t_l_1_1_class-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон структуры LTL::Class&lt; T &gt;</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Класс для добавления пользовательского класса в ВМ Lua.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_class_8hpp_source.html">Class.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:a11a2c2691eed0810f17398000659ceed" id="r_a11a2c2691eed0810f17398000659ceed"><td class="memItemLeft" align="right" valign="top"><a id="a11a2c2691eed0810f17398000659ceed" name="a11a2c2691eed0810f17398000659ceed"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>UData</b> = <a class="el" href="struct_l_t_l_1_1_user_data.html">UserData</a>&lt;T&gt;</td></tr>
+<tr class="separator:a11a2c2691eed0810f17398000659ceed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0eaa525d252c8d2b458146fb18b42cc" id="r_ae0eaa525d252c8d2b458146fb18b42cc"><td class="memTemplParams" colspan="2"><a id="ae0eaa525d252c8d2b458146fb18b42cc" name="ae0eaa525d252c8d2b458146fb18b42cc"></a>
+template&lt;bool condition&gt; </td></tr>
+<tr class="memitem:ae0eaa525d252c8d2b458146fb18b42cc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>EnableIf</b> = std::enable_if_t&lt;condition, <a class="el" href="struct_l_t_l_1_1_class.html">Class</a>&amp;&gt;</td></tr>
+<tr class="separator:ae0eaa525d252c8d2b458146fb18b42cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:ac277953683d55564340e37a4cfaf786c" id="r_ac277953683d55564340e37a4cfaf786c"><td class="memItemLeft" align="right" valign="top"><a id="ac277953683d55564340e37a4cfaf786c" name="ac277953683d55564340e37a4cfaf786c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Class</b> (lua_State *l, const char *name)</td></tr>
+<tr class="separator:ac277953683d55564340e37a4cfaf786c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bbe0db5add25fdab1666d545b862da5" id="r_a9bbe0db5add25fdab1666d545b862da5"><td class="memTemplParams" colspan="2"><a id="a9bbe0db5add25fdab1666d545b862da5" name="a9bbe0db5add25fdab1666d545b862da5"></a>
+template&lt;typename TAlloc &gt; </td></tr>
+<tr class="memitem:a9bbe0db5add25fdab1666d545b862da5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Class</b> (const <a class="el" href="class_l_t_l_1_1_state.html">State</a>&lt; TAlloc &gt; &amp;state, const char *name)</td></tr>
+<tr class="separator:a9bbe0db5add25fdab1666d545b862da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebbf96c2cfb8010cfa4e0b3bc1ae818a" id="r_aebbf96c2cfb8010cfa4e0b3bc1ae818a"><td class="memTemplParams" colspan="2"><a id="aebbf96c2cfb8010cfa4e0b3bc1ae818a" name="aebbf96c2cfb8010cfa4e0b3bc1ae818a"></a>
+template&lt;typename ... TArgs&gt; </td></tr>
+<tr class="memitem:aebbf96c2cfb8010cfa4e0b3bc1ae818a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddConstructor</b> ()</td></tr>
+<tr class="separator:aebbf96c2cfb8010cfa4e0b3bc1ae818a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609110d7f197b49121577ae98ae2fa03" id="r_a609110d7f197b49121577ae98ae2fa03"><td class="memItemLeft" align="right" valign="top"><a id="a609110d7f197b49121577ae98ae2fa03" name="a609110d7f197b49121577ae98ae2fa03"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>AddGetter</b> (const char *key, lua_CFunction func)</td></tr>
+<tr class="separator:a609110d7f197b49121577ae98ae2fa03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238cd4afee72bb20c011bb8990466e3f" id="r_a238cd4afee72bb20c011bb8990466e3f"><td class="memItemLeft" align="right" valign="top"><a id="a238cd4afee72bb20c011bb8990466e3f" name="a238cd4afee72bb20c011bb8990466e3f"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>AddSetter</b> (const char *key, lua_CFunction func)</td></tr>
+<tr class="separator:a238cd4afee72bb20c011bb8990466e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a706b2d457f1cd9660fed93f8357d7d74" id="r_a706b2d457f1cd9660fed93f8357d7d74"><td class="memItemLeft" align="right" valign="top"><a id="a706b2d457f1cd9660fed93f8357d7d74" name="a706b2d457f1cd9660fed93f8357d7d74"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>AddMetaMethod</b> (const char *name, lua_CFunction func)</td></tr>
+<tr class="separator:a706b2d457f1cd9660fed93f8357d7d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a440435af16ea3a76243e855ab207b945" id="r_a440435af16ea3a76243e855ab207b945"><td class="memItemLeft" align="right" valign="top"><a id="a440435af16ea3a76243e855ab207b945" name="a440435af16ea3a76243e855ab207b945"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>AddMethod</b> (const char *name, lua_CFunction func)</td></tr>
+<tr class="separator:a440435af16ea3a76243e855ab207b945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4ac904e5e82c86e27784e43a777a78a" id="r_ae4ac904e5e82c86e27784e43a777a78a"><td class="memItemLeft" align="right" valign="top"><a id="ae4ac904e5e82c86e27784e43a777a78a" name="ae4ac904e5e82c86e27784e43a777a78a"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>SetIndexFunction</b> (lua_CFunction func)</td></tr>
+<tr class="separator:ae4ac904e5e82c86e27784e43a777a78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e5dc9bb83db8b00fae2634c994f2b5" id="r_af0e5dc9bb83db8b00fae2634c994f2b5"><td class="memItemLeft" align="right" valign="top"><a id="af0e5dc9bb83db8b00fae2634c994f2b5" name="af0e5dc9bb83db8b00fae2634c994f2b5"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>SetNewIndexFunction</b> (lua_CFunction func)</td></tr>
+<tr class="separator:af0e5dc9bb83db8b00fae2634c994f2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc5dbbee648aa56188524eae20b5e15" id="r_a0cc5dbbee648aa56188524eae20b5e15"><td class="memItemLeft" align="right" valign="top"><a id="a0cc5dbbee648aa56188524eae20b5e15" name="a0cc5dbbee648aa56188524eae20b5e15"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Add</b> (const <a class="el" href="struct_l_t_l_1_1_meta_method_name.html">MetaMethodName</a> &amp;key, lua_CFunction func)</td></tr>
+<tr class="separator:a0cc5dbbee648aa56188524eae20b5e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa325d770f7df85c3afe878e9f11f4e17" id="r_aa325d770f7df85c3afe878e9f11f4e17"><td class="memItemLeft" align="right" valign="top"><a id="aa325d770f7df85c3afe878e9f11f4e17" name="aa325d770f7df85c3afe878e9f11f4e17"></a>
+<a class="el" href="struct_l_t_l_1_1_class.html">Class</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Add</b> (const char *key, lua_CFunction func)</td></tr>
+<tr class="separator:aa325d770f7df85c3afe878e9f11f4e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad892e34353994a929e1af202a36d67c8" id="r_ad892e34353994a929e1af202a36d67c8"><td class="memTemplParams" colspan="2"><a id="ad892e34353994a929e1af202a36d67c8" name="ad892e34353994a929e1af202a36d67c8"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:ad892e34353994a929e1af202a36d67c8"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_property_base.html">PropertyBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const Element &amp;)</td></tr>
+<tr class="separator:ad892e34353994a929e1af202a36d67c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7212b02df5d69d4cee9320a2b8cafea" id="r_ac7212b02df5d69d4cee9320a2b8cafea"><td class="memTemplParams" colspan="2"><a id="ac7212b02df5d69d4cee9320a2b8cafea" name="ac7212b02df5d69d4cee9320a2b8cafea"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:ac7212b02df5d69d4cee9320a2b8cafea"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_getter_base.html">GetterBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const Element &amp;element)</td></tr>
+<tr class="separator:ac7212b02df5d69d4cee9320a2b8cafea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad080f84bcd8444ba1be83f3d89e5b8e4" id="r_ad080f84bcd8444ba1be83f3d89e5b8e4"><td class="memTemplParams" colspan="2"><a id="ad080f84bcd8444ba1be83f3d89e5b8e4" name="ad080f84bcd8444ba1be83f3d89e5b8e4"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:ad080f84bcd8444ba1be83f3d89e5b8e4"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_setter_base.html">SetterBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const Element &amp;element)</td></tr>
+<tr class="separator:ad080f84bcd8444ba1be83f3d89e5b8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60446a4d4427e32e0a148e3324e956d3" id="r_a60446a4d4427e32e0a148e3324e956d3"><td class="memTemplParams" colspan="2"><a id="a60446a4d4427e32e0a148e3324e956d3" name="a60446a4d4427e32e0a148e3324e956d3"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:a60446a4d4427e32e0a148e3324e956d3"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_c_function_base.html">Internal::CFunctionBase</a>, Element &gt; &amp;&amp;!BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_method_base.html">Internal::MethodBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const Element &amp;)</td></tr>
+<tr class="separator:a60446a4d4427e32e0a148e3324e956d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d47d7cc7e1bf01da26bf76adabe405" id="r_ad7d47d7cc7e1bf01da26bf76adabe405"><td class="memTemplParams" colspan="2"><a id="ad7d47d7cc7e1bf01da26bf76adabe405" name="ad7d47d7cc7e1bf01da26bf76adabe405"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:ad7d47d7cc7e1bf01da26bf76adabe405"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_c_function_base.html">Internal::CFunctionBase</a>, Element &gt; &amp;&amp;!BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_method_base.html">Internal::MethodBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const <a class="el" href="struct_l_t_l_1_1_meta_method_name.html">MetaMethodName</a> &amp;name, const Element &amp;)</td></tr>
+<tr class="separator:ad7d47d7cc7e1bf01da26bf76adabe405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c90d7d5b8309e03b9cd6600f55f360" id="r_ad3c90d7d5b8309e03b9cd6600f55f360"><td class="memTemplParams" colspan="2"><a id="ad3c90d7d5b8309e03b9cd6600f55f360" name="ad3c90d7d5b8309e03b9cd6600f55f360"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:ad3c90d7d5b8309e03b9cd6600f55f360"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_method_base.html">Internal::MethodBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const <a class="el" href="struct_l_t_l_1_1_meta_method_name.html">MetaMethodName</a> &amp;name, const Element &amp;)</td></tr>
+<tr class="separator:ad3c90d7d5b8309e03b9cd6600f55f360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a94f5ae3b9c3581ced5c7a3c2480143" id="r_a4a94f5ae3b9c3581ced5c7a3c2480143"><td class="memTemplParams" colspan="2"><a id="a4a94f5ae3b9c3581ced5c7a3c2480143" name="a4a94f5ae3b9c3581ced5c7a3c2480143"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:a4a94f5ae3b9c3581ced5c7a3c2480143"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_method_base.html">Internal::MethodBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Add</b> (const char *name, const Element &amp;)</td></tr>
+<tr class="separator:a4a94f5ae3b9c3581ced5c7a3c2480143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed9e2add59aaedc6bd97fa5f5fbd47d6" id="r_aed9e2add59aaedc6bd97fa5f5fbd47d6"><td class="memTemplParams" colspan="2"><a id="aed9e2add59aaedc6bd97fa5f5fbd47d6" name="aed9e2add59aaedc6bd97fa5f5fbd47d6"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:aed9e2add59aaedc6bd97fa5f5fbd47d6"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_getter_base.html">GetterBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddGetter</b> (const char *key, const Element &amp;)</td></tr>
+<tr class="separator:aed9e2add59aaedc6bd97fa5f5fbd47d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b78aa516684864a788ff037520023ff" id="r_a1b78aa516684864a788ff037520023ff"><td class="memTemplParams" colspan="2"><a id="a1b78aa516684864a788ff037520023ff" name="a1b78aa516684864a788ff037520023ff"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:a1b78aa516684864a788ff037520023ff"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_setter_base.html">SetterBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddSetter</b> (const char *key, const Element &amp;)</td></tr>
+<tr class="separator:a1b78aa516684864a788ff037520023ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e037ac41810ac354de525542ab2e0d4" id="r_a2e037ac41810ac354de525542ab2e0d4"><td class="memTemplParams" colspan="2"><a id="a2e037ac41810ac354de525542ab2e0d4" name="a2e037ac41810ac354de525542ab2e0d4"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:a2e037ac41810ac354de525542ab2e0d4"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_c_function_base.html">Internal::CFunctionBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddGetter</b> (const char *key, const Element &amp;)</td></tr>
+<tr class="separator:a2e037ac41810ac354de525542ab2e0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22794460a6b4652d5a9d64d72d35ae4d" id="r_a22794460a6b4652d5a9d64d72d35ae4d"><td class="memTemplParams" colspan="2"><a id="a22794460a6b4652d5a9d64d72d35ae4d" name="a22794460a6b4652d5a9d64d72d35ae4d"></a>
+template&lt;typename Element &gt; </td></tr>
+<tr class="memitem:a22794460a6b4652d5a9d64d72d35ae4d"><td class="memTemplItemLeft" align="right" valign="top">EnableIf&lt; BaseOf&lt; <a class="el" href="struct_l_t_l_1_1_internal_1_1_c_function_base.html">Internal::CFunctionBase</a>, Element &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddSetter</b> (const char *key, const Element &amp;)</td></tr>
+<tr class="separator:a22794460a6b4652d5a9d64d72d35ae4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Статические открытые данные</h2></td></tr>
+<tr class="memitem:a231909a4ddf44050e59982361f7bef8b" id="r_a231909a4ddf44050e59982361f7bef8b"><td class="memTemplParams" colspan="2"><a id="a231909a4ddf44050e59982361f7bef8b" name="a231909a4ddf44050e59982361f7bef8b"></a>
+template&lt;typename Base , typename Derived &gt; </td></tr>
+<tr class="memitem:a231909a4ddf44050e59982361f7bef8b"><td class="memTemplItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>BaseOf</b> = std::is_base_of_v&lt;Base, Derived&gt;</td></tr>
+<tr class="separator:a231909a4ddf44050e59982361f7bef8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct LTL::Class&lt; T &gt;</div><p>Класс для добавления пользовательского класса в ВМ Lua. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+</div><hr/>Объявления и описания членов структуры находятся в файле:<ul>
+<li>F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/<a class="el" href="_class_8hpp_source.html">Class.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>

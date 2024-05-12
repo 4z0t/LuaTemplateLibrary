@@ -1,0 +1,64 @@
+\doxysection{Шаблон класса LTL\+::Ref\texorpdfstring{$<$}{<} Ref\+Access \texorpdfstring{$>$}{>}}
+\hypertarget{class_l_t_l_1_1_ref}{}\label{class_l_t_l_1_1_ref}\index{LTL::Ref$<$ RefAccess $>$@{LTL::Ref$<$ RefAccess $>$}}
+
+
+Класс ссылки на объект внутри ВМ. представляет из себя только ссылку на объект без самой ВМ. Уничтожение объекта должно быть выполнено вручную. Имеется класс-\/обертка для работы со ссылаемым объектом \doxylink{class_l_t_l_1_1_context_ref}{Context\+Ref}.  
+
+
+
+
+{\ttfamily \#include $<$Ref.\+hpp$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_adfd31954b081ea81037b448f83718616}\label{class_l_t_l_1_1_ref_adfd31954b081ea81037b448f83718616} 
+{\bfseries Ref} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, int index)
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_ac192ed780e0d0cd4a39971f67da4beba}\label{class_l_t_l_1_1_ref_ac192ed780e0d0cd4a39971f67da4beba} 
+{\bfseries Ref} (const \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}}$<$ Ref\+Access $>$ \&sref) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_a8d807242fa26f1102bd5c205967f2477}\label{class_l_t_l_1_1_ref_a8d807242fa26f1102bd5c205967f2477} 
+{\bfseries Ref} (const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \&other) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_a00cc9ab2f107caa0c0224655b9959b14}\label{class_l_t_l_1_1_ref_a00cc9ab2f107caa0c0224655b9959b14} 
+{\bfseries Ref} (\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \&\&other) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_ae38af832ad74a42f5fd4d8578ca0d5bf}\label{class_l_t_l_1_1_ref_ae38af832ad74a42f5fd4d8578ca0d5bf} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{Context\+Ref}}$<$ Ref\+Access $>$ \&sref) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_ad64c71f6d5df418db2ab7607383170b6}\label{class_l_t_l_1_1_ref_ad64c71f6d5df418db2ab7607383170b6} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \&other) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_a5db03b036a5fe2c90e9cb21c8805bab0}\label{class_l_t_l_1_1_ref_a5db03b036a5fe2c90e9cb21c8805bab0} 
+\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \& {\bfseries operator=} (\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \&\&ref) noexcept
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_ad7edf2a67c58df7aa051990cdf243e9d}\label{class_l_t_l_1_1_ref_ad7edf2a67c58df7aa051990cdf243e9d} 
+void {\bfseries Push} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l) const
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_af3f2e5e56e3453b1fef0c85025a3e166}\label{class_l_t_l_1_1_ref_af3f2e5e56e3453b1fef0c85025a3e166} 
+void {\bfseries Unref} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l)
+\item 
+\Hypertarget{class_l_t_l_1_1_ref_a5129078e9cc90a184b6e0f422ac8318b}\label{class_l_t_l_1_1_ref_a5129078e9cc90a184b6e0f422ac8318b} 
+void {\bfseries Duplicate} (lua\+\_\+\+State \texorpdfstring{$\ast$}{*}l, const \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}} \&other)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+\subsubsection*{template$<$typename Ref\+Access = Ref\+Global\+Access$>$\newline
+class LTL\+::\+Ref$<$ Ref\+Access $>$}
+Класс ссылки на объект внутри ВМ. представляет из себя только ссылку на объект без самой ВМ. Уничтожение объекта должно быть выполнено вручную. Имеется класс-\/обертка для работы со ссылаемым объектом \doxylink{class_l_t_l_1_1_context_ref}{Context\+Ref}. 
+
+\begin{DoxySeeAlso}{См. также}
+\doxylink{class_l_t_l_1_1_context_ref}{Context\+Ref} 
+\end{DoxySeeAlso}
+
+\begin{DoxyTemplParams}{Параметры шаблона}
+{\em Ref\+Access} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/\+GIT/\+Lua\+Template\+Library/\+Source/\+Lua\+Template\+Library/Ref.\+hpp\end{DoxyCompactItemize}

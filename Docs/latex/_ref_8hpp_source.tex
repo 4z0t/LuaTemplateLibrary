@@ -1,0 +1,153 @@
+\doxysection{Ref.\+hpp}
+\hypertarget{_ref_8hpp_source}{}\label{_ref_8hpp_source}\index{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Ref.hpp@{F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/Ref.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}LuaAux.hpp"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Types.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }LTL}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ RefAccess>}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{class\ }Ref;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ RefAccess\ =\ RefGlobalAccess>}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\ =\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref<RefAccess>}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}(lua\_State*\ l,\ \textcolor{keywordtype}{int}\ index)\ :\ m\_state\{\ l\ \},\ m\_ref\{\ l,\ index\ \}\ \{\}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}(lua\_State*\ l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\&\ ref)noexcept\ :\ m\_state\{\ l\ \},\ m\_ref\{\ ref\ \}\ \{\}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\ other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}(\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\&\ other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\ other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\ operator=(\mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\&\ other)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\&\ ref)\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ ref;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push()\textcolor{keyword}{const}}
+\DoxyCodeLine{00039\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref.Push(m\_state);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Release()}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref.Unref(m\_state);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\&\ GetRef()\textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_ref;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\&\ GetRef()\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_ref;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ lua\_State*\textcolor{keyword}{const}\ GetState()\textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_state;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ lua\_State*\ GetState()\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_state;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{\string~ContextRef}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ lua\_State*\ \textcolor{keyword}{const}\ m\_state\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{RefClass}}\ m\_ref\{\};}
+\DoxyCodeLine{00073\ \ \ \ \ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ RefAccess\ =\ RefGlobalAccess>}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}}
+\DoxyCodeLine{00083\ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}(lua\_State*\ l,\ \textcolor{keywordtype}{int}\ index)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ lua\_pushvalue(l,\ index);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \_FromTop(l);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef<RefAccess>}}\&\ sref)noexcept\ :\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}(sref.GetRef())\ \{\}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ other)\ noexcept\ :\ m\_ref\{\ other.m\_ref\ \}\ \{\}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}(\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\&\ other)\ noexcept\ :\ m\_ref\{\ other.m\_ref\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ other.NullRef();}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_context_ref}{ContextRef<RefAccess>}}\&\ sref)\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ =\ sref.GetRef();}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ other)\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ other.m\_ref;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ operator=(\mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\&\ ref)\ \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ ref.m\_ref;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ ref.NullRef();}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Push(lua\_State*\ l)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00122\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ RefAccess::PushRef(l,\ m\_ref);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Unref(lua\_State*\ l)}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ RefAccess::Unref(l,\ m\_ref);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ NullRef();}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Duplicate(lua\_State*\ l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ other)}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \_FromRef(l,\ other);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_t_l_1_1_ref}{\string~Ref}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \_FromRef(lua\_State*\ l,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_l_t_l_1_1_ref}{Ref}}\&\ other)}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ other.Push(l);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \_FromTop(l);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \_FromTop(lua\_State*\ l)}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ RefAccess::GetRef(l);}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ NullRef()\textcolor{keyword}{noexcept}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ m\_ref\ =\ LUA\_NOREF;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_ref\ =\ LUA\_NOREF;}
+\DoxyCodeLine{00157\ \ \ \ \ \};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \}}
+
+\end{DoxyCode}

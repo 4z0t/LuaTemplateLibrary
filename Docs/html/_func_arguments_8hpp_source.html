@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lua Template Library: Исходный файл F:/GIT/LuaTemplateLibrary/Source/LuaTemplateLibrary/FuncArguments.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Lua Template Library<span id="projectnumber">&#160;v0.3.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_6a1a20724d80b30ebb7f93ae15887c04.html">LuaTemplateLibrary</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">FuncArguments.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Types.hpp&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>LTL</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_unwrap_type_base.html">   11</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_unwrap_type_base.html">UnwrapTypeBase</a> {};</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_type_base.html">   14</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_type_base.html">TypeBase</a> :<a class="code hl_struct" href="struct_l_t_l_1_1_unwrap_type_base.html">UnwrapTypeBase</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">using </span>type = T;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    };</div>
+</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_optional_arg.html">   19</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_optional_arg.html">OptionalArg</a> {};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_optional_base.html">   22</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_optional_base.html">OptionalBase</a> :<a class="code hl_struct" href="struct_l_t_l_1_1_optional_arg.html">OptionalArg</a>, <a class="code hl_struct" href="struct_l_t_l_1_1_type_base.html">TypeBase</a>&lt;T&gt; {};</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> DerivedFromSuper = <span class="keywordtype">void</span>&gt;</div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_unwrap.html">   25</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_unwrap.html">Unwrap</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">using </span>type = T;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    };</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">using </span>EnableIfUnwrappable = std::enable_if_t&lt;std::is_base_of_v&lt;UnwrapTypeBase, T&gt;&gt;;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">using </span>EnableIfOptionalArg = std::enable_if_t&lt;std::is_base_of_v&lt;OptionalArg, T&gt;&gt;;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="};">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_unwrap_3_01_t_00_01_enable_if_unwrappable_3_01_t_01_4_01_4.html">   37</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_unwrap.html">Unwrap</a>&lt;T, EnableIfUnwrappable&lt;T&gt;&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">using </span>type = <span class="keyword">typename</span> T::type;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    };</div>
+</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> DerivedFromSuper = <span class="keywordtype">void</span>&gt;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">using </span>Unwrap_t = <span class="keyword">typename</span> Unwrap&lt;T, DerivedFromSuper&gt;::type;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="};">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_default.html">   46</a></span>    <span class="keyword">struct  </span><a class="code hl_struct" href="struct_l_t_l_1_1_default.html">Default</a> : <a class="code hl_struct" href="struct_l_t_l_1_1_optional_base.html">OptionalBase</a>&lt;T&gt;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keyword">static</span>  T value;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    T <a class="code hl_struct" href="struct_l_t_l_1_1_default.html">Default&lt;T&gt;::value</a>{};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">struct </span>IsUpvalueType;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00058" data-start="{" data-end="};">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_upvalue.html">   58</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_upvalue.html">Upvalue</a> final :<a class="code hl_struct" href="struct_l_t_l_1_1_type_base.html">TypeBase</a>&lt;T&gt;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">static_assert</span>(!<a class="code hl_struct" href="struct_l_t_l_1_1_is_upvalue_type.html">IsUpvalueType&lt;T&gt;::value</a>, <span class="stringliteral">&quot;T can&#39;t be an Upvalue&quot;</span>);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    };</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_is_upvalue_type.html">   64</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_is_upvalue_type.html">IsUpvalueType</a> : std::false_type {};</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_is_upvalue_type_3_01_upvalue_3_01_t_01_4_01_4.html">   67</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_is_upvalue_type.html">IsUpvalueType</a>&lt;<a class="code hl_struct" href="struct_l_t_l_1_1_upvalue.html">Upvalue</a>&lt;T&gt;&gt; : std::true_type {};</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00070" data-start="{" data-end="};">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_check_optional.html">   70</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_check_optional.html">CheckOptional</a></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> Check(lua_State* l, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">return</span> lua_isnoneornil(l, index) || <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31">StackType&lt;T&gt;::Check</a>(l, index);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    };</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TOpt&gt;</div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="};">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_stack_type_3_01_t_opt_00_01_enable_if_optional_arg_3_01_t_opt_01_4_01_4.html">   79</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_stack_type.html">StackType</a>&lt;TOpt, EnableIfOptionalArg&lt;TOpt&gt;&gt; : <a class="code hl_struct" href="struct_l_t_l_1_1_check_optional.html">CheckOptional</a>&lt;Unwrap_t&lt;TOpt&gt;&gt;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keyword">using </span>T = Unwrap_t&lt;TOpt&gt;;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> T <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">Get</a>(lua_State* l, <span class="keywordtype">int</span> index)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="keywordflow">if</span> (lua_isnoneornil(l, index))</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <span class="keywordflow">return</span> TOpt::value;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">StackType&lt;T&gt;::Get</a>(l, index);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    };</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_mult_return_base.html">   91</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_mult_return_base.html">MultReturnBase</a> {};</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Ts&gt;</div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="};">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_mult_return.html">   99</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_mult_return.html">MultReturn</a> : std::tuple&lt;Ts...&gt;, <a class="code hl_struct" href="struct_l_t_l_1_1_mult_return_base.html">MultReturnBase</a></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keyword">using </span>std::tuple&lt;Ts...&gt;::tuple;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keyword">decltype</span>(<span class="keyword">auto</span>) Get()</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">return</span> std::get&lt;N&gt;(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        <span class="keyword">decltype</span>(<span class="keyword">auto</span>) Get()<span class="keyword">const</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">return</span> std::get&lt;N&gt;(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        }</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    };</div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="};">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="struct_l_t_l_1_1_stack_result.html">  120</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_l_t_l_1_1_stack_result.html">StackResult</a></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keyword">const</span> <span class="keywordtype">size_t</span> n_results = 1;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <a class="code hl_struct" href="struct_l_t_l_1_1_stack_result.html">StackResult</a>(<span class="keywordtype">size_t</span> n) : n_results(n) { }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    };</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>}</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">#define LuaOptionalArg(name_, type_, value_) \</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">struct name_ : LTL::OptionalBase&lt;type_&gt;\</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="preprocessor">{\</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">  static const type_ value; \</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="preprocessor">};\</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="preprocessor">const type_ name_::value = (value_)</span></div>
+<div class="ttc" id="astruct_l_t_l_1_1_check_optional_html"><div class="ttname"><a href="struct_l_t_l_1_1_check_optional.html">LTL::CheckOptional</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:71</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_default_html"><div class="ttname"><a href="struct_l_t_l_1_1_default.html">LTL::Default</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:47</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_is_upvalue_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_is_upvalue_type.html">LTL::IsUpvalueType</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:64</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_mult_return_base_html"><div class="ttname"><a href="struct_l_t_l_1_1_mult_return_base.html">LTL::MultReturnBase</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:91</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_mult_return_html"><div class="ttname"><a href="struct_l_t_l_1_1_mult_return.html">LTL::MultReturn</a></div><div class="ttdoc">Класс для возврата множества значений из функции.</div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:100</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_optional_arg_html"><div class="ttname"><a href="struct_l_t_l_1_1_optional_arg.html">LTL::OptionalArg</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:19</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_optional_base_html"><div class="ttname"><a href="struct_l_t_l_1_1_optional_base.html">LTL::OptionalBase</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:22</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_result_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_result.html">LTL::StackResult</a></div><div class="ttdoc">Класс для возвращения количества результатов работы функции на стеке.</div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:121</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html">LTL::StackType</a></div><div class="ttdoc">Класс определяет как преобразовывать тип C++ в тип ВМ Lua и обратно, а также проверять на соответстви...</div><div class="ttdef"><b>Definition</b> Types.hpp:52</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_a1f94b9bd72e14272ccda9160c52f4963"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#a1f94b9bd72e14272ccda9160c52f4963">LTL::StackType::Get</a></div><div class="ttdeci">static T Get(lua_State *l, int index)</div><div class="ttdoc">преобразует объект на стеке ВМ Lua по индексу index в тип T</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_stack_type_html_ac57f1a375f74a319211524fccc743f31"><div class="ttname"><a href="struct_l_t_l_1_1_stack_type.html#ac57f1a375f74a319211524fccc743f31">LTL::StackType::Check</a></div><div class="ttdeci">static bool Check(lua_State *l, int index)</div><div class="ttdoc">проверяет объект на стеке ВМ Lua по индексу index на соответствие типу T</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_type_base_html"><div class="ttname"><a href="struct_l_t_l_1_1_type_base.html">LTL::TypeBase</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:15</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_unwrap_html"><div class="ttname"><a href="struct_l_t_l_1_1_unwrap.html">LTL::Unwrap</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:26</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_unwrap_type_base_html"><div class="ttname"><a href="struct_l_t_l_1_1_unwrap_type_base.html">LTL::UnwrapTypeBase</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:11</div></div>
+<div class="ttc" id="astruct_l_t_l_1_1_upvalue_html"><div class="ttname"><a href="struct_l_t_l_1_1_upvalue.html">LTL::Upvalue</a></div><div class="ttdef"><b>Definition</b> FuncArguments.hpp:59</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
+</small></address>
+</body>
+</html>
