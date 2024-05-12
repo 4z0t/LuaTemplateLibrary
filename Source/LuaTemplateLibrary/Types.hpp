@@ -11,6 +11,11 @@
 #pragma once
 #include "Internal.hpp"
 
+/**
+ * @brief Пространство имен Lua Template Library.
+ * Содержит все классы, которые может использовать пользователь.
+ * 
+ */
 namespace LTL
 {
     class CState;
