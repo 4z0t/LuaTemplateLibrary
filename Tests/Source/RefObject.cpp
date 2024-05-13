@@ -90,15 +90,29 @@ TEST_F(RefObjectTests, ValueAccess)
     ASSERT_DOUBLE_EQ(Result().To<double>(), 4.0);
     ASSERT_DOUBLE_EQ(Result().To<long double>(), 4.0);
 
+    {
+        Run("result = {a = 4}");
+        ASSERT_TRUE(Result().IsTable());
+        ASSERT_TRUE(Result()["a"].Is<int>());
+        ASSERT_EQ(Result()["a"].To<int>(), 4);
 
-    Run("result = {a = 4}");
-    ASSERT_TRUE(Result().IsTable());
-    ASSERT_TRUE(Result()["a"].Is<int>());
-    ASSERT_EQ(Result()["a"].To<int>(), 4);
+        GRefObject key{ l, "a" };
+        ASSERT_TRUE(Result()[key].Is<int>());
+        ASSERT_EQ(Result()[key].To<int>(), 4);
+    }
+    {
+        Run("result = {a = {b = 4}}");
+        ASSERT_TRUE(Result().IsTable());
+        ASSERT_TRUE(Result()["a"].Is<Type::Table>());
+        ASSERT_TRUE(Result()["a"]["b"].Is<int>());
+        ASSERT_EQ(Result()["a"]["b"], 4);
 
-    GRefObject key{ l, "a" };
-    ASSERT_TRUE(Result()[key].Is<int>());
-    ASSERT_EQ(Result()[key].To<int>(), 4);
+        GRefObject key1{ l, "a" };
+        GRefObject key2{ l, "b" };
+        ASSERT_TRUE(Result()[key1].Is<Type::Table>());
+        ASSERT_TRUE(Result()[key1][key2].Is<int>());
+        ASSERT_EQ(Result()[key1][key2], 4);
+    }
 }
 
 TEST_F(RefObjectTests, TestImplicitConvertion)
@@ -150,6 +164,7 @@ TEST_F(RefObjectTests, TestImplicitConvertion)
 
 TEST_F(RefObjectTests, IteratorTest)
 {
+    using namespace std;
     {
         Run("result = {1,3,4,6,7,10}");
         auto result = Result();
@@ -190,7 +205,19 @@ TEST_F(RefObjectTests, IteratorTest)
             ASSERT_TRUE(value == nullptr);
         }
     }
-    //    Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
+    {
+        Run("result = {1,3,4,6,7, a = 5, b = 'abc'}");
+        auto result = Result();
+        for (auto [key, value] : result)
+        {
+            ASSERT_EQ(result[key], value);
+            if (key.Is<string>())
+            {
+                if (key == "a") ASSERT_EQ(value, 5);
+                if (key == "b") ASSERT_EQ(value, "abc");
+            }
+        }
+    }
 
 }
 
