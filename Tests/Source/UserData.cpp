@@ -28,7 +28,7 @@ TEST_F(UserDataTests, Class_Basic)
         .Add("GetA", Method<&MyClass::GetA>{})
         .Add("SetA", Method<&MyClass::SetA, int>{})
         ;
-    ASSERT_EQ(0, lua_gettop(l));
+    ASSERT_EQ(0, Top());
 
     Run(R"===(
     result = Class(4)
@@ -118,7 +118,7 @@ TEST_F(UserDataTests, Class_MethodBased_GettersAndSetters)
         .AddGetter("A", Method<&MyClass::GetA>{})
         .AddSetter("A", Method<&MyClass::SetA, int>{})
         ;
-    ASSERT_EQ(0, lua_gettop(l));
+    ASSERT_EQ(0, Top());
     Run(R"===(
     result = Class(4)
     )===");

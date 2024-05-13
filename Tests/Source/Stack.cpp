@@ -9,12 +9,6 @@ struct StackObjectViewTest : TestBase
 
 TEST_F(StackObjectViewTest, Tests)
 {
-
-    const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
-
     using namespace LTL;
     using namespace std;
     {
@@ -24,7 +18,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(so.Is<float>());
         ASSERT_TRUE(so.Is<Type::Number>());
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
     {
         const StackTopRestorer rst{ l };
         PushValue(l, 1);
@@ -33,7 +27,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(so.Is<Type::Number>());
         ASSERT_EQ(so.To<int>(), 1);
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
     {
         const StackTopRestorer rst{ l };
         PushValue(l, "Hello");
@@ -42,7 +36,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(so.Is<Type::String>());
         ASSERT_STREQ(so.To<const char*>(), "Hello");
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
 
     {
         const StackTopRestorer rst{ l };
@@ -56,7 +50,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_EQ(so.To<string_view>(), string_view{ "Hello" });
         ASSERT_EQ(so.To<string>(), string{ "Hello" });
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
     {
         const StackTopRestorer rst{ l };
         PushValue(l, false);
@@ -65,7 +59,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(so.Is<Type::Boolean>());
         ASSERT_EQ(so.To<bool>(), false);
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
 
     {
         const StackTopRestorer rst{ l };
@@ -80,7 +74,7 @@ TEST_F(StackObjectViewTest, Tests)
 
 
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
     {
         const StackTopRestorer rst{ l };
         Run("a = {b = 3}");
@@ -91,7 +85,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(b.Is<Type::Number>());
         ASSERT_EQ(b.To<int>(), 3);
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
 
     {
         const StackTopRestorer rst{ l };
@@ -104,7 +98,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(b.Is<int>());
         ASSERT_EQ(b.To<int>(), 3);
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
 
     {
         const StackTopRestorer rst{ l };
@@ -121,8 +115,7 @@ TEST_F(StackObjectViewTest, Tests)
         ASSERT_TRUE(b2.Is<int>());
         ASSERT_EQ(b2.To<int>(), 3);
     }
-    AssertEmptyStack();
-
+    ASSERT_EQ(0, Top());
     {
         const StackTopRestorer rst{ l };
         Run("a = {}");
@@ -136,7 +129,7 @@ TEST_F(StackObjectViewTest, Tests)
         auto b2 = a.Get<int>(key);
         ASSERT_EQ(b2, 3);
     }
-    AssertEmptyStack();
+    ASSERT_EQ(0, Top());
 }
 
 
@@ -363,10 +356,6 @@ TEST_F(StackObjectViewTest, TestStack)
 
 TEST_F(StackObjectViewTest, TestAsArg)
 {
-    const auto AssertEmptyStack = [&]()
-        {
-            ASSERT_TRUE(lua_gettop(l) == 0);
-        };
     using namespace LTL;
     using namespace std;
 
