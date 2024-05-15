@@ -55,7 +55,7 @@ namespace LTL
             Type result{};
 
             lua_pushnil(l);
-            while (lua_next(l, table.GetIndex()))
+            while (table.Next())
             {
                 StackObjectView key{ l,-2 };
                 StackObjectView value{ l,-1 };
