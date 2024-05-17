@@ -244,7 +244,7 @@ namespace LTL
             }
             return 0;
         }
-
+    private:
         inline static int _Caller(lua_State* l)
         {
 
@@ -310,7 +310,7 @@ namespace LTL
             }
             return 0;
         }
-
+    private:
         inline static int _Caller(lua_State* l)
         {
             ArgsTuple args = _FunctionHelper::GetArgs(l);
