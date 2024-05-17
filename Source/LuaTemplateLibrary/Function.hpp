@@ -27,17 +27,17 @@ namespace LTL
             constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
             constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
 
-            static constexpr ArgsTuple GetArgs(lua_State* l)
+            static constexpr inline ArgsTuple GetArgs(lua_State* l)
             {
                 return UnpackArgs(l, std::index_sequence_for<TArgs...>{});
             }
 
-            static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
+            static constexpr inline size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
             {
                 return FuncUtility::ReplaceUpvalues<ArgsTuple, TArgs...>(l, args);
             }
 
-            static constexpr void CheckArgCount(lua_State* l)
+            static constexpr inline void  CheckArgCount(lua_State* l)
             {
                 const size_t n = static_cast<size_t>(lua_gettop(l));
                 if constexpr (min_arg_count == max_arg_count)
