@@ -245,7 +245,7 @@ namespace LTL
             return 0;
         }
 
-        static int _Caller(lua_State* l)
+        inline static int _Caller(lua_State* l)
         {
 
             ArgsTuple args = _FunctionHelper::GetArgs(l);
@@ -311,7 +311,7 @@ namespace LTL
             return 0;
         }
 
-        static int _Caller(lua_State* l)
+        inline static int _Caller(lua_State* l)
         {
             ArgsTuple args = _FunctionHelper::GetArgs(l);
             if constexpr (std::is_void_v<TUnwrappedReturn>)
