@@ -19,12 +19,6 @@ namespace LTL
 #pragma region Ctors
 
         /**
-         * @brief Для внутреннего использования.
-         * Не использовать самому.
-         */
-        StackObjectView() = default;
-
-        /**
          * @brief Назначает индекс объекта на стеке.
          *
          * @param l Состояние ВМ Lua.
@@ -640,8 +634,8 @@ namespace LTL
         }
 
     protected:
-        lua_State* m_state = nullptr;
-        int m_index = 0;
+        lua_State* const m_state = nullptr;
+        int const m_index = 0;
     };
 
     /**
