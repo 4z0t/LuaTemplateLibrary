@@ -132,8 +132,6 @@ namespace LTL
         template <size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
         struct Arg<0, Args<ArgIndex, UpvalueIndex, T, Ts...>>
         {
-            /*static_assert(ArgIndex == 0, "Arg Index isnt 0");
-            static_assert(UpvalueIndex == 0, "Upvalue Index isnt 0");*/
             using type = Unwrap_t<T>;
             using Ptype = Args<ArgIndex, UpvalueIndex, T, Ts...>;
         };
@@ -147,10 +145,9 @@ namespace LTL
 
 
         template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
-        constexpr  const  typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l) {
+        constexpr const typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l) {
             using Ptype = typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::Ptype;
             return static_cast<const Ptype&>(p).GetArg(l);
-            //return ArgExtractor<T>::Get<ArgIndex, UpvalueIndex>(l);
         }
 
 
@@ -179,7 +176,7 @@ namespace LTL
             template <size_t Index>
             constexpr typename Arg<Index, Args>::type Get(lua_State* l)
             {
-                return LTL::FuncUtility::Get <Index>(*this, l);
+                return LTL::FuncUtility::Get<Index>(*this, l);
             }
 
         };
