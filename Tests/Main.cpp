@@ -1115,12 +1115,31 @@ struct TestS
 };
 
 
-static void FnTest(int a, float b, bool c)
+static void FnTest(int a, LTL::CState* state, float b, bool c)
 {
     using namespace std;
     cout << a << endl;
     cout << b << endl;
     cout << c << endl;
+    cout << state->GetGlobal<const char*>("a") << endl;
+}
+
+
+static int Fn(lua_State* l)
+{
+    using namespace LTL;
+    using namespace std;
+    using namespace FuncUtility;
+    Args<0, 0, Upvalue<int>, CState*, float, bool> a;
+    auto args = TestS<Upvalue<int>, CState*, float, bool> ::Get(l);
+
+    cout << get<0>(args) << endl;
+    cout << get<1>(args) << endl;
+    cout << l << endl;
+    cout << get<2>(args) << endl;
+    cout << get<3>(args) << endl;
+
+    return 0;
 }
 
 void ExtractingArgs()
@@ -1134,25 +1153,22 @@ void ExtractingArgs()
     s.OpenLibs();
     lua_State* l = s.GetState()->Unwrap();
 
-    s.Add("Func", CFunction<FnTest, Upvalue<int>, float, bool>{}, 3);
+    s.AddClosure("Func", Fn, 3);
+    s.SetGlobal("a", "Hello");
 
-
-    Args<0, 0, Upvalue<int>, float, bool> a;
-    s.GetState()->GetGlobal("Func");
-    PushArgs(l, 2.5, true);
-    CallStack(l, 2);
+    s.Call("Func", 2.5, true);
 
 
 
-  /*  cout << typeid(decltype(a.Get<0>(l))).name() << endl;
-    cout << typeid(decltype(a.Get<1>(l))).name() << endl;
-    cout << typeid(decltype(a.Get<2>(l))).name() << endl;
+    /*  cout << typeid(decltype(a.Get<0>(l))).name() << endl;
+      cout << typeid(decltype(a.Get<1>(l))).name() << endl;
+      cout << typeid(decltype(a.Get<2>(l))).name() << endl;
 
-    auto tpl = TestS<int, float, bool>::Get(l);
+      auto tpl = TestS<int, float, bool>::Get(l);
 
-    cout << get<0>(tpl) << endl;
-    cout << get<1>(tpl) << endl;
-    cout << get<2>(tpl) << endl;*/
+      cout << get<0>(tpl) << endl;
+      cout << get<1>(tpl) << endl;
+      cout << get<2>(tpl) << endl;*/
 }
 
 

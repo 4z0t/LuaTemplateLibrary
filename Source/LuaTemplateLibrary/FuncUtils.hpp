@@ -166,7 +166,7 @@ namespace LTL
                 IncrementArgIndex<T, ArgIndex>::value,
                 IncrementUpvalueIndex<T, UpvalueIndex>::value, Ts...>;
 
-            constexpr T GetArg(lua_State* l)const
+            constexpr auto GetArg(lua_State* l)const
             {
                 return ArgExtractor<T>::Get<ArgIndex, UpvalueIndex>(l);
             }
