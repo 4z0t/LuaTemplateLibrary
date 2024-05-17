@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
-#include "Lua/LuaLibrary.h"
 #include "LuaTemplateLibrary/LTL.hpp"
 
 class Callable
@@ -213,7 +212,7 @@ void Test()
         LTL::GRefObject obj = LTL::GRefObject::FromStack(lua_state, -1);
 
         cout << obj.Is<const char*>() << std::endl;
-        cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
+        //cout << "error:" << lua_state.To<const char*>(-1) << std::endl;
         return;
     }
 
@@ -295,10 +294,6 @@ void Test()
     global["RefFunc"].Call(1);
 
 
-    lua_state.Push(3);
-    lua_state.Push(2);
-    lua_state.Push(1);
-    cout << lua_gettop(lua_state.GetState()->Unwrap()) << endl;
 
 }
 
@@ -813,7 +808,7 @@ void AAAAAAAA()
     s.ThrowExceptions();
     try
     {
-        s.Pop(2);
+        // s.Pop(2);
 
     }
     catch (Exception& ex)
@@ -947,7 +942,7 @@ void PcallTest()
             }
             else
             {
-                cout << "Error: " << s.To<const char*>(-1) << endl;
+                // cout << "Error: " << s.To<const char*>(-1) << endl;
             }
         }
         {
@@ -958,7 +953,7 @@ void PcallTest()
             }
             else
             {
-                cout << "Error: " << s.To<const char*>(-1) << endl;
+                // cout << "Error: " << s.To<const char*>(-1) << endl;
             }
         }
     }
@@ -1100,6 +1095,67 @@ void MetatableTest()
         )");
 }
 
+template<typename ...TArgs>
+struct TestS
+{
+    using TRes = std::tuple< LTL::Unwrap_t<TArgs>...>;
+    template <size_t... Is>
+    inline static TRes Get(lua_State* l)
+    {
+        return UnpackArgs(l, std::index_sequence_for<TArgs...>{});
+    }
+
+    template <size_t... Is>
+    inline static TRes UnpackArgs(lua_State* l, const std::index_sequence<Is...>)
+    {
+        LTL::FuncUtility::Args<0, 0, TArgs...> args;
+        return { args.Get<Is>(l)... };
+    }
+
+};
+
+
+static void FnTest(int a, float b, bool c)
+{
+    using namespace std;
+    cout << a << endl;
+    cout << b << endl;
+    cout << c << endl;
+}
+
+void ExtractingArgs()
+{
+    using namespace LTL;
+    using namespace std;
+    using namespace FuncUtility;
+
+
+    State s;
+    s.OpenLibs();
+    lua_State* l = s.GetState()->Unwrap();
+
+    s.Add("Func", CFunction<FnTest, Upvalue<int>, float, bool>{}, 3);
+
+
+    Args<0, 0, Upvalue<int>, float, bool> a;
+    s.GetState()->GetGlobal("Func");
+    PushArgs(l, 2.5, true);
+    CallStack(l, 2);
+
+
+
+  /*  cout << typeid(decltype(a.Get<0>(l))).name() << endl;
+    cout << typeid(decltype(a.Get<1>(l))).name() << endl;
+    cout << typeid(decltype(a.Get<2>(l))).name() << endl;
+
+    auto tpl = TestS<int, float, bool>::Get(l);
+
+    cout << get<0>(tpl) << endl;
+    cout << get<1>(tpl) << endl;
+    cout << get<2>(tpl) << endl;*/
+}
+
+
 int main()
 {
     //ClassTest();
@@ -1124,5 +1180,6 @@ int main()
     //AltException();
     //LibsTest();
    // OnlyMethods();
-    MetatableTest();
+    //MetatableTest();
+    ExtractingArgs();
 }

@@ -109,6 +109,82 @@ namespace LTL
             return GetArgs<0, 0, 0, TArgsTuple, TArgs...>(l, args);
         }
 #pragma endregion
+        template<size_t ArgIndex = 0, size_t UpvalueIndex = 0, typename ...Ts>
+        class Args;
+
+        template<size_t ArgIndex, size_t UpvalueIndex>
+        class Args <ArgIndex, UpvalueIndex>
+        {
+        public:
+            constexpr Args() noexcept = default;
+        };
+
+        template<size_t Index, typename Args>
+        struct Arg;
+
+        template<size_t Index, typename Args>
+        struct Arg<Index, const Args> :Arg<Index, Args>
+        {
+            using Base = Arg<Index, Args>;
+            using type = const typename Base::type;
+        };
+
+        template <size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        struct Arg<0, Args<ArgIndex, UpvalueIndex, T, Ts...>>
+        {
+            /*static_assert(ArgIndex == 0, "Arg Index isnt 0");
+            static_assert(UpvalueIndex == 0, "Upvalue Index isnt 0");*/
+            using type = Unwrap_t<T>;
+            using Ptype = Args<ArgIndex, UpvalueIndex, T, Ts...>;
+        };
+
+        template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        struct Arg < Index, Args<ArgIndex, UpvalueIndex, T, Ts...>> :
+            Arg<Index - 1,
+            Args<IncrementArgIndex<T, ArgIndex>::value,
+            IncrementUpvalueIndex<T, UpvalueIndex>::value,
+            Ts...>> {};
+
+
+        template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        constexpr  const  typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l) {
+            using Ptype = typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::Ptype;
+            return static_cast<const Ptype&>(p).GetArg(l);
+            //return ArgExtractor<T>::Get<ArgIndex, UpvalueIndex>(l);
+        }
+
+
+        template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        class Args<ArgIndex, UpvalueIndex, T, Ts ...>
+            : private Args<
+            IncrementArgIndex<T, ArgIndex>::value,
+            IncrementUpvalueIndex<T, UpvalueIndex>::value, Ts...>
+        {
+
+        public:
+            using Base = Args<
+                IncrementArgIndex<T, ArgIndex>::value,
+                IncrementUpvalueIndex<T, UpvalueIndex>::value, Ts...>;
+
+            constexpr T GetArg(lua_State* l)const
+            {
+                return ArgExtractor<T>::Get<ArgIndex, UpvalueIndex>(l);
+            }
+
+            template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+            friend constexpr  const  typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l);
+
+            constexpr Args() noexcept : Base() {}
+
+            template <size_t Index>
+            constexpr typename Arg<Index, Args>::type Get(lua_State* l)
+            {
+                return LTL::FuncUtility::Get <Index>(*this, l);
+            }
+
+        };
+
+
 
 #pragma region ReplaceUpvalues logic
         template <size_t TupleIndex, size_t ArgIndex, size_t UpvalueIndex, typename TArgsTuple>
