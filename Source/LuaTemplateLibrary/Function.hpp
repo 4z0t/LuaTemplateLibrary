@@ -14,13 +14,22 @@ namespace LTL
         template <typename... TArgs>
         struct FunctionHelper : CFunctionBase
         {
+            using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
+        private:
+            template <size_t... Is>
+            inline static ArgsTuple UnpackArgs(lua_State* l, const std::index_sequence<Is...>)
+            {
+                LTL::FuncUtility::Args<0, 0, TArgs...> args;
+                return { args.Get<Is>(l)... };
+            }
+
+        public:
             constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
             constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
 
-            using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
-            static constexpr size_t GetArgs(lua_State* l, ArgsTuple& args)
+            static constexpr ArgsTuple GetArgs(lua_State* l)
             {
-                return FuncUtility::GetArgs<ArgsTuple, TArgs...>(l, args);
+                return UnpackArgs(l, std::index_sequence_for<TArgs...>{});
             }
 
             static constexpr size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
@@ -238,8 +247,8 @@ namespace LTL
 
         static int _Caller(lua_State* l)
         {
-            ArgsTuple args;
-            _FunctionHelper::GetArgs(l, args);
+
+            ArgsTuple args = _FunctionHelper::GetArgs(l);
             if constexpr (std::is_void_v<TReturn>)
             {
                 _FunctionCaller::Call(args);
@@ -304,8 +313,7 @@ namespace LTL
 
         static int _Caller(lua_State* l)
         {
-            ArgsTuple args;
-            _FunctionHelper::GetArgs(l, args);
+            ArgsTuple args = _FunctionHelper::GetArgs(l);
             if constexpr (std::is_void_v<TUnwrappedReturn>)
             {
                 _FunctionCaller::Call(args);
