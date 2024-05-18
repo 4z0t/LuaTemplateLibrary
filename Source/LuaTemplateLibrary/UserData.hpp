@@ -8,17 +8,17 @@
 namespace LTL
 {
     template<typename T>
-    struct RegistryTableBase
+    struct RegistryValue
     {
-        static const void* GetKey()
+        static inline const void* GetKey()
         {
             static const char key;
             return &key;
         }
 
-        static int Push(lua_State* l)
+        static inline int Push(lua_State* l)
         {
-            return lua_getregp(l, RegistryTableBase<T>::GetKey());
+            return lua_getregp(l, RegistryValue<T>::GetKey());
         }
     };
 
@@ -33,11 +33,11 @@ namespace LTL
         using _UserDataValue = Internal::UserDataPtr<T>;
         using _UserDataValue::_UserDataValue;
 
-        struct MetaTable : public RegistryTableBase<MetaTable> {};
-        struct MethodsTable : public RegistryTableBase<MethodsTable> {};
-        struct ClassTable : public RegistryTableBase<ClassTable> {};
-        struct IndexTable : public RegistryTableBase<IndexTable> {};
-        struct NewIndexTable : public RegistryTableBase<NewIndexTable> {};
+        struct MetaTable : public RegistryValue<MetaTable> {};
+        struct MethodsTable : public RegistryValue<MethodsTable> {};
+        struct ClassTable : public RegistryValue<ClassTable> {};
+        struct IndexTable : public RegistryValue<IndexTable> {};
+        struct NewIndexTable : public RegistryValue<NewIndexTable> {};
 
         struct Data
         {
