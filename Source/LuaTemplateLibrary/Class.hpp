@@ -127,7 +127,6 @@ namespace LTL
             MakeMetaTable();
             if constexpr (!std::is_trivially_destructible_v<T>)
             {
-                //std::cout << "Assigning dtor for " << typeid(T).name() << std::endl;
                 Add(MetaMethods::gc, UData::DestructorFunction);
             }
             UData::MetaTable::Push(m_state);
