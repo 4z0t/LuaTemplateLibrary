@@ -16,9 +16,9 @@ namespace LTL
             return &key;
         }
 
-        static inline int Push(lua_State* l)
+        static inline Type Push(lua_State* l)
         {
-            return lua_getregp(l, This::GetKey());
+            return static_cast<Type>(lua_getregp(l, This::GetKey()));
         }
 
         static inline void Set(lua_State* l)

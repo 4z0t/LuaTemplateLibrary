@@ -307,7 +307,7 @@ namespace LTL
 
         void MakeMetaTable()
         {
-            if (UData::MetaTable::Push(m_state) != LUA_TNIL)
+            if (UData::MetaTable::Push(m_state) != Type::Nil)
             {
                 Pop();
                 return;
@@ -324,7 +324,7 @@ namespace LTL
 
         void MakeClassTable()
         {
-            if (UData::ClassTable::Push(m_state) != LUA_TNIL)
+            if (UData::ClassTable::Push(m_state) != Type::Nil)
             {
                 Pop();
                 return;
@@ -338,7 +338,7 @@ namespace LTL
 
         void MakeIndexTable()
         {
-            if (UData::IndexTable::Push(m_state) != LUA_TNIL)
+            if (UData::IndexTable::Push(m_state) != Type::Nil)
             {
                 Pop();
                 return;
@@ -353,7 +353,7 @@ namespace LTL
 
         void MakeNewIndexTable()
         {
-            if (UData::NewIndexTable::Push(m_state) != LUA_TNIL)
+            if (UData::NewIndexTable::Push(m_state) != Type::Nil)
             {
                 Pop();
                 return;

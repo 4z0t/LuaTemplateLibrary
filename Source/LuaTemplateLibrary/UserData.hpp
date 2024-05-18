@@ -119,7 +119,7 @@ namespace LTL
          */
         static void SetClassMetaTable(lua_State* l)
         {
-            if (MetaTable::Push(l) != LUA_TTABLE)
+            if (MetaTable::Push(l) != Type::Table)
             {
                 luaL_error(l, "%s", "The class was't registered");
             }
@@ -169,7 +169,7 @@ namespace LTL
                 return false;
             }
 
-            if (MetaTable::Push(l) == LUA_TNIL)
+            if (MetaTable::Push(l) == Type::Nil)
             {
                 lua_pop(l, 1);
                 return false;
@@ -193,7 +193,7 @@ namespace LTL
                 return nullptr;
             }
 
-            if (MetaTable::Push(l) == LUA_TNIL)
+            if (MetaTable::Push(l) == Type::Nil)
             {
                 lua_pop(l, 1);
                 ThrowNoMetaTableForUD(l, index);
@@ -276,7 +276,7 @@ namespace LTL
 
         static const char* GetClassName(lua_State* l)
         {
-            if (ClassTable::Push(l) == LUA_TNIL)
+            if (ClassTable::Push(l) == Type::Nil)
             {
                 lua_pushstring(l, typeid(T).name());
             }
