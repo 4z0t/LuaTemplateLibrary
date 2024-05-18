@@ -53,6 +53,26 @@ TEST_F(ExceptionTests, BaseExceptions)
     }
 
     {
+        constexpr auto f = +[](float x, float y, float z)noexcept -> float
+            {
+                return sqrtf(x * x + y * y + z * z);
+            };
+
+        RegisterFunction(l, "VectorLen", CFunction<f, float, float, Default<float>>::Function);
+
+        Run("a = VectorLen(3, 4)");
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), 5.f);
+        Run("a = VectorLen(1, 2, 3)");
+        ASSERT_FLOAT_EQ(cstate->GetGlobal<float>("a"), f(1, 2, 3));
+        ASSERT_THROW(Run("VectorLen(1, 2, 3, 4)"), Exception);
+
+        ASSERT_THROW(cstate->Call<float>("VectorLen", 1.f, 2.f, 3.f, 4.f), Exception);
+
+        ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 3.f, 4.f), 5);
+        ASSERT_FLOAT_EQ(cstate->Call<float>("VectorLen", 1, 2, 3), f(1, 2, 3));
+    }
+
+    {
         constexpr auto f = +[](float x) -> float
             {
                 if (x > 0)

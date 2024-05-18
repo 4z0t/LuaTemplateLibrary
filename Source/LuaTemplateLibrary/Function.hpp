@@ -49,7 +49,7 @@ namespace LTL
                 }
                 else
                 {
-                    if (n < min_arg_count && n > max_arg_count)
+                    if (n < min_arg_count || n > max_arg_count)
                     {
                         luaL_error(l, "Expected arguments between %d and %d, but got %d.", min_arg_count, max_arg_count, n);
                     }
@@ -242,7 +242,6 @@ namespace LTL
                     luaL_error(l, "%s", "unknown error");
                 }
             }
-            return 0;
         }
     private:
         inline static int _Caller(lua_State* l)
@@ -308,7 +307,6 @@ namespace LTL
                     luaL_error(l, "%s", "unknown error");
                 }
             }
-            return 0;
         }
     private:
         inline static int _Caller(lua_State* l)
