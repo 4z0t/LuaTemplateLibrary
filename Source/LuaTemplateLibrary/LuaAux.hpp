@@ -8,6 +8,7 @@ namespace LTL
     template<typename T>
     struct RegistryValue
     {
+    private:
         using This = RegistryValue<T>;
 
         static inline const void* GetKey()
@@ -15,7 +16,7 @@ namespace LTL
             static const char key;
             return &key;
         }
-
+    public:
         static inline Type Push(lua_State* l)
         {
             return static_cast<Type>(lua_getregp(l, This::GetKey()));
