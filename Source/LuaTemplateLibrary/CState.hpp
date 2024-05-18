@@ -223,8 +223,12 @@ namespace LTL
         ~CState() = delete;
     };
 
-    inline CState* WrapState(lua_State* l)
+    template<>
+    struct StackType<CState*> : AlwaysValid
     {
-        return (CState*)l;
-    }
+        static CState* Get(lua_State* l, int index)
+        {
+            return CState::Wrap(l);
+        }
+    };
 }

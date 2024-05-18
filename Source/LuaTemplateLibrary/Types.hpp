@@ -18,10 +18,6 @@
  */
 namespace LTL
 {
-    class CState;
-
-    inline CState* WrapState(lua_State* l);
-
     enum class Type :int
     {
         None = LUA_TNONE,
@@ -88,15 +84,6 @@ namespace LTL
         static lua_State* Get(lua_State* l, int index)
         {
             return l;
-        }
-    };
-
-    template<>
-    struct StackType<CState*> : AlwaysValid
-    {
-        static CState* Get(lua_State* l, int index)
-        {
-            return WrapState(l);
         }
     };
 
