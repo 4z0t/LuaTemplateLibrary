@@ -17,7 +17,7 @@ namespace LTL
             using ArgsTuple = std::tuple<Unwrap_t<TArgs>...>;
         private:
             template <size_t... Is>
-            inline static ArgsTuple UnpackArgs(lua_State* l, const std::index_sequence<Is...>)
+            inline static ArgsTuple PackArgs(lua_State* l, const std::index_sequence<Is...>)
             {
                 LTL::FuncUtility::Args<0, 0, TArgs...> args;
                 return { args.Get<Is>(l)... };
@@ -29,7 +29,7 @@ namespace LTL
 
             static constexpr inline ArgsTuple GetArgs(lua_State* l)
             {
-                return UnpackArgs(l, std::index_sequence_for<TArgs...>{});
+                return PackArgs(l, std::index_sequence_for<TArgs...>{});
             }
 
             static constexpr inline size_t ReplaceUpvalues(lua_State* l, ArgsTuple& args)
@@ -277,9 +277,6 @@ namespace LTL
     public:
         template <typename... TUpvalues>
         struct ValidUpvalues : FuncUtility::MatchUpvalues<TUpvalues...>::template Matches<TArgs...>{};
-
-        constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
-        constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
 
         static int Function(lua_State* l)
         {
