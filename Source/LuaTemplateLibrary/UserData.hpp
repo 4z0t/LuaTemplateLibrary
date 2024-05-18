@@ -184,20 +184,17 @@ namespace LTL
             if (!lua_isuserdata(l, index))
             {
                 ThrowWrongType(l, index);
-                return nullptr;
             }
 
             if (!lua_getmetatable(l, index))
             {
                 ThrowInvalidUserData(l, index);
-                return nullptr;
             }
 
             if (MetaTable::Push(l) == Type::Nil)
             {
                 lua_pop(l, 1);
                 ThrowNoMetaTableForUD(l, index);
-                return nullptr;
             }
 
             bool res = lua_rawequal(l, -2, -1);
@@ -206,7 +203,6 @@ namespace LTL
             if (!res)
             {
                 ThrowWrongUserDataType(l, index);
-                return nullptr;
             }
             return static_cast<Data*>(lua_touserdata(l, index));
         }
@@ -217,7 +213,6 @@ namespace LTL
             if (data == nullptr || data->isDestroyed)
             {
                 ThrowUDDestroyed(l, index);
-                return nullptr;
             }
 
             return &data->object;
@@ -292,27 +287,27 @@ namespace LTL
 
     private:
 #pragma region ThrowFunctions
-        static void ThrowInvalidUserData(lua_State* l, int index)
+        static void ThrowInvalidUserData(lua_State* l, int index) noexcept(false)
         {
             luaL_argerror(l, index, "Invalind UserData");
         }
 
-        static void ThrowWrongUserDataType(lua_State* l, int index)
+        static void ThrowWrongUserDataType(lua_State* l, int index) noexcept(false)
         {
             luaL_error(l, "Expected %s but got other userdata", GetClassName(l));
         }
 
-        static void ThrowWrongType(lua_State* l, int index)
+        static void ThrowWrongType(lua_State* l, int index) noexcept(false)
         {
             luaL_error(l, "Expected %s but got %s", GetClassName(l), lua_typename(l, lua_type(l, index)));
         }
 
-        static void ThrowNoMetaTableForUD(lua_State* l, int index)
+        static void ThrowNoMetaTableForUD(lua_State* l, int index) noexcept(false)
         {
             luaL_argerror(l, index, "Expected userdata with metatable");
         }
 
-        static void ThrowUDDestroyed(lua_State* l, int index)
+        static void ThrowUDDestroyed(lua_State* l, int index) noexcept(false)
         {
             luaL_argerror(l, index, "Userdata has been destroyed");
         }
