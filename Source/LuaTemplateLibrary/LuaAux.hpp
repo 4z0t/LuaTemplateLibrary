@@ -372,31 +372,4 @@ namespace LTL
     }
 
 #pragma endregion
-
-#pragma region Upvalues Replace
-
-    template<size_t Index, typename TResult>
-    constexpr size_t _ReplaceUpvalue(lua_State* l, TResult& upvalues)
-    {
-        return Index;
-    }
-
-    template<size_t Index, typename TResult, typename T, typename ...Ts>
-    inline size_t _ReplaceUpvalue(lua_State* l, TResult& upvalues)
-    {
-        if constexpr (!std::is_pointer<T>::value)
-        {
-            PushValue<T>(l, std::get<Index>(upvalues));
-            lua_replace(l, lua_upvalueindex((int)Index + 1));
-        }
-        return _ReplaceUpvalue<Index + 1, TResult, Ts...>(l, upvalues);
-    }
-
-    template<typename ...CArgs>
-    void ReplaceUpvalues(lua_State* l, std::tuple<CArgs...>& upvalues)
-    {
-        _ReplaceUpvalue<0, std::tuple<CArgs...>, CArgs...>(l, upvalues);
-    }
-
-#pragma endregion
 }
