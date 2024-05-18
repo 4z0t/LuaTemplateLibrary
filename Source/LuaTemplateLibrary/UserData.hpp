@@ -7,21 +7,6 @@
 
 namespace LTL
 {
-    template<typename T>
-    struct RegistryValue
-    {
-        static inline const void* GetKey()
-        {
-            static const char key;
-            return &key;
-        }
-
-        static inline int Push(lua_State* l)
-        {
-            return lua_getregp(l, RegistryValue<T>::GetKey());
-        }
-    };
-
     /**
      * @brief Класс представляющий пользовательский тип в Lua
      *

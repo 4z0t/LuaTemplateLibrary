@@ -5,6 +5,28 @@
 
 namespace LTL
 {
+    template<typename T>
+    struct RegistryValue
+    {
+        using This = RegistryValue<T>;
+
+        static inline const void* GetKey()
+        {
+            static const char key;
+            return &key;
+        }
+
+        static inline int Push(lua_State* l)
+        {
+            return lua_getregp(l, This::GetKey());
+        }
+
+        static inline void Set(lua_State* l)
+        {
+            lua_setregp(l, This::GetKey());
+        }
+    };
+
     /**
      * @brief Класс для доступа к объектам по ссылке
      * внутри ВМ Lua.

@@ -11,7 +11,7 @@ namespace LTL
 {
     /**
      * @brief Метаметоды ВМ Lua.
-     * 
+     *
      */
     namespace MetaMethods
     {
@@ -81,12 +81,12 @@ namespace LTL
     }
 
     /**
-     * @brief Класс универсальной функции, преобразующий методы пользовательских типов 
+     * @brief Класс универсальной функции, преобразующий методы пользовательских типов
      * для использования с UserData.
      * Оборачивает пользовательские типы в UserData
-     * 
-     * @tparam fn 
-     * @tparam TArgs 
+     *
+     * @tparam fn
+     * @tparam TArgs
      */
     template<auto fn, typename ...TArgs>
     class Method :
@@ -113,8 +113,8 @@ namespace LTL
 
     /**
      * @brief Класс для добавления пользовательского класса в ВМ Lua.
-     * 
-     * @tparam T 
+     *
+     * @tparam T
      */
     template<typename T>
     struct Class
@@ -133,7 +133,6 @@ namespace LTL
             StackObjectView metatable{ m_state };
             metatable.RawSet(MetaMethods::metatable, true);
             lua_pop(m_state, 1);
-
         }
 
         template<typename TAlloc>
@@ -319,8 +318,8 @@ namespace LTL
             lua_newtable(m_state);
             StackObjectView methodsTable{ m_state };
             metaTable.RawSet(MetaMethods::index, methodsTable);
-            lua_setregp(m_state, UData::MethodsTable::GetKey());
-            lua_setregp(m_state, UData::MetaTable::GetKey());
+            UData::MethodsTable::Set(m_state);
+            UData::MetaTable::Set(m_state);
         }
 
         void MakeClassTable()
@@ -333,7 +332,7 @@ namespace LTL
             lua_newtable(m_state);
             StackObjectView classTable{ m_state };
             classTable.RawSet("className", m_name);
-            lua_setregp(m_state, UData::ClassTable::GetKey());
+            UData::ClassTable::Set(m_state);
             Pop();
         }
 
@@ -348,7 +347,7 @@ namespace LTL
             SetIndexFunction(UData::IndexMethod);
 
             lua_newtable(m_state);
-            lua_setregp(m_state, UData::IndexTable::GetKey());
+            UData::IndexTable::Set(m_state);
             Pop();
         }
 
@@ -363,7 +362,7 @@ namespace LTL
             SetNewIndexFunction(UData::NewIndexMethod);
 
             lua_newtable(m_state);
-            lua_setregp(m_state, UData::NewIndexTable::GetKey());
+            UData::NewIndexTable::Set(m_state);
             Pop();
         }
 
