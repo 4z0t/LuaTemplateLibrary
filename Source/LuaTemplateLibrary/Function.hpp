@@ -7,9 +7,7 @@ namespace LTL
 {
     namespace Internal
     {
-        struct CFunctionBase
-        {
-        };
+        struct CFunctionBase {};
 
         template <typename... TArgs>
         struct FunctionHelper : CFunctionBase
