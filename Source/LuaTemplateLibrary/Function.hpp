@@ -25,6 +25,8 @@ namespace LTL
             constexpr static size_t min_arg_count = FuncUtility::MinArgumentCount<TArgs...>();
             constexpr static size_t max_arg_count = FuncUtility::MaxArgumentCount<TArgs...>();
 
+            static_assert(min_arg_count <= max_arg_count);
+
             static constexpr inline ArgsTuple GetArgs(lua_State* l)
             {
                 return PackArgs(l, std::index_sequence_for<TArgs...>{});
