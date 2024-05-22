@@ -229,13 +229,13 @@ namespace LTL
                 {
                     return _Caller(l);
                 }
-                catch (std::exception& ex)
-                {
-                    luaL_error(l, "%s", ex.what());
-                }
                 catch (LTL::Exception&)
                 {
                     throw;
+                }
+                catch (std::exception& ex)
+                {
+                    luaL_error(l, "%s", ex.what());
                 }
                 catch (...)
                 {
@@ -291,13 +291,13 @@ namespace LTL
                 {
                     return _Caller(l);
                 }
-                catch (std::exception& ex)
-                {
-                    luaL_error(l, "%s", ex.what());
-                }
                 catch (LTL::Exception&)
                 {
                     throw;
+                }
+                catch (std::exception& ex)
+                {
+                    luaL_error(l, "%s", ex.what());
                 }
                 catch (...)
                 {
