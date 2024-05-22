@@ -136,13 +136,17 @@ namespace LTL
             using Ptype = Args<ArgIndex, UpvalueIndex, T, Ts...>;
         };
 
-        template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
-        struct Arg < Index, Args<ArgIndex, UpvalueIndex, T, Ts...>> :
-            Arg<Index - 1,
-            Args<IncrementArgIndex<T, ArgIndex>::value,
+        template <size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        using NextArgs = Args<
+            IncrementArgIndex<T, ArgIndex>::value,
             IncrementUpvalueIndex<T, UpvalueIndex>::value,
-            Ts...>> {};
+            Ts... >;
 
+        template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        using NextArg = Arg<Index - 1, NextArgs<ArgIndex, UpvalueIndex, T, Ts ...>>;
+
+        template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
+        struct Arg <Index, Args<ArgIndex, UpvalueIndex, T, Ts...>> : NextArg<Index, ArgIndex, UpvalueIndex, T, Ts...> {};
 
         template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
         constexpr const typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l) {
@@ -152,16 +156,11 @@ namespace LTL
 
 
         template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
-        class Args<ArgIndex, UpvalueIndex, T, Ts ...>
-            : private Args<
-            IncrementArgIndex<T, ArgIndex>::value,
-            IncrementUpvalueIndex<T, UpvalueIndex>::value, Ts...>
+        class Args<ArgIndex, UpvalueIndex, T, Ts ...> :private  NextArgs<ArgIndex, UpvalueIndex, T, Ts ...>
         {
-
+            using Base = NextArgs<ArgIndex, UpvalueIndex, T, Ts ...>;
         public:
-            using Base = Args<
-                IncrementArgIndex<T, ArgIndex>::value,
-                IncrementUpvalueIndex<T, UpvalueIndex>::value, Ts...>;
+            constexpr Args() noexcept : Base() {}
 
             constexpr auto GetArg(lua_State* l)const
             {
@@ -171,14 +170,11 @@ namespace LTL
             template <size_t Index, size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
             friend constexpr  const  typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l);
 
-            constexpr Args() noexcept : Base() {}
-
             template <size_t Index>
             constexpr typename Arg<Index, Args>::type Get(lua_State* l)
             {
                 return LTL::FuncUtility::Get<Index>(*this, l);
             }
-
         };
 
 
