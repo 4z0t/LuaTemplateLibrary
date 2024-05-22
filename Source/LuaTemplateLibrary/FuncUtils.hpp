@@ -122,13 +122,6 @@ namespace LTL
         template<size_t Index, typename Args>
         struct Arg;
 
-        template<size_t Index, typename Args>
-        struct Arg<Index, const Args> :Arg<Index, Args>
-        {
-            using Base = Arg<Index, Args>;
-            using type = const typename Base::type;
-        };
-
         template <size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
         struct Arg<0, Args<ArgIndex, UpvalueIndex, T, Ts...>>
         {
@@ -153,7 +146,6 @@ namespace LTL
             using Ptype = typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::Ptype;
             return static_cast<const Ptype&>(p).GetArg(l);
         }
-
 
         template<size_t ArgIndex, size_t UpvalueIndex, typename T, typename ...Ts>
         class Args<ArgIndex, UpvalueIndex, T, Ts ...> :private  NextArgs<ArgIndex, UpvalueIndex, T, Ts ...>
