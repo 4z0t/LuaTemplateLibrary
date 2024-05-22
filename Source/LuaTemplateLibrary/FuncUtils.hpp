@@ -163,7 +163,7 @@ namespace LTL
             friend constexpr  const  typename Arg<Index, Args<ArgIndex, UpvalueIndex, T, Ts...>>::type Get(const Args< ArgIndex, UpvalueIndex, T, Ts...>& p, lua_State* l);
 
             template <size_t Index>
-            constexpr typename Arg<Index, Args>::type Get(lua_State* l)
+            constexpr typename Arg<Index, Args>::type Get(lua_State* l)const
             {
                 return LTL::FuncUtility::Get<Index>(*this, l);
             }
