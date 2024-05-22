@@ -1,0 +1,1 @@
+OpenCppCoverage  --sources Source  --excluded_sources Tests -- .\out\build\x64-debug\Tests\TestLTL.exe
