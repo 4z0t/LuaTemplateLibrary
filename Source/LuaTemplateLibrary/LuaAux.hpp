@@ -192,6 +192,9 @@ namespace LTL
     template<typename T>
     struct ResulltNum : std::integral_constant<int, 1> {};
 
+    template<>
+    struct ResulltNum<StackResult>: std::integral_constant<int, LUA_MULTRET> {};
+
     template<typename ...Ts>
     struct ResulltNum< MultReturn<Ts...>> : std::integral_constant<int, sizeof...(Ts)> {};
 
