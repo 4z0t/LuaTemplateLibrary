@@ -93,3 +93,44 @@ TEST_F(TestNotRegisteredUserDataClass, Tests)
 }
 #endif // WINDOWS
 #pragma endregion
+
+struct TestRetTypes : TestBase
+{
+
+};
+
+TEST_F(TestRetTypes, TestStackResult)
+{
+    using namespace LTL;
+    using namespace std;
+    struct TestClass
+    {
+        static StackResult F(lua_State* l, int a, int b)
+        {
+            if (a > b)
+            {
+                PushValue(l, a + b);
+                PushValue(l, a - b);
+                return 2;
+            }
+            PushValue(l, a + b);
+            return 1;
+        }
+
+
+
+    };
+
+    RegisterFunction(l, "F", CFunction<TestClass::F, lua_State*, int, int>::Function);
+    {
+        auto res = CallFunction<MultReturn<int, std::optional<int>>>(l, GlobalValue{ "F" }, 2, 1);
+        ASSERT_EQ(get<0>(res), 2 + 1);
+        ASSERT_TRUE(get<1>(res).has_value());
+        ASSERT_EQ(get<1>(res).value(), 1);
+    }
+    {
+        auto res = CallFunction<MultReturn<int, std::optional<int>>>(l, GlobalValue{ "F" }, 1, 2);
+        ASSERT_EQ(get<0>(res), 2 + 1);
+        ASSERT_FALSE(get<1>(res).has_value());
+    }
+}

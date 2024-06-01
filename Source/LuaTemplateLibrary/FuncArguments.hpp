@@ -96,22 +96,7 @@ namespace LTL
      * @tparam Ts 
      */
     template<typename ...Ts>
-    struct MultReturn : std::tuple<Ts...>, MultReturnBase
-    {
-        using std::tuple<Ts...>::tuple;
-
-        template <size_t N>
-        decltype(auto) Get()
-        {
-            return std::get<N>(*this);
-        }
-
-        template <size_t N>
-        decltype(auto) Get()const
-        {
-            return std::get<N>(*this);
-        }
-    };
+    using MultReturn = std::tuple<Ts...>;
 
     /**
      * @brief Класс для возвращения количества результатов работы функции на стеке.
