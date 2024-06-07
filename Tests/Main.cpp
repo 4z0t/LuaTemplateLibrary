@@ -462,7 +462,7 @@ void ClassTest()
     }
     catch (Exception& ex)
     {
-        std::cerr << ex.GetReason() << std::endl;
+        std::cerr << ex.what() << std::endl;
     }
 }
 
@@ -604,7 +604,7 @@ void OnlyMethods()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason();
+        cout << ex.what();
     }
 
 
@@ -715,7 +715,7 @@ void TestUpvaluesMatching()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
     s.Add("CountSemiCols", CFunction<CountCharacters, const char*, Upvalue<const char*>>{}, ";l");
     try
@@ -729,7 +729,7 @@ void TestUpvaluesMatching()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
     try
     {
@@ -742,7 +742,7 @@ void TestUpvaluesMatching()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
 
     s.Add("CantThrowRegularExceptions", CFunction<ICanThrow, int>{});
@@ -757,7 +757,7 @@ void TestUpvaluesMatching()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
 
 }
@@ -792,7 +792,7 @@ void TestStackResult()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
 
 }
@@ -813,7 +813,7 @@ void AAAAAAAA()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason();
+        cout << ex.what();
     }
 }
 
@@ -909,7 +909,7 @@ void TestGCAccess()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.what() << endl;
     }
 
 }
@@ -959,7 +959,7 @@ void PcallTest()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason();
+        cout << ex.what();
     }
 }
 
@@ -1020,7 +1020,7 @@ void MutlReturnTest()
     }
     catch (Exception& ex)
     {
-        cout << ex.GetReason() << endl;
+        cout << ex.w    () << endl;
     }
 }
 
