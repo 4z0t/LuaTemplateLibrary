@@ -56,8 +56,7 @@ TEST_F(InheritanceTest, Basic)
     Class<C>(s, "C")
         .AddConstructor<>()
         .Add("getC", Method<&C::GetC>{})
-        .CanCastTo<B>()
-        .CanCastTo<A>()
+        .CanCastTo<B, A>()
         ;
 
     s.Run(R"(

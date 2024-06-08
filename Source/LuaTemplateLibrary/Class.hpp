@@ -287,6 +287,15 @@ namespace LTL
             return *this;
         }
 
+
+
+
+        template<typename Base, typename Rest, typename ...RestBases>
+        auto CanCastTo()
+        {
+            return CanCastTo<Base>().CanCastTo<Rest, RestBases...>();
+        }
+
         template<typename Base>
         EnableIf<BaseOf<Base, T> && !std::is_same_v<T, Base>> CanCastTo()
         {
