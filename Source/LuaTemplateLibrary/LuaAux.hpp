@@ -10,13 +10,13 @@ namespace LTL
     {
     private:
         using This = RegistryValue<T>;
-
+    public:
         static inline const void* GetKey()
         {
             static const char key;
             return &key;
         }
-    public:
+
         static inline Type Push(lua_State* l)
         {
             return static_cast<Type>(lua_getregp(l, This::GetKey()));
@@ -27,6 +27,15 @@ namespace LTL
             lua_setregp(l, This::GetKey());
         }
     };
+
+    using PointerToPointerFn = void* (*)(void*);
+
+    template<typename Base, typename Derived>
+    void* CastFunction(void* data)
+    {
+        return static_cast<Base*>(reinterpret_cast<Derived*>(data));
+    }
+
 
     /**
      * @brief Класс для доступа к объектам по ссылке
@@ -193,7 +202,7 @@ namespace LTL
     struct ResulltNum : std::integral_constant<int, 1> {};
 
     template<>
-    struct ResulltNum<StackResult>: std::integral_constant<int, LUA_MULTRET> {};
+    struct ResulltNum<StackResult> : std::integral_constant<int, LUA_MULTRET> {};
 
     template<typename ...Ts>
     struct ResulltNum< MultReturn<Ts...>> : std::integral_constant<int, sizeof...(Ts)> {};

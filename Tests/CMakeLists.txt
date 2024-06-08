@@ -10,6 +10,7 @@ set(LTL_TEST_SOURCE_FILES
     Source/Misc.cpp
     Source/Types.cpp
     Source/Libs.cpp
+    Source/Inheritance.cpp
 )
 
 source_group("Source" FILES ${LTL_TEST_SOURCE_FILES})

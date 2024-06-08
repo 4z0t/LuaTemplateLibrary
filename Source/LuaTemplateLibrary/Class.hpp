@@ -287,7 +287,29 @@ namespace LTL
             return *this;
         }
 
+        template<typename Base>
+        EnableIf<BaseOf<Base, T>> CanCastTo()
+        {
+            if (UserData<Base>::MetaTable::Push(m_state) != Type::Table)
+            {
+                throw std::exception("Base class wasnt registered");
+            }
 
+            if (UserData<Base>::CastTable::Push(m_state) != Type::Table)
+            {
+                Pop();
+                lua_createtable(m_state, 0, 0);
+                UserData<Base>::CastTable::Set(m_state);
+                UserData<Base>::CastTable::Push(m_state);
+            }
+
+            UData::MetaTable::Push(m_state);
+            lua_pushlightuserdata(m_state, static_cast<void*>(&CastFunction<Base, T>));
+            lua_rawset(m_state, -3);
+
+            Pop(2);
+            return *this;
+        }
 
     private:
         inline void Pop(int n = 1)const

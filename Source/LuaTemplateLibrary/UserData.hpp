@@ -23,11 +23,12 @@ namespace LTL
         struct ClassTable : public RegistryValue<ClassTable> {};
         struct IndexTable : public RegistryValue<IndexTable> {};
         struct NewIndexTable : public RegistryValue<NewIndexTable> {};
+        struct CastTable : public RegistryValue<CastTable> {};
 
         struct Data
         {
-            T object;
             bool isDestroyed = false;
+            T object;
         };
     private:
         /**
@@ -209,7 +210,47 @@ namespace LTL
 
         static T* ValidateUserData(lua_State* l, int index)
         {
-            Data* data = ToUserData(l, index);
+            if (!lua_isuserdata(l, index))
+            {
+                ThrowWrongType(l, index);
+            }
+
+            if (!lua_getmetatable(l, index))
+            {
+                ThrowInvalidUserData(l, index);
+            }
+
+            if (MetaTable::Push(l) == Type::Nil)
+            {
+                lua_pop(l, 1);
+                ThrowNoMetaTableForUD(l, index);
+            }
+
+            bool res = lua_rawequal(l, -2, -1);
+            lua_pop(l, 2);
+
+            Data* data = static_cast<Data*>(lua_touserdata(l, index));
+            if (!res)
+            {
+                if (CastTable::Push(l) == Type::Table)
+                {
+                    lua_getmetatable(l, index);
+                    if (lua_rawget(l, -2) == LUA_TLIGHTUSERDATA)
+                    {
+                        if (data == nullptr || data->isDestroyed)
+                        {
+                            ThrowUDDestroyed(l, index);
+                        }
+
+                        PointerToPointerFn f = reinterpret_cast<PointerToPointerFn>(lua_touserdata(l, -1));
+                        lua_pop(l, 2);
+                        void* ud = f(&data->object);
+                        return static_cast<T*>(ud);
+                    }
+                }
+                ThrowWrongUserDataType(l, index);
+            }
+
             if (data == nullptr || data->isDestroyed)
             {
                 ThrowUDDestroyed(l, index);
