@@ -48,8 +48,9 @@ namespace LTL
     }
 
 
-    template<typename T>
+    template<typename T, typename ...Bases>
     struct Class;
+
     namespace Internal
     {
         struct MethodBase {};
@@ -94,7 +95,7 @@ namespace LTL
         public Internal::MethodBase
     {
     public:
-        using TClass = Class<Internal::DeduceClass_t<fn>>;
+        using TClass = Internal::DeduceClass_t<fn>;
     };
 
 
@@ -104,7 +105,7 @@ namespace LTL
         public Internal::MethodBase
     {
     public:
-        using TClass = Class<Internal::DeduceClass_t<fn>>;
+        using TClass = Internal::DeduceClass_t<fn>;
     };
 
     /**
@@ -112,7 +113,7 @@ namespace LTL
      *
      * @tparam T
      */
-    template<typename T>
+    template<typename T, typename ...Bases>
     struct Class
     {
         using UData = UserData<T>;
@@ -128,7 +129,8 @@ namespace LTL
             UData::MetaTable::Push(m_state);
             StackObjectView metatable{ m_state };
             metatable.RawSet(MetaMethods::metatable, true);
-            lua_pop(m_state, 1);
+            Pop();
+            Inherit();
         }
 
         template<typename TAlloc>
@@ -243,7 +245,7 @@ namespace LTL
         EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const MetaMethodName& name, const Element&)
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
-            static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
+            static_assert(std::is_same_v<typename Element::TClass, T>, "Method must be of the same class");
             return Add(name, Element::Function);
         }
 
@@ -251,7 +253,7 @@ namespace LTL
         EnableIf<BaseOf<Internal::MethodBase, Element>> Add(const char* name, const Element&)
         {
             static_assert(Element::template ValidUpvalues<>::value, "Methods dont support upvalues");
-            static_assert(std::is_same_v<typename Element::TClass, Class>, "Method must be of the same class");
+            static_assert(std::is_same_v<typename Element::TClass, T>, "Method must be of the same class");
             return AddMethod(name, Element::Function);
         }
 
@@ -392,6 +394,30 @@ namespace LTL
             UData::NewIndexTable::Set(m_state);
             Pop();
         }
+
+        void Inherit()
+        {
+            _Inherit<Bases...>();
+        }
+
+        template<typename ...Ts>
+        void _Inherit();
+
+        template<typename Base, typename ...Ts>
+        void _Inherit()
+        {
+            __Inherit<Base>();
+            _Inherit<Ts...>();
+        }
+
+        template<typename Base>
+        void __Inherit()
+        {
+            std::cout << typeid(Base).name() << std::endl;
+        }
+
+        template<>
+        void _Inherit() {}
 
         lua_State* m_state;
         std::string m_name;

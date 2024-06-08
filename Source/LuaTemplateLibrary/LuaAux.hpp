@@ -357,7 +357,7 @@ namespace LTL
         PushValue<T>(l, std::get<Index>(result));
         return _PushResult<Index + 1, TResult, Ts...>(l, result);
     }
-
+      
     template<typename T>
     inline void _PushResult(lua_State* l, const T& result)
     {
