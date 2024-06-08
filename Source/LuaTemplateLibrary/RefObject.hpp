@@ -23,14 +23,14 @@ namespace LTL
     {
     public:
         RefObjectBase() = default;
-        RefObjectBase(lua_State* l) noexcept : m_state(l) { assert(m_state, "Expected not null lua_State"); };
+        explicit RefObjectBase(lua_State* l) noexcept : m_state(l) { };
         template<typename T>
-        RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
+        explicit RefObjectBase(const State<T>& state) noexcept : RefObjectBase(state.GetState()->Unwrap()) {};
 
         class Iterator
         {
         public:
-            Iterator(const ParentClass& iterable) : m_table(iterable), m_key(iterable.GetState()) {}
+            Iterator(const ParentClass& iterable) : m_table(iterable), m_key{ iterable.GetState() }, m_value{ iterable.GetState() } {}
 
             Iterator& Next()
             {
