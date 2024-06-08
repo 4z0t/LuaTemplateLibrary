@@ -288,7 +288,7 @@ namespace LTL
         }
 
         template<typename Base>
-        EnableIf<BaseOf<Base, T>> CanCastTo()
+        EnableIf<BaseOf<Base, T> && !std::is_same_v<T, Base>> CanCastTo()
         {
             if (UserData<Base>::MetaTable::Push(m_state) != Type::Table)
             {
