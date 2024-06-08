@@ -95,8 +95,6 @@ namespace LTL
     {
     public:
         using TClass = Class<Internal::DeduceClass_t<fn>>;
-
-        Method() = default;
     };
 
 
@@ -107,8 +105,6 @@ namespace LTL
     {
     public:
         using TClass = Class<Internal::DeduceClass_t<fn>>;
-
-        Method() = default;
     };
 
     /**
