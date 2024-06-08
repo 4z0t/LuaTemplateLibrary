@@ -48,7 +48,7 @@ namespace LTL
     }
 
 
-    template<typename T, typename ...Bases>
+    template<typename T>
     struct Class;
 
     namespace Internal
@@ -113,7 +113,7 @@ namespace LTL
      *
      * @tparam T
      */
-    template<typename T, typename ...Bases>
+    template<typename T>
     struct Class
     {
         using UData = UserData<T>;
@@ -130,7 +130,6 @@ namespace LTL
             StackObjectView metatable{ m_state };
             metatable.RawSet(MetaMethods::metatable, true);
             Pop();
-            Inherit();
         }
 
         template<typename TAlloc>
@@ -289,9 +288,6 @@ namespace LTL
             return *this;
         }
 
-
-
-
         template<typename Base, typename Rest, typename ...RestBases>
         auto CanCastTo()
         {
@@ -319,6 +315,19 @@ namespace LTL
             lua_rawset(m_state, -3);
 
             Pop(2);
+            return *this;
+        }
+
+        template<typename Base, typename Rest, typename ...RestBases>
+        auto Inherit()
+        {
+            return Inherit<Base>().Inherit<Rest, RestBases...>();
+        }
+
+        template<typename Base>
+        EnableIf<BaseOf<Base, T> && !std::is_same_v<T, Base>> Inherit()
+        {
+            _Inherit<Base>();
             return *this;
         }
 
@@ -395,29 +404,11 @@ namespace LTL
             Pop();
         }
 
-        void Inherit()
-        {
-            _Inherit<Bases...>();
-        }
-
-        template<typename ...Ts>
-        void _Inherit();
-
-        template<typename Base, typename ...Ts>
-        void _Inherit()
-        {
-            __Inherit<Base>();
-            _Inherit<Ts...>();
-        }
-
         template<typename Base>
-        void __Inherit()
+        void _Inherit()
         {
             std::cout << typeid(Base).name() << std::endl;
         }
-
-        template<>
-        void _Inherit() {}
 
         lua_State* m_state;
         std::string m_name;
