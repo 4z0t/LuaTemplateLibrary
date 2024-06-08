@@ -10,13 +10,13 @@ namespace LTL
     {
     private:
         using This = RegistryValue<T>;
-    public:
+
         static inline const void* GetKey()
         {
             static const char key;
             return &key;
         }
-
+    public:
         static inline Type Push(lua_State* l)
         {
             return static_cast<Type>(lua_getregp(l, This::GetKey()));

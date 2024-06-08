@@ -135,7 +135,6 @@ namespace LTL
          */
         static int DestructorFunction(lua_State* l)
         {
-
             Data* data = ToUserData(l, 1);
 
             if (data != nullptr)
