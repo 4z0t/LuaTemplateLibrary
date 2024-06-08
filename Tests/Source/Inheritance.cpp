@@ -1,19 +1,12 @@
 #include "TestBase.hpp"
 
-
 struct InheritanceTest : testing::Test
 {
 
 };
 
-
-
-
-
-
 TEST_F(InheritanceTest, Basic)
 {
-
     struct A
     {
         int a = 2;

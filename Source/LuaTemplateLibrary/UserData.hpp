@@ -237,10 +237,7 @@ namespace LTL
                     lua_getmetatable(l, index);
                     if (lua_rawget(l, -2) == LUA_TLIGHTUSERDATA)
                     {
-                        if (data == nullptr || data->isDestroyed)
-                        {
-                            ThrowUDDestroyed(l, index);
-                        }
+                        CheckValidData(l, index, data);
 
                         PointerToPointerFn f = reinterpret_cast<PointerToPointerFn>(lua_touserdata(l, -1));
                         lua_pop(l, 2);
@@ -251,10 +248,7 @@ namespace LTL
                 ThrowWrongUserDataType(l, index);
             }
 
-            if (data == nullptr || data->isDestroyed)
-            {
-                ThrowUDDestroyed(l, index);
-            }
+            CheckValidData(l, index, data);
 
             return &data->object;
         }
@@ -328,6 +322,15 @@ namespace LTL
 
     private:
 #pragma region ThrowFunctions
+
+        static inline void CheckValidData(lua_State* l, int index, Data* data)
+        {
+            if (data == nullptr || data->isDestroyed)
+            {
+                ThrowUDDestroyed(l, index);
+            }
+        }
+
         static void ThrowInvalidUserData(lua_State* l, int index) noexcept(false)
         {
             luaL_argerror(l, index, "Invalind UserData");
