@@ -432,6 +432,36 @@ namespace LTL
                 MergeTable(base_meta, derived_meta);
             }
 
+            if (UserData<Base>::IndexTable::Push(m_state) == Type::Table)
+            {
+                GRefObject base_methods = GRefObject::FromTop(m_state);
+
+                MakeIndexTable();
+                UData::IndexTable::Push(m_state);
+                GRefObject derived_methods = GRefObject::FromTop(m_state);
+
+                MergeTable(base_methods, derived_methods);
+            }
+            else
+            {
+                Pop();
+            }
+
+            if (UserData<Base>::NewIndexTable::Push(m_state) == Type::Table)
+            {
+                GRefObject base_methods = GRefObject::FromTop(m_state);
+
+                MakeNewIndexTable();
+                UData::NewIndexTable::Push(m_state);
+                GRefObject derived_methods = GRefObject::FromTop(m_state);
+
+                MergeTable(base_methods, derived_methods);
+            }
+            else
+            {
+                Pop();
+            }
+
 
         }
 
