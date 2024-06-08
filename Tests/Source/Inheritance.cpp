@@ -346,3 +346,94 @@ TEST_F(InheritanceTest, CallGettersAndSetters)
     }
 
 }
+
+TEST_F(InheritanceTest, TestVirtualClasses)
+{
+    struct I
+    {
+        //doesnt support purely virtual classes
+        virtual int GetValue() { return 0; }
+    };
+
+    struct A : I
+    {
+        int GetValue()override
+        {
+            return 1;
+        }
+    };
+
+    struct B : I
+    {
+        int GetValue()override
+        {
+            return 2;
+        }
+    };
+
+    struct C : I
+    {
+        int GetValue()override
+        {
+            return 3;
+        }
+    };
+
+    using namespace LTL;
+    using namespace std;
+
+    State s;
+    s.OpenLibs();
+
+    Class<I>(s, "I")
+        .AddGetter("value", Method<&I::GetValue>{})
+        ;
+
+    Class<A>(s, "A")
+        .AddConstructor<>()
+        .Inherit<I>()
+        ;
+    Class<B>(s, "B")
+        .AddConstructor<>()
+        .Inherit<I>()
+        ;
+
+    Class<C>(s, "C")
+        .AddConstructor<>()
+        .Inherit<I>()
+        ;
+
+    s.Run(R"(
+    a = A()
+    b = B()
+    c = C()
+            )");
+
+    s.Run(R"(
+    r = a.value
+            )");
+    {
+        auto r = s.GetGlobal("r");
+        ASSERT_EQ(r, 1);
+    }
+
+    s.Run(R"(
+    r = b.value
+            )");
+    {
+        auto r = s.GetGlobal("r");
+        ASSERT_EQ(r, 2);
+    }
+
+    s.Run(R"(
+    r = c.value
+            )");
+    {
+        auto r = s.GetGlobal("r");
+        ASSERT_EQ(r, 3);
+    }
+
+
+}
+
+
