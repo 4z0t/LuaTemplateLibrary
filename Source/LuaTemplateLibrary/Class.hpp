@@ -328,7 +328,7 @@ namespace LTL
         EnableIf<BaseOf<Base, T> && !std::is_same_v<T, Base>> Inherit()
         {
             _Inherit<Base>();
-            return *this;
+            return CanCastTo<Base>();
         }
 
     private:
@@ -407,7 +407,32 @@ namespace LTL
         template<typename Base>
         void _Inherit()
         {
-            std::cout << typeid(Base).name() << std::endl;
+            {
+                if (UserData<Base>::MethodsTable::Push(m_state) != Type::Table)
+                {
+                    throw std::exception("Base class wasnt registered");
+                }
+                GRefObject base_methods = GRefObject::FromTop(m_state);
+
+                UData::MethodsTable::Push(m_state);
+                GRefObject derived_methods = GRefObject::FromTop(m_state);
+
+                MergeTable(base_methods, derived_methods);
+            }
+            {
+                if (UserData<Base>::MetaTable::Push(m_state) != Type::Table)
+                {
+                    throw std::exception("Base class wasnt registered");
+                }
+                GRefObject base_meta = GRefObject::FromTop(m_state);
+
+                UData::MetaTable::Push(m_state);
+                GRefObject derived_meta = GRefObject::FromTop(m_state);
+
+                MergeTable(base_meta, derived_meta);
+            }
+
+
         }
 
         lua_State* m_state;

@@ -746,4 +746,16 @@ namespace LTL
             value.Push();
         }
     };
+
+    template<typename T, typename Y>
+    void MergeTable(const RefObject<T>& from, const RefObject<Y>& to)
+    {
+        for (const auto& [key, value] : from)
+        {
+            if (to[key] == nullptr)
+            {
+                to[key] = value;
+            }
+        }
+    }
 }
